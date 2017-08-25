@@ -1,44 +1,54 @@
 % Chapter Template
 
-\chapter{Convolutional Neural Networks against Jitter-Based Countermeasures} % Main chapter title
+\chapter{Machine Learning Approach} % Main chapter title
 
-\label{ChapterCNN}
-
+\label{ChapterML}
+% deep learning book (curse of dimensionality pag 155)
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 
-\section{Misalignment of Side-Channel Traces}
-
-\subsection{The Necessity and the Risks of Applying Realignment Techniques}
-\subsection{Analogy with Image Recognition Issues}
+\section{Motivation}
 
 %----------------------------------------------------------------------------------------
 %	SECTION 2
 %----------------------------------------------------------------------------------------
 
-\section{Convolutional Layers to Impose Shift-Invariance}
+\section{Introduction to Machine Learning}
+\subsection{The Task, the Experience and the Performance}
+\subsection{Supervised, Semi-Supervised, Unsupervised Learning}
+\subsection{Training, Validation and Test Sets}
+\subsection{Underfitting, Overfitting and Regularization}
+\subsection{Data Augmentation}
+\subsection{No Free Lunch Theorem}
+
 
 %----------------------------------------------------------------------------------------
 %	SECTION 3
 %----------------------------------------------------------------------------------------
+\section{Machine Learning Applications in Side-Channel Context}
+\subsection{Profiled Attack as a Classification Problem}
+\subsubsection{Support Vector Machine}
+\subsubsection{Random Forest}
 
-\section{Data Augmentation for Misaligned Side-Channel Traces}
 %----------------------------------------------------------------------------------------
 %	SECTION 4
 %----------------------------------------------------------------------------------------
+\section{Artificial Neural Networks}
+\subsection{Motivations Leading from Kernel Machines to Deep Learning}
+%https://papers.nips.cc/paper/2810-the-curse-of-highly-variable-functions-for-local-kernel-machines.pdf
+\subsection{The Multi-Layer Perceptron}
 
-\section{Experiments against Software Countermeasures}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 4
+%----------------------------------------------------------------------------------------
+\section{Simulated Experiment for Profiled HO-Attacks}
+\subsection{The Simulations}
+\subsection{Comparison between KDA and MLP}
 
 
 %----------------------------------------------------------------------------------------
-%	SECTION 3
+%	SECTION 4
 %----------------------------------------------------------------------------------------
-
-\section{Experiments against Artificial Hardware Countermeasures}
-
-%----------------------------------------------------------------------------------------
-%	SECTION 3
-%----------------------------------------------------------------------------------------
-
-\section{Experiments against Real-Case Hardware Countermeasures}
+\section{Real-Case Experiments over ARM Cortex-M4}
