@@ -63,6 +63,15 @@ headsepline, % Uncomment to get a line under the header
 	%showframe, % Uncomment to show how the type block is set on the page
 }
 
+
+%----------------------------------------------------------------------------------------
+%	MY NEW COMMANDS AND PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{amsthm}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+
 %----------------------------------------------------------------------------------------
 %	THESIS INFORMATION
 %----------------------------------------------------------------------------------------
@@ -255,16 +264,18 @@ headsepline, % Uncomment to get a line under the header
 
 % Include the chapters of the thesis as separate files from the Chapters folder
 % Uncomment the lines as you write the chapters
-
+\part{Context and State of the Art}
 \include{Chapters/Chapter1}
 \include{Chapters/Chapter2} 
 \include{Chapters/Chapter3}
+\part{Contributions}
 \include{Chapters/Chapter4} 
 \include{Chapters/Chapter5} 
 \include{Chapters/Chapter6} 
 \include{Chapters/Chapter7}
 \include{Chapters/Chapter8}
 \include{Chapters/Chapter9}
+\include{Chapters/Chapter10}
 %\include{Chapters/ChapterExample_instructions}
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES

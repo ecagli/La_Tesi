@@ -1,103 +1,120 @@
 \boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
 \defcounter {refsection}{0}\relax 
 \select@language {english}
-\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.8}
-\contentsline {section}{\numberline {1.1}Introduction to Cryptography}{2}{section.9}
-\contentsline {subsection}{\numberline {1.1.1}Secret-Key Cryptography}{2}{subsection.10}
-\contentsline {subsection}{\numberline {1.1.2}Public-Key Cryptography}{2}{subsection.11}
-\contentsline {section}{\numberline {1.2}Secure Hardware and Embedded Cryptography}{2}{section.12}
-\contentsline {subsection}{\numberline {1.2.1}The Example of the Smart Card}{2}{subsection.13}
-\contentsline {subsection}{\numberline {1.2.2}Certification of a Secure Hardware}{2}{subsection.14}
-\contentsline {subsection}{\numberline {1.2.3}Embedded Cryptography Vulnerabilities}{2}{subsection.15}
-\contentsline {section}{\numberline {1.3}Introduction to Side-Channel Attacks}{2}{section.16}
-\contentsline {subsection}{\numberline {1.3.1}Historical Overview}{2}{subsection.17}
-\contentsline {subsection}{\numberline {1.3.2}Terminology and Generalities}{2}{subsection.18}
-\contentsline {subsubsection}{Target and Leakage Model}{2}{section*.19}
-\contentsline {subsubsection}{Points of Interest}{2}{section*.20}
-\contentsline {subsubsection}{Simple vs Advanced SCAs}{2}{section*.21}
-\contentsline {subsubsection}{Vertical vs Horizontal SCAs}{2}{section*.22}
-\contentsline {subsubsection}{Profiled vs Non-Profiled SCAs}{2}{section*.23}
-\contentsline {subsubsection}{Distinguishers}{2}{section*.24}
-\contentsline {subsubsection}{SCA Metrics}{2}{section*.25}
-\contentsline {subsection}{\numberline {1.3.3}Side-Channel Attacks vs Machine Learning}{2}{subsection.26}
-\contentsline {subsubsection}{Distinguishers vs Classifiers}{2}{section*.27}
-\contentsline {section}{\numberline {1.4}Main Side-Channel Countermeasures}{2}{section.28}
-\contentsline {subsection}{\numberline {1.4.1}Masking}{2}{subsection.29}
-\contentsline {subsection}{\numberline {1.4.2}Shuffling}{2}{subsection.30}
-\contentsline {subsection}{\numberline {1.4.3}Blinding}{2}{subsection.31}
-\contentsline {subsection}{\numberline {1.4.4}Random Delays and Jitter}{2}{subsection.32}
-\contentsline {chapter}{\numberline {2}Points of Interest and Dimensionality Reduction}{3}{chapter.33}
-\contentsline {section}{\numberline {2.1}Motivations}{3}{section.34}
-\contentsline {subsection}{\numberline {2.1.1}The Curse of Dimensionality}{3}{subsection.35}
-\contentsline {section}{\numberline {2.2}Selection on Points of Interest: Classical Statistics}{3}{section.36}
-\contentsline {section}{\numberline {2.3}Related Issues: Leakage Detection and Leakage Assessment}{3}{section.37}
-\contentsline {section}{\numberline {2.4}Dimensionality Reduction Approach}{3}{section.38}
-\contentsline {subsection}{\numberline {2.4.1}Feature Selection as a Machine Learning Task}{3}{subsection.39}
-\contentsline {chapter}{\numberline {3}Linear Dimensionality Reduction}{5}{chapter.40}
-\contentsline {section}{\numberline {3.1}Introduction}{5}{section.41}
-\contentsline {subsection}{\numberline {3.1.1}Principal Component Analysis}{5}{subsection.42}
-\contentsline {subsection}{\numberline {3.1.2}Linear Discriminant Analysis}{5}{subsection.43}
-\contentsline {subsection}{\numberline {3.1.3}Projection Pursuits}{5}{subsection.44}
-\contentsline {section}{\numberline {3.2}Principal Component Analysis}{5}{section.45}
-\contentsline {subsection}{\numberline {3.2.1}Statistical Point of View}{5}{subsection.46}
-\contentsline {subsection}{\numberline {3.2.2}Geometrical Point of View}{5}{subsection.47}
-\contentsline {section}{\numberline {3.3}Application of PCA in SCAs}{5}{section.48}
-\contentsline {subsection}{\numberline {3.3.1}Original vs Class-Oriented PCA}{5}{subsection.49}
-\contentsline {subsection}{\numberline {3.3.2}The Choice of the Principal Components}{5}{subsection.50}
-\contentsline {section}{\numberline {3.4}Linear Discriminant Analysis}{5}{section.51}
-\contentsline {subsection}{\numberline {3.4.1}Statistical Point of View}{5}{subsection.52}
-\contentsline {subsection}{\numberline {3.4.2}Geometrical Point of View}{5}{subsection.53}
-\contentsline {section}{\numberline {3.5}Application of LDA in SCAs}{5}{section.54}
-\contentsline {subsection}{\numberline {3.5.1}The Small Sample Size problem}{5}{subsection.55}
-\contentsline {chapter}{\numberline {4}Kernel Dimensionality Reduction}{7}{chapter.56}
-\contentsline {section}{\numberline {4.1}Motivation}{7}{section.57}
-\contentsline {subsection}{\numberline {4.1.1}Higher-Order Attacks}{7}{subsection.58}
-\contentsline {subsubsection}{Higher-Order Version of Projection Pursuits}{7}{section*.59}
-\contentsline {section}{\numberline {4.2}Kernel Function and Kernel Trick}{7}{section.60}
-\contentsline {subsection}{\numberline {4.2.1}Local Kernel Functions as Similarity Metrics}{7}{subsection.61}
-\contentsline {section}{\numberline {4.3}Kernel Discriminant Analysis}{7}{section.62}
-\contentsline {section}{\numberline {4.4}Experiments over Atmega328P}{7}{section.63}
-\contentsline {subsection}{\numberline {4.4.1}The Regularization Problem}{7}{subsection.64}
-\contentsline {subsection}{\numberline {4.4.2}The Multi-Class Trade-Off}{7}{subsection.65}
-\contentsline {subsection}{\numberline {4.4.3}Multi-Class vs 2-class Approach}{7}{subsection.66}
-\contentsline {subsection}{\numberline {4.4.4}Asymmetric Preprocessing/Attack Approach}{7}{subsection.67}
-\contentsline {subsubsection}{Comparison with Projection Pursuits}{7}{section*.68}
-\contentsline {chapter}{\numberline {5}Machine Learning Approach}{9}{chapter.69}
-\contentsline {section}{\numberline {5.1}Motivation}{9}{section.70}
-\contentsline {section}{\numberline {5.2}Introduction to Machine Learning}{9}{section.71}
-\contentsline {subsection}{\numberline {5.2.1}The Task, the Experience and the Performance}{9}{subsection.72}
-\contentsline {subsection}{\numberline {5.2.2}Supervised, Semi-Supervised, Unsupervised Learning}{9}{subsection.73}
-\contentsline {subsection}{\numberline {5.2.3}Training, Validation and Test Sets}{9}{subsection.74}
-\contentsline {subsection}{\numberline {5.2.4}Underfitting, Overfitting and Regularization}{9}{subsection.75}
-\contentsline {subsection}{\numberline {5.2.5}Data Augmentation}{9}{subsection.76}
-\contentsline {subsection}{\numberline {5.2.6}No Free Lunch Theorem}{9}{subsection.77}
-\contentsline {section}{\numberline {5.3}Machine Learning Applications in Side-Channel Context}{9}{section.78}
-\contentsline {subsection}{\numberline {5.3.1}Profiled Attack as a Classification Problem}{9}{subsection.79}
-\contentsline {subsubsection}{Support Vector Machine}{9}{section*.80}
-\contentsline {subsubsection}{Random Forest}{9}{section*.81}
-\contentsline {section}{\numberline {5.4}Artificial Neural Networks}{9}{section.82}
-\contentsline {subsection}{\numberline {5.4.1}Motivations Leading from Kernel Machines to Deep Learning}{9}{subsection.83}
-\contentsline {subsection}{\numberline {5.4.2}The Multi-Layer Perceptron}{9}{subsection.84}
-\contentsline {section}{\numberline {5.5}Simulated Experiment for Profiled HO-Attacks}{9}{section.85}
-\contentsline {subsection}{\numberline {5.5.1}The Simulations}{9}{subsection.86}
-\contentsline {subsection}{\numberline {5.5.2}Comparison between KDA and MLP}{9}{subsection.87}
-\contentsline {section}{\numberline {5.6}Real-Case Experiments over ARM Cortex-M4}{9}{section.88}
-\contentsline {chapter}{\numberline {6}Convolutional Neural Networks against Jitter-Based Countermeasures}{11}{chapter.89}
-\contentsline {section}{\numberline {6.1}Misalignment of Side-Channel Traces}{11}{section.90}
-\contentsline {subsection}{\numberline {6.1.1}The Necessity and the Risks of Applying Realignment Techniques}{11}{subsection.91}
-\contentsline {subsection}{\numberline {6.1.2}Analogy with Image Recognition Issues}{11}{subsection.92}
-\contentsline {section}{\numberline {6.2}Convolutional Layers to Impose Shift-Invariance}{11}{section.93}
-\contentsline {section}{\numberline {6.3}Data Augmentation for Misaligned Side-Channel Traces}{11}{section.94}
-\contentsline {section}{\numberline {6.4}Experiments against Software Countermeasures}{11}{section.95}
-\contentsline {section}{\numberline {6.5}Experiments against Artificial Hardware Countermeasures}{11}{section.96}
-\contentsline {section}{\numberline {6.6}Experiments against Real-Case Hardware Countermeasures}{11}{section.97}
-\contentsline {chapter}{\numberline {7}Neural Networks: Back to Dimensionality Reduction}{13}{chapter.98}
-\contentsline {section}{\numberline {7.1}Motivation}{13}{section.99}
-\contentsline {section}{\numberline {7.2}Stacked Auto-Encoders}{13}{section.100}
-\contentsline {subsection}{\numberline {7.2.1}The Same Issues of Classic PCA}{13}{subsection.101}
-\contentsline {section}{\numberline {7.3}Siamese Neural Networks}{13}{section.102}
-\contentsline {subsection}{\numberline {7.3.1}Distances and Loss Functions}{13}{subsection.103}
-\contentsline {subsection}{\numberline {7.3.2}Relation with Kernel Machines}{13}{subsection.104}
-\contentsline {section}{\numberline {7.4}A Experimental comparison between KDA and Siamese NNs}{13}{section.105}
-\contentsline {section}{\numberline {7.5}Collision Attacks with Siamese NNs}{13}{section.106}
-\contentsline {subsection}{\numberline {7.5.1}Experimental Results}{13}{subsection.107}
+\contentsline {part}{I\hspace {1em}Context and State of the Art}{1}{part.8}
+\contentsline {chapter}{\numberline {1}Introduction}{3}{chapter.9}
+\contentsline {section}{\numberline {1.1}Introduction to Cryptography}{3}{section.10}
+\contentsline {subsection}{\numberline {1.1.1}Secret-Key Cryptography}{3}{subsection.11}
+\contentsline {subsection}{\numberline {1.1.2}Public-Key Cryptography}{3}{subsection.12}
+\contentsline {section}{\numberline {1.2}Secure Hardware and Embedded Cryptography}{3}{section.13}
+\contentsline {subsection}{\numberline {1.2.1}The Example of the Smart Card}{3}{subsection.14}
+\contentsline {subsection}{\numberline {1.2.2}Certification of a Secure Hardware}{3}{subsection.15}
+\contentsline {subsection}{\numberline {1.2.3}Modern More Complex Devices to Certify}{3}{subsection.16}
+\contentsline {subsection}{\numberline {1.2.4}Embedded Cryptography Vulnerabilities}{3}{subsection.17}
+\contentsline {chapter}{\numberline {2}Introduction to Side-Channel Attacks}{5}{chapter.18}
+\contentsline {section}{\numberline {2.1}Introduction to Side-Channel Attacks}{6}{section.19}
+\contentsline {subsection}{\numberline {2.1.1}Historical Overview}{6}{subsection.20}
+\contentsline {subsection}{\numberline {2.1.2}Terminology and Generalities}{6}{subsection.21}
+\contentsline {subsubsection}{Target and Leakage Model}{6}{section*.22}
+\contentsline {subsubsection}{Points of Interest}{6}{section*.23}
+\contentsline {subsubsection}{Simple vs Advanced SCAs}{6}{section*.24}
+\contentsline {subsubsection}{Vertical vs Horizontal SCAs}{6}{section*.25}
+\contentsline {subsubsection}{Profiled vs Non-Profiled SCAs}{6}{section*.26}
+\contentsline {subsubsection}{Side-Channel Algebraic Attacks}{6}{section*.27}
+\contentsline {subsubsection}{Distinguishers}{6}{section*.28}
+\contentsline {subsubsection}{SCA Metrics}{6}{section*.29}
+\contentsline {section}{\numberline {2.2}Main Side-Channel Countermeasures}{6}{section.30}
+\contentsline {subsection}{\numberline {2.2.1}Random Delays and Jitter}{6}{subsection.31}
+\contentsline {subsection}{\numberline {2.2.2}Shuffling}{6}{subsection.32}
+\contentsline {subsection}{\numberline {2.2.3}Masking}{6}{subsection.33}
+\contentsline {section}{\numberline {2.3}Higher-Order Attacks}{6}{section.34}
+\contentsline {subsection}{\numberline {2.3.1}Higher-Order Moments Analysis and Combining Functions}{6}{subsection.35}
+\contentsline {subsection}{\numberline {2.3.2}Profiling Higher-Order Attacks}{6}{subsection.36}
+\contentsline {subsubsection}{Profiling with Masks Knowledge}{6}{section*.37}
+\contentsline {subsubsection}{Profiling without Masks Knowledge}{6}{section*.38}
+\contentsline {section}{\numberline {2.4}Thesis Contribution and Organization}{6}{section.39}
+\contentsline {subsection}{\numberline {2.4.1}Foreword of this Thesis: Research of Points of Interest}{6}{subsection.40}
+\contentsline {subsection}{\numberline {2.4.2}Dimensionality Reduction Approach}{6}{subsection.41}
+\contentsline {subsubsection}{Linear Methods for First-Order Attacks}{6}{section*.42}
+\contentsline {subsubsection}{Kernel Methods for Higher-Order Attacks}{6}{section*.43}
+\contentsline {subsection}{\numberline {2.4.3}Neural Network Approach}{6}{subsection.44}
+\contentsline {subsubsection}{Toward Getting Rid of Information-Loosing Preprocessing}{6}{section*.45}
+\contentsline {chapter}{\numberline {3}Introduction to Machine Learning}{7}{chapter.46}
+\contentsline {section}{\numberline {3.1}Basic Concepts of Machine Learning}{7}{section.47}
+\contentsline {subsection}{\numberline {3.1.1}The Task, the Experience and the Performance}{7}{subsection.48}
+\contentsline {subsection}{\numberline {3.1.2}Supervised, Semi-Supervised, Unsupervised Learning}{7}{subsection.49}
+\contentsline {subsection}{\numberline {3.1.3}Training, Validation and Test Sets}{7}{subsection.50}
+\contentsline {subsection}{\numberline {3.1.4}Underfitting, Overfitting and Regularization}{7}{subsection.51}
+\contentsline {subsection}{\numberline {3.1.5}Data Augmentation}{7}{subsection.52}
+\contentsline {subsection}{\numberline {3.1.6}No Free Lunch Theorem}{7}{subsection.53}
+\contentsline {section}{\numberline {3.2}Machine Learning Applications in Side-Channel Context}{7}{section.54}
+\contentsline {subsection}{\numberline {3.2.1}Profiled Attack as a Classification Problem}{7}{subsection.55}
+\contentsline {subsubsection}{Support Vector Machine}{7}{section*.56}
+\contentsline {subsubsection}{Random Forest}{7}{section*.57}
+\contentsline {subsubsection}{Neural Networks}{7}{section*.58}
+\contentsline {part}{II\hspace {1em}Contributions}{9}{part.59}
+\contentsline {chapter}{\numberline {4}Points of Interest}{11}{chapter.60}
+\contentsline {section}{\numberline {4.1}Motivations}{11}{section.61}
+\contentsline {subsection}{\numberline {4.1.1}The Curse of Dimensionality}{11}{subsection.62}
+\contentsline {section}{\numberline {4.2}Selection on Points of Interest: Classical Statistics}{11}{section.63}
+\contentsline {section}{\numberline {4.3}Related Issues: Leakage Detection and Leakage Assessment}{11}{section.64}
+\contentsline {section}{\numberline {4.4}Generalized SNR for Multi-Variate Attacks}{11}{section.65}
+\contentsline {section}{\numberline {4.5}Observations Leading to Take a Dimensionality Reduction Approach}{11}{section.66}
+\contentsline {chapter}{\numberline {5}Linear Dimensionality Reduction}{13}{chapter.67}
+\contentsline {section}{\numberline {5.1}Introduction}{13}{section.68}
+\contentsline {subsection}{\numberline {5.1.1}Principal Component Analysis}{13}{subsection.69}
+\contentsline {subsection}{\numberline {5.1.2}Linear Discriminant Analysis}{13}{subsection.70}
+\contentsline {subsection}{\numberline {5.1.3}Projection Pursuits}{13}{subsection.71}
+\contentsline {section}{\numberline {5.2}Principal Component Analysis}{13}{section.72}
+\contentsline {subsection}{\numberline {5.2.1}Statistical Point of View}{13}{subsection.73}
+\contentsline {subsection}{\numberline {5.2.2}Geometrical Point of View}{13}{subsection.74}
+\contentsline {section}{\numberline {5.3}Application of PCA in SCAs}{13}{section.75}
+\contentsline {subsection}{\numberline {5.3.1}Original vs Class-Oriented PCA}{13}{subsection.76}
+\contentsline {subsection}{\numberline {5.3.2}The Choice of the Principal Components}{13}{subsection.77}
+\contentsline {section}{\numberline {5.4}Linear Discriminant Analysis}{13}{section.78}
+\contentsline {subsection}{\numberline {5.4.1}Statistical Point of View}{13}{subsection.79}
+\contentsline {subsection}{\numberline {5.4.2}Geometrical Point of View}{13}{subsection.80}
+\contentsline {section}{\numberline {5.5}Application of LDA in SCAs}{13}{section.81}
+\contentsline {subsection}{\numberline {5.5.1}The Small Sample Size problem}{13}{subsection.82}
+\contentsline {chapter}{\numberline {6}Kernel Dimensionality Reduction}{15}{chapter.83}
+\contentsline {section}{\numberline {6.1}Motivation}{15}{section.84}
+\contentsline {subsection}{\numberline {6.1.1}Higher-Order Attacks}{15}{subsection.85}
+\contentsline {subsubsection}{Higher-Order Version of Projection Pursuits}{15}{section*.86}
+\contentsline {section}{\numberline {6.2}Kernel Function and Kernel Trick}{15}{section.87}
+\contentsline {subsection}{\numberline {6.2.1}Local Kernel Functions as Similarity Metrics}{15}{subsection.88}
+\contentsline {section}{\numberline {6.3}Kernel Discriminant Analysis}{15}{section.89}
+\contentsline {section}{\numberline {6.4}Experiments over Atmega328P}{15}{section.90}
+\contentsline {subsection}{\numberline {6.4.1}The Regularization Problem}{15}{subsection.91}
+\contentsline {subsection}{\numberline {6.4.2}The Multi-Class Trade-Off}{15}{subsection.92}
+\contentsline {subsection}{\numberline {6.4.3}Multi-Class vs 2-class Approach}{15}{subsection.93}
+\contentsline {subsection}{\numberline {6.4.4}Asymmetric Preprocessing/Attack Approach}{15}{subsection.94}
+\contentsline {subsubsection}{Comparison with Projection Pursuits}{15}{section*.95}
+\contentsline {section}{\numberline {6.5}Drawbacks of Kernel Methods}{15}{section.96}
+\contentsline {subsubsection}{Misalignment Effects}{15}{section*.97}
+\contentsline {subsubsection}{Memory Complexity and Actual Number of Parameters}{15}{section*.98}
+\contentsline {subsubsection}{Two-Phases Approach: Preprocessing-Templates}{15}{section*.99}
+\contentsline {chapter}{\numberline {7}Convolutional Neural Networks against Jitter-Based Countermeasures}{17}{chapter.100}
+\contentsline {section}{\numberline {7.1}Moving from Kernel Machines to Neural Networks}{17}{section.101}
+\contentsline {section}{\numberline {7.2}Misalignment of Side-Channel Traces}{17}{section.102}
+\contentsline {subsection}{\numberline {7.2.1}The Necessity and the Risks of Applying Realignment Techniques}{17}{subsection.103}
+\contentsline {subsection}{\numberline {7.2.2}Analogy with Image Recognition Issues}{17}{subsection.104}
+\contentsline {section}{\numberline {7.3}Convolutional Layers to Impose Shift-Invariance}{17}{section.105}
+\contentsline {section}{\numberline {7.4}Data Augmentation for Misaligned Side-Channel Traces}{17}{section.106}
+\contentsline {section}{\numberline {7.5}Experiments against Software Countermeasures}{17}{section.107}
+\contentsline {section}{\numberline {7.6}Experiments against Artificial Hardware Countermeasures}{17}{section.108}
+\contentsline {section}{\numberline {7.7}Experiments against Real-Case Hardware Countermeasures}{17}{section.109}
+\contentsline {chapter}{\numberline {8}KDA vs Neural Networks Approach for HO-Attacks}{19}{chapter.110}
+\contentsline {section}{\numberline {8.1}Simulated Experiment for Profiled HO-Attacks}{19}{section.111}
+\contentsline {subsection}{\numberline {8.1.1}The Simulations}{19}{subsection.112}
+\contentsline {subsection}{\numberline {8.1.2}Comparison between KDA and MLP}{19}{subsection.113}
+\contentsline {section}{\numberline {8.2}Real-Case Experiments over ARM Cortex-M4}{19}{section.114}
+\contentsline {chapter}{\numberline {9}Siamese Neural Networks for Collision Attacks}{21}{chapter.115}
+\contentsline {section}{\numberline {9.1}Introduction}{21}{section.116}
+\contentsline {section}{\numberline {9.2}Siamese Neural Networks}{21}{section.117}
+\contentsline {subsection}{\numberline {9.2.1}Distances and Loss Functions}{21}{subsection.118}
+\contentsline {subsection}{\numberline {9.2.2}Relation with Kernel Machines}{21}{subsection.119}
+\contentsline {section}{\numberline {9.3}Collision Attacks with Siamese NNs}{21}{section.120}
+\contentsline {subsection}{\numberline {9.3.1}Experimental Results}{21}{subsection.121}
+\contentsline {chapter}{\numberline {10}Conclusions and Perspectives}{23}{chapter.122}
+\contentsline {section}{\numberline {10.1}Summary}{23}{section.123}
+\contentsline {section}{\numberline {10.2}Strengthen Embedded Security: the Main Challenge for Machine Learning Applications}{23}{section.124}
