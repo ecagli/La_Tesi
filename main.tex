@@ -43,7 +43,7 @@ headsepline, % Uncomment to get a line under the header
 
 \usepackage{palatino} % Use the Palatino font by default
 
-\usepackage[backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+\usepackage[backend=bibtex,style=alphabetic,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
 \addbibresource{all_my_bib.bib} % The filename of the bibliography
 
@@ -65,12 +65,37 @@ headsepline, % Uncomment to get a line under the header
 
 
 %----------------------------------------------------------------------------------------
-%	MY NEW COMMANDS AND PACKAGES
+%	MY NOTATIONS AND PACKAGES
 %----------------------------------------------------------------------------------------
-\usepackage{amsthm}
+
+\usepackage{amsmath,amsfonts,amsthm}
+\usepackage{xcolor,colortbl}
+\usepackage{subfigure}
+
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}{\bfseries}{\itshape}
+\newtheorem{notation}{Notation}{\bfseries}{\itshape}
+\newtheorem{procedure}{Procedure}{\bfseries}{}
 
+\newcommand*{\todo}[1]{\textbf{\textcolor{red}{#1}}}
+%----------------------------------------------------------------------------------------
+%	MY NEW ENVIRONMENTS AND PACKAGES
+%----------------------------------------------------------------------------------------
+\newcommand*{\nbTraces}{N}
+\newcommand*{\nbProfilingTraces}{N_p}
+\newcommand*{\nbAttackTraces}{N_a}
+\newcommand*{\guessingEntropy}{\mathrm{GE}}
+\newcommand*{\newTraceLength}{C}
+\newcommand*{\traceLength}{D}
+\newcommand*{\AAlpha}{\boldsymbol{\alpha}}
+\newcommand*{\covmat}{\textbf{S}}
+\newcommand*{\numPoI}{\sharp\mathrm{PoI}}
+
+\newcommand{\SW}{\textbf{S}_{\textbf{W}}}
+\newcommand{\SB}{\textbf{S}_{\textbf{B}}}
+\newcommand{\ST}{\textbf{S}_{\textbf{T}}}
 
 %----------------------------------------------------------------------------------------
 %	THESIS INFORMATION
@@ -281,13 +306,13 @@ headsepline, % Uncomment to get a line under the header
 %	THESIS CONTENT - APPENDICES
 %----------------------------------------------------------------------------------------
 
-%\appendix % Cue to tell LaTeX that the following "chapters" are Appendices
+\appendix % Cue to tell LaTeX that the following "chapters" are Appendices
 
 % Include the appendices of the thesis as separate files from the Appendices folder
 % Uncomment the lines as you write the Appendices
 
-%\include{Appendices/AppendixA}
-%\include{Appendices/AppendixB}
+\include{Appendices/scenario3_4_cardis15}
+\include{Appendices/artificial_jitter}
 %\include{Appendices/AppendixC}
 
 %----------------------------------------------------------------------------------------
