@@ -28,7 +28,49 @@ A general principle in cryptography, nowadays widely accepted by cryptography re
 In the following part of this section a description of the two standard cryptographic primitives, \emph{i.e.} building block algorithms used to build cryptographic protocols, that will be used in this thesis will; a symmetric one, the AES, and an asymmetric one, the RSA. 
 \subsection{Description of AES}
 The \emph{Advanced Encryption Standard} (AES) has been standardized in 2001 by the United States governmental agency \emph{National Institute of Standards and Technology} (NIST) through the \emph{Federal Information
-Processing Standards Publication 197 } (FIPS PUB 197) \cite{nist197}. It is a symmetric encryption algorithm
+Processing Standards Publication 197 } (FIPS PUB 197) \cite{nist197}. It is a symmetric \emph{block cipher}, \emph{i.e.} an algorithm operating on fixed-length groups of bits.\footnote{in contrast with \emph{stream ciphers}, which operate over a single plaintext bit at time} The AES operates on blocks of 128 bits of plaintext, and can use keys of size 128, 192 or 256 bits. The encryption is done by rounds. The number of executed rounds depends on the key size (10 rounds for 128 bits, 12 for 192 and 14 pour 256). The basic unit for processing in the AES algorithm is a byte. For AES internal operations, bytes are arranged on a two-dimensional array of bytes called the \emph{state}, denoted $s$. Such a state has 4 rows and 4 columns, thus contains 16 bytes. The byte lying at the $i$-th row, $j$-th column of $s$ will be denoted by $s_{i,j}$ for $i,j\in\{0,1,2,3\}$. The 16 input bytes and the 16 output bytes are indexed column-wise as shown in Fig.~\ref{fig:AES_state}. Each element $s_{i,j}$ of a state is mathematically seen as an element of the \emph{Rjindael finite field}, defined as $GF(2^8) = \mathbb{Z}/{2\mathbb{Z}[X]}/P(X)$ where $P(X) = X^8 + X^4 + X^3 + X + 1$. Five functions are performed during the AES, named KeySchedule, AddRoundKey, SubBytes, ShiftRow and MixColumn. At high level the AES algorithm is described hereafter:
+\begin{itemize}
+\item[\textbf{Key Expansion:}]  derivation of round keys from secret key through the KeySchedule function
+\item[\textbf{Round 0:} ] 
+\begin{itemize}
+\item[] AddRoundKey
+\end{itemize}
+\item[\textbf{Rounds 1 to penultimate:}] 
+\begin{itemize}
+\item[] SubBytes
+\item[] ShiftRow
+\item[] MixColumn
+\item[] AddRoundKey
+\end{itemize}
+\item[\textbf{Last Round:}] 
+\begin{itemize}
+\item[] SubBytes
+\item[] ShiftRow
+\item[] AddRoundKey
+\end{itemize}
+\end{itemize}
+
+\begin{figure}
+\includegraphics[width = \textwidth]{../Figures/FISP_AES/state.png} 
+\caption[State array input and output.]{State array input and output. Source: \cite{nist197}.}\label{fig:AES_state}
+\end{figure}
+
+A description of the five functions is provided hereafter.
+
+\subsubsection*{KeySchedule}
+The key round of the initial round of AES coincides with the secret encryption key $\boldsymbol{K} = (k_{0,0},k_{0,1},\dots,k_{0,3}, k_{1,0},\dots,k_{1,3},\dots,k_{3,3})$. The $i$-th round key is given by 
+\begin{equation*}
+\boldsymbol{K_i} = (k_{4i,0},k_{4i,1},\dots,k_{4i,3}, k_{4i+1,0},\dots,k_{4i+1,3},\dots,k_{4i+3,3}),
+\end{equation*}
+where, for $i>3$
+\begin{equation*}
+\begin{cases}
+k_{a,b} = k_{a-4,b}\oplus k_{a-1,b} & \mbox{if } a \not\equiv 0 \mathrm{ mod } 4\\
+k_{a,b} = k_{a-4,b}\oplus \Sbox(k_{a-1,(b+1) \mathrm{mod } 4} \oplus \mathrm{Rcon}(a) & \mbox{if } a \equiv 0 \mathrm{ mod } 4 \mathrm{,}
+\end{cases}
+\end{equation*}
+
+where $Rcon(a) = 2^{a-1}$ in the Rjindael finite field.\footnote{where $2=(00000010)_2$ is represented by the polynomial $x$}
 \subsection{Description of RSA}
 
 
@@ -36,7 +78,7 @@ Processing Standards Publication 197 } (FIPS PUB 197) \cite{nist197}. It is a sy
 %	SECTION 2
 %----------------------------------------------------------------------------------------
 \section{Secure Components and Embedded Cryptography}
-As we have seen in the previous section, modern cryptography proposes solutions to secure communications that asks for electronic computations and repose their security over some secret keys. Keys are 
+As we have seen in the previous section, modern cryptography proposes solutions to secure communications that asks for electronic computations and repose their security over some secret keys. Keys are represented as long bit strings, impossible to be memorized by users. Keys need then to be stored in a secure medium, and never delivered in clear over insecure channels.
 
 
 \subsection{The Example of the Smart Card}
