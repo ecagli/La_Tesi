@@ -65,26 +65,71 @@ The key round of the initial round of AES coincides with the secret encryption k
 where, for $i>3$
 \begin{equation*}
 \begin{cases}
-k_{a,b} = k_{a-4,b}\oplus k_{a-1,b} & \mbox{if } a \not\equiv 0 \mathrm{ mod } 4\\
-k_{a,b} = k_{a-4,b}\oplus \Sbox(k_{a-1,(b+1) \mathrm{mod } 4} \oplus \mathrm{Rcon}(a) & \mbox{if } a \equiv 0 \mathrm{ mod } 4 \mathrm{,}
+k_{a,b} = k_{a-4,b}\oplus k_{a-1,b} & \mbox{if } a \not\equiv 0 \mbox{ mod } 4\\
+k_{a,b} = k_{a-4,b}\oplus \Sbox(k_{a-1,(b+1) \mbox{mod } 4}) \oplus \mathrm{Rcon}(a) & \mbox{if } a \equiv 0 \mbox{ mod } 4 \mathrm{,}
 \end{cases}
 \end{equation*}
 
 where $Rcon(a) = 2^{a-1}$ in the Rjindael finite field.\footnote{where $2=(00000010)_2$ is represented by the polynomial $x$}
+
+\subsubsection*{AddRoundKey}
+\subsubsection*{SubByte}
+\subsubsection*{ShiftRow}
+\subsubsection*{MixColumn}
+
+
 \subsection{Description of RSA}
 
 
 %----------------------------------------------------------------------------------------
 %	SECTION 2
 %----------------------------------------------------------------------------------------
-\section{Secure Components and Embedded Cryptography}
-As we have seen in the previous section, modern cryptography proposes solutions to secure communications that asks for electronic computations and repose their security over some secret keys. Keys are represented as long bit strings, impossible to be memorized by users. Keys need then to be stored in a secure medium, and never delivered in clear over insecure channels.
+\section{Secured Components}
+\section{Smart Cards and Related Devices}
+As we have seen in the previous section, modern cryptography proposes solutions to secure communications that ask for electronic computations and repose their security over some secret keys. Keys are represented as long bit strings, impossible to be memorized by users. Thus, keys need to be stored in a secure medium, and never delivered in clear over insecure channels. Smart cards were historically conceived as a practical solution to such a key storage issue: they consist in small devices a user can easily carry around with, which not only store secret keys, but also are able to internally perform cryptographic operations, in such a way that keys are never asked to be delivered. The registrations of a first patent by Roland Moreno in 1974 and of a second one by Michel Ugon in 1977 are often referred to date the smart card invention, finally produced for the first time in 1979. Smart cards are pocket-sized plastic-made cards equipped with a secured component, which is typically an integrated circuit containing a some computational units and some memories.\\
+
+Today, about 40 years after its invention, they still have a huge diffusion, both in terms of applicative domains and in terms of quantity of exemplars. Indeed, they serve as credit or ATM cards, healthy cards, ID cards, public transport payment cards, fuel cards, identification and access badges, authorization cards for pay television, etc. Slightly changing the card support, we find other applications of the same kind of integrated circuits, for example the  mobile phone SIMs (\emph{Subscriber Identity Module} and the electronic passports. In terms of quantity, it seems that in 2014 8.8 billion smart cards have been sold, \emph{i.e.} the same order of magnitude of the global population. \\
+
+In addition to smart cards, the recent growing and variation of security needs lead to the development and specification of other kinds of secured components, for example the \emph{Trusted Execution Environment} (TEE), which as a secured part of the main processor of a smartphone or tablet, and the \emph{Trusted Platform Module} 
+(TPM), which is a secure element providing cryptographic functionalities to a motherboard. 
+
+\subsection{Embedded Cryptography Vulnerabilities}
+\subsubsection{Side-Channel Attacks}
+Until the middle of nineties, the security of embedded cryptosystems was considered as equivalent to the mathematical security of the cryptographic algorithm. In classical cryptanalysis an attacker has usually the knowledge of the algorithm (in accordance to the Kerckhoff's principle) and of some inputs and/or outputs. Starting from this data, his goal is to retrieve the secret key. This attack model considers the algorithm computation as a black box, in the sense that no internal variable can be observed during execution, only inputs and/or outputs. With his seminal paper about Side-Channel Attacks (SCAs) in 1996, Paul Kocher showed that such a black-box model fails once the algorithm is implemented over a material component \cite{kocher1996timing}: an attacker can indeed inspect its component during the execution of the cryptographic algorithm, monitor some physical quantities, for example the execution time \cite{kocher1996timing} or the instantaneous power consumption \cite{kocher1999differential} and deduct information about internal variables of the algorithm. Depending on the attacked algorithm, making inference over some well chosen internal variable (the so-called \emph{sensitive variables} of the algorithm) is sufficient to retrieve the secret key. After these first works it was shown that other observable physical quantities contained \emph{leakages} of sensitive information, for example the electromagnetic radiation emanating from the device \cite{gandolfi2001electromagnetic,quisquater2001electromagnetic} and the acoustic emanations \cite{genkin2014rsa}. Moreover, if until few years ago it was thought that only small devices, equipped with slow microprocessors and in a small-size architecture, such as smart cards were vulnerable to this kind of Side-Channel Attacks, this recent work about acoustic emanations, together with other works exploiting electromagnetic fluctuations pointed out that much faster and bigger devices, \emph{i.e.} laptops and desktop computers, are vulnerable as well \cite{genkin2015stealing,genkin2015get,genkin2016ecdh}.
+
+\subsubsection{A Classification of the Attacks to Secured Components}
+\begin{table}[]
+\centering
+\caption{Classification of Attacks}
+\label{fig:classification_attacks}
+\begin{tabular}{|l|lll}
+\cline{1-3}
+\multirow{4}{*}{\textbf{Hardware Attacks}} & \multicolumn{1}{l|}{Passive} & \multicolumn{1}{l|}{Active} &                                    \\ \cline{2-4} 
+                                           & \multicolumn{1}{l|}{}        & \multicolumn{1}{l|}{}       & \multicolumn{1}{l|}{Invasive}      \\ \cline{2-4} 
+                                           & \multicolumn{1}{l|}{}        & \multicolumn{1}{l|}{}       & \multicolumn{1}{l|}{Semi-Invisive} \\ \cline{2-4} 
+                                           & \multicolumn{1}{l|}{SCAs}    & \multicolumn{1}{l|}{FAs}    & \multicolumn{1}{l|}{Non-Invasive}  \\ \hline
+\textbf{Software Attacks}                  &                              &                             &                                    \\ \cline{1-1}
+\end{tabular}
+\end{table}
+
+The Side-Channel Attacks outlined in previous paragraph belong to a much bigger family of attacks that can be performed to break cryptographic devices security claims. First of all software attacks and hardware attacks must be distinguished. Software attacks only exploit vulnerability coming from the way the component's code is written. Hardware attacks are still commonly classified on the base of two criteria: on one hand we can distinguish passive and active attacks, on the other hand we can distinguish invasive, semi-invasive, non-invasive attacks. 
+\begin{itemize}
+\item[] \textbf{Passive attacks:} in passive attack, the device is let run respecting its specifications. The attacker observes its behaviour without provoking any alteration;
+\item[] \textbf{Active attacks:}  in active attacks a special manipulation is performed in order to make the normal behaviour of the device change. 
+\end{itemize}
 
 
-\subsection{The Example of the Smart Card}
+\begin{itemize}
+\item[] \textbf{Invasive attacks}: in invasive attack, the device is depackaged and inspected at the level of the components technology. The circuit can be modified, broken, signals can be accessed via a probing station, etc. There is no limits to the manipulations attacker can do to the components;
+\item[] \textbf{Semi-invasive attacks}: as in invasive attacks the device is depackaged, but in contrast to them, no direct electrical contact to the chip is done;
+\item[] \textbf{Non-invasive attacks}: in non-invasive attacks the device is not modified and only accessible interfaces are exploited. 
+
+In literature, the term Side-Channel Attacks commonly denotes the passive non-invasive attacks. In the same way, active non-invasive attacks are often referred to as \emph{Fault Injection Attacks}. 
+
+\end{itemize}
 
 \subsection{Certification of a Secure Hardware}
-\subsection{Embedded Cryptography Vulnerabilities}
+
 parla anche degli attachi per perturbazione (tesi alexandre)
 
 
