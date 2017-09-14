@@ -112,7 +112,7 @@ Until the middle of nineties, the security of embedded cryptosystems was conside
 \end{tabular}
 \end{table}
 
-The Side-Channel Attacks outlined in previous paragraph belong to a much bigger family of attacks that can be performed to break cryptographic devices security claims. First of all software attacks and hardware attacks must be distinguished. Software attacks only exploit vulnerability coming from the way the component's code is written. Hardware attacks are still commonly classified on the base of two criteria: on one hand we can distinguish passive and active attacks, on the other hand we can distinguish invasive, semi-invasive, non-invasive attacks. 
+The Side-Channel Attacks outlined in previous paragraph, and which are the main concern of this thesis,  belong to a much bigger family of attacks that can be performed to break cryptographic devices security claims. First of all software attacks and hardware attacks must be distinguished. Software attacks only exploit vulnerability coming from the way the component's code is written. Hardware attacks are still commonly classified on the base of two criteria: on one hand we can distinguish passive and active attacks, on the other hand we can distinguish invasive, semi-invasive, non-invasive attacks. 
 \begin{itemize}
 \item[] \textbf{Passive attacks:} in passive attack, the device is let run respecting its specifications. The attacker observes its behaviour without provoking any alteration;
 \item[] \textbf{Active attacks:}  in active attacks a special manipulation is performed in order to make the normal behaviour of the device change. 
@@ -128,8 +128,24 @@ In literature, the term Side-Channel Attacks commonly denotes the passive non-in
 
 \end{itemize}
 
-\subsection{Certification of a Secure Hardware}
+\subsection{Certification of a Secure Hardware - The Common Criteria}
+In previous paragraphs we have evoked the great diffusion of the cryptographic devices, which implies consequent great risks in case of vulnerabilities of such largely diffused devices, and the existence of a wide range of attacks exploiting vulnerabilities coming from the way cryptography is embedded. These factors justify the importance and necessity to ensure reliability on the security claims of commercialised secured components and thus the arise of several guidelines and standards for their evaluation. The international standard ISO/IEC 15408, also known as \emph{Common Criteria for Information Technology Security Evaluation} (abbreviated as \emph{Common Criteria} or simply \emph{CC}) represents one of the stronger efforts in standardization, unifying in 1999 three previously existing standards:
+\begin{itemize}
+\item the \emph{Trusted Computer System Evaluation Criteria} (TCSEC - United States - 1983)
+\item the \emph{Information Technology Security Evaluation Criteria} (ITSEC - France,Germany, Netherlands, United Kingdom - 1990)
+\item the \emph{Canadian Trusted Computer Product Evaluation Criteria} (CTCPEC - Canada - 1993).
+\end{itemize}
 
-parla anche degli attachi per perturbazione (tesi alexandre)
+\subsubsection{The actors} The CC define four actors of the evaluation process of a secured component:
+\begin{itemize}
+\item \textbf{The Developer}, who conceives a product and wish sell it a certified secured product. He send a request for evaluation to the certification body and, once the request is accepted, he contacts an evaluation laboratory
+\item \textbf{The ITSEF} is the \emph{IT Security Evaluation Facility}. It is an evaluation laboratory, in possession of a certification body agreement, which performs the security tests to assess the resilience of the product
+\item \textbf{The Certification Body} is often a governmental organism, the \emph{Agence National de la Securit\'e des Syst\`emes d'Information} (ANSSI) in France, or the \emph{Bundesamt f\"ur Sicherheit in der Informationstechnik} (BSI) in Germany. It ensures the quality of the evaluation and delivers a certificate to the developer
+\item \textbf{The end user}, who buys the product and follows its security guidelines.
+\end{itemize} 
 
+\subsubsection{The Target of Evaluation and the security objectives} 
+To start the certification process, the developer compiles a document called \emph{Security Target} (ST). Such a document begins specifying the (part of the) device subjected to evaluation, the so-called \emph{Target of Evaluation} (ToE) and then lists its \emph{Security Functional Requirements} (SFR), choosing by those proposed by the CC. In practice, and to ease de redaction of the ST, the choice of the SFRs is not free, but guided by the typology of components. In particular, the CC propose a catalogue of \emph{Protection Profiles} (PP), associated with the required SFRs; for example \emph{smart card} or \emph{TEE} designate some precise PPs. 
 
+\subsubsection{Evaluation Assurance Level and Security Assurance Requirements}
+During the evaluation process, an \emph{Evaluation Assurance Level} (EAL)
