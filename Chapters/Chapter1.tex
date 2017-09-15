@@ -38,14 +38,14 @@ Processing Standards Publication 197 } (FIPS PUB 197) \cite{nist197}. It is a sy
 \item[\textbf{Rounds 1 to penultimate:}] 
 \begin{itemize}
 \item[] SubBytes
-\item[] ShiftRow
-\item[] MixColumn
+\item[] ShiftRows
+\item[] MixColumns
 \item[] AddRoundKey
 \end{itemize}
 \item[\textbf{Last Round:}] 
 \begin{itemize}
 \item[] SubBytes
-\item[] ShiftRow
+\item[] ShiftRows
 \item[] AddRoundKey
 \end{itemize}
 \end{itemize}
@@ -73,9 +73,9 @@ k_{a,b} = k_{a-4,b}\oplus \Sbox(k_{a-1,(b+1) \mbox{mod } 4}) \oplus \mathrm{Rcon
 where $Rcon(a) = 2^{a-1}$ in the Rjindael finite field.\footnote{where $2=(00000010)_2$ is represented by the polynomial $x$}
 
 \subsubsection*{AddRoundKey}
-\subsubsection*{SubByte}
-\subsubsection*{ShiftRow}
-\subsubsection*{MixColumn}
+\subsubsection*{SubBytes}
+\subsubsection*{ShiftRows}
+\subsubsection*{MixColumns}
 
 
 \subsection{Description of RSA}
@@ -129,6 +129,10 @@ In literature, the term Side-Channel Attacks commonly denotes the passive non-in
 \end{itemize}
 
 \subsection{Certification of a Secure Hardware - The Common Criteria}
+\begin{figure}
+\includegraphics[width=\textwidth]{../Figures/ITSEF_ANSSI2.pdf} 
+\caption{The actors of French Certification Scheme}
+\end{figure}
 In previous paragraphs we have evoked the great diffusion of the cryptographic devices, which implies consequent great risks in case of vulnerabilities of such largely diffused devices, and the existence of a wide range of attacks exploiting vulnerabilities coming from the way cryptography is embedded. These factors justify the importance and necessity to ensure reliability on the security claims of commercialised secured components and thus the arise of several guidelines and standards for their evaluation. The international standard ISO/IEC 15408, also known as \emph{Common Criteria for Information Technology Security Evaluation} (abbreviated as \emph{Common Criteria} or simply \emph{CC}) represents one of the stronger efforts in standardization, unifying in 1999 three previously existing standards:
 \begin{itemize}
 \item the \emph{Trusted Computer System Evaluation Criteria} (TCSEC - United States - 1983)
@@ -139,7 +143,7 @@ In previous paragraphs we have evoked the great diffusion of the cryptographic d
 \subsubsection{The actors} The CC define four actors of the evaluation process of a secured component:
 \begin{itemize}
 \item \textbf{The Developer}, who conceives a product and wish sell it a certified secured product. He send a request for evaluation to the certification body and, once the request is accepted, he contacts an evaluation laboratory
-\item \textbf{The ITSEF} is the \emph{IT Security Evaluation Facility}. It is an evaluation laboratory, in possession of a certification body agreement, which performs the security tests to assess the resilience of the product
+\item \textbf{The ITSEF} is the \emph{IT Security Evaluation Facility}; in France it is named \emph{Centre d'Evaluation de la Securit\'e des Technologies de l'Information} (CESTI). It is an evaluation laboratory, in possession of a certification body agreement, which performs the security tests to assess the resilience of the product
 \item \textbf{The Certification Body} is often a governmental organism, the \emph{Agence National de la Securit\'e des Syst\`emes d'Information} (ANSSI) in France, or the \emph{Bundesamt f\"ur Sicherheit in der Informationstechnik} (BSI) in Germany. It ensures the quality of the evaluation and delivers a certificate to the developer
 \item \textbf{The end user}, who buys the product and follows its security guidelines.
 \end{itemize} 

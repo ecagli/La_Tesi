@@ -7,11 +7,19 @@
 %----------------------------------------------------------------------------------------
 
 \section{Introduction to Side-Channel Attacks}
-\subsection{Historical Overview}
 
 \subsection{Terminology and Generalities}
 \subsubsection{Target and Leakage Model}
+\begin{itemize}
+\item The goal of an SCA is to retrieve a secret part of a cryptographic algorithm, typically the secret key.
+\item The underlying hypothesis of a SCA is that some information about internal variables (or parts of internal variables) of the implemented algorithm leak during its execution through some observable \emph{side} channels. Such leakages are collectable in the form of signals, observing such channels. 
+\item No matter the size of an algorithm inputs, outputs and internal variables, an hardware implementation  always operates over variables of a bounded size. Such a bound size depends on the hardware architecture. For example, in an 8-bit architecture an RSA with 1024-bit-sized key, modulo and plaintext will be somehow implemented as multiple operations over 8-bit blocks of observable data. 
+\item This fact allows an attacker to apply the \emph{divide-and-conquer} strategy: if his goal is retrieving the full 128-bit AES key or 1024-bit RSA key, he will smartly divide his problem in retrieving small parts of such keys at time, namely some \emph{subkeys}.  
+\item An attack = find the right association between a trace (or a set of traces) and the value assumed by a target variable during the acquisition of such trace/traces. 
+\item the target variable can directly be a target subkey, ....simple/advanced
+\item model HW but also Z = HW(...)
 
+\end{itemize}
 
 \subsubsection{Points of Interest}
 \subsubsection{Simple vs Advanced SCAs}

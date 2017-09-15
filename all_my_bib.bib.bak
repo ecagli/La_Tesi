@@ -592,7 +592,7 @@ Attacks More Effectively?},
 @InProceedings{gandolfi2001electromagnetic,
   Title                    = {Electromagnetic analysis: Concrete results},
   Author                   = {Gandolfi, Karine and Mourtel, Christophe and Olivier, Francis},
-  Booktitle                = {Cryptographic Hardware and Embedded Systems—CHES 2001},
+  Booktitle                = {Cryptographic Hardware and Embedded Systems - CHES 2001},
   Year                     = {2001},
   Organization             = {Springer},
   Pages                    = {251--261}
