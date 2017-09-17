@@ -85,7 +85,7 @@ where $Rcon(a) = 2^{a-1}$ in the Rjindael finite field.\footnote{where $2=(00000
 %	SECTION 2
 %----------------------------------------------------------------------------------------
 \section{Secured Components}
-\section{Smart Cards and Related Devices}
+\subsection{Smart Cards and Related Devices}
 As we have seen in the previous section, modern cryptography proposes solutions to secure communications that ask for electronic computations and repose their security over some secret keys. Keys are represented as long bit strings, impossible to be memorized by users. Thus, keys need to be stored in a secure medium, and never delivered in clear over insecure channels. Smart cards were historically conceived as a practical solution to such a key storage issue: they consist in small devices a user can easily carry around with, which not only store secret keys, but also are able to internally perform cryptographic operations, in such a way that keys are never asked to be delivered. The registrations of a first patent by Roland Moreno in 1974 and of a second one by Michel Ugon in 1977 are often referred to date the smart card invention, finally produced for the first time in 1979. Smart cards are pocket-sized plastic-made cards equipped with a secured component, which is typically an integrated circuit containing a some computational units and some memories.\\
 
 Today, about 40 years after its invention, they still have a huge diffusion, both in terms of applicative domains and in terms of quantity of exemplars. Indeed, they serve as credit or ATM cards, healthy cards, ID cards, public transport payment cards, fuel cards, identification and access badges, authorization cards for pay television, etc. Slightly changing the card support, we find other applications of the same kind of integrated circuits, for example the  mobile phone SIMs (\emph{Subscriber Identity Module} and the electronic passports. In terms of quantity, it seems that in 2014 8.8 billion smart cards have been sold, \emph{i.e.} the same order of magnitude of the global population. \\
@@ -149,7 +149,120 @@ In previous paragraphs we have evoked the great diffusion of the cryptographic d
 \end{itemize} 
 
 \subsubsection{The Target of Evaluation and the security objectives} 
-To start the certification process, the developer compiles a document called \emph{Security Target} (ST). Such a document begins specifying the (part of the) device subjected to evaluation, the so-called \emph{Target of Evaluation} (ToE) and then lists its \emph{Security Functional Requirements} (SFR), choosing by those proposed by the CC. In practice, and to ease de redaction of the ST, the choice of the SFRs is not free, but guided by the typology of components. In particular, the CC propose a catalogue of \emph{Protection Profiles} (PP), associated with the required SFRs; for example \emph{smart card} or \emph{TEE} designate some precise PPs. 
+To start the certification process, the developer compiles a document called \emph{Security Target} (ST). Such a document begins specifying the (part of the) device subjected to evaluation, the so-called \emph{Target of Evaluation} (ToE) and then lists its \emph{Security Functional Requirements} (SFR), choosing by those proposed by the CC. In practice, and to ease de redaction of the ST, the choice of the SFRs is not open, but guided by the typology of the component. In particular, the CC propose a catalogue of \emph{Protection Profiles} (PP), associated with the required SFRs; for example \emph{smart card} or \emph{TEE} designate some precise PPs. 
 
 \subsubsection{Evaluation Assurance Level and Security Assurance Requirements}
-During the evaluation process, an \emph{Evaluation Assurance Level} (EAL)
+\begin{table}[]
+\centering
+\caption{Evaluation Assurance Levels}
+\label{tab:EAL}
+\begin{tabular}{cc}
+\toprule 
+EAL  & Description                                \\
+\midrule
+EAL1 & Functionally tested                        \\
+EAL2 & Structurally tested                        \\
+EAL3 & Methodically tested and checked            \\
+EAL4 & Methodically designed, tested and reviewed \\
+EAL5 & Semi-formally designed and tested          \\
+EAL6 & Semi-formally verified design and tested   \\
+EAL7 & Formally verified design and tested      \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+In CC seven  \emph{Evaluation Assurance Level} (EAL) are defined, and determine the quantity and complexity of the tasks the evaluator has to effectuate, thus specifying the insurance strength. The EAL are defined in insurance increasing order, so that the EAL1 has the lowest verification exigences while EAL7 has the highest ones. In Table~\ref{tab:EAL} the objectives given by the CC for each EAL are resumed.\\
+
+During the process of evaluation, the SFRs of the ToE have to be verified according to the claimed EAL. To this end, the evaluation is  divided into six classes of \emph{Security Assurance Requirement} (SAR). Five of this classes are the so-called \emph{conformity} classes, and one in called the \emph{attack} class. Each class is sub-divided in several \emph{families} (excepted the attack class, which only contains one family), and the evaluators are charged to check each requirement corresponding to these families. The table~\ref{tab:SAR} resumes the SAR classes and their families. For each family a grade is assigned following precise specifications detailed in CC. Grades range in general from 1 to 6 and the obtention of a certain EAL depends on the grades obtained for each family, as reported in Table~\ref{tab:components}.
+
+
+\begin{table}[]
+\centering
+\caption{Security Assurance Requirements}
+\label{tab:SAR}
+\begin{tabular}{ccc}
+\toprule
+Class                               & Family   & Description                           \\
+\midrule
+\multirow{6}{*}{Development}        & ADV\_ARC & Security architecture                 \\
+                                    & ADV\_FSP & Functional specification              \\
+                                    & ADV\_IMP & Implementation representation         \\
+                                    & ADV\_INT & TOE Security Functions internals      \\
+                                    & ADV\_SPM & Security policy modelling             \\
+                                    & ADV\_TDS & TOE design                            \\
+                                    \midrule
+\multirow{2}{*}{Guidance Documents} & AGD\_OPE & Operational user guidance             \\
+                                    & AGD\_PRE & Preparative procedures                \\
+                                    \midrule
+\multirow{7}{*}{Life-cycle support} & ALC\_CMC & Configuration Management capabilities \\
+                                    & ALC\_CMS & Configuration Management scope        \\
+                                    & ALC\_DEL & Delivery                              \\
+                                    & ALC\_DVS & Development security                  \\
+                                    & ALC\_FLR & Flaw remediation                      \\
+                                    & ALC\_LCD & Life-cycle definition                 \\
+                                    & ALC\_TAT & Tools and techniques                  \\
+                                    \midrule
+\multirow{7}{*}{ST evaluation}      & ASE\_CCL & Conformance claims                    \\
+                                    & ASE\_ECD & Extended components definition        \\
+                                    & ASE\_INT & ST introduction                       \\
+                                    & ASE\_OBJ & Security objectives                   \\
+                                    & ASE\_REQ & Security requirements                 \\
+                                    & ASE\_SPD & Security problem definition           \\
+                                    & ASE\_TSS & TOE summary specification             \\
+                                    \midrule
+\multirow{4}{*}{Tests}              & ATE\_COV & Coverage                              \\
+                                    & ATE\_DPT & Depth                                 \\
+                                    & ATE\_FUN & Functional tests                      \\
+                                    & ATE\_IND & Independent testing                   \\
+                                    \midrule
+Vulnerability assessment            & AVA\_VAN & Vulnerability analysis   \\
+\bottomrule
+            
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[]
+\centering
+\caption{Required grades for the obtention of each EAL.}
+\label{tab:components}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{Family} & \multicolumn{7}{c|}{Assurance Components by EAL} \\ \cline{2-8} 
+                        & EAL1  & EAL2  & EAL3 & EAL4 & EAL5 & EAL6 & EAL7 \\
+                        \midrule
+ADV\_ARC                &       & 1     & 1    & 1    & 1    & 1    & 1    \\ 
+ADV\_FSP                & 1     & 2     & 3    & 4    & 5    & 5    & 6    \\ 
+ADV\_IMP                &       &       &      & 1    & 1    & 2    & 2    \\ 
+ADV\_INT                &       &       &      &      & 2    & 3    & 3    \\ 
+ADV\_SPM                &       &       &      &      &      & 1    & 1    \\ 
+ADV\_TDS                &       & 1     & 2    & 3    & 4    & 5    & 6    \\
+\midrule
+AGD\_OPE                & 1     & 1     & 1    & 1    & 1    & 1    & 1    \\ 
+AGD\_PRE                & 1     & 1     & 1    & 1    & 1    & 1    & 1    \\ 
+\midrule
+ALC\_CMC                & 1     & 2     & 3    & 4    & 4    & 5    & 5    \\ 
+ALC\_CMS                & 1     & 2     & 3    & 4    & 5    & 5    & 5    \\ 
+ALC\_DEL                &       & 1     & 1    & 1    & 1    & 1    & 1    \\ 
+ALC\_DVS                &       &       & 1    & 1    & 1    & 2    & 2    \\ 
+ALC\_FLR                &       &       &      &      &      &      &      \\ 
+ALC\_LCD                &       &       & 1    & 1    & 1    & 1    & 2    \\ 
+ALC\_TAT                &       &       &      & 1    & 2    & 3    & 3    \\ 
+\midrule
+ASE\_CCL                & 1     & 1     & 1    & 1    & 1    & 1    & 1    \\ 
+ASE\_ECD                & 1     & 1     & 1    & 1    & 1    & 1    & 1    \\ 
+ASE\_INT                & 1     & 1     & 1    & 1    & 1    & 1    & 1    \\ 
+ASE\_OBJ                & 1     & 2     & 2    & 2    & 2    & 2    & 2    \\ 
+ASE\_REQ                & 1     & 2     & 2    & 2    & 2    & 2    & 2    \\ 
+ASE\_SPD                &       & 1     & 1    & 1    & 1    & 1    & 1    \\ 
+ASE\_TSS                & 1     & 1     & 1    & 1    & 1    & 1    & 1    \\ 
+\midrule
+ATE\_COV                &       & 1     & 2    & 2    & 2    & 3    & 3    \\ 
+ATE\_DPT                &       &       & 1    & 1    & 3    & 3    & 4    \\ 
+ATE\_FUN                &       & 1     & 1    & 1    & 1    & 2    & 2    \\ 
+ATE\_IND                & 1     & 2     & 2    & 2    & 2    & 2    & 3    \\ 
+\midrule
+AVA\_VAN                & 1     & 2     & 2    & 3    & 4    & 5    & 5    \\ \hline
+\end{tabular}
+\end{table}
