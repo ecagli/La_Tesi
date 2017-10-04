@@ -9,20 +9,47 @@
 \section{Introduction to Side-Channel Attacks}
 
 \subsection{Terminology and Generalities}
-\subsubsection{Target and Leakage Model}
+
+\subsubsection{Divide-and-Conquer}
+
 \begin{itemize}
 \item The goal of an SCA is to retrieve a secret part of a cryptographic algorithm, typically the secret key.
-\item The underlying hypothesis of a SCA is that some information about internal variables (or parts of internal variables) of the implemented algorithm leak during its execution through some observable \emph{side} channels. Such leakages are collectable in the form of signals, observing such channels. 
 \item No matter the size of an algorithm inputs, outputs and internal variables, an hardware implementation  always operates over variables of a bounded size. Such a bound size depends on the hardware architecture. For example, in an 8-bit architecture an RSA with 1024-bit-sized key, modulo and plaintext will be somehow implemented as multiple operations over 8-bit blocks of observable data. 
 \item This fact allows an attacker to apply the \emph{divide-and-conquer} strategy: if his goal is retrieving the full 128-bit AES key or 1024-bit RSA key, he will smartly divide his problem in retrieving small parts of such keys at time, namely some \emph{subkeys}.  
-\item An attack = find the right association between a trace (or a set of traces) and the value assumed by a target variable during the acquisition of such trace/traces. 
-\item the target variable can directly be a target subkey, ....simple/advanced
-\item model HW but also Z = HW(...)
+\item An attack consists in finding the right association between a trace (or a set of traces) and the value assumed by a target \emph{sensitive variable} $Z$ during the acquisition of such trace/traces. 
+\end{itemize}
+\subsubsection{Sensitive Variable}
+\begin{itemize}
+\item Sensitive variable is a piece of info that tells something about a secret of the implementation. Actually, it would be better to call it sensitive target, since it might not be variable
+\item example: $Z = K$ with $K$ a secret subkey. This is the most direct sensitive target one can imagine, nevertheless it is often not variable, since in some cases a device exploits always the same key for a given embedded primitive. When the target is not variable we are performing a \emph{simple attack} (see later)
+\item other examples of sensitive variables: 
+\begin{itemize}
+\item the most classical: a cryptographic variable that depends over a sufficiently small subkey
+\item any function of of a cryptographic variable (ex: $HW(Z)$), we will see in the discussion about the leakage model in which sense it can be interesting to not target a variable but a non-injective function of a variable
+\item an operation (ex:square, multiply)
+\item a register (ex: the register used to store results of operations in a montgomery ladder implem of rsa)
+\end{itemize}
+\item actually, in this thesis we will try as much as possible to abstract from the form of the sensitive variable, thinking of any entity $Z$ that can assume values in a finite set $\mathcal{Z}$ and whose value permit an attacker to make inference about a secret of the implemented algorithm
+\end{itemize}
+\subsubsection{Leakage Models}
+\begin{itemize}
 
+
+\item The underlying hypothesis of a SCA is that some information about internal variables (or parts of internal variables) of the implemented algorithm leak during its execution through some observable \emph{side} channels. Such leakages are collectable in the form of signals, observing such channels. 
+
+\item Depending on the observed channel (\emph{e.g. power consumption, electromagnetic irradiation, time, \dots}), different properties might influence the form of the leakage, and should be taken into account for the construction of a leakage model
+\item If we allow a Side-Channel attacker making use of a probing station to directly access the circuit wires and monitor the exact values of some intermediate values, this attacker will observe leakages following the so-called \emph{probing model}. To define this model no further hypothesis are needed, for example no noise is taken into account. As explained in \ref{sec:classification_attacks}, SCAs typically refer to non-invasive attacks, so in Side-Channel literature the probing model has been introduced as a worst-case abstract model, and is mainly considered in order to provide formal security proofs for some kinds of countermeasures. More precisely the $d$-probing model \cite{ishai2003private}, in which an attacker can probe $d$ different wires at a time, provides a good model to exhibit security proofs for $d$-th order masking schemes (cf. \ref{sec:masking}). 
+\item The most common passive leaking channel considered in literature being the power consumption, for such a physical quantity many efforts have been done to propose adherent leakage models. A detailed modelling for power consumption of CMOS circuits is proposed in the \emph{DPA book} \cite{mangard2008power}. After a description of the physical factors influencing the power consumption (divided into static and dynamic) of single logic cells, the authors propose to assume two different points of view to model and develop simulations of the power consumption: the designer point of view can bring to a quite accurate and detailed model, essentially based over his circuit transistor netlists. On the contrary an attacker would be satisfied by considering some easier modelisation, often based over the \emph{Hamming-Distance} ($\HD$) or the \emph{Hamming-Weight} ($\HW$) of internal variables. Indeed these two functions well-fit the consumption behaviour of circuits registers and buses. 
+\item 
 \end{itemize}
 
-\subsubsection{Points of Interest}
+
+
+
+
 \subsubsection{Simple vs Advanced SCAs}
+\subsubsection{Points of Interest}
+
 \subsubsection{Vertical vs Horizontal SCAs}
 \subsubsection{Profiled vs Non-Profiled SCAs}
 \subsubsection{Side-Channel Algebraic Attacks}
@@ -37,7 +64,7 @@
 \section{Main Side-Channel Countermeasures}
 \subsection{Random Delays and Jitter}
 \subsection{Shuffling}
-\subsection{Masking}
+\subsection{Masking}\label{sec:masking}
 
 
 
