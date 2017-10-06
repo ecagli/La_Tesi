@@ -2,6 +2,25 @@
 % Encoding: Cp1252
 
 
+@InProceedings{DBLP:conf/ches/CagliDP17,
+  Title                    = {Convolutional Neural Networks with Data Augmentation Against Jitter-Based
+ Countermeasures - Profiling Attacks Without Pre-processing},
+  Author                   = {Eleonora Cagli and
+ C{\'{e}}cile Dumas and
+ Emmanuel Prouff},
+  Booktitle                = {Cryptographic Hardware and Embedded Systems - {CHES} 2017 - 19th International
+ Conference, Taipei, Taiwan, September 25-28, 2017, Proceedings},
+  Year                     = {2017},
+  Pages                    = {45--68},
+
+  Bibsource                = {dblp computer science bibliography, http://dblp.org},
+  Biburl                   = {http://dblp.org/rec/bib/conf/ches/CagliDP17},
+  Crossref                 = {DBLP:conf/ches/2017},
+  Doi                      = {10.1007/978-3-319-66787-4_3},
+  Timestamp                = {Mon, 18 Sep 2017 13:25:39 +0200},
+  Url                      = {https://doi.org/10.1007/978-3-319-66787-4_3}
+}
+
 @InCollection{TAprincipal,
   Title                    = {Template Attacks in Principal Subspaces},
   Author                   = {Archambeau, C. and Peeters, E. and Standaert, F.-X. and Quisquater, J.-J.},
@@ -1055,6 +1074,16 @@ and Ogihara, Mitsunori},
   Url                      = {http://dx.doi.org/10.1007/s10115-006-0013-y}
 }
 
+@TechReport{JIL,
+  Title                    = {Application of Attack Potential to SmartSmart, Version 2.9},
+  Author                   = {Joint Interpretation Library},
+  Institution              = {Common Criteria},
+  Year                     = {2013},
+
+  Owner                    = {EC243758},
+  Timestamp                = {2017.09.18}
+}
+
 @Article{Lin2016,
   Title                    = {Why does deep and cheap learning work so well?},
   Author                   = {Lin, Henry W and Tegmark, Max},
@@ -1563,6 +1592,18 @@ and Ogihara, Mitsunori},
   Year                     = {2005},
   Organization             = {Springer},
   Pages                    = {30--46}
+}
+
+@InProceedings{schmidt2008probing,
+  Title                    = {A probing attack on AES},
+  Author                   = {Schmidt, J{\"o}rn-Marc and Kim, Chong Hee},
+  Booktitle                = {International Workshop on Information Security Applications},
+  Year                     = {2008},
+  Organization             = {Springer},
+  Pages                    = {256--265},
+
+  Owner                    = {EC243758},
+  Timestamp                = {2017.09.15}
 }
 
 @InBook{Schneider2015,

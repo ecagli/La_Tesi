@@ -85,7 +85,7 @@ where $Rcon(a) = 2^{a-1}$ in the Rjindael finite field.\footnote{where $2=(00000
 %	SECTION 2
 %----------------------------------------------------------------------------------------
 \section{Secured Components}
-\subsection{Smart Cards and Related Devices}
+
 As we have seen in the previous section, modern cryptography proposes solutions to secure communications that ask for electronic computations and repose their security over some secret keys. Keys are represented as long bit strings, impossible to be memorized by users. Thus, keys need to be stored in a secure medium, and never delivered in clear over insecure channels. Smart cards were historically conceived as a practical solution to such a key storage issue: they consist in small devices a user can easily carry around with, which not only store secret keys, but also are able to internally perform cryptographic operations, in such a way that keys are never asked to be delivered. The registrations of a first patent by Roland Moreno in 1974 and of a second one by Michel Ugon in 1977 are often referred to date the smart card invention, finally produced for the first time in 1979. Smart cards are pocket-sized plastic-made cards equipped with a secured component, which is typically an integrated circuit containing a some computational units and some memories.\\
 
 Today, about 40 years after its invention, they still have a huge diffusion, both in terms of applicative domains and in terms of quantity of exemplars. Indeed, they serve as credit or ATM cards, healthy cards, ID cards, public transport payment cards, fuel cards, identification and access badges, authorization cards for pay television, etc. Slightly changing the card support, we find other applications of the same kind of integrated circuits, for example the  mobile phone SIMs (\emph{Subscriber Identity Module} and the electronic passports. In terms of quantity, it seems that in 2014 8.8 billion smart cards have been sold, \emph{i.e.} the same order of magnitude of the global population. \\
@@ -93,11 +93,11 @@ Today, about 40 years after its invention, they still have a huge diffusion, bot
 In addition to smart cards, the recent growing and variation of security needs lead to the development and specification of other kinds of secured components, for example the \emph{Trusted Execution Environment} (TEE), which as a secured part of the main processor of a smartphone or tablet, and the \emph{Trusted Platform Module} 
 (TPM), which is a secure element providing cryptographic functionalities to a motherboard. 
 
-\subsection{Embedded Cryptography Vulnerabilities}
+\subsection{Embedded Cryptography Vulnerabilities}\label{sec:vulnerabilities}
 \subsubsection{Side-Channel Attacks}
 Until the middle of nineties, the security of embedded cryptosystems was considered as equivalent to the mathematical security of the cryptographic algorithm. In classical cryptanalysis an attacker has usually the knowledge of the algorithm (in accordance to the Kerckhoff's principle) and of some inputs and/or outputs. Starting from this data, his goal is to retrieve the secret key. This attack model considers the algorithm computation as a black box, in the sense that no internal variable can be observed during execution, only inputs and/or outputs. With his seminal paper about Side-Channel Attacks (SCAs) in 1996, Paul Kocher showed that such a black-box model fails once the algorithm is implemented over a material component \cite{kocher1996timing}: an attacker can indeed inspect its component during the execution of the cryptographic algorithm, monitor some physical quantities, for example the execution time \cite{kocher1996timing} or the instantaneous power consumption \cite{kocher1999differential} and deduct information about internal variables of the algorithm. Depending on the attacked algorithm, making inference over some well chosen internal variable (the so-called \emph{sensitive variables} of the algorithm) is sufficient to retrieve the secret key. After these first works it was shown that other observable physical quantities contained \emph{leakages} of sensitive information, for example the electromagnetic radiation emanating from the device \cite{gandolfi2001electromagnetic,quisquater2001electromagnetic} and the acoustic emanations \cite{genkin2014rsa}. Moreover, if until few years ago it was thought that only small devices, equipped with slow microprocessors and in a small-size architecture, such as smart cards were vulnerable to this kind of Side-Channel Attacks, this recent work about acoustic emanations, together with other works exploiting electromagnetic fluctuations pointed out that much faster and bigger devices, \emph{i.e.} laptops and desktop computers, are vulnerable as well \cite{genkin2015stealing,genkin2015get,genkin2016ecdh}.
 
-\subsubsection{A Classification of the Attacks to Secured Components}
+\subsubsection{A Classification of the Attacks to Secured Components}\label{sec:classification_attacks}
 \begin{table}[]
 \centering
 \caption{Classification of Attacks}
@@ -149,7 +149,7 @@ In previous paragraphs we have evoked the great diffusion of the cryptographic d
 \end{itemize} 
 
 \subsubsection{The Target of Evaluation and the security objectives} 
-To start the certification process, the developer compiles a document called \emph{Security Target} (ST). Such a document begins specifying the (part of the) device subjected to evaluation, the so-called \emph{Target of Evaluation} (ToE) and then lists its \emph{Security Functional Requirements} (SFR), choosing by those proposed by the CC. In practice, and to ease de redaction of the ST, the choice of the SFRs is not open, but guided by the typology of the component. In particular, the CC propose a catalogue of \emph{Protection Profiles} (PP), associated with the required SFRs; for example \emph{smart card} or \emph{TEE} designate some precise PPs. 
+To start the certification process, the developer compiles a document called \emph{Security Target} (ST). Such a document begins specifying the (part of the) device subjected to evaluation, the so-called \emph{Target of Evaluation} (TOE) and then lists its \emph{Security Functional Requirements} (SFR), choosing by those proposed by the CC. In practice, and to ease de redaction of the ST, the choice of the SFRs is not open, but guided by the typology of the component. In particular, the CC propose a catalogue of \emph{Protection Profiles} (PP), associated with the required SFRs; for example \emph{smart card} or \emph{TEE} designate some precise PPs. 
 
 \subsubsection{Evaluation Assurance Level and Security Assurance Requirements}
 \begin{table}[]
@@ -173,7 +173,7 @@ EAL7 & Formally verified design and tested      \\
 
 In CC seven  \emph{Evaluation Assurance Level} (EAL) are defined, and determine the quantity and complexity of the tasks the evaluator has to effectuate, thus specifying the insurance strength. The EAL are defined in insurance increasing order, so that the EAL1 has the lowest verification exigences while EAL7 has the highest ones. In Table~\ref{tab:EAL} the objectives given by the CC for each EAL are resumed.\\
 
-During the process of evaluation, the SFRs of the ToE have to be verified according to the claimed EAL. To this end, the evaluation is  divided into six classes of \emph{Security Assurance Requirement} (SAR). Five of this classes are the so-called \emph{conformity} classes, and one in called the \emph{attack} class. Each class is sub-divided in several \emph{families} (excepted the attack class, which only contains one family), and the evaluators are charged to check each requirement corresponding to these families. The table~\ref{tab:SAR} resumes the SAR classes and their families. For each family a grade is assigned following precise specifications detailed in CC. Grades range in general from 1 to 6 and the obtention of a certain EAL depends on the grades obtained for each family, as reported in Table~\ref{tab:components}.
+During the process of evaluation, the SFRs of the TOE have to be verified according to the claimed EAL. To this end, the evaluation is  divided into six classes of \emph{Security Assurance Requirement} (SAR). Five of this classes are the so-called \emph{conformity} classes, and one in called the \emph{attack} class. Each class is sub-divided in several \emph{families} (excepted the attack class, which only contains one family), and the evaluators are charged to check each requirement corresponding to these families. The table~\ref{tab:SAR} resumes the SAR classes and their families. For each family a grade is assigned following precise specifications detailed in CC, and the obtention of a certain EAL depends on the grades obtained for each family, as reported in Table~\ref{tab:components}. An EAL can also be \emph{augmented}, meaning that the product achieves all the required SAR grades to obtain a certain EAL and some upper grades for certain families. For example, smart cards are usually protected at level EAL4$+$AVA\_VAN5$+$ALC\_DVS2, and chips for e-passport application are usually protected at level EAL5$+$AVA\_VAN5$+$ALC\_DVS2. In case of banking smart cards, the card also need to respect the EMVco norms, being EMVco a consortium of six companies (Visa, MasterCard, JCB, American Express, China UnionPay, and Discover) that manages private certification schemes for banking cards, payment terminal and automated teller machines. 
 
 
 \begin{table}[]
@@ -266,3 +266,70 @@ ATE\_IND                & 1     & 2     & 2    & 2    & 2    & 2    & 3    \\
 AVA\_VAN                & 1     & 2     & 2    & 3    & 4    & 5    & 5    \\ \hline
 \end{tabular}
 \end{table}
+
+\subsubsection{The AVA\_VAN family and the Attack Potential}
+The AVA\_VAN is the solely family of the vulnerability assessment SAR. The goal of such a SAR is to make the connection between the conformity of the TOE, verified via the analysis of its documentation, and the efficacy of its the protections and countermeasures. This is the step of the evaluation in which the actual resilience of the TOE against the \emph{penetration tests} is measured. In this phase the attacks outlined in Sec.~\ref{sec:vulnerabilities} are taken into account, and the so-called \emph{attack potential} of such attacks is stated. The attack potential is a notion appearing in CC whose aim is to reflect the realism of succeeding a certain attack, and thus its realistic dangerousness. Indeed in the context of physical attacks, many possible attack paths require unrealistic conditions, amounts of time and/or money to be actually performed and do not represent in reality a great risk. For example, invasive attacks such as probing attacks which appears in theory the most dangerous ones, ask in general for some very expensive instruments, a huge expertise, much time and many broken samples before succeeding. Their attack potential can thus result not so wondering. For this evaluation phase, the evaluator is in charge to prepare a testing plan, listing the possibly dangerous attack path, basing on a code analysis, and on the state-of-the-art attacks list in general provided by working groups dedicated to the secured component considered. Once the testing plan is ready he practically tests each attack. For each succeeded attack he fills a \emph{cotation table} in order to assign a score to the attack, on the base of several criteria. The goal of the cotation table is to provide a metric able to compare very different kind of attacks. The guidelines for the cotation table are given by the \emph{Common Methodology for Information Technology Security Evaluation} (CEM). \\
+
+In the case of smart cards the evaluation systematically includes the AVA\_VAN5 grade, thus the testing plan is asked to be as complete as possible. The state-of-the-art of the attacks is periodically upgrades by the \emph{JIL\footnote{Joint Interpretation Library} Hardware Attacks Subgroup}, a subgroup of the working committee \emph{Senior Officials Group Information Systems Security} (SOG-IS) which coordinate the standardization of CC. Moreover, the JHAS produces the \emph{Application of Attack Potential to Smartcards} \cite{JIL} of the JIL, which is an interpretation of the CEM in the special case of smart cards. The cotation table factors specified by the JHAS are detailed in Table~\ref{tab:cot_table}. The evaluation is divided in two parts, an \emph{identification} part, that reflects the difficulty in finding the attack path, and an \emph{exploitation} part, that reflects the difficulty in actually perform the attack. The total score of an attack is the sum of scores assigned to each factor. To obtain the AVA\_VAN5 grade every attack tested by the evaluators must have been rated at least 31.\\
+
+
+
+\begin{table}[]
+\centering
+\caption{Factors of the \emph{Attack Potentials for Smartcards}}
+\label{tab:cot_table}
+\begin{tabular}{ccc}
+\toprule
+Factors                       & Identification & Exploitation \\
+\midrule
+\textbf{Elapsed Time}         &                &              \\
+\textless one hour            & 0              & 0            \\
+\textless one day             & 1              & 3            \\
+\textless one week            & 2              & 4            \\
+\textless one month           & 3              & 6            \\
+\textgreater one month        & 5              & 8            \\
+\midrule
+\textbf{Expertise}            &                &              \\
+Layman                        & 0              & 0            \\
+Proficient                    & 2              & 2            \\
+Expert                        & 5              & 4            \\
+Multiple Expert               & 7              & 6            \\
+\midrule
+\textbf{Knowledge of the TOE} &                &              \\
+Public                        & 0              & 0            \\
+Restricted                    & 2              & 2            \\
+Sensitive                     & 4              & 3            \\
+Critical                      & 6              & 5            \\
+Very critical hardware design & 9              & NA           \\
+\midrule
+\textbf{Access to TOE}        &                &              \\
+\textless 10 samples          & 0              & 0            \\
+\textless 30 samples          & 1              & 2            \\
+\textless 100 samples         & 2              & 4            \\
+\textgreater 100 samples      & 3              & 6            \\
+\midrule
+\textbf{Equipement}           &                &              \\
+None                          & 0              & 0            \\
+Standard                      & 1              & 2            \\
+Specialized                   & 3              & 4            \\
+Bespoke                       & 5              & 6            \\
+Multiple Bespoke              & 7              & 8            \\
+\midrule
+\textbf{Open Samples}         &                &              \\
+Public                        & 0              & NA           \\
+Restricted                    & 2              & NA           \\
+Sensitive                     & 4              & NA           \\
+Critical                      & 6              & NA    \\	
+\bottomrule      
+\end{tabular}
+\end{table}
+
+
+\subsubsection{The Evaluation Technical Rapport}
+The evaluation ends with the redaction by the evaluators of an \emph{Evaluation Technical Rapport}, which is transmitted to the certification body. The last analyses the ETR and, in case the security claims of the TOE are verified, issues a \emph{certificate}. The ETR is kept confidential. Concerning the penetration testing of a certified smart card, the ETR contains all the cotation tables of the succeed attacks. If the component is certified it means that the score of such attacks was higher than 31, and such vulnerability are kept as \emph{residual vulnerabilities}. The ETR will probably be read annually by the evaluators in charge of the surveillance of the certificate. For the penetration testing, the evaluators are in particular asked each year to verify that the cotation of the attacks presented in the ETR did not drop.
+
+\subsection{This thesis objectives}
+Among the factors observable in the cotation table~\ref{tab:cot_table} we find \emph{open samples}, sometimes interpretable as \emph{samples with known secrets}. Indeed, for an evaluation scope it is sometimes possible for an ITSEF to have access to a device identical to the TOE but where the evaluator can fix certain variables, for example some random numbers used by cryptographic algorithm, of load specific software. The evaluator generally exploits this possibility to ease the task of characterization of the behaviour of the device.\\
+
+In the context of Side-Channel Attacks, when such an characterization phase is possible we talk about \emph{profiling attacks}. Due to the favourable condition of this attacks their are commonly considered the more dangerous, allowing a sort of worst-case security analysis. As we will see in next Chapters, this thesis is mainly focused over the profiling scenario. Indeed, we will address the problems an evaluator deals with when he is in such a favourable case and he wonders how to optimally exploit such a characterization phase in order to be able in the proper exploitation phase to extract as much information as possible from his signals. One of these issues is the selection of the so-called \emph{Points of Interest} (PoI), strictly link to the more general problem of dimensionality reduction. Indeed, 
+%FRASE dal primo paper sul rate dell'oscilloscopio etc...piu cosa faccio nei capitoli di contribuzione

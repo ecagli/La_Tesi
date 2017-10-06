@@ -43,7 +43,7 @@ headsepline, % Uncomment to get a line under the header
 
 \usepackage{palatino} % Use the Palatino font by default
 
-\usepackage[backend=bibtex,style=alphabetic,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+\usepackage[hyperref, backend=bibtex,style=alphabetic,natbib=true,backref,backrefstyle=none]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
 \addbibresource{all_my_bib.bib} % The filename of the bibliography
 
@@ -95,6 +95,9 @@ headsepline, % Uncomment to get a line under the header
 \newcommand*{\AAlpha}{\boldsymbol{\alpha}}
 \newcommand*{\covmat}{\textbf{S}}
 \newcommand*{\numPoI}{\sharp\mathrm{PoI}}
+
+\newcommand*{\HD}{\mathrm{HD}}
+\newcommand*{\HW}{\mathrm{HW}}
 
 \newcommand{\SW}{\textbf{S}_{\textbf{W}}}
 \newcommand{\SB}{\textbf{S}_{\textbf{B}}}
@@ -246,7 +249,8 @@ headsepline, % Uncomment to get a line under the header
 \begin{abbreviations}{ll} % Include a list of abbreviations (a table of two columns)
 
 \textbf{SCA} & \textbf{S}ide \textbf{C}hannel \textbf{A}ttack\\
-
+\textbf{AES} & \textbf{A}dvanced \textbf{E}ncryption \textbf{S}tandard\\
+\textbf{NIST} & \textbf{N}ational \textbf{I}nstitute of \textbf{S}tandards and \textbf{T}echnology \\
 \end{abbreviations}
 
 %----------------------------------------------------------------------------------------
