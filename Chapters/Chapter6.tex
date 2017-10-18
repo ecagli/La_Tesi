@@ -17,17 +17,88 @@
 %----------------------------------------------------------------------------------------
 
 \section{Principal Component Analysis}
-\subsection{Statistical Point of View}
-\subsection{Geometrical Point of View}
+\begin{figure}
+\includegraphics[width=.5\textwidth]{../Figures/PCA_LDA_geometric/PCA_unsupervised_mV2.pdf} 
+\includegraphics[width=.5\textwidth]{../Figures/PCA_LDA_geometric/PCAprojection_unsupervised_mV2.pdf} 
+\caption{PCA: some 2-dimensional data projected into their 1-dimensional principal subspace.}\label{fig:PCAunsupervised}
+\end{figure}
+The Principal Component Analysis (PCA) is a technique for data dimensionality reduction. The same PCA algorithm can be deduced from two different points of view, a statistical one and a geometrical one. In the former PCA aims to project orthogonally the data onto a lower-dimensional linear space, the so-called \emph{principal subspace}, such that the variance of the projected data is maximized. In the latter, PCA aims to project data onto a lower-dimensional linear space in such a way that the average projection cost, defined as the mean square distance between the data and their projections, is minimized. In the following it is shown how the PCA algorithm is deduced by the statistical definition. In Appendix~\ref{app:PCA_geometrical} the equivalence between the two approaches is depicted. An example of 2-dimensional data projected over their 1-dimensional principal subspace is depicted in Fig.~\ref{fig:PCAunsupervised}\\
+
+Let $(\vLeakVec)_{i=1..\nbTraces}$ be a set of $\traceLength$-dimensional measurements (or observations, or data), i.e. realizations of a $\traceLength$-dimensional zero-mean random vector $\vaLeakVec{}$, and collect them as columns of an $\traceLength \times \nbTraces$ matrix $\measuresMatrix$, so that the empirical covariance matrix of $\vaLeakVec{}$ can be computed as 
+\begin{equation}
+\covmat = \frac{1}{\nbTraces}\measuresMatrix\measuresMatrix^\intercal \mbox{ .}
+\end{equation}
+
+Let us assume for the moment that we have fixed the dimension $\newTraceLength<\traceLength$ of the principal subspace we are looking for. 
+
+\paragraph{Compute the First Principal Component}
+Suppose in a first time that $\newTraceLength = 1$, i.e. that we want to represent our data by a unique variable $Y_1 =  \AAlpha_1 \vaLeakVec{}$, i.e. projecting data over a single $ 1 \times\traceLength$ vector $\AAlpha_1$, in such a way the the variance of the obtained data is maximal. The vector $\AAlpha_1$ that provides such a linear combination is called {\em first principal component}. 
+To avoid misunderstanding we will call {\em $j$-th principal component} (PC) the projecting vector $\AAlpha_i$, while we will refer to the variable $Y_j = \AAlpha_j \vaLeakVec{}$ as {\em $i$-th Principal Variable (PV)}. 
+Realizations of the PVs are given by the measured data projected over the $j$-th PC, for example we have $\nbTraces $ realizations of $Y_1$:
+\begin{equation}
+y_1[i] = \AAlpha_1 \vLeakVec \mbox{ for } i=1,\dots , \nbTraces \mbox{ .}
+\end{equation}
+
+Let us collect these realizations in a vector $\yyy_1 = \AAlpha_1 \measuresMatrix $; the mean of these realizations will be zero as they are linear combinations of zero-mean variables, and the variance turns to be expressible as
+\begin{equation}
+\frac{1}{\nbTraces}\yyy_1\yyy_1^\intercal = \frac{1}{\nbTraces}\AAlpha_1\measuresMatrix\measuresMatrix^\intercal\AAlpha_1^\intercal = \AAlpha_1\covmat\AAlpha_1^\intercal \mbox{ .}
+\end{equation}
+To compute $\AAlpha_1$ we have to look for the vector that maximize such a variance.\\
+
+Obviously, we can attend a value for the variance as high as wished, raising the modulo $\|\AAlpha_1\| = \sqrt{\AAlpha_1^T\AAlpha_1}$. In order to let the maximization problem have a solution, we impose a restriction over it: $\AAlpha_1^T\AAlpha_1 = 1$.\\
+Let us handle this constrained optimization problem making use of Lagrange multipliers:
+\begin{equation}
+\Lambda(\AAlpha_1, \lambda) = \AAlpha_1\covmat\AAlpha_1^\intercal - \lambda(\AAlpha_1\AAlpha_1^\intercal-1)
+\end{equation}
+and let us compute de partial derivative of $\Lambda$ with respect to $\AAlpha_1$
+\begin{equation}
+\frac{\partial\Lambda}{\partial\AAlpha_1} = 2\covmat\AAlpha_1^\intercal-2\lambda\AAlpha_1^\intercal \mbox{ .}
+\end{equation}
+Thus, stationary points of $\Lambda$ verify
+\begin{equation}\label{eq:eigProblem}
+\covmat\AAlpha_1^\intercal = \lambda\AAlpha_1^\intercal \mbox{ ,}
+\end{equation}
+which implies that $\AAlpha_1^\intercal$ must be an eigenvector of $\covmat$, with $\lambda$ its correspondent eigenvalue. Multiplying both sides of Eq.~(\ref{eq:eigProblem}) by $\AAlpha_1$ on the left, we remark that
+\begin{equation}
+\AAlpha_1\covmat\AAlpha_1^\intercal = \lambda\AAlpha_1\AAlpha_1^\intercal = \lambda, 
+\end{equation}
+which means that the variance of the obtained variable $\yyy_1$ equals $\lambda$. For this reason $\AAlpha_1$ must be the leading eigenvector of $\covmat$.
+
+\paragraph{Compute the Second and following Principal Component}
+The PCs following the first one are defined in an incremental fashion by choosing new directions orthogonal to those already considered and such that the sum of the projected variances over each direction is maximal. Explicitly, if we look for two PCs, \ie $\newTraceLength = 2$,  we look for a $2$-dimensional variable $\YYY = \begin{psmallmatrix} \AAlpha_1 \\ \AAlpha_2 \end{psmallmatrix} \vaLeakVec$ such that the trace of its covariance matrix, \ie the sum of variances $\var(Y_1)+\var(Y_2)$, is maximal. It can be shown that the same result would be obtained maximizing the so-called \emph{generalized variance} of $\YYY$, which is defined as the determinant of its covariance matrix, instead of its trace. \\
+
+Let us write, as in previous case, the Lagrangian of the problem
+\begin{equation}
+\Lambda = \AAlpha_1 \covmat \AAlpha_1^\intercal + \AAlpha_2\covmat \AAlpha_2^\intercal - \lambda_1(\AAlpha_1\AAlpha_1^\intercal -1) - \lambda_2(\AAlpha_2\AAlpha_2^\intercal -1) \mbox{ .}
+\end{equation}
+
+Partial derivatives with respect to $\AAlpha_1$ and $\AAlpha_2$ attend zero under the following conditions:
+\begin{align}
+\covmat  \AAlpha_1^\intercal &= \lambda_1\AAlpha_1^\intercal\\
+\covmat  \AAlpha_2^\intercal &= \lambda_2\AAlpha_2^\intercal \mbox{ ,}
+\end{align}
+
+which means that $\AAlpha_1^\intercal$ and $\AAlpha_2^\intercal$ must be eigenvectors of $\covmat$ with correspondent eigenvalues given by $\lambda_1$ and $\lambda_2$. Moreover, as before, $\lambda_1$ and $\lambda_2$ equal the variances of variable components $Y_1$ and $Y_2$, and since we want to maximize the sum of such variables we have to choose $\AAlpha_1$ and $\AAlpha_2$ as the two leading vectors of $\covmat$.\\
+Let us remark that the covariance between $Y_1$ and $Y_2$ is given by $\AAlpha_1^T\covmat \AAlpha_2$ which equals zero, since $\AAlpha_1^T\AAlpha_2 = 0$, by orthogonality. In particular the principal variables are uncorrelated, which is a remarkable property of the PCA. \\
+
+In the general case of a $\newTraceLength$-dimensional projection space, it can be shown by induction that the PCs would corresponds to the $\newTraceLength$ leading eigenvectors of the covariance matrix $\covmat$.
+
+
 
 %----------------------------------------------------------------------------------------
 %	SECTION 3
 %----------------------------------------------------------------------------------------
 \section{Application of PCA in SCAs}
 \subsection{Original vs Class-Oriented PCA}
-\begin{remark}
-Stacked Auto-Encoders...
-\end{remark}
+\begin{figure}
+\includegraphics[width=.5\textwidth]{../Figures/PCA_LDA_geometric/dataNoProjection_mV2.pdf} 
+\includegraphics[width=.5\textwidth]{../Figures/PCA_LDA_geometric/PCAprojection_mV2.pdf} 
+\caption{PCA: some 2-dimensional data projected into their 1-dimensional principal subspace.}\label{fig:PCAunsupervised}
+\end{figure}
+We remark that the classical version of PCA method does not take into account the information about the value assumed by the target variable during the acquisition of data: actually our attacker is provided not only with a set of data $(\vLeakVec)_{i=1..\nbTraces}$, but she can group such traces depending on the target value: this let her obtain a set of traces $(\vLeakVec)_{i=1..\nbTraces}$ for each value of the target variable $\sensRandVar$. \\
+In this context, and for the sake of distinguish the target value assumed by the variable $\sensRandVar$ in new executions, we want to consider {\em equivalent} all traces coming from each group, i.e. obtained by a same characteristic form plus a random noise. To estimate the characteristic form we compute the sample means of the traces of each group obtaining $\mmmX = \frac{1}{\nbTraces}\sum_{i=1..\nbTraces} \vLeakVec$. These sample means will take the place of data in PCA: we collect them as rows in the data matrix $\measuresMatrix$, shift the empirical mean of each component to zero, compute the covariance matrix $\covmat$ et select the leading $\newTraceLength$ eigenvectors of $\covmat$ as optimal projecting directions.\\
+In this way we focus the attention on information that discriminate classes, i.e. target values; this is why we will refer to this version of PCA as {\em class-oriented version}. 
+
 \subsection{The Choice of the Principal Components}\label{sec:ELV}
 The introduction of the PCA method in SCA context (either in its classical or class-oriented version)  has raised some important questions: \textit{how many} principal components and \textit{which ones} are sufficient/necessary to reduce the trace size (and thus the attack processing complexity) without losing important discriminative information?\\
 
@@ -69,7 +140,7 @@ The selection methods provided by the evaluation of the EGV and of the IPR are s
 %\caption{Cumulative ELV trend of principal components. On the right a zoom of the plot on the left. Data acquisition described in Sec.~\ref{sec:experiments}.}\label{fig:ELVcumulative}
 %\end{figure}
 %
-%Let us start by giving some intuition behind our new concept. Thinking to the observations ${\sss[]{}}^\intercal$, or to the class-averages ${\mmmX}^\intercal$ in class-oriented PCA case, as realizations of a random variable $\XXX^\intercal$, we have that $\lambda_i$ is an estimator for the variance of the random variable $\XXX^\intercal\cdot\AAlpha_i$. Developing, we obtain
+%Let us start by giving some intuition behind our new concept. Thinking to the observations ${\vLeakVec{}}^\intercal$, or to the class-averages ${\mmmX}^\intercal$ in class-oriented PCA case, as realizations of a random variable $\XXX^\intercal$, we have that $\lambda_i$ is an estimator for the variance of the random variable $\XXX^\intercal\cdot\AAlpha_i$. Developing, we obtain
 %\begin{align}\label{eq:ELV}
 %\lambda_i =& \hat{\mathrm{var}}(\sum_{j=1}^D \XXX^\intercal[j]\AAlpha_i[j]) = \sum_{j=1}^D\sum_{k=1}^D \hat{\mathrm{cov}}(\XXX^\intercal[j]\AAlpha_i[j], \XXX^\intercal[k]\AAlpha_i[k])=\\
 %=& \sum_{j=1}^D \AAlpha_i[j]\sum_{k=1}^D\AAlpha_i[k]\hat{\mathrm{cov}}(\XXX^\intercal[j], \XXX^\intercal[k])= \sum_{j=1}^D \AAlpha_i[j] (\covmat_{j}^\intercal \cdot \AAlpha_i)=  \\
@@ -134,7 +205,7 @@ In this section we compare the different extractors provided by the PCA and the 
 \item[Scenario 4] varying parameter: number of original time samples implied into the trace preprocessing computation $\numPoI$ .
 \end{itemize}
  
-For scenarios in which $\\nbProfilingTraces$ is fixed, the value of $\nbProfilingTraces$ is chosen high enough to avoid the SSS problem, and the extensions of LDA presented in Sec.~\ref{sec:SSS} are not evaluated.
+For scenarios in which $\nbProfilingTraces$ is fixed, the value of $\nbProfilingTraces$ is chosen high enough to avoid the SSS problem, and the extensions of LDA presented in Sec.~\ref{sec:SSS} are not evaluated.
  This choice of $\nbProfilingTraces$ will imply that the LDA is always performed in a favourable situation, which makes expect the LDA to be particularly efficient for these experiments. Consequentely, for the scenarios in which $\nbProfilingTraces$ is high, our goal is to study whether the PCA can be made almost as efficient as the LDA thanks to the component selection methods discussed in Sec.~\ref{sec:ELV}. 
 
 

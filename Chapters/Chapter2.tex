@@ -42,9 +42,11 @@
 \item The most common passive leaking channel considered in literature being the power consumption, for such a physical quantity many efforts have been done to propose adherent leakage models. A detailed modelling for power consumption of CMOS circuits is proposed in the \emph{DPA book} \cite{mangard2008power}. After a description of the physical factors influencing the power consumption (divided into static and dynamic) of single logic cells, the authors propose to assume two different points of view to model and develop simulations of the power consumption: the designer point of view can bring to a quite accurate and detailed model, essentially based over his circuit transistor netlists. On the contrary an attacker would be satisfied by considering some easier modelisation, often based over the \emph{Hamming-Distance} ($\HD$) or the \emph{Hamming-Weight} ($\HW$) of internal variables. Indeed these two functions well-fit the consumption behaviour of circuits registers and buses. 
 \item When an attacker has chosen its sensitive target $Z$ and deals with concrete acquisitions, he does not need a complete power model, but only  a way to modelise the relative differences between leakages for different values of $Z$. A statistical model is then sufficient to him. Thus for an attacker, the wider considered model in Side-Channel community is the one sometimes called \emph{noisy leakage model}. In this model the leakage is a random variable obtained by the sum of a deterministic function of the sensitive variable $Z$ and a random noise. In general the noise has a Gaussian distribution of null mean and variance $\sigma^2$:
 \begin{equation}
-X = \leak_function(Z) + \noise \mbox{ ,}
+X = \leakFunction(Z) + \noise \mbox{ ,}
 \end{equation}
 with $\noise \approx \mathcal{N}(0,\sigma^2)$.
+
+\item description of the Template Attack
 \end{itemize}
 
 
@@ -52,12 +54,14 @@ with $\noise \approx \mathcal{N}(0,\sigma^2)$.
 
 
 \subsubsection{Simple vs Advanced SCAs}
+
 \subsubsection{Points of Interest}
 
 \subsubsection{Vertical vs Horizontal SCAs}
 \subsubsection{Profiled vs Non-Profiled SCAs}
+with introduction of \emph{synonims} as supervised/unsupervised
 \subsubsection{Side-Channel Algebraic Attacks}
-\subsubsection{Distinguishers}
+
 \subsubsection{SCA Metrics}
 
 

@@ -68,7 +68,7 @@ headsepline, % Uncomment to get a line under the header
 %	MY NEW ENVIRONMENTS AND PACKAGES
 %----------------------------------------------------------------------------------------
 
-\usepackage{amsmath,amsfonts,amsthm}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
 \usepackage{xcolor,colortbl}
 \usepackage{subfigure}
 \usepackage{multirow}
@@ -83,9 +83,26 @@ headsepline, % Uncomment to get a line under the header
 \newtheorem{procedure}{Procedure}{\bfseries}{}
 
 \newcommand*{\todo}[1]{\textbf{\textcolor{red}{#1}}}
+
+\newenvironment{psmallmatrix}
+  {\left[\begin{smallmatrix}}
+  {\end{smallmatrix}\right]}
 %----------------------------------------------------------------------------------------
 %	MY NOTATIONS
 %----------------------------------------------------------------------------------------
+\newcommand{\vLeak}[1][i]{x_{#1}}
+\newcommand{\vLeakVec}[1][i]{\textbf{x}_{#1}}
+\newcommand{\vaLeak}[1][i]{X_{#1}}
+\newcommand{\setLeak}{\vec{\mathcal{X}}}
+\newcommand{\vaLeakVec}[1][i]{\vec{X}}
+
+\newcommand{\sensVar}{z}
+\newcommand{\sensRandVar}{Z}
+\newcommand{\sensVarSet}{\mathcal{Z}}
+
+\newcommand{\yyy}{\textbf{y}}
+\newcommand{\YYY}{\textbf{Y}}
+
 \newcommand*{\nbTraces}{N}
 \newcommand*{\nbProfilingTraces}{N_p}
 \newcommand*{\nbAttackTraces}{N_a}
@@ -95,19 +112,38 @@ headsepline, % Uncomment to get a line under the header
 \newcommand*{\AAlpha}{\boldsymbol{\alpha}}
 \newcommand*{\covmat}{\textbf{S}}
 \newcommand*{\numPoI}{\sharp\mathrm{PoI}}
-\newcommand*{\leak_function}{\phi}
-\newcommand*{\leak_function}{\boldsymbol{\phi}}
+\newcommand*{\leakFunction}{\phi}
+\newcommand*{\LeakFunction}{\boldsymbol{\phi}}
 \newcommand*{\noise}{B}
 \newcommand*{\Noise}{\textbf{B}}
 
 \newcommand*{\HD}{\mathrm{HD}}
 \newcommand*{\HW}{\mathrm{HW}}
 
+
+
+
+\newcommand{\measuresMatrix}{\textbf{M}}
+\newcommand{\projectingMatrix}{\textbf{A}}
 \newcommand{\SW}{\textbf{S}_{\textbf{W}}}
 \newcommand{\SB}{\textbf{S}_{\textbf{B}}}
 \newcommand{\ST}{\textbf{S}_{\textbf{T}}}
+\newcommand{\var}{\mathrm{Var}}
+\newcommand{\mmm}{\textbf{m}}
+\newcommand{\mmmX}{\overline{\textbf{x}}}
+\newcommand{\mmmXclass}[1][z]{\overline{\textbf{x}}^{#1}}
+\newcommand{\mmmY}{\overline{\textbf{y}}}
 
 \newcommand{\Sbox}{\mathrm{Sbox}}
+
+%----------------------------------------------------------------------------------------
+% EDITORIAL DEFINITIONS
+%----------------------------------------------------------------------------------------
+\def\etal{\textit{et al.} }
+\newcommand {\ie}{{\em i.e.} }
+\def\eg{\textit{e.g.} }
+\def\resp{{\em resp.} }
+\def\th{$^\text{th}$}
 
 %----------------------------------------------------------------------------------------
 %	THESIS INFORMATION
@@ -328,6 +364,7 @@ $GF(2^b)$ & Galois Field of order $2^b$\\
 
 \include{Appendices/scenario3_4_cardis15}
 \include{Appendices/artificial_jitter}
+\include{Appendices/PCA_geometrical}
 %\include{Appendices/AppendixC}
 
 %----------------------------------------------------------------------------------------
