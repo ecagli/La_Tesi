@@ -73,7 +73,7 @@ headsepline, % Uncomment to get a line under the header
 \usepackage{subfigure}
 \usepackage{multirow}
 \usepackage{booktabs}
-
+\usepackage{csquotes}
 
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
@@ -90,18 +90,19 @@ headsepline, % Uncomment to get a line under the header
 %----------------------------------------------------------------------------------------
 %	MY NOTATIONS
 %----------------------------------------------------------------------------------------
-\newcommand{\vLeak}[1][i]{x_{#1}}
-\newcommand{\vLeakVec}[1][i]{\textbf{x}_{#1}}
-\newcommand{\vaLeak}[1][i]{X_{#1}}
-\newcommand{\setLeak}{\vec{\mathcal{X}}}
-\newcommand{\vaLeakVec}[1][i]{\vec{X}}
+\newcommand*{\vLeak}[1][i]{x_{#1}}
+\newcommand*{\vLeakVec}[1][i]{\textbf{x}_{#1}}
+\newcommand*{\vaLeak}[1][i]{X_{#1}}
+\newcommand*{\setLeak}{\vec{\mathcal{X}}}
+\newcommand*{\vaLeakVec}[1][i]{\vec{X}}
 
-\newcommand{\sensVar}{z}
-\newcommand{\sensRandVar}{Z}
-\newcommand{\sensVarSet}{\mathcal{Z}}
+\newcommand*{\sensVar}{z}
+\newcommand*{\sensRandVar}{Z}
+\newcommand*{\sensVarSet}{\mathcal{Z}}
+\newcommand*{\sensFunction}{f}
 
-\newcommand{\yyy}{\textbf{y}}
-\newcommand{\YYY}{\textbf{Y}}
+\newcommand*{\yyy}{\textbf{y}}
+\newcommand*{\YYY}{\textbf{Y}}
 
 \newcommand*{\nbTraces}{N}
 \newcommand*{\nbProfilingTraces}{N_p}
@@ -120,7 +121,7 @@ headsepline, % Uncomment to get a line under the header
 \newcommand*{\HD}{\mathrm{HD}}
 \newcommand*{\HW}{\mathrm{HW}}
 
-
+\newcommand*{\prob}{\mathrm{Prob}}
 
 
 \newcommand{\measuresMatrix}{\textbf{M}}

@@ -16,7 +16,7 @@
 \item The goal of an SCA is to retrieve a secret part of a cryptographic algorithm, typically the secret key.
 \item No matter the size of an algorithm inputs, outputs and internal variables, an hardware implementation  always operates over variables of a bounded size. Such a bound size depends on the hardware architecture. For example, in an 8-bit architecture an RSA with 1024-bit-sized key, modulo and plaintext will be somehow implemented as multiple operations over 8-bit blocks of observable data. 
 \item This fact allows an attacker to apply the \emph{divide-and-conquer} strategy: if his goal is retrieving the full 128-bit AES key or 1024-bit RSA key, he will smartly divide his problem in retrieving small parts of such keys at time, namely some \emph{subkeys}.  
-\item An attack consists in finding the right association between a trace (or a set of traces) and the value assumed by a target \emph{sensitive variable} $Z$ during the acquisition of such trace/traces. 
+\item An attack consists in finding the right association between a trace (or a set of traces) and the value assumed by a target \emph{sensitive variable} $Z$ during the acquisition of such trace/traces. The side-channel traces will be denoted as observations $\vLeakVec{}$ of a random real vector $\vaLeakVec$, where each coordinate corresponds to a time sample of the acquired signal. 
 \end{itemize}
 \subsubsection{Sensitive Variable}
 \begin{itemize}
@@ -24,10 +24,10 @@
 \item example: $Z = K$ with $K$ a secret subkey. This is the most direct sensitive target one can imagine, nevertheless it is often not variable, since in some cases a device exploits always the same key for a given embedded primitive. When the target is not variable we are performing a \emph{simple attack} (see later)
 \item other examples of sensitive variables: 
 \begin{itemize}
-\item the most classical: a cryptographic variable that depends over a sufficiently small subkey
-\item any function of of a cryptographic variable (ex: $HW(Z)$), we will see in the discussion about the leakage model in which sense it can be interesting to not target a variable but a non-injective function of a variable
-\item an operation (ex:square, multiply)
-\item a register (ex: the register used to store results of operations in a montgomery ladder implem of rsa)
+\item the most classical: a cryptographic variable that depends over a sufficiently small subkey and a part of the input  variable $P$: $\sensRandVar = \sensFunction(K,P)$
+\item any function of of a cryptographic variable (ex: $HW(\sensFunction(K,P))$), we will see in the discussion about the leakage model in which sense it can be interesting to not target a variable but a non-injective function of a variable
+\item an operation (ex:$\sensRandVar \in \{\mathrm{square}, \mathrm{multiply}\}$)
+\item a register (ex: $\sensRandVar$ is the register used to store results of operations in a montgomery ladder implem of rsa)
 \end{itemize}
 \item actually, in this thesis we will try as much as possible to abstract from the form of the sensitive variable, thinking of any entity $Z$ that can assume values in a finite set $\mathcal{Z}$ and whose value permit an attacker to make inference about a secret of the implemented algorithm
 \end{itemize}
@@ -46,7 +46,6 @@ X = \leakFunction(Z) + \noise \mbox{ ,}
 \end{equation}
 with $\noise \approx \mathcal{N}(0,\sigma^2)$.
 
-\item description of the Template Attack
 \end{itemize}
 
 
@@ -54,13 +53,27 @@ with $\noise \approx \mathcal{N}(0,\sigma^2)$.
 
 
 \subsubsection{Simple vs Advanced SCAs}
+A simple attack corresponds exactly to a classification problem in machine learning language. An advanced attack is more powerful because exploits synergistically the inferences an attacker can make over many data: observing many different outcomes of the sensitive variable, under known plaintexts, the attacker discard impossible classifications and highlight the correct ones taking advantages of the key hypotheses and the algebraic relation between distinct data. 
 
-\subsubsection{Points of Interest}
+\subsubsection{Side-Channel Algebraic Attacks}
+Side-Channel Algebraic Attacks are advanced attacks that not only exploit algebraic relations between distinct acquisitions, but also algebraic relations between many sensitive variables within the same acquisition...SASCA ...
+
 
 \subsubsection{Vertical vs Horizontal SCAs}
-\subsubsection{Profiled vs Non-Profiled SCAs}
-with introduction of \emph{synonims} as supervised/unsupervised
-\subsubsection{Side-Channel Algebraic Attacks}
+Attacks in which sensitive information
+is extracted from a single acquisition split into several parts are called \emph{horizontal}. Horizontal attacks may apply when the same sensitive variable is involved in many internal operation during the overall algorithm, or may be the extreme case of  SC Algebraic Attacks in which inferences over many different sensitive variables are done exploiting only one acquisition, than analysing algebraic relations between such sensitive variables. Horizontal attacks differ from the so-called \emph{vertical} attacks where information is obtained from different algorithm
+executions. The nice notion of \emph{Rectangle} attack has been introduced in \cite{bauer2013horizontal} to refer to attacks that both exploit vertical and horizontal leakages.
+
+\subsubsection{Profiling vs Non-Profiling SCAs}
+As anticipated in Sec.~\ref{sec:this_thesis_objectives}, when an open sample of the attacked device is available to make a prior characterization of the leaking signals of a device, we talk about \emph{profiling} attacks. When this is not the case, we talk about \emph{non-profiling} attacks. \\
+A profiling attack is thus divided into two distinct phases: a first one, call \emph{profiling phase} of \emph{characterization} phase exploits some so-called \emph{profiling traces} to build a model of the leakages. Profiling traces are acquisitions taken under known values for the sensitive variable $\sensRandVar$, so are couples $(\vLeakVec{i}, \sensVar_i)_{i=1, \dots , \nbProfilingTraces}$ for which the association trace/sensitive variable is correct. \\
+As we will see in Chapter~\ref{ChapterML}, in machine learning domain the analogous of profiling attacks context is known under the name of \emph{supervised machine learning}. In supervised machine learning couples $(\vLeakVec{i}, \sensVar_i)_{i=1, \dots , \nbProfilingTraces}$ are available and are called \emph{training examples} (or simply \emph{examples}). If no example is available we talk about \emph{unsupervised machine learning}, which corresponds to the non-profiling SCAs branch. 
+
+\subsubsection{Template Attack}
+Introduced in 2004 by Chari \cite{Chari2003}, the so-called \emph{Template Attack} (TA) is the most well-established strategy to run a profiling SCA. The idea of the TA is based over the construction of a so-called \emph{generative model}: in probability, statistic and machine learning \enquote{ ...approaches that explicitly or implicitly model the distribution of inputs as well as outputs are known as generative models, because by sampling from them it is possible to generate synthetic data points in the input space.} \cite{christopher2006pattern}.
+In TA the attacker observes couples $(\vLeakVec{i}, \sensVar_i)_{i=1, \dots , \nbProfilingTraces}$  and exploit them to estimate both the a-priori conditional probability  
+
+\subsubsection{Points of Interest}
 
 \subsubsection{SCA Metrics}
 
