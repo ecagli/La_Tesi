@@ -29,7 +29,7 @@
 \item an operation (ex:$\sensRandVar \in \{\mathrm{square}, \mathrm{multiply}\}$)
 \item a register (ex: $\sensRandVar$ is the register used to store results of operations in a montgomery ladder implem of rsa)
 \end{itemize}
-\item actually, in this thesis we will try as much as possible to abstract from the form of the sensitive variable, thinking of any entity $Z$ that can assume values in a finite set $\mathcal{Z}$ and whose value permit an attacker to make inference about a secret of the implemented algorithm
+\item actually, in this thesis we will try as much as possible to abstract from the form of the sensitive variable, thinking of any entity $Z$ that can assume values in a finite set $\sensVarSet$ and whose value permit an attacker to make inference about a secret of the implemented algorithm
 \end{itemize}
 \subsubsection{Leakage Models}
 \begin{itemize}
@@ -66,14 +66,62 @@ executions. The nice notion of \emph{Rectangle} attack has been introduced in \c
 
 \subsubsection{Profiling vs Non-Profiling SCAs}
 As anticipated in Sec.~\ref{sec:this_thesis_objectives}, when an open sample of the attacked device is available to make a prior characterization of the leaking signals of a device, we talk about \emph{profiling} attacks. When this is not the case, we talk about \emph{non-profiling} attacks. \\
-A profiling attack is thus divided into two distinct phases: a first one, call \emph{profiling phase} of \emph{characterization} phase exploits some so-called \emph{profiling traces} to build a model of the leakages. Profiling traces are acquisitions taken under known values for the sensitive variable $\sensRandVar$, so are couples $(\vLeakVec{i}, \sensVar_i)_{i=1, \dots , \nbProfilingTraces}$ for which the association trace/sensitive variable is correct. \\
-As we will see in Chapter~\ref{ChapterML}, in machine learning domain the analogous of profiling attacks context is known under the name of \emph{supervised machine learning}. In supervised machine learning couples $(\vLeakVec{i}, \sensVar_i)_{i=1, \dots , \nbProfilingTraces}$ are available and are called \emph{training examples} (or simply \emph{examples}). If no example is available we talk about \emph{unsupervised machine learning}, which corresponds to the non-profiling SCAs branch. 
+A profiling attack is thus divided into two distinct phases. The first one, called \emph{profiling phase} of \emph{characterization} phase exploits some so-called \emph{profiling traces} to build a model of the leakages. Profiling traces are acquisitions taken under known values for the sensitive variable $\sensRandVar$, so are couples $(\vLeakVec{i}, \sensVar_i)_{i=1, \dots , \nbProfilingTraces}$ for which the association trace/sensitive variable is correct. The second phase of a profiling attack is the proper \emph{attack phase}, during which the attacker observes a new set of acquisitions, unknown secret key, and take advantage of the previous characterization to infer over it. \\
+As we will see in Chapter~\ref{ChapterIntroML}, in machine learning domain the analogous of profiling attacks context is known under the name of \emph{supervised machine learning}. In supervised machine learning couples $(\vLeakVec{i}, \sensVar_i)_{i=1, \dots , \nbProfilingTraces}$ are available and are called \emph{training examples} (or simply \emph{examples}). The profiling phase is referred to as \emph{training} of \emph{learning} and the attack phase is assimilable to the so-called \emph{test phase}. If no example is available we talk about \emph{unsupervised machine learning}, which corresponds to the non-profiling SCAs branch. 
+
+\subsubsection{Classes}
+Throughout this thesis, and each time a profiling attack scenario is supposed,  we will refer to elements of $\sensVarSet$ as \emph{classes}. We will say that acquired traces associated to a same value $\sensVar\in\sensVarSet$ \emph{belong} to the same class $\sensVar$.
+
 
 \subsubsection{Template Attack}
 Introduced in 2004 by Chari \cite{Chari2003}, the so-called \emph{Template Attack} (TA) is the most well-established strategy to run a profiling SCA. The idea of the TA is based over the construction of a so-called \emph{generative model}: in probability, statistic and machine learning \enquote{ ...approaches that explicitly or implicitly model the distribution of inputs as well as outputs are known as generative models, because by sampling from them it is possible to generate synthetic data points in the input space.} \cite{christopher2006pattern}.
-In TA the attacker observes couples $(\vLeakVec{i}, \sensVar_i)_{i=1, \dots , \nbProfilingTraces}$  and exploit them to estimate both the a-priori conditional probability  
+In TA the attacker observes the couples $(\vLeakVec{i}, \sensVar_i)_{i=1, \dots , \nbProfilingTraces}$  and exploit them to estimate the class-conditional densities  
+\begin{equation}\label{eq:class-conditional}
+p_{\vaLeakVec}(\vLeakVec \given \sensRandVar = \sensVar)\mbox{ ,}
+\end{equation}
+eventually the prior densities $p_{\vaLeakVec}(\vLeakVec)$, $p_{\sensRandVar}(\sensVar)$, and finally the a-posteriori density, by means of the Bayes' theorem:
+\begin{equation}\label{eq:a-posteriori}
+p_{\sensRandVar}(\sensVar \given \vaLeakVec) = \frac{p_{\vaLeakVec}(\vLeakVec \given \sensRandVar = \sensVar)p_{\sensRandVar}}(\sensVar) {p_{\vaLeakVec}(\vLeakVec)}\mbox{ .}
+\end{equation}
+In the attack phase the attacker acquires new traces that he only can associate to the public parameter $\publicParRandVar$, obtaining couples  $(\vLeakVec{i}, \publicParVar_i)_{i=1, \dots , \nbAttackTraces}$. Then he makes key hypothesis $\keyVar \in \keyVarSet$ and, making the assumption that each acquisition is an independent observation of $\vaLeakVec$, he associates to each hypothesis a score given by the joint a-posteriori probability that follows, exploiting distributions \eqref{eq:class-conditional}, \eqref{eq:a-posteriori}:
 
-\subsubsection{Points of Interest}
+\begin{equation}
+d_{\keyVar} = \prod_{i=1}^{\nbAttackTraces}\prob[\sensRandVar = \sensFunction(\publicParVar_i,\keyVar) \given \vaLeakVec = \vLeakVec[i]] \mbox{ .}
+\end{equation}
+
+Finally, his best key candidate $\hat{\keyVar}$ is the one maximizing such a joint probability
+\begin{equation}\label{eq:max_classifier}
+\hat{\keyVar} = \argmax_{\keyVar} d_{\keyVar} \mbox{ .}
+\end{equation}
+
+\begin{remark}Since the marginal probability density $p_{\vaLeakVec}(\vLeakVec)$ of \eqref{eq:a-posteriori} does not depend on key hypothesis, it is usually neglected. Moreover, in many cases the $\sensRandVar$ follows a uniform distribution, so its probability mass function $p_{\sensRandVar}(\sensVar)$ appearing in \eqref{eq:a-posteriori}  does not influence the ranking of key hypothesis, then it is often neglected as well. 
+\end{remark}
+
+\begin{remark}
+In the special case of a simple attack, \ie $\nbAttackTraces = 1$, in which $\sensRandVar = \keyRandVar$, the problem becomes a classical machine learning classification problem (as we will discuss over in Chapter~\ref{ChapterIntroML}: the attacker wants to classify the unique attack trace, \ie assign to it a class label (the key). In such a case, the choice proposed by \eqref{eq:max_classifier} is known as \emph{Bayes (optimal) classifier}.\footnote{The term \emph{optimal} distinguishes it from the so-called \emph{Bayes naive classifier}, which introduces an independence assumption between data vector coordinates. The efficiency of a Bayes naive classifier has been analysed in SCA context in 2017 \cite{picek2017template}.} It is proven to be the optimal choice to reduce de misclassification error.
+\end{remark}
+
+In general this approach theoretically exploits all available information and is optimal under an information-theoretical point of view. The crucial point is the estimation of the class-conditional densities \eqref{eq:class-conditional}: the efficiency of the attack strongly depends on the quality of such estimates. 
+
+\paragraph{The Gaussian Hypothesis} A well-established choice to construct class-conditional densities estimations \ref{eq:class-conditional} is the one applied in TA \cite{Chari2003} it consists in making a class-conditional multivariate Gaussian distribution assumption
+\begin{equation}\label{eq:gaussian_assumption}
+\vaLeakVec\given \sensRandVar =\sensVar \approx \mathcal{N}(\mumumu_\sensVar, \Sigma_\sensVar)\mbox{ ,}
+\end{equation} 
+and exploits the profiling traces to estimate the  parameters $\mumumu_\sensVar$, \ie the mean vector of the Gaussian distributions, and $ \Sigma_\sensVar$, \ie the covariance matrices. \\
+
+\begin{remark}This assumption is the same that is done for classification problems, bringing to the \emph{Quadratic Discriminant Analysis} technique, which we will describe in Chapter~\ref{ChapterIntroML}. 
+\end{remark}
+
+Many options and choices influence the implementation of a TA: the suppression or not of the marginal densities in \eqref{eq:a-posteriori}, the use of the unbiased estimator or the maximum likelihood estimator for the covariance matrices, the addition of an \emph{homoscedasticity} assumption (assume that all class-covariance matrices are equal): This assumption, proposed in 2014 in SCA literature \cite{choudary2014efficient},  allows exploiting all profiling traces to estimate the so-called \emph{pooled} covariance matrix, instead of using traces belonging to each class to estimate each covariance matrix. The pooled estimation gains in accuracy. 
+
+\begin{remark}
+This assumption is the same that is done for classification problems, bringing to the \emph{Linear Discriminant Analysis} technique, which we will introduce in Chapter~\ref{ChapterIntroML} and more deeply analyse in Chapter~\ref{ChapterLinear}.  
+\end{remark}
+
+Other choices that mainly influences the TA efficiency are those related to the PoI selection, or more generically to the dimensionality reduction issue.
+
+\subsubsection{Points of Interest and Dimensionality Reduction}
+
 
 \subsubsection{SCA Metrics}
 
