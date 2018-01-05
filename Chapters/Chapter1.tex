@@ -70,13 +70,36 @@ k_{a,b} = k_{a-4,b}\oplus \Sbox(k_{a-1,(b+1) \mbox{mod } 4}) \oplus \mathrm{Rcon
 \end{cases}
 \end{equation*}
 
-where $Rcon(a) = 2^{a-1}$ in the Rjindael finite field.\footnote{where $2=(00000010)_2$ is represented by the polynomial $x$}
+where $Rcon(a) = \{02\}^{a-1}$ in the Rjindael finite field.\footnote{where $\{02\}=(00000010)_2$ is represented by the polynomial $x$}
 
-\subsubsection*{AddRoundKey}
+\subsubsection*{AddRoundKey} Each byte of the State is combined with the corresponding byte of the round key via an addition over the Rjindael field $GF(2^8)$, \ie a bitwise exclusive OR (\emph{XOR}) operation $\oplus$.
 \subsubsection*{SubBytes}
+\begin{figure}
+\centering
+\includegraphics[width = .60\textwidth]{../Figures/FISP_AES/add_round_key.pdf} 
+\includegraphics[width = .45\textwidth]{../Figures/FISP_AES/sbox.pdf} 
+\caption[AddRoundKey and SubBytes.]{AddRoundKey (top) and SubBytes (bottom) operate over the State byte by byte, independently. Source: \cite{nist197}.}\label{fig:AES_sbox}
+\end{figure}
+The SubBytes transformation is a non-linear byte invertible substitution that operates independently on each byte of the State using a substitution table (called \emph{S-Box}). The SubBytes is composed of the following two functions:
+\begin{itemize}
+\item the inversion in $GF(2^8)$ where the element $\{00\}$ is mapped to itself
+\item the affine transformation which maps each byte $b_i$ to:
+\begin{equation}
+b_i \oplus b_{(i+4)\mbox{mod }8} \oplus b_{(i+5)\mbox{mod }8} \oplus b_{(i+6)\mbox{mod }8} \oplus b_{(i+7)\mbox{mod }8} \oplus c_i \mbox{ ,}
+\end{equation}
+ where $c_i$ is the i\th bit of $\{63\}  = (01100011)_2$.
+\end{itemize}  
 \subsubsection*{ShiftRows}
+The bytes in the last second, third and fourth rows of the State are cyclically shifted over 1, 2, and 3 bytes respectively.
 \subsubsection*{MixColumns}
+Each column of the State is treated as a four-term polynomial. They are considered as polynomials over the Rjindael field $GF(2^8)$ and multiplied modulo $X^4 +1$ with a fixed polynomial $a(X) = \{03\}X^3 +\{01\}X^2 + \{01\}X + \{02\}$.
 
+\begin{figure}
+\centering
+\includegraphics[width = .45\textwidth]{../Figures/FISP_AES/shift_rows.pdf} 
+\includegraphics[width = .45\textwidth]{../Figures/FISP_AES/mix_columns.pdf} 
+\caption[ShiftRows and MixColumns.]{ShiftRows operates over the State rows. MixColumns operates over the State columns. Source: \cite{nist197}.}\label{fig:AES_sbox}
+\end{figure}
 
 \subsection{Description of RSA}
 
