@@ -6,12 +6,47 @@
 
 
 \section{Basic Concepts of Machine Learning}
-\subsection{The Task, the Experience and the Performance}
+Machine Learning (ML) is a field of computer science that groups a variety of  methods whose aim is giving computers the ability of \emph{learning} without being explicitly programmed. The more cited definition of \emph{learning} has been provided by Mitchell in 1997 \cite{Mitchell1997}: \enquote{ A computer program is said to learn from experience E with respect to some task T and performance measure P, if its performance on T, as measured by P, improves with experience E.} \\
+Machine Learning groups a variety of methods essentially coming from applied statistics, and characterized by an increased emphasis on the use of computers to statistically estimate complicated functions. This allows Machine Learning to tackle tasks that would be too difficult to solve with fixed programs written and designed by human being. A Machine Learning algorithm is an algorithm that learns from data, in the sense that is an algorithm able to improve a computer program's performance at some task via an experience.
+
+\subsection{The Task, the Performance and the Experience}
+\paragraph*{The task T} is usually described in terms of how the machine learning system should process an \emph{example} (or \emph{data point}). An example is one datum $\vLeakVec\in \mathbb{R}^\traceLength$ , which is in turn a collection of \emph{features} $\vLeakVec[i]$. In SCA context an example is a side-channel trace, which is in turn a collection of time samples, that are its features. Some common ML tasks include these three examples: 
+\begin{itemize}
+\item \emph{Regression: } the computer is asked to predict a numerical value, given some input. The learning algorithm is thus asked to construct a function $f\colon \mathbb{R}^\traceLength \rightarrow \mathbb{R}$.
+\item \emph{Classification: } the computer is asked to specify which class or category an input belongs to, being $\sensVarSet$ the set of the possible classes. The learning algorithm is thus asked to construct a function $f\colon \mathbb{R}^\traceLength \sensVarSet$. We remark that this task is similar to the regression one, except for the form of the output, since in general $\sensVarSet$ is a discrete finite set. As slightly variant solution to the classification task consists in constructing a function $f\colon \mathbb{R}^\traceLength \rightarrow \{0,1\}^{\numClasses}$, once have assigned to each class $\sensVar^j$ a \emph{one-hot encoding}, \ie  a $\numClasses$-dimensional vector,
+with all entries equal to $0$ and the $j$-th entry equal to $1$: $\sensVar^j
+\rightarrow \vec{\sensVar}^j = (0,\ldots , 0,\underbrace{1}_{j},0,\dots,0)$. A variant of the classification task consists in finding a function $f$ defining a probability distribution over classes.
+\item \emph{Verification}: the computer is asked to state whether or not two given inputs are instances of a same class or category, for example state if two hand-written signature have been produced by the same person. The learning algorithm is thus asked to construct a function $f\colon \mathbb{R}^\traceLength \times \mathbb{R}^{traceLength}\rightarrow \{0,1\}$. A variant of such a task consists in finding for a pair of inputs the probability distribution for them being instance or not of a same class. This problem differs from the classification one essentially for the for of the input.
+\end{itemize}
+The functions constructed by a Machine Learning algorithm, somehow describe and characterize the data form and distribution, thus are often referred to as \emph{models}.
+
+\paragraph*{The performance P} designs a quantitative measure of the abilities of the learning algorithm. Depending on the task T, a specific performance measure P can be considered. For tasks as classification or verification the more common measure is the \emph{accuracy} of the model, \ie the proportion of inputs for which the model produces the correct output. Equivalently, the \emph{error rate} may be used as performance measure P, \ie the proportion of inputs for which the model produces an incorrect output. For the regression task the more common performance measure P is the so-called \emph{Mean Squared Error} (MSE): it is computed by averaging over a finite set of examples, the differences raised to the square between the correct output and the one predicted by the model. \\
+One of the crucial challenge of Machine Learning is that we are usually interested in how well a learning algorithm performs in producing a model that fits new, unseen data. For this reason, the performances of a Machine Learning algorithm are usually evaluated over a so-called \emph{test set}, \ie a set of examples that have not been used for the learning (or \emph{training}) phase. 
+
+\paragraph*{The experience E} denotes the typology of access to data and information the algorithm is allowed during learning. In this context we principally distinguish two family of learning algorithms: 
+\begin{itemize}
+\item the \emph{supervised} learning algorithms experience a dataset of examples, each associated in general to a \emph{target} or \emph{label}. The term supervised reflects the fact the the learning is somehow guided by an instruct that knows the right answer over the learning dataset;
+\item the \emph{unsupervised} learning algorithms experience a dataset, without any associated target. They tries to learn useful properties of the structure of the dataset. 
+\end{itemize}
+In general, the nature of the task is strictly related to the kind of experience the learner is allowed, for example the classification or regression tasks are considered as supervised tasks, while examples of unsupervised tasks include \emph{clustering} and \emph{data representation} or \emph{dimensionality reduction}. The Principal Component Analysis, that will be discussed in Chapter~\ref{ChapterLinear} in the context of SCA, is a dimensionality reduction algorithm that might be seen as an unsupervised algorithm that learns a representation of data. We will see how for SCA context a supervised version of PCA has been proposed as well. 
+
+
 % examples: Classification, Dimensionality Reduction, Verification
 % Example method: Neural Network Classifier, Stacked Auto-Encoder, Siamese Network 
-\subsection{Supervised, Semi-Supervised, Unsupervised Learning}
+
+\subsection{Example of Linear Regression}
+% ispirati dall'esempio sul deep learning book
+\subsection{Examples of Classification Algorithms}
+% classify = trovare/definire decision boundaries
+% bishop divide gli algoritmi in due tipologie: trovare discriminant functions, oppure costruire modelli probabilistici
+% tra i modelli probabilistici distingue quelli generativi da quelli discriminativi
+% The simplest representation of a linear discriminant function is obtained by taking y(x) = wx + w0...oppure in grosso per piu di due classi: la decision boundary è un iperpiano di dimensione (numClasses - 1)
+% per imparare i pesi W un'idea è minimizzare il sum error square sti cazzi, un'altra è passare attraverso la riduzione di dimensione e scegliere la riduzione che amplifica la separabilità. 
+%Infatti....fisher dà la nozione di ottimalità col quoziente, che porta alla Fisher Discriminant Analysis (o anche LDA, discussa nel Capitolo 6) ... Nel caso numClasses = 2 le due si equivalgono. 
+% E interessante discutere brevemente anche di un semplice modello generativo, basato su hp gaussiana, perche tale ipotesi, insieme ad un'altra, porta a costruire anch'essa un modello lineare, giustificando questa scelta in molti contesti...P(x|C)...log del quoziente, funzione sigmoid, logit...softmax...linear piu sigmoid, dove di nuovo la soluzione LDA è la parte lineare (verifica). Se togliamo l'ipotesi sulle covarianze allora resta la parte quadratica e è la QDA (in pratica la parte di classificazione usata nei template attacks)  
+
 \subsection{Training, Validation and Test Sets}
-\subsection{Underfitting, Overfitting and Regularization}
+\subsection{Capacity, Underfitting, Overfitting and Regularization}
 \subsection{Data Augmentation}
 \subsection{No Free Lunch Theorem}
 
@@ -26,3 +61,24 @@
 \subsubsection{Random Forest}
 \subsubsection{Neural Networks}
 
+%\begin{table}[]
+%\centering
+%\caption{Examples of hyper-parameters}
+%\label{tab:hyperparameters}
+%\begin{tabular}{c|c}
+%\multicolumn{1}{c}{\textbf{Training Hyper-Parameters}} & \multicolumn{1}{c}{\textbf{Architecture Hyper-Parameters}}    \\
+%\hline
+%training set size                             & number of layers                                     \\
+%batch size                                    & nature of each layer{\scriptsize  (\eg FC, ACT,$\dots$)} \\
+%number of epochs                              & number of units     \rdelim\}{1}{3mm}[{\scriptsize for FC layers}]                 \\
+%optimizer algorithm              &  number of filters               \rdelim\}{4}{3mm}[{\scriptsize for CONV layers}]                          \\
+%(initial) learning rate              & kernel size                           \\
+%                                              & stride                                               \\
+%                                                  & padding                                              \\
+%                                              & activation function                  \rdelim\}{1}{3mm}[{\scriptsize for ACT layers}]             \\                   
+%                                          
+%                                              & pooling function        \rdelim\}{3}{3mm}[{\scriptsize for POOL layers}]                                              \\
+%                                              & kernel size \\
+%                                              & stride                                              
+%\end{tabular}
+%\end{table}
