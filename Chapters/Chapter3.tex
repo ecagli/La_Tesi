@@ -35,19 +35,89 @@ In general, the nature of the task is strictly related to the kind of experience
 % Example method: Neural Network Classifier, Stacked Auto-Encoder, Siamese Network 
 
 \subsection{Example of Linear Regression}
+The regression task is not of high interest for the rest of this thesis, but is the most direct example to keep in mind to understand some basic Machine Learning concepts. Let us introduce a linear regression model so tackle the regression task: we want to construct a linear function $f\colon \mathbb{R}^\traceLength \rightarrow \mathbb{R}$, that takes an input $\vLeakVec$ and outputs $y = \www^\intercal \vLeakVec$, where $\www\in \mathbb{R}^\traceLength$ is a vector of \emph{parameters} that have to be learned by a learning algorithm.\footnote{An affine model may be considered as well by adding a \emph{bias} is added to the model, leading to $y = \www^\intercal \vLeakVec+w_0$. This model is equivalently obtained by adding an additional entry to $\vLeakVec$, always set to $1$ and writing back $y = \www^\intercal \vLeakVec$ with $\www\in \mathbb{R}^{N+1}$. } We want this model well describe some data and we suppose have two available datasets of such data: $\setDataTrain = (\setLeakTrain, \setTargetTrain)$, to let the learning algorithm experience on, and $\setDataTest = (\setLeakTest, \setTargetTest)$ to evaluate the performance of the obtained model over some unseen data. Let us choose the MSE over the test set to evaluate such performances. If we collect the, let say $N$, examples of a dataset as column of a measure matrix $\measuresMatrix\in \mathbb{R}^{\traceLength \times N}$ and the related target into a vector $\yyy\in \mathbb{R}^N$, and let the learned model predict targets $y$ by outputting $\hat{y} = \www\vLeakVec$, then the MSE is given by
+\begin{equation}
+ \mathrm{MSE_{test}} = \frac{1}{m} \norm{\hat{\yyy}_{\text{test}}-\yyy_{\text{test}}}^2_2 \mbox{ .}
+\end{equation}
+ The MSE is the performance measure in this example, meaning that we consider the model performs well the most such an MSE is small. So the goal of the learning algorithm is somehow minimize the $\mathrm{MSE_{test}}$. But the learning algorithm only experiences on the $\setDataTrain$ dataset. An intuitive way to act, that can be proven be the maximum likelihood solution to the problem, is to minimize  $\mathrm{MSE_{train}}$ by solving an easy optimization problem. The solution to such a optimization problem can be given in closed form, by means of the pseudo-inverse matrix of $\measuresMatrix_{\text{train}}$:
+\begin{equation}
+\www = (\measuresMatrix_{\text{train}}\measuresMatrix_{\text{train}}^\intercal)^{-1}\measuresMatrix_{\text{train}}\yyy_{\text{train}}.
+\end{equation}
+
+
 % ispirati dall'esempio sul deep learning book
-\subsection{Examples of Classification Algorithms}
-% classify = trovare/definire decision boundaries
-% bishop divide gli algoritmi in due tipologie: trovare discriminant functions, oppure costruire modelli probabilistici
-% tra i modelli probabilistici distingue quelli generativi da quelli discriminativi
-% The simplest representation of a linear discriminant function is obtained by taking y(x) = wx + w0...oppure in grosso per piu di due classi: la decision boundary è un iperpiano di dimensione (numClasses - 1)
+$\setDataTrain$  $\setDataTest$ $\setDataProfiling=(\setLeak,\setTarget)$
+\subsection{Example of Linear Model for Classification}
+In this thesis we point out a strict relationship between the profiling SCAs and the classification task in Machine Learning context. For this reason we introduce here a very brief overview of how classically such a task is tackled, by means of linear models. \\
+Classify means assigning to an example $\vLeakVec\in\mathbb{R}^\traceLength$ a label $\sensVar\in \sensVarSet$, or equivalently divide the input space $\mathbb{R}^\traceLength$ in \emph{decision regions}, whose boundaries are referred to as \emph{decision boundaries}. Making use of a linear model signifies exploiting some hyperplanes as decision boundaries. Data sets whose classes can be separated exactly by linear decision boundaries are said to be \emph{linearly separable}. Following the discussion kept by Bishop in \cite{christopher2006pattern}, two different approaches to tackle the classification task should be distinguished: the direct research for a discriminant function $f$ that assigns to an example a label, or the prior construction of a probabilistic model. This second approach might in turn be distinguished into two options, depending on whether a generative model, or a discriminative model is constructed. For this example we consider a probabilistic approach, constructing a generative model. This example will allow to introduce some interesting functions, such as the \emph{logistic sigmoid} and the \emph{softmax}, that will play a role in the construction of neural network (see Chapter \ref{ChapterCNN}, and to show how adding some assumptions on the data distributions one can justify, in contexts where the goal of the learning algorithm is making decisions directly, dispensing with any probabilistic interpretation, the exploitation of linear discriminant functions. \\
+Construct a generative probabilistic model implies modelling the class-conditional probabilities $\pdf(\vLeakVec\mid \sensVar^j)$ for $j\in [1,\dots,\numClasses]$ as well as the class priors $\pdf(\sensVar^i)$. Let us first consider in a 2-class context, \ie $\numClasses = 2$. Then the posterior probability for the class $\sensVar^1$ is the following:
+\begin{equation}\label{eq:post_probs}
+\pdf(\sensVar^1\mid \vLeakVec) = \frac{\pdf(\vLeakVec\mid \sensVar^1)\pdf(\sensVar^1)}{\pdf(\vLeakVec\mid \sensVar^1)\pdf(\sensVar^1) + \pdf(\vLeakVec\mid \sensVar^2)\pdf(\sensVar^2)}\mbox{ .}
+\end{equation}
+To compare the two classes, we can look to their \emph{log-likelihood ratio}:
+\begin{equation}\label{eq:log-ratio}
+a = \log\left[\frac{\pdf(\sensVar^1\mid \vLeakVec)}{\pdf(\sensVar^2\mid \vLeakVec)}\right] =  \log\left[\frac{\pdf(\vLeakVec\mid \sensVar^1)\pdf(\sensVar^1)}{\pdf(\vLeakVec\mid \sensVar^2)\pdf(\sensVar^2)}\right].
+\end{equation}
+Then the discriminative criteria can be assigning to $\vLeakVec$ the class $\sensVar^1$ iff $a>0$. The decision boundary is given by the surface defined by $\pdf(\vLeakVec\mid \sensVar^1)\pdf(\sensVar^1) = \pdf(\vLeakVec\mid \sensVar^2)\pdf(\sensVar^2)$.
+We remark that we Eq.~\eqref{eq:post_probs} rewrites as
+\begin{equation}\label{eq:post_probs_sigmoid}
+\pdf(\sensVar^1\mid \vLeakVec) = \frac{1}{1+e^{-a}} = \sigma(a)\mbox{ ,}
+\end{equation}
+where the function $\sigma$ is the so-called \emph{logistic sigmoid}.\\
+In the multi-class case, \ie $\numClasses >2$, the posterior probability for each class $\sensVar^j$ is given by
+\begin{equation}\label{eq:post_probs_multi-class}
+\pdf(\sensVar^j\mid \vLeakVec) = \frac{\pdf(\vLeakVec\mid \sensVar^j)\pdf(\sensVar^1)}{\sum_k\pdf(\vLeakVec\mid \sensVar^k)\pdf(\sensVar^k )} = \softmax (\aaa)[k]\mbox{ ,}
+\end{equation}
+where $\aaa$ is a $\numClasses$-dimensional vector, whose entries are given by
+\begin{equation}
+\aaa[j] = \log\left[ \pdf(\vLeakVec\mid \sensVar^j)\pdf(\sensVar^j) \right] \mbox{ ,}
+\end{equation}
+and $\softmax$ is the so-called \emph{softmax} function, or \emph{normalized exponential}, that is defined, entry-wise by:
+\begin{equation}\label{eq:softmax}
+\softmax(\aaa)[k] = \frac{e^{\aaa[k]}}{\sum_{j=1}^{\numClasses}e^{\aaa[j]}}\mbox{ .}
+\end{equation}
+
+Let us now introduce two assumptions about class-conditional densities: we will suppose they follow a Gaussian distribution with parameters $\mu_j, \Sigma_j$, and that all class-conditional densities share the same covariance matrix $\Sigma_j=\Sigma$, so that
+\begin{equation}
+\pdf(\vLeakVec\mid \sensVar^j) = \frac{1}{(2\pi)^{{\traceLength}/2}\lvert \Sigma\rvert^{1/2}}e^{-\frac{1}{2}(\vLeakVec- \mu_j)^\intercal\Sigma^{-1}(\vLeakVec- \mu_j)} \mbox{ .}
+\end{equation}
+Under this assumptions Eq.~\eqref{eq:log-ratio} rewrites as: 
+\begin{equation}\label{eq:LDA-2classes}
+a = \log(\frac{\pdf(\sensVar^1)}{\pdf(\sensVar^2)}) - \frac{1}{2}\mu_1^\intercal\Sigma^{-1}\mu_1 + \frac{1}{2}\mu_2^\intercal\Sigma^{-1}\mu_2 - \vLeakVec^\intercal\Sigma^{-1}(\mu_2-\mu_1) = \www^\intercal \vLeakVec + w_0, 
+\end{equation}
+where we set 
+\begin{align*}
+\www =& \Sigma^{-1}(\mu_1-\mu_2)\\
+w_0 =  & \log\frac{\pdf(\sensVar^1)}{\pdf(\sensVar^2)} - \frac{1}{2}\mu_1^\intercal\Sigma^{-1}\mu_1 + \frac{1}{2}\mu_2^\intercal\Sigma^{-1}\mu_2 . 
+\end{align*}
+The quadratic terms in $\vLeakVec$ in the exponent of the Gaussian density have cancelled thanks to the common variance assumption, thus we obtain that the decision boundary for the 2-class problem, given by $a=0$ is a $(\traceLength - 1)$-hyperplane of the input space. \footnote{An analogous result can be obtained in the multi-class problem.} This way of choosing linear boundaries is known under the name of \emph{Linear Discriminant Analysis}. Another way to view the same linear classification model is in terms of dimensionality reduction: intuitively, in the 2-class case\footnote{again extensible to the multi-class case} one can see the term $\www^\intercal \vLeakVec$ of \eqref{eq:LDA-2classes} as a projection of the input $\vLeakVec$ onto a one-dimensional subspace of $\mathbb{R}^\traceLength$ orthogonal to the decision boundary mentioned above, then classify the obtained dimensionality-reduced examples by the means of a threshold (that would correspond to $w_0$, in the optimal case). It can be shown that the dimensionality reduction obtained by the Fisher criterion that we will deploy in Chapter~\ref{ChapterLinear}, to which we will refer to LDA dimensionality reduction by a common abuse, is equivalent to the dimensionality reduction obtained in this example, making the Gaussian assumption over the class-conditional probabilities, equipped of a common covariance matrix assumption.  \\
+Relaxing the assumption of a shared covariance matrix and allowing each class-conditional density $\pdf(\vLeakVec\mid \sensVar^j)$ to have its own covariance matrix $\Sigma_j$, then the earlier cancellations will no longer occur, and the discriminant $a$ turns out to be a quadratic function of $\vLeakVec$. This gives rise to the so-called \emph{Quadratic Discriminant Analysis}, that we already mentioned in Chapter~\ref{ChapterIntroductionSCA} for its analogy with Template Attacks.\\
+
+The two assumptions leading to the log-likelihood ratio \eqref{eq:LDA-2classes}, also leads to the following expression for the posterior probability for $\sensVar^1$, directly implied by \eqref{eq:post_probs_sigmoid}: 
+\begin{equation}
+\pdf(\sensVar^1\mid \vLeakVec) = \sigma(\www^\intercal \vLeakVec + w_0)\mbox{ .}
+\end{equation}
+Thus such a posterior probability is given by the sigmoid acting to a linear function of $\vLeakVec$. Similarly, for the multi-class case, the posterior probability of class $\sensVar^j$ is given by the $j$-th entry of the softmax transformation of a linear function of $\vLeakVec$. This kind of \emph{generalized linear model} can be thus used in a probabilistic discriminant approach, where the posterior conditional probabilities are directly modelised from data without passing through the estimations of class-conditional densities and priors. Such a discriminative approach is the one that will be adopted in Chapter~\ref{ChapterCNN} when considering neural networks as models.
+
+%the simplest representations of a linear discriminant function is obtained by taking
+%\begin{equation}
+%f(\vLeakVec) = \www\vLeakVec + w_0 \mbox{ ,}
+%\end{equation}
+%where $-w_0$ plays the role of a threshold. Here  $\vLeakVec$ is assigned to $\sensVar^1$ if $f(\vLeakVec)>0$, \ie $\www\vLeakVec>-w_0$, otherwise $\vLeakVec$ is assigned to $\sensVar^2$.
+
+
+
+% la decision boundary  è un D-1 iperpiano
+% introducendo i vettori di target...
+% y(x) = wx + w0...oppure in grosso per piu di due classi: la decision boundary è un iperpiano di dimensione (numClasses - 1)
 % per imparare i pesi W un'idea è minimizzare il sum error square sti cazzi, un'altra è passare attraverso la riduzione di dimensione e scegliere la riduzione che amplifica la separabilità. 
 %Infatti....fisher dà la nozione di ottimalità col quoziente, che porta alla Fisher Discriminant Analysis (o anche LDA, discussa nel Capitolo 6) ... Nel caso numClasses = 2 le due si equivalgono. 
 % E interessante discutere brevemente anche di un semplice modello generativo, basato su hp gaussiana, perche tale ipotesi, insieme ad un'altra, porta a costruire anch'essa un modello lineare, giustificando questa scelta in molti contesti...P(x|C)...log del quoziente, funzione sigmoid, logit...softmax...linear piu sigmoid, dove di nuovo la soluzione LDA è la parte lineare (verifica). Se togliamo l'ipotesi sulle covarianze allora resta la parte quadratica e è la QDA (in pratica la parte di classificazione usata nei template attacks)  
 
 \subsection{Training, Validation and Test Sets}
 \subsection{Capacity, Underfitting, Overfitting and Regularization}
-\subsection{Data Augmentation}
+% parla del linear basis model per regression (è quello che si usa in SCA e aumenta la capacità del modello) oltre alla regressione polinomiale
+%\subsection{Data Augmentation}
 \subsection{No Free Lunch Theorem}
 
 

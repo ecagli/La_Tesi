@@ -95,6 +95,16 @@ headsepline, % Uncomment to get a line under the header
 \newcommand*{\vaLeak}{X}
 \newcommand*{\setLeak}{\vec{\mathcal{X}}}
 \newcommand*{\vaLeakVec}{\vec{X}}
+\newcommand{\setLeakTrain}{\setLeak_{\text{train}}}
+\newcommand{\setLeakTest}{\setLeak_{\text{test}}}
+\newcommand{\setTargetTrain}{\setTarget_{\text{train}}}
+\newcommand{\setTargetTest}{\setTarget_{\text{test}}}
+
+\newcommand{\setDataTrain}{\mathcal{D}_{\text{train}}}
+\newcommand{\setDataTest}{\mathcal{D}_{\text{test}}}
+\newcommand{\setDataProfiling}{\mathcal{D}_{\text{profiling}}}
+\newcommand{\setDataAttack}{\mathcal{D}_{\text{attack}}}
+\newcommand{\setTarget}{{\mathcal{Y}}}
 
 
 \newcommand*{\publicParRandVar}{E}
@@ -105,11 +115,13 @@ headsepline, % Uncomment to get a line under the header
 \newcommand*{\sensVar}{z}
 \newcommand*{\sensRandVar}{Z}
 \newcommand*{\sensVarSet}{\mathcal{Z}}
-\newcommand*{\numClasses}{\mid\sensVarSet\mid}
+\newcommand*{\numClasses}{\lvert\sensVarSet\rvert}
 \newcommand*{\sensFunction}{f}
 
 \newcommand*{\yyy}{\textbf{y}}
 \newcommand*{\YYY}{\textbf{Y}}
+\newcommand*{\www}{\textbf{w}}
+\newcommand*{\WWW}{\textbf{W}}
 
 \newcommand*{\nbTraces}{N}
 \newcommand*{\nbProfilingTraces}{N_p}
@@ -130,6 +142,7 @@ headsepline, % Uncomment to get a line under the header
 \newcommand*{\HW}{\mathrm{HW}}
 
 \newcommand*{\prob}{\mathrm{Prob}}
+\newcommand*{\pdf}{p}
 \newcommand*{\mumumu}{\boldsymbol{\mu}}
 
 \newcommand{\measuresMatrix}{\textbf{M}}
@@ -143,7 +156,11 @@ headsepline, % Uncomment to get a line under the header
 \newcommand{\mmmXclass}[1][z]{\overline{\textbf{x}}^{#1}}
 \newcommand{\mmmY}{\overline{\textbf{y}}}
 
-\newcommand{\Sbox}{\mathrm{Sbox}}
+\newcommand*{\aaa}{\textbf{a}}
+
+\newcommand*{\Sbox}{\mathrm{Sbox}}
+\newcommand*{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand*{\softmax}{s}
 
 %----------------------------------------------------------------------------------------
 % EDITORIAL DEFINITIONS
