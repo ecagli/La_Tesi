@@ -55,7 +55,7 @@ A simple attack is an attack that only need one trace to be applied, except for 
 An advanced attack is a more powerful strategy: the attacker acquires several acquisitions making entry parameters vary, and by consequence observing leakages related to different values of $\sensRandVar$. This time the variation of the observed sensitive variable is interpretable as a raising of the amount of caught information. The attacker exploits synergistically the information coming from each acquisition: he evaluates each key hypothesis, taking advantage of the algebraic relation between (known) entries, keys and sensitive variables, to find out the one that would better justify the leakages he observed. Classical Differential Power Attacks (DPA) \cite{brier2004correlation} or Correlation Power Attacks (CPA) \cite{brier2004correlation}, as well as attacks based over Mutual Information Analysis (MIA) \cite{batina2011mutual} are advanced attacks. 
 
 
-\subsubsection{Template Attack}
+\subsubsection{Template Attack}\label{sec:TA}
 Introduced in 2004 by Chari \cite{Chari2003}, the so-called \emph{Template Attack} (TA) is the most well-established strategy to run a profiling SCA. It can be performed in a simple or advanced way. The idea of the TA is based over the construction of a so-called \emph{generative model}: in probability, statistic and machine learning \enquote{ ...approaches that explicitly or implicitly model the distribution of inputs as well as outputs are known as generative models, because by sampling from them it is possible to generate synthetic data points in the input space.} \cite{christopher2006pattern}.
 In TA the attacker observes the couples $(\vLeakVec_i, \sensVar_i)_{i=1, \dots , \nbProfilingTraces}$  and exploit them to estimate the class-conditional densities  
 \begin{equation}\label{eq:class-conditional}
@@ -102,10 +102,11 @@ The homoscedasticity assumption is the same that is done for classification prob
 
 Other choices that mainly influences the TA efficiency are those related to the PoI selection, or more generically to the dimensionality reduction issue.
 
-\subsubsection{Points of Interest and Dimensionality Reduction}
+\subsubsection{Points of Interest and Dimensionality Reduction}\label{sec:extractors}
 The side channel traces are usually acquired by oscilloscopes with a very high sampling rate, which permits a powerful inspection of the component behaviour, but at the same time produces huge- dimensional data, consisting in thousands, or even millions of points. Nevertheless, often only a relatively small part of these time samples is informative, i.e. statistically depends, independently or jointly, on a sensitive target variable. These informative points are called \emph{Points of Interest} (PoI). The dimensionality reduction of the traces is a fundamental pre-processing phase to get efficient and effective SCAs, not too expensive in terms of memory and time consumption. The problem of performing an opportune dimensionality reduction goes hand in hand with the research of PoIs: a convenient dimensionality reduction should enhance the contribution of such PoIs while reducing or nullifying the one provided by non-interesting points. 
-The goal of these researches is to study and develop techniques to characterize PoIs and to apply conve- nient dimensionality reduction techniques, that allow reducing the size of the acquisitions while keeping the exploitable information held by data high enough to allow an SCA to succeed.
-Considering the side channel traces as column vectors ${\bf x}$ in $\mathbb{R}^\traceLength$, the compressing phase might be seen as the application of a function $\extract\colon \mathbb{R}^\traceLength\rightarrow \mathbb{R}^\newTraceLength$, called {\em extractor} in this paper.
+The goal of these researches is to study and develop techniques to characterize PoIs and to apply convenient dimensionality reduction techniques, that allow reducing the size of the acquisitions while keeping the exploitable information held by data high enough to allow an SCA to succeed.
+Considering the side channel traces as column vectors ${\bf x}$ in $\mathbb{R}^\traceLength$, the compressing phase might be seen as the application of a function $\extract\colon \mathbb{R}^\traceLength\rightarrow \mathbb{R}^\newTraceLength$, called {\em extractor} throughout this thesis.
+\todo{A brief overview of state-of-the art statistics to select PoIs}
 
 
 \subsubsection{Algebraic Side-Channel Attacks}
@@ -117,13 +118,13 @@ In \cite{Oren2014} a constraint solver is proposed to replace the bit-oriented S
 Since all these algebraic side-channel approach are based over a preliminary profiling phase, they are all largely concerned by the dimensionality reduction issue, which is often not explicitly taken into account in literature about this research axe. 
 
 \subsubsection{SCA Metrics}
-
+\todo{definition of rank, guessing entropy}
 
 
 %----------------------------------------------------------------------------------------
 %	SECTION 2
 %----------------------------------------------------------------------------------------
-\section{Main Side-Channel Countermeasures}
+\section{Main Side-Channel Countermeasures}\label{sec:countermeasures}
 \subsection{Random Delays and Jitter}
 \subsection{Shuffling}
 \subsection{Masking}\label{sec:masking}

@@ -30,19 +30,19 @@ In the following part of this section a description of the two standard cryptogr
 The \emph{Advanced Encryption Standard} (AES) has been standardized in 2001 by the United States governmental agency \emph{National Institute of Standards and Technology} (NIST) through the \emph{Federal Information
 Processing Standards Publication 197 } (FIPS PUB 197) \cite{nist197}. It is a symmetric \emph{block cipher}, \emph{i.e.} an algorithm operating on fixed-length groups of bits.\footnote{in contrast with \emph{stream ciphers}, which operate over a single plaintext bit at time} The AES operates on blocks of 128 bits of plaintext, and can use keys of size 128, 192 or 256 bits. The encryption is done by rounds. The number of executed rounds depends on the key size (10 rounds for 128 bits, 12 for 192 and 14 pour 256). The basic unit for processing in the AES algorithm is a byte. For AES internal operations, bytes are arranged on a two-dimensional array of bytes called the \emph{state}, denoted $s$. Such a state has 4 rows and 4 columns, thus contains 16 bytes. The byte lying at the $i$-th row, $j$-th column of $s$ will be denoted by $s_{i,j}$ for $i,j\in\{0,1,2,3\}$. The 16 input bytes and the 16 output bytes are indexed column-wise as shown in Fig.~\ref{fig:AES_state}. Each element $s_{i,j}$ of a state is mathematically seen as an element of the \emph{Rjindael finite field}, defined as $GF(2^8) = \mathbb{Z}/{2\mathbb{Z}[X]}/P(X)$ where $P(X) = X^8 + X^4 + X^3 + X + 1$. Five functions are performed during the AES, named KeySchedule, AddRoundKey, SubBytes, ShiftRow and MixColumn. At high level the AES algorithm is described hereafter:
 \begin{itemize}
-\item[\textbf{Key Expansion:}]  derivation of round keys from secret key through the KeySchedule function
-\item[\textbf{Round 0:} ] 
+\item[]\textbf{Key Expansion:}  derivation of round keys from secret key through the KeySchedule function
+\item[]\textbf{Round 0:}  
 \begin{itemize}
 \item[] AddRoundKey
 \end{itemize}
-\item[\textbf{Rounds 1 to penultimate:}] 
+\item[] \textbf{Rounds 1 to penultimate:}
 \begin{itemize}
 \item[] SubBytes
 \item[] ShiftRows
 \item[] MixColumns
 \item[] AddRoundKey
 \end{itemize}
-\item[\textbf{Last Round:}] 
+\item[] \textbf{Last Round:}
 \begin{itemize}
 \item[] SubBytes
 \item[] ShiftRows
@@ -102,7 +102,9 @@ Each column of the State is treated as a four-term polynomial. They are consider
 \end{figure}
 
 \subsection{Description of RSA}
-The RSA cryptosystem, proposed in 1978 by Rivest, Shamir and Adleman \cite{rivest1978method}, represents the first practical realization of the use of trapdoor functions to provide asymmetric cryptography (a concept proposed two years earlier by Diffie, Helman and Merkle \cite{diffie1976new}. RSA is one of the most deployed, analysed, challenged, and discussed cryptosystems of all times, the seminal paper \cite{rivest1978method} counting today 18950 citations.\footnote{From Google Scholar, visited on January 2018.}
+The RSA cryptosystem, proposed in 1978 by Rivest, Shamir and Adleman \cite{rivest1978method}, represents the first practical realization of the use of trapdoor functions to provide asymmetric cryptography (a concept proposed two years earlier by Diffie, Helman and Merkle \cite{diffie1976new}). RSA is one of the most deployed, analysed, challenged, and discussed cryptosystems of all times, the seminal paper \cite{rivest1978method} counting today 18950 citations.\footnote{From Google Scholar, visited on January 2018.}\\
+
+\todo{describe the principle of RSA, then add an appendix with 2 or 3 algorithm for exponentiation (right-to-left, square and multiply always, CRT...), cite paper CHES 2017 to say how still the choice of a good implem is an actual research topic}
 
 %----------------------------------------------------------------------------------------
 %	SECTION 2
@@ -354,10 +356,16 @@ The evaluation ends with the redaction by the evaluators of an \emph{Evaluation 
 \section{This thesis objectives and contributions}\label{sec:this_thesis_objectives}
 Among the factors observable in the cotation table~\ref{tab:cot_table} we find \emph{open samples}, sometimes interpretable as \emph{samples with known secrets}. Indeed, for an evaluation scope it is sometimes possible for an ITSEF to have access to a device identical to the TOE but where the evaluator can fix certain variables, for example some random numbers used by cryptographic algorithm, of load specific software. The evaluator generally exploits this possibility to ease the task of characterization of the behaviour of the device.\\
 
-In the context of Side-Channel Attacks, when such an characterization phase is possible we talk about \emph{profiling attacks}. Due to the favourable condition of this attacks their are commonly considered the more dangerous, allowing a sort of worst-case security analysis. As we will see in next Chapters, this thesis is mainly focused over the profiling scenario. Indeed, we will address the problems an evaluator deals with when he is in such a favourable case and he wonders how to optimally exploit such a characterization phase in order to be able in the proper exploitation phase to extract as much information as possible from his signals. One of these issues is the selection of the so-called \emph{Points of Interest} (PoI), strictly link to the more general problem of dimensionality reduction. Indeed, 
+In the context of Side-Channel Attacks, when such an characterization phase is possible we talk about \emph{profiling attacks}. Due to the favourable condition of this attacks their are commonly considered the more dangerous, allowing a sort of worst-case security analysis. This thesis is mainly focused over the profiling scenario. Indeed, we will address the problems an evaluator deals with when he is in such a favourable case and he wonders how to optimally exploit such a characterization phase in order to be able in the proper exploitation phase to extract as much information as possible from his signals. One of these issues is the selection of the so-called \emph{Points of Interest} (PoI), strictly link to the more general problem of dimensionality reduction.
 %FRASE dal primo paper sul rate dell'oscilloscopio etc...piu cosa faccio nei capitoli di contribuzione
 \subsection{Foreword of this Thesis: Research of Points of Interest}
+To practice a Side-Channel Attack, the monitoring of unintentional channels leaking from the attacked device usually performed through an oscilloscope that samples continuous analog signals and turns them into discrete digitalized sequences. Such sequences are often referred to as \emph{traces}. To allow a deep inspection of the device, the sampling rate of the oscilloscope needs to be high, leading very often to a high dimensionality of such traces. Nevertheless,  it is expected that only a limited number of time samples are relevant for a SCA: those that are statistically dependent on the sensitive variable that is exploited to run the attack. Such time samples are called \emph{Points of Interest} (PoI). In literature a few of different statistics was proposed and exploited to choose such PoI in a preliminary attack phase, in order to reduce both time and memory complexity of the attacks. A brief overview of such statistics is proposed in Sec.~\ref{sec:extractors}. The foreword of this thesis was to propose new methods to research and characterise such PoIs, in order to ameliorate and eventually optimise the preliminary attack phase consisting in their selection. 
 \subsection{Dimensionality Reduction Approach}
-\subsubsection{Linear Methods for First-Order Attacks}
+Beyond the use of sample-wise statistics to identify PoIs, an axe of research was launched in SCA context, importing from the Machine Learning domain more general techniques for dimensionality reduction of data. At the moment this thesis researches begun, linear methods were drawing a raising attention, consisting in techniques to conveniently exploit linear combinations of many time sample. The first contributions we proposed belong to this axe of research: in Chapter~\ref{ChapterLinear} we describe the two mainly deployed techniques, the Principal Components Analysis and the Linear Discriminant Analysis, and tackle some open issues about their application to SCA context. \\
+
+Nowadays every device needing to obtain an AVA\_VAN5 grade is equipped of specific countermeasures against SCAs. A brief overview of some classic and public principles providing efficient countermeasure is provided in Sec.~\ref{sec:countermeasures}. Among them, the \emph{masking}, or \emph{sharing} countermeasure, besides being the most popular and considered the most efficient, is the most likely to require an adaptation of the attack strategy in order to be defeated. Indeed, when an effective masking scheme is implemented, each sensitive variable of the original computation is divided probabilistically into shares such that any proper subset
+of shares is statistically independent of the sensitive variable itself. Computation of cryptographic primitives is done
+accessing only the random shares, with intermediate steps computing only the shares of the result. This forces the attacker to work with the joint distributions of the signal at the time samples where the shares are being accessed. In other words, sample-wise statistics to retrieve PoIs are completely inefficient in presence of a masking countermeasure, since each time sample is by itself statistically independent from any sensitive variable. Moreover, joint distributions that allow retrieve sensitive information have to be compared at their higher-order statistical moments, 
+
 \subsubsection{Kernel Methods for Higher-Order Attacks}
 \subsection{Neural Network Approach}
