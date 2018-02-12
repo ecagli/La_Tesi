@@ -1,18 +1,72 @@
 % Chapter Template
 
-\chapter{Kernel Dimensionality Reduction} % Main chapter title
-
+\chapter{Kernel Discriminant Analysis} % Main chapter title
 \label{ChapterKernel}
-\todo{intro con riferimento a CARDIS 2016 + seguiti , 'Manifold Learning Towards Masking
-Implementations: A First Study', A Novel Use of Kernel Discriminant Analysis as a Higher-Order Side-Channel Distinguisher (CARDIS 2017)}
+
+We tackle the dimensionality reduction problem in the context of profiling attacks against implementations protected by masking countermeasure. For such attacks, the attacker might have or not access to the  random values drawn at every execution and used to mask the sensitive variables. If he have such a knowledge, then the dimensionality reduction problem turns to be equivalent to the case of unprotected implementations. Thus ,the classic statistics for the PoIs research (and we will concentrate over the SNR, see Sec.~\ref{sec:extractors}) and the linear dimensionality reduction techniques described in the previous chapter are still applicable and efficient. On the contrary, when such a knowledge is denied, linear techniques are completely inefficient: a non-linear function of the PoIs has to be considered in order to construct discriminant features from side-channel observations. In this chapter we propose to make use of Kernel Discriminant Analysis (KDA) technique to construct such a non-linear processing. To this aim we revisit the contents and the experimental results of the paper presented at CARDIS 2016 international conference \cite{cagli2016kernel}. After such a publication, the KDA has been compared to other non-linear dimensionality reduction techniques in \cite{manifold}, where manifold learning solutions such as ISOMAP, Locally Linear Embedding (LLE) and Laplacian Eigenmaps (LE) are proposed. Moreover, a use of the KDA in an unsupervised way to perform a higher-order SCA (as a key candidate distinguisher and not as a dimensionality reduction technique) has been proposed at CARDIS 2017 \cite{zhou2017novel}.
+
 
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 
 \section{Motivation}
-\subsection{Higher-Order Attacks}
+When a masking countermeasure is properly applied, it ensures that every sensitive variable $\sensRandVar$  is randomly split  into multiple shares $M_1,M_2,\dots,M_d$ in such a way that a relation $Z = M_1 \star \dots \star M_d$ holds for a group operation $\star$ (\emph{e.g.} the exclusive or for the Boolean masking). The value $d$ plays the role of a security parameter and the method is usually referred to as $(d-1)$th-order masking (since it involves $d-1$ random values). In many cases, especially for software implementations, the shares are manipulated at different times, and no time sample therefore shows dependency on $\sensRandVar$: in order to recover such  information the attacker is obliged to join information held by each of the $d$ shares, executing a so-called $d$th-order SCA. In the great majority of the published higher-order attacks, the PoI selection during the pre-attack characterization phase is either put aside or made  under the hypothesis that the random shares are known. Actually, the latter knowledge brings the problem back to the unprotected case. 
+%, and the methods recalled in previous paragraphs can be directly applied. 
+Here we relax this hypothesis and we consider  situations where the values of the random shares are unknown to the adversary. We however assume that the adversary can characterize the leakage before attacking the implementation, by controlling the value of the target variable $\sensRandVar$. These two assumptions put our study in the classical context of {\em template attacks without knowledge of the masks}. \\
+
+\subsection{Getting information from masked implementations}\label{sec:HO}
+The SNR measures, point by point, the information held by the first-order moment of the acquisition, \emph{i.e.} the mean, to which we can refer to as a \emph{1st-order information}. In masked implementations, such information is null: in any time sample the mean is independent from $\sensRandVar$ due to the randomization provided by the shares, namely $f(\sensVar) = \esper[\vaLeakVec\vert \sensRandVar=\sensVar]$ is constant, which implies that the SNR is asymptotically  null over the whole trace.\\
+ 
+When a $(d-1)$th-order masking is applied, the information about the shared sensitive target $\sensRandVar$ lies in some $d$th-order statistical moments of the acquisition,\footnote{whence the name {\em $d$th-order attacks}} meaning that for some $d$-tuples of samples $(t_1,\dots ,t_d)$ the function $f(z) = \esper[\vaLeakVec[t_1]\vaLeakVec[t_2]\cdots \vaLeakVec[t_d]\vert \sensRandVar=\sensVar]$ (based on a $d$th-order raw moment) is not constant (equivalently, $f(\sensVar) = \esper[(\vaLeakVec[t_1]-\esper[\vaLeakVec[t_1]])\cdots (\vaLeakVec[t_d]-\esper[\vaLeakVec[t_d]])\vert \sensRandVar=\sensVar]$ is not constant, using the central moment). We can refer to such information as $d$th-order information.
+In order to let the SNR reveal it, and consequently let such information be directly exploitable, the attacker must pre-process the traces through an extractor $\extract$ that renders the mean of the extracted data dependent on $\sensRandVar$, \emph{i.e.} such that $f(\sensVar) = \esper[\extract(\vaLeakVec)\vert \sensRandVar=\sensVar])$ is not constant. In this way, the $d$th-order information is brought back to a $1$st-order one.
+
+\begin{property}[SCA efficiency necessary condition]\label{property:poly}
+Let us denote by $\sensRandVar$ the SCA target and let us assume that $\sensRandVar$ is represented by a tuple of shares $M_i$ manipulated at $d$ different times. Denoting $t_1,\dots,t_d$ the time samples\footnote{not necessary distinct} where each share is handled, the output of an effective extractor needs to have at least one coordinate whose polynomial representation over the variables given by the coordinates of $\vaLeakVec$ contains at least one term divisible by the the $d$th-degree monomial $\prod_{i=1,\dots,d}\vaLeakVec[t_i]$ (see \emph{e.g.} \cite{carlet2014achieving} for more information).
+\end{property}
+
+
+\begin{remark}\label{remark:normalized}
+The use of central moments has been experimentally shown to reveal more information than the use of the raw ones \cite{chari1999towards,ProuffRB09}. Thus we will from now on suppose that the acquisitions have previously been normalized, so that $\esperEst(\vLeakVec_i) = \boldsymbol{0}$ and $\varEst(\vLeakVec_i) = \boldsymbol{1}$. In this way a centred product coincides with a non-centred one. 
+\end{remark}
+
+We motivate hereafter through a simplified but didactic  example, the need for a computational efficient dimensionality reduction technique as preliminary step to perform an higher-order attack.
+
+
+\subsection{Some strategies to perform higher-order attack}
+We consider here an SCA targeting an $8$-bit sensitive variable $\sensRandVar$ which has been priorly split into $d$ shares and we assume that a reverse engineering and signal processing have priorly been executed to isolate the manipulation of each share  in a region of $\ell$ time samples. This implies that our SCA  now amounts to extract a $\sensRandVar$-dependent information from leakage measurements whose size has been reduced to $d\times \ell$ time samples. To extract such information the State-of-the-Art proposes three approaches to the best of our knowledge.\\
+
+The first one consists in considering $d$ time samples  at a time, one per region, and in testing if they jointly contain information about $\sensRandVar$ (\emph{e.g.} by estimating the mutual information  \cite{Reparaz2012} or by processing a Correlation Power Attack (CPA) using their centred product \cite{chari1999towards}, etc.). Computationally speaking, this approach requires to evaluate $\ell^d$ $d$-tuples (\emph{e.g.} 6.25 million $d$-tuples for $d=4$ and $\ell=50$), thus its complexity grows exponentially with $d$. \\
+
+The second approach, that avoids the exhaustive enumeration of the $d$-tuples of time samples, consists in estimating the conditional pdf of the whole region: 
+to this scope, a Gaussian mixture model is proposed in literature \cite{lemke2007gaussian,Lomne2014} and the parameters of such a Gaussian mixture can be estimated through the expectation-maximization (EM) procedure. In \cite{lemke2007gaussian} 4 variants of the procedure are proposed according to a trade-off between the efficiency and the accuracy of the estimations;  the most rough leads to the estimation of  $256^{(d-1)}(\ell d)$  parameters (\emph{e.g.} $\approx 3.4 $ billion parameters for $d=4$ and $\ell=50$), while the finest one requires the estimation of $256^{(d-1)}(1 + \frac{3\cdot \ell d}{2} + \frac{(\ell d)^2}{2}-1)$ parameters (\emph{e.g.} $\approx 87$ trillion parameters). Once again, the complexity of the approach grows exponentially with the order $d$.\\
+
+The third approach, whose complexity does not increase exponentially with $d$, is the application of the higher-order version of the PP tool for the PoI selection, for which we give an outline hereafter. As will be discussed in Sec.~\ref{sec:comparisonPP}, its heuristic nature is the counterpart of the relatively restrained complexity of this tool. \\
+
+%
+
 \subsubsection{Higher-Order Version of Projection Pursuits}
+The $d$th-order version of PP makes use of the so-called \emph{Moment against Moment Profiled Correlation} (MMPC) as objective function. The extractor $\extract^{PP}$ has the following form:
+\begin{equation} 
+\extract^{PP}(\vLeakVec) = (\AAlpha\cdot\vLeakVec)^d \mbox{ ,}
+\end{equation}
+where $\AAlpha$ is a sparse projecting vector with $d$ non-overlapping windows of coordinates set to 1, where the method has identified points of interest. Actually, as will be discussed in Sec.~\ref{sec:comparisonPP}, authors of \cite{PP} propose to exploit $\AAlpha$ as a pointer of PoIs, but do not encourage the use of $\extract^{PP}$ as an attack preprocessing. The procedure is divided into two parts: a global research called {\em Find Solution} and a local optimization called {\em Improve Solution}. At each step of {\em Find Solution}, $d$ windows are randomly selected to form a primordial $\AAlpha$, thus a primordial $\extract^{PP}$. A part of the training traces are then processed via $\extract^{PP}$ and used to estimate the $d$th-order statistical moments $\mmm^d_\sensRandVar = \esperEst_i[(\extract^{PP}(\vLeakVec_i))_{i:\sensVar_i=\sensVar}])$,  for each value of $\sensRandVar$. Then the Pearson correlation coefficient $\hat{\rho}$ between such estimates and the same estimates issued from a second part of the training set is computed. If $\hat{\rho}$ is higher than some threshold $T_{det}$, the windows forming $\AAlpha$ are considered interesting\footnote{A further validation is performed over such windows, using other two training sets to estimate $\hat{\rho}$, in order to reduce the risk of false positives.}\label{fn:4trainingSets} and \emph{Improve Solution} optimises their positions and lengths, via small local movements. Otherwise, the $\AAlpha$ is discarded and another $d$-tuple of random windows is selected.\\
+
+The threshold $T_{det}$ plays a fundamental role in this crucial part of the algorithm: it has to be small enough to promote interesting windows (avoiding false negatives) and high enough to reject uninteresting ones (avoiding false positives). A hypothesis test is used to choose a value for $T_{det}$ in such a way that the probability of $\hat{\rho}$ being higher than $T_{det}$ given that no interesting windows are selected is lower than a chosen significance level $\beta$.\footnote{Interestingly, the threshold $T_{det}$ depends on size of $\sensVarSet$ and not on the size of the training sets of traces. This fact disables the classic strategy that consists in enlarging the sample, making $T_{det}$ lower, in order to raise the statistical power of the test (\emph{i.e.} $\mathrm{Prob}[\hat{\rho}>T_{det}\vert \rho=1]$). Some developments of this algorithm have been proposed \cite{durvauximproved}, also including the substitution of the MMPC objective function with a \emph{Moments against Samples} one, that would let $T_{det}$ decrease when increasing the size of the training set.} \\
+
+\subsection{Foreword of this study}
+
+The exploitation of KDA technique in the way we propose in this chapter has similarities with the first one above as it also aims to exploit interesting $d$-tuples of time samples. It however improves it in several aspects. In particular, its complexity does not increase exponentially with $d$. Moreover, it may be remarked that the first approach allows the attacker to extract interesting $d$-tuples of points, but does not provide any hint to conveniently combine them. This is an important limitation since  finding a convenient way to combine time samples would raise the SCA efficiency. This remark has already been made for the unprotected case and for the particular case of implementations protected by first-order masking \cite{boosting}. Nevertheless in the SCA literature no specific method has been proposed for the general case $d>2$.  This study aims to propose a new answer to this question, while showing that it compares favourably to the PP approach.
+
+%\subsection{Our Contribution}
+%The ideas developed in the paper are based on the so-called Kernel Discriminant Analysis (KDA) \cite{hofmann2008kernel,scholkopf1999fisher}, which essentially consists in applying a so-called \emph{kernel trick} to the LDA. The trick is a stratagem that allows performing the LDA over a higher-dimensional \emph{feature space} (whose dimension can even raise exponentially with $d$) in which information about $Z$ lies in single dimensions and can be enhanced through linear combinations, keeping the computational cost independent from the dimension of the feature space (thus independent from $d$).\footnote{Even if the complexity is independent of $d$, the amount of information extracted is still decreasing exponentially with $d$, as expected when $(d-1)$-th order masking is applied \cite{chari1999towards}.} This study is in line with other recent works aiming to apply machine learning techniques to the side-channel context, such as \cite{machineLearningSCA,lerman2015template} which also exploit kernel functions to deal with non-linearly separable data.\\
+
+%We show that the application of the KDA comes with several issues that we identify and analyse.
+%We afterwards apply it to attack  masked operations implemented over an 8-bit AVR microprocessor Atmega328P. The experiments performed in $2$nd-order, $3$rd-order and $4$th-order contexts confirm the effectiveness of the KDA: in all cases the dimensionality reductions provided by the KDA lead to efficient and successful key recovery template attacks.\\
+
+
+
+%The paper is organised as follows: in Sec.~\ref{sec:general} the notations are established, together with the formalization of the treated problem.  Moreover, some State-of-the-Art methods, efficient for the $1$st-order context, are recalled. In Sec.~\ref{sec:KDA}, the KDA method is described. A discussion about issues related to the application of the KDA to the SCA is conducted in Sec.~\ref{sec:practice} on the basis of experimental results. Finally, a comparison with the PP approach is proposed in Sec.~\ref{sec:PP}.
 
 %----------------------------------------------------------------------------------------
 %	SECTION 2
@@ -25,6 +79,7 @@ Implementations: A First Study', A Novel Use of Kernel Discriminant Analysis as 
 %----------------------------------------------------------------------------------------
 \section{Kernel Discriminant Analysis}
 
+
 %----------------------------------------------------------------------------------------
 %	SECTION 4
 %----------------------------------------------------------------------------------------
@@ -33,7 +88,7 @@ Implementations: A First Study', A Novel Use of Kernel Discriminant Analysis as 
 \subsection{The Multi-Class Trade-Off}
 \subsection{Multi-Class vs 2-class Approach}
 \subsection{Asymmetric Preprocessing/Attack Approach}
-\subsubsection{Comparison with Projection Pursuits}
+\subsubsection{Comparison with Projection Pursuits}\label{sec:comparisonPP}
 
 
 %----------------------------------------------------------------------------------------
