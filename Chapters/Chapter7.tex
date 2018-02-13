@@ -33,7 +33,7 @@ The use of central moments has been experimentally shown to reveal more informat
 We motivate hereafter through a simplified but didactic  example, the need for a computational efficient dimensionality reduction technique as preliminary step to perform an higher-order attack.
 
 
-\subsection{Some strategies to perform higher-order attack}
+\subsection{Some strategies to perform higher-order attack}\label{sec:example}
 We consider here an SCA targeting an $8$-bit sensitive variable $\sensRandVar$ which has been priorly split into $d$ shares and we assume that a reverse engineering and signal processing have priorly been executed to isolate the manipulation of each share  in a region of $\ell$ time samples. This implies that our SCA  now amounts to extract a $\sensRandVar$-dependent information from leakage measurements whose size has been reduced to $d\times \ell$ time samples. To extract such information the State-of-the-Art proposes three approaches to the best of our knowledge.\\
 
 The first one consists in considering $d$ time samples  at a time, one per region, and in testing if they jointly contain information about $\sensRandVar$ (\emph{e.g.} by estimating the mutual information  \cite{Reparaz2012} or by processing a Correlation Power Attack (CPA) using their centred product \cite{chari1999towards}, etc.). Computationally speaking, this approach requires to evaluate $\ell^d$ $d$-tuples (\emph{e.g.} 6.25 million $d$-tuples for $d=4$ and $\ell=50$), thus its complexity grows exponentially with $d$. \\
@@ -56,7 +56,7 @@ The threshold $T_{det}$ plays a fundamental role in this crucial part of the alg
 
 \subsection{Foreword of this study}
 
-The exploitation of KDA technique in the way we propose in this chapter has similarities with the first one above as it also aims to exploit interesting $d$-tuples of time samples. It however improves it in several aspects. In particular, its complexity does not increase exponentially with $d$. Moreover, it may be remarked that the first approach allows the attacker to extract interesting $d$-tuples of points, but does not provide any hint to conveniently combine them. This is an important limitation since  finding a convenient way to combine time samples would raise the SCA efficiency. This remark has already been made for the unprotected case and for the particular case of implementations protected by first-order masking \cite{boosting}. Nevertheless in the SCA literature no specific method has been proposed for the general case $d>2$.  This study aims to propose a new answer to this question, while showing that it compares favourably to the PP approach.
+The exploitation of KDA technique in the way we propose in this chapter aims to exploit interesting $d$-tuples of time samples as the first strategy described in Sec.~\ref{sec:example}. It however improves it in several aspects. In particular, its complexity does not increase exponentially with $d$. Moreover, it may be remarked that such a first approach allows the attacker to extract interesting $d$-tuples of points, but does not provide any hint to conveniently combine them. This is an important limitation since  finding a convenient way to combine time samples would raise the SCA efficiency. This remark has already been made for the unprotected case and for the particular case of implementations protected by first-order masking \cite{boosting}. Nevertheless in the SCA literature no specific method has been proposed for the general case $d>2$.  This study aims to propose a new answer to this question, while showing that it compares favourably to the PP approach.
 
 %\subsection{Our Contribution}
 %The ideas developed in the paper are based on the so-called Kernel Discriminant Analysis (KDA) \cite{hofmann2008kernel,scholkopf1999fisher}, which essentially consists in applying a so-called \emph{kernel trick} to the LDA. The trick is a stratagem that allows performing the LDA over a higher-dimensional \emph{feature space} (whose dimension can even raise exponentially with $d$) in which information about $Z$ lies in single dimensions and can be enhanced through linear combinations, keeping the computational cost independent from the dimension of the feature space (thus independent from $d$).\footnote{Even if the complexity is independent of $d$, the amount of information extracted is still decreasing exponentially with $d$, as expected when $(d-1)$-th order masking is applied \cite{chari1999towards}.} This study is in line with other recent works aiming to apply machine learning techniques to the side-channel context, such as \cite{machineLearningSCA,lerman2015template} which also exploit kernel functions to deal with non-linearly separable data.\\
@@ -72,12 +72,173 @@ The exploitation of KDA technique in the way we propose in this chapter has simi
 %	SECTION 2
 %----------------------------------------------------------------------------------------
 
-\section{Kernel Function and Kernel Trick}
+\section{Feature Space, Kernel Function and Kernel Trick}
+
+
+As described in Sec.~\ref{sec:HO}, the hard part of the construction of an effective extractor  is the detection of $d$ time samples $t_1,\dots,t_d$ where the shares leak. A naive solution, depicted in Fig.~\ref{fig:scheme1}, consists in applying to the traces the centred product preprocessing for each $d$-tuple of time samples. Formally it means immerse the observed data in a higher-dimensional space, via a non-linear function
+\begin{equation}\label{eq:featureSpace}
+\Phi \colon \mathbb{R}^\traceLength \rightarrow \featureSpace = \mathbb{R}^{{D+d-1}\choose{d}} \mbox{ .}
+\end{equation}
+ Using the Machine Learning language the higher-dimensional space $\featureSpace$ will be called \emph{feature space}, because in such a space the attacker finds the features that discriminate different classes. Procedures involving a feature space defined as in \eqref{eq:featureSpace} imply the construction, the storage and the management of ${D+d-1}\choose{d}$-sized traces; such a combinatorially explosion of the size of $\featureSpace$ is undoubtedly an obstacle from a computational standpoint.
+ 
+\begin{figure}
+\centering
+{
+\begin{tikzpicture}
+\matrix (m) [matrix of math nodes, row sep=3em,
+column sep=3em, text height=1.5ex, text depth=0.25ex]
+{ \mathbb{R}^\traceLength & \featureSpace & \mathbb{R}^\newTraceLength \\};
+\path[->]
+(m-1-1) edge node[above] {$\Phi$} (m-1-2);
+         %edge [bend left=30] (m-2-2)
+         %edge [bend right=15] (m-2-2);
+\path[->]
+($(m-1-2.north east)-(0,0.1)$) edge node[above] {$\extract^{\mathrm{PCA}}$} ($(m-1-3.north west)-(0,0.1)$);
+\path[->]
+($(m-1-2.south east)+(0,0.15)$) edge node[below] {$\extract^{\mathrm{LDA}}$} ($(m-1-3.south west)+(0,0.15)$);
+
+\end{tikzpicture} 
+}
+\caption{Performing LDA and PCA over a high-dimensional feature space.}\label{fig:scheme1}
+\end{figure} 
+ 
+ In Machine Learning a stratagem known as \emph{kernel trick} is available for some linear classifiers, such as Support Vector Machine (SVM), PCA and LDA, to turn them into non-linear classifiers, providing an efficient way to implicitly compute them into a high-dimensional feature space. This section gives an intuition about how the kernel trick acts. It explains how it can be combined with the LDA, leading to the so-called KDA algorithm, that enables an attacker to construct some non-linear extractors that concentrate in few points the $d$-th order information held by the side-channel traces, without requiring computations into a high-dimensional feature space, see Fig.~\ref{fig:scheme2}. 
+
+\begin{figure}
+\centering
+{
+\begin{tikzpicture}
+\matrix (m) [matrix of math nodes, row sep=3em,
+column sep=3em, text height=1.5ex, text depth=0.25ex]
+{ \mathbb{R}^\traceLength & \featureSpace & \mathbb{R}^\newTraceLength \\};
+\path[->]
+(m-1-1) edge node[above] {$\Phi$} (m-1-2);
+         %edge [bend left=30] (m-2-2)
+         %edge [bend right=15] (m-2-2);
+\path[->]
+($(m-1-2.north east)-(0,0.1)$) edge node[above] {$\extract^{\mathrm{PCA}}$} ($(m-1-3.north west)-(0,0.1)$);
+\path[->]
+($(m-1-2.south east)+(0,0.15)$) edge node[below] {$\extract^{\mathrm{LDA}}$} ($(m-1-3.south west)+(0,0.15)$);
+
+\path[->]
+(m-1-1) edge [bend left=50] node[above] {$\extract^{\mathrm{KPCA}}$} (m-1-3)
+(m-1-1) edge [bend right=50] node[below] {$\extract^{\mathrm{KDA}}$} (m-1-3);
+
+\end{tikzpicture} 
+}
+\caption{Applying KDA and KPCA permits to by-pass computations in $\featureSpace$.}\label{fig:scheme2}
+\end{figure}
+
+The central tool of a kernel trick is the \emph{kernel function} $K \colon \mathbb{R}^\traceLength \times \mathbb{R}^\traceLength \rightarrow \mathbb{R}$, that has to satisfy the following property, in relation with the function $\Phi$:
+
+\begin{equation}\label{eq:kernelProperty}
+K(\vLeakVec_i,\vLeakVec_i) = \Phi(\vLeakVec_i)\cdot \Phi(\vLeakVec_i) \mbox{ ,}
+\end{equation}
+for each $i,j= 1,\dots, \numTraces$, where $\cdot$ denote the dot product.
+
+
+Every map $\Phi$ has an associated kernel function given by \eqref{eq:kernelProperty}, for a given set of data. The converse is not true: all and only the functions $K\colon\mathbb{R}^D\times \mathbb{R}^D \rightarrow \mathbb{R}$ that satisfy a convergence condition known as {\em Mercer's condition} are associated to some map $\Phi:\mathbb{R}^D	\rightarrow \mathbb{R}^F$, for some $F$. Importantly, a kernel function is interesting only if it is computable directly from the rough data $\vLeakVec$, without evaluating the function $\Phi$. \\
+
+The notion of kernel function is illustrated in the following example.
+
+\begin{example}\label{ex:polyKernel}
+Let $D=2$. Consider the function
+\begin{align}
+&K\colon\mathbb{R}^2\times \mathbb{R}^2 \rightarrow \mathbb{R} \nonumber \\ 
+&K\colon(\vLeakVec_i,\vLeakVec_j) \mapsto ( \vLeakVec_i\cdot \vLeakVec_j)^2 \mbox{ ,} \label{eq:example1}
+\end{align}
+
+After defining $\vLeakVec_i = [a,b]$ and $\vLeakVec_j = [c,d]$, we get the following development of K:
+\begin{equation}
+K(\vLeakVec_i,\vLeakVec_j) = (ac + bd)^2 = a^2c^2 + 2abcd + b^2d^2 \mbox{ ,}
+\end{equation}
+
+which is associated to the following map from $\mathbb{R}^2$ to $\mathbb{R}^3$:
+\begin{equation}
+\Phi(u,v) =  [u^2, \sqrt{2}uv, v^2]
+\end{equation}
+
+Indeed $\Phi(\vLeakVec_i)\cdot \Phi(\vLeakVec_j) = a^2c^2 + 2abcd + b^2d^2 = K(\vLeakVec_i,\vLeakVec_j)$\enspace. This means that to compute the dot product between some data mapped into the $3$-dimensional space $\featureSpace$ there is no need to apply $\Phi$: applying $K$ over the $2$-dimensional space is equivalent. This trick allows the short-cut depicted in Fig.~\ref{fig:scheme2}.
+
+\end{example}
+
+
+
+In view of the necessary condition exhibited by Property~\ref{property:poly},  the function $K(\vLeakVec_i,\vLeakVec_j) = (\vLeakVec_i \cdot \vLeakVec_j)^d$, hereafter named \emph{$d$th-degree polynomial kernel function}, is the convenient choice for an attack against implementations protected with $(d-1)$th-order masking. It corresponds to a function $\Phi$ that brings the input coordinates into a feature space $\featureSpace$ containing all possible $d$-degree monomials in the coordinates of $\vLeakVec$, up to constants. This is, up to constants, exactly the $\Phi$ function of \eqref{eq:featureSpace}.\footnote{Other polynomial kernel functions may be more adapted if the acquisitions are not free from $d^\prime$th-order leakages, with $d^\prime<d$. Among non-polynomial kernel functions, we effectuated some experimental trials with the most common Radial Basis Function (RBF), obtaining no interesting results. This might be caused by the infinite-dimensional size of the underlying feature space, that makes the discriminant components estimation less efficient.}\\ 
+
+
 \subsection{Local Kernel Functions as Similarity Metrics}
+\todo{give an intuition and anticipate siamese networks}
 %----------------------------------------------------------------------------------------
 %	SECTION 3
 %----------------------------------------------------------------------------------------
+
+% SEI ARRIVATA FINO A QUI E POI HAI UN PROBLEMA DI NOTAZIONI \sss[z_i]{j}
 \section{Kernel Discriminant Analysis}
+As shown in \ref{eq:kernelProperty}, a kernel function $K$ allows us to compute the dot product between elements mapped into the feature space $\featureSpace$ \eqref{eq:kernelProperty}, and more generally any procedure that is only composed of such products. Starting from this remark, the authors of  \cite{scholkopf1998nonlinear} have shown that the PCA and LDA procedures can be adapted to satisfy the latter condition, which led them to define the KPCA and KDA algorithms. The latter one is described in the following procedure.
+
+\begin{procedure}[KDA for $d$th-order masked side-channel traces]\label{procedure:KDA}\\
+Given a set of labelled profiling side-channel traces $(\vLeakVec_i, \sensVar_i)_{i=1, \dots , \nbProfilingTraces}$ and the kernel function $K(\vLeakVec,\yyy)= (\vLeakVec \cdot \yyy)^d$:
+\begin{itemize}
+
+\item[1)] Construct a matrix $\MMM$ (acting as \emph{between-class scatter matrix}):
+
+\begin{equation}
+\MMM = \sum_{\sensVar\in\sensVarSet}\nbTracesPerClass(\MMMclass - \MMMT)(\MMMclass-\MMMT)^\intercal\mbox{ ,}
+\end{equation}
+
+where $\MMMclass$ and $\MMMT$ are two $N$-size column vectors whose entries are given by:
+\begin{align}
+\MMMclass[\sensVar][j] = \frac{1}{\nbTracesPerClass}\sum_{i:\sensVar_i=\sensVar}^{\nbTracesPerClass}K(\vLeakVec_j,\vLeakVec_i)\\
+\MMMT[j] = \frac{1}{\nbProfilingTraces}\sum_{i=1}^{\nbProfilingTraces}K(\vLeakVec_{j},\vLeakVec_{i}) \mbox{ .}
+\end{align}
+
+
+\item[2)] Construct a matrix $\NNN$ (acting as \emph{within-class scatter matrix}):
+
+\begin{equation}\label{eq:N}
+\NNN = \sum_{\sensVar\in\sensVarSet}\kernelMatrix_\sensVar(\III - \III_{\numTraces})\kernelMatrix_\sensVar^\intercal\mbox{ ,}
+\end{equation}
+where $\III$ is a $\nbTracesPerClass \times \nbTracesPerClass$ identity matrix, $\III_{\nbTracesPerClass}$ is a $\nbTracesPerClass \times \nbTracesPerClass$ matrix with all entries equal to $\frac{1}{\nbTracesPerClass}$ and $\kernelMatrix_{\sensVar}$ is the $\nbProfilingTraces \times \nbTracesPerClass$
+
+%ARRIVATA QUI A LEGGERE E A SISTEMARE LE NOTAZIONI
+
+ sub-matrix of $\kernelMatrix = (K(\sss[z_i]{i},\sss[z_j]{j}))_{\substack{i=1,\dots,\numTraces[] \\ j=1,\dots,\numTraces[]}}$ storing only columns indexed by the indices $i$ such that $z_i=z$. 
+
+\item[2bis)] Regularize the  matrix $\NNN$ for computational stability:
+\begin{equation}\label{eq:mu}
+\NNN = \NNN + \mu  \III \quad \mbox{ see \ref{sec:mu};}
+\end{equation}
+
+\item[3)]\label{point:eigs} Find the non-zero eigenvalues $\lambda_1, \dots, \lambda_\numEigenvectors$ and the corresponding eigenvectors $\nununu_1, \dots, \nununu_\numEigenvectors$ of $\NNN^{-1}\MMM$; 
+
+
+\item[4)] Finally, the projection of a new trace $\sss[]{}$ over the $\ell$-th non-linear $d$-th order discriminant component can be computed as:
+\begin{equation}\label{eq:projection}
+\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) = \sum_{i=1}^{\NPoI}\boldsymbol{\nu}_\ell[i]K(\sss[z_i]{i}, \sss[]{}) \mbox{ .}
+\end{equation} 
+
+\end{itemize}
+\end{procedure}
+For the reasons discussed in the introduction of this section, the right-hand side of \eqref{eq:projection} may be viewed as an efficient way to process the $\ell$-coordinate of the vector $\extract^{LDA}(\Phi(\sss[]{})) = \textbf{w}_{\ell} \cdot \Phi(\sss[]{})$,
+without evaluating $\Phi(\sss[]{})$. The entries of $\textbf{w}_{\ell}$ are never computed, and will thus be referred to as \emph{implicit coefficients} (see Remark 2). It may be observed that each discriminant component $\extract^{\mathrm{KDA}}_{\ell}(\cdot)$ depends on the training set $(\sss[z_i]{i})_{i=1,\dots,\NPoI}$, on the kernel function $K$ and on the regularization parameters $\mu$.
+
+\begin{remark}[The implicit coefficients]\label{rem:implicit}
+As already said, the KDA, when the $d$th-degree  polynomial kernel function is chosen as kernel function, operates implicitly in the feature space of all products of $d$-tuples of time samples. In order to investigate the effect of projecting a new trace $\sss[]{}$ over a component $\extract^{\mathrm{KDA}}_{\ell}(\sss[]{})$, we can compute for a small $d$ the implicit coefficients that are assigned to the $d$-tuples of time samples through \eqref{eq:projection}. For $d=2$ we obtain that in such a feature space the projection is given by the linear combination computed via the coefficients shown below: 
+\begin{equation}\label{eq:implicit}
+\extract^{\mathrm{KDA}}_{\ell}(\sss[]{}) = \sum_{j=1}^\traceLength \sum_{k=1}^\traceLength[ (\sss[]{}[j]\sss[]{}[k])\underbrace{(\sum_{i=1}^{\NPoI}\boldsymbol{\nu}_{\ell}[i] \sss[]{i}[j]\sss[]{i}[k])}_{\mbox{implicit \\ coefficients}}]
+\end{equation}
+
+\end{remark}
+
+
+\subsection{Computational complexity analysis}
+The order $d$ of the attack does not significantly influence the complexity of the KDA algorithm. Let $\NPoI$ be the size of the training trace set and let $D$ be the trace length, then the KDA requires:
+\begin{itemize}
+\item $\frac{\NPoI^2}{2}D$ multiplications, $\frac{\NPoI^2}{2}(D-1)$ additions and $\frac{\NPoI^2}{2}D$ raising to the $d$-th power, to process the kernel function over all pairs of training traces
+\item $(D+C)$ multiplications, $(D+C-2)$ additions and 1 raising to the $d$-th power for the projection of each new trace over $C$ KDA components,
+\item the cost of the eigenvalue problem, that is $O(\NPoI^3)$.
+\end{itemize} 
 
 
 %----------------------------------------------------------------------------------------
