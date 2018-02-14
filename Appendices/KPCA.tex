@@ -1,0 +1,136 @@
+\chapter{Kernel PCA construction}\label{app:KPCA}
+
+Suppose that we want to perform PCA in the image space of a function $\Phi$ that is associated to a given kernel function $K$. The kernel version for PCA has been presented in \cite{scholkopf1998nonlinear}, where all details can be found; as we said, the important step consists in expressing the operations needed for the PCA procedure in terms of the dot products between the mapped data.\\
+
+Let us assume that data are centered in the feature space, {\em i.e.} $\sum_{i=1,\dots,\nbProfilingTraces}\Phi(\vLeakVec_{i})=0$.\footnote{Such a condition is not hard to achieve, even without explicitly pass through the feature space: it suffices substituting the kernel matrix $\kernelMatrix$ by the matrix $\tilde{\kernelMatrix} = \kernelMatrix - \boldsymbol{1}_{\nbProfilingTraces}\kernelMatrix - \kernelMatrix\boldsymbol{1}_{\nbProfilingTraces} + \boldsymbol{1}_{\nbProfilingTraces}\kernelMatrix\boldsymbol{1}_{\nbProfilingTraces}$, where $\boldsymbol{1}_{\nbProfilingTraces}$ denotes the matrix with each entry equal to $\frac{1}{\nbProfilingTraces}$. The same kind of matrix has to be computed in projecting phase, using the test data.} In this way the empirical covariance matrix $\covmat^\Phi$ of data in the feature space is given by:
+\begin{equation}
+\covmat^\Phi = \frac{1}{\nbProfilingTraces} \sum_{i=1}^{\nbProfilingTraces}\Phi(\vLeakVec_{i})\Phi(\vLeakVec_{i})^\intercal \mbox{ .}
+\end{equation} 
+We want to find eigenvalues $\lambda^\Phi \neq 0$ and eigenvectors $\AAlpha^\Phi\in \mathcal{F}\smallsetminus \{\boldsymbol{0}\}$ such that
+\begin{equation}\label{eq:eigProblem}
+\covmat^\Phi\AAlpha^\Phi = \lambda^\Phi \AAlpha^\Phi \mbox{ .}
+\end{equation}
+We remark that such an eigenvector satisfies
+\begin{align}
+\AAlpha^\Phi &= \frac{1}{\lambda^\Phi\nbProfilingTraces}\sum_{i=1}^{\nbProfilingTraces} \Phi(\vLeakVec_{i})\Phi(\vLeakVec_{i})^\intercal \AAlpha^\Phi\\
+\label{eq:passaggio}
+&=  \frac{1}{\lambda^\Phi\nbProfilingTraces}\sum_{i=1}^{\nbProfilingTraces} \left[\Phi(\vLeakVec_{i})^\intercal \AAlpha^\Phi\right] \Phi(\vLeakVec_{i}) =  \\
+&= \sum_{i=1}^{\nbProfilingTraces}\underbrace{\frac{\Phi(\vLeakVec_{i})^\intercal \AAlpha^\Phi}{\lambda^\Phi\nbProfilingTraces}}_{\nu_i}\Phi(\vLeakVec_{i}) = \\
+\label{eq:linearComb}
+&= \sum_{i=1}^{\nbProfilingTraces}\nu_i \Phi(\vLeakVec_{i})\mbox{ ,}
+\end{align}
+where the step \eqref{eq:passaggio} makes use of the associativity of the matrix product and the commutativity of the scalar-matrix product. Eq.~\eqref{eq:linearComb} tells us that each eigenvector $\AAlpha^\Phi$ is expressible as a linear combination of the data mapped into the feature space $(\Phi(\vLeakVec_{i})_{i=1,\dots,\nbProfilingTraces}$, or equivalently each eigenvector $\AAlpha^\Phi$ lies in the span of $(\Phi(\vLeakVec_{i})_{i=1,\dots,\nbProfilingTraces})$. This observation authorizes to substitute to the problem \eqref{eq:eigProblem}, the following equivalent system:
+\begin{equation}\label{eq:system}
+\begin{cases}
+\lambda^\Phi(\Phi(\vLeakVec_{1})\cdot  \AAlpha^\Phi) = \Phi(\vLeakVec_{1})\cdot \covmat^\Phi \AAlpha^\Phi \\
+\vdots\\
+\lambda^\Phi(\Phi(\vLeakVec_{\nbProfilingTraces})\cdot  \AAlpha^\Phi) = \Phi(\vLeakVec_{\nbProfilingTraces})\cdot \covmat^\Phi \AAlpha^\Phi
+\end{cases}
+\end{equation}
+
+
+Joining \eqref{eq:linearComb} and \eqref{eq:system} we obtain, looking to the first equation of the system:
+\begin{align}
+\lambda^\Phi(\Phi(\vLeakVec_{1})\cdot \sum_{i=1}^{\nbProfilingTraces}\nu_i\Phi(\vLeakVec_{i})) &= \Phi(\vLeakVec_{1})\cdot\left[ \frac{1}{N}\sum_{i=1}^{\nbProfilingTraces}\Phi(\vLeakVec_{i})\Phi(\vLeakVec_{i})^\intercal (\sum_{i=1}^{\nbProfilingTraces}\nu_i \Phi(\vLeakVec_{i}))\right]\\
+\lambda^\Phi \sum_{i=1}^{\nbProfilingTraces}\nu_i(\Phi(\vLeakVec_{1})\cdot \Phi(\vLeakVec_{i})) &=\Phi(\vLeakVec_{1})\cdot\left[ \sum_{j=1}^{\nbProfilingTraces}\frac{\nu_j}{N}\left(\sum_{i=1}^{\nbProfilingTraces}\Phi(\vLeakVec_{i})\Phi(\vLeakVec_{i})^\intercal\right)  \Phi(\vLeakVec_{j})\right]\\
+\lambda^\Phi \sum_{i=1}^{\nbProfilingTraces}\nu_i(\Phi(\vLeakVec_{1})\cdot \Phi(\vLeakVec_{i})) &=\Phi(\vLeakVec_{1})\cdot\left[ \sum_{j=1}^{\nbProfilingTraces}\frac{\nu_j}{N}\sum_{i=1}^{\nbProfilingTraces}\underbrace{\Phi(\vLeakVec_{i})^\intercal \Phi(\vLeakVec_{j})}_{\Phi(\vLeakVec_{i}) \cdot \Phi(\vLeakVec_{j})}\Phi(\vLeakVec_{i})\right]\\
+\lambda^\Phi \sum_{i=1}^{\nbProfilingTraces}\nu_i(\Phi(\vLeakVec_{1})\cdot \Phi(\vLeakVec_{i})) &= \sum_{j=1}^{\nbProfilingTraces}\frac{\nu_j}{N}\left[\Phi(\vLeakVec_{1})\cdot\sum_{i=1}^{\nbProfilingTraces}(\Phi(\vLeakVec_{i}) \cdot \Phi(\vLeakVec_{j}))\Phi(\vLeakVec_{i})\right]\\
+\nbProfilingTraces\lambda^\Phi \sum_{i=1}^{\nbProfilingTraces}\nu_i\underbrace{(\Phi(\vLeakVec_{1})\cdot \Phi(\vLeakVec_{i}))}_{\kernelMatrix[1,i]} &= \sum_{j=1}^{\nbProfilingTraces}\nu_j\left[\sum_{i=1}^{\nbProfilingTraces}\underbrace{(\Phi(\vLeakVec_{i}) \cdot \Phi(\vLeakVec_{j}))}_{\kernelMatrix[i,j]}\underbrace{(\Phi(\vLeakVec_{1})\cdot\Phi(\vLeakVec_{i}))}_{\kernelMatrix[1,j]}\right]\mbox{ .}
+\end{align}
+Thus, the system \eqref{eq:system} is equivalent to the follow:
+
+\begin{equation}
+\begin{cases}
+\nbProfilingTraces\lambda^\Phi \sum_{i=1}^{\nbProfilingTraces}\nu_i{\kernelMatrix[1,i]} &= \sum_{j=1}^{\nbProfilingTraces}\nu_j\left[\sum_{i=1}^{\nbProfilingTraces}{\kernelMatrix[1,j]}{\kernelMatrix[i,j]}\right]\\
+\vdots \\
+\nbProfilingTraces\lambda^\Phi \sum_{i=1}^{\nbProfilingTraces}\nu_i{\kernelMatrix[\nbProfilingTraces,i]} &= \sum_{j=1}^{\nbProfilingTraces}\nu_j\left[\sum_{i=1}^{\nbProfilingTraces}{\kernelMatrix[\nbProfilingTraces,j]}{\kernelMatrix[i,j]}\right]
+\end{cases}
+\end{equation}
+
+%\begin{remark}
+%The kernel matrix $\kernelMatrix$ is symmetric by construction: $\kernelMatrix[i,j] = \kernelMatrix[j,i]$ for each pair $i,j$.
+%\end{remark}
+
+Let $\nununu$ be the column vector containing the coefficients $\nu_i$ of \eqref{eq:linearComb}. The above system is expressible in matricial form as
+
+\begin{equation}
+\begin{cases}
+\nbProfilingTraces\lambda^\Phi [\kernelMatrix\nununu][1] &= [\kernelMatrix^2\nununu][1]\\
+\vdots \\
+\nbProfilingTraces\lambda^\Phi [\kernelMatrix\nununu][\nbProfilingTraces] &= [\kernelMatrix^2\nununu][\nbProfilingTraces]\mbox{ ,}
+\end{cases}
+\end{equation}
+
+which equals the following equation:
+
+\begin{equation}
+\nbProfilingTraces\lambda^\Phi\kernelMatrix\nununu = \kernelMatrix^2\nununu \mbox{ .}
+\end{equation}
+
+It can be shown that solving the last equation is equivalent to solve the following eigenvector problem
+\begin{equation}\label{eq:eigProblemKPCA}
+\gamma\nununu = \kernelMatrix\nununu \mbox{ .}
+\end{equation}
+
+Let $\gamma_1\geq\gamma_2\geq\dots\geq\gamma_{\nbProfilingTraces}$ denote the eigenvalues of $\kernelMatrix$, $\gamma_C$ being the last different from zero, and $\nununu_1,\dots, \nununu_{\nbProfilingTraces}$ the corresponding eigenvectors. For the sake of obtaining the corresponding normalized principal components in the feature space $\mathcal{F}$, denoted $\AAlpha^\Phi_1,\dots, \AAlpha^\Phi_C$, a normalization step is required, imposing for all $k=1,\dots, C$
+
+\begin{equation}
+\AAlpha^\Phi_k\cdot\AAlpha^\Phi_k = 1 \mbox{ ,}
+\end{equation}
+
+which can be translated into a condition for $\nununu_1,\dots, \nununu_C$, using \eqref{eq:linearComb} and \eqref{eq:eigProblemKPCA}:
+\begin{equation}
+1 = \sum_{i,j=1}^{\nbProfilingTraces}\nununu_k[i]\nununu_k[j](\Phi(\vLeakVec_{i})\cdot \Phi(\vLeakVec_{j})) = \nununu_k \cdot \kernelMatrix\nununu_k = \gamma_k(\nununu_k\cdot \nununu_k)
+\end{equation}
+
+
+Extracting the non-linear principal components of a datum $\vLeakVec_{}$ means projecting its image $\Phi(\vLeakVec_{})$ onto the eigenvectors $\AAlpha^\Phi_1,\dots, \AAlpha^\Phi_C$ in $\mathcal{F}$. To do so, we neither need to explicitly compute $\Phi(\vLeakVec_{})$ nor $\AAlpha^\Phi_i$. Indeed, using \eqref{eq:linearComb}:
+
+\begin{equation}
+\AAlpha^\Phi_k \cdot \Phi(\vLeakVec_{}) = \sum_{i=1}^{\nbProfilingTraces}\nununu_k[i](\Phi(\vLeakVec_{i}) \cdot \Phi(\vLeakVec_{})) =  \sum_{i=1}^{\nbProfilingTraces}\nununu_k[i]K(\vLeakVec_{i}, \vLeakVec_{}) \mbox{ .}
+\end{equation}
+
+
+
+\section{Kernel class-oriented PCA}
+
+Suppose now that we want to perform a class-oriented PCA in the image space of a function $\Phi$ that is associated to a given kernel function $K$, i.e. we want to solve, using a kernel trick, the eigenvalue problem
+
+
+\begin{equation}\label{eq:eigProblemSB}
+\SB^\Phi\AAlpha^\Phi = \lambda^\Phi \AAlpha^\Phi \mbox{ ,}
+\end{equation}
+
+where $\SB^\Phi$ is the between-scatter matrix in the feature space: 
+
+\begin{equation}
+\SB^\Phi = \sum_{\sensVar\in\sensVarSet}\nbTracesPerClass(\mmmXclassPhi-\mmmXPhi)(\mmmXclassPhi-\mmmXPhi)^\intercal \mbox{ .}
+\end{equation}
+
+Here $\mmmXclassPhi = \frac{1}{\nbTracesPerClass}\sum_{i=1\colon \sensVar_i=\sensVar}\Phi(\vLeakVec_{i})$ and $\mmmXPhi = \frac{1}{\nbProfilingTraces}\sum_{i=1}^{\nbProfilingTraces}\Phi(\vLeakVec_{i})$.\\
+
+As before, the eigenvectors $\AAlpha^\Phi_i$ are expressible as linear combination of the data images on $\mathcal{F}$, i.e. \eqref{eq:linearComb} is still true:
+
+\begin{equation}
+\AAlpha^\Phi = \sum_{i=1}^{\nbProfilingTraces}\nu_i \Phi(\vLeakVec_{i}) \mbox{ .}
+\end{equation}
+
+Moreover as before, the eigenvector problem \eqref{eq:eigProblemSB} can be translated in an eigenvector problem that gives the coefficients $\nununu$ as solutions. That is:
+
+\begin{equation}\label{eq:eigProblemM}
+\gamma\MMM = \MMM \nununu \mbox{ ,}
+\end{equation}
+
+where the matrix $\MMM$ is computed as
+
+\begin{equation}
+\MMM = \sum_{\sensVar\in\sensVarSet}\nbTracesPerClass(\MMMclass - \MMMT)(\MMMclass-\MMMT)\mbox{ ,}
+\end{equation}
+
+where $\MMMclass[j] = \frac{1}{\nbTracesPerClass}\sum_{i=1\colon \sensVar_i=\sensVar}K(\vLeakVec_{j},\vLeakVec{i})$ is an $\nbProfilingTraces$-sized column vector, and $\MMMT[j] = \frac{1}{\nbProfilingTraces}\sum_{i=1}^{\nbProfilingTraces}K(\vLeakVec_{j},\vLeakVec_{i})$.\\
+
+Finally, one the eigenvector $\nununu$ are found, to project a datum $\vLeakVec_{}$ onto the corresponding principal component in the feature space we proceed as in the previous case:
+
+\begin{equation} \label{eq:projection}
+\AAlpha^\Phi_k \cdot \Phi(\vLeakVec_{}) =  \sum_{i=1}^{\nbProfilingTraces}\nununu_k[i]K(\vLeakVec_{i}, \vLeakVec_{}) \mbox{ .}
+\end{equation}

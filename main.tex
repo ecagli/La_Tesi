@@ -75,11 +75,25 @@ headsepline, % Uncomment to get a line under the header
 \usepackage{booktabs}
 \usepackage{csquotes}
 
+\usepackage{tikz}
+\usetikzlibrary{mindmap,backgrounds}
+\usetikzlibrary{shapes}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{arrows}
+\usetikzlibrary{patterns}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
+\usetikzlibrary{matrix}
+
+
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
 \newtheorem{definition}{Definition}
 \newtheorem{assumption}{Assumption}{\bfseries}{\itshape}
 \newtheorem{property}{Property}{\bfseries}{\itshape}
+\newtheorem{example}{Example}{\bfseries}{\itshape}
 \newtheorem{notation}{Notation}{\bfseries}{\itshape}
 \newtheorem{procedure}{Procedure}{\bfseries}{}
 
@@ -172,6 +186,12 @@ headsepline, % Uncomment to get a line under the header
 \newcommand{\MMMT}{\textbf{M}_{\textbf{T}}}
 \newcommand{\NNN}{\textbf{N}}
 \newcommand{\III}{\textbf{I}}
+\newcommand{\numEigenvectors}{Q}
+\newcommand{\kernelMatrix}{\textbf{K}}
+\newcommand{\nununu}{\boldsymbol{\nu}}
+\newcommand{\mmmXPhi}{\overline{\Phi(\textbf{x}})}
+\newcommand{\mmmXclassPhi}[1][z]{\overline{\Phi(\textbf{x})}^{#1}}
+
 
 \newcommand*{\aaa}{\textbf{a}}
 
@@ -430,6 +450,7 @@ $GF(2^b)$ & Galois Field of order $2^b$\\
 \include{Appendices/scenario3_4_cardis15}
 \include{Appendices/artificial_jitter}
 \include{Appendices/PCA_geometrical}
+\include{Appendices/KPCA}
 %\include{Appendices/AppendixC}
 
 %----------------------------------------------------------------------------------------
