@@ -45,7 +45,7 @@ The third approach, whose complexity does not increase exponentially with $d$, i
 
 %
 
-\subsubsection{Higher-Order Version of Projection Pursuits}
+\subsubsection{Higher-Order Version of Projection Pursuits}\label{sec:PP_description}
 The $d$th-order version of PP makes use of the so-called \emph{Moment against Moment Profiled Correlation} (MMPC) as objective function. The extractor $\extract^{PP}$ has the following form:
 \begin{equation} 
 \extract^{PP}(\vLeakVec) = (\AAlpha\cdot\vLeakVec)^d \mbox{ ,}
@@ -228,6 +228,8 @@ As already said, the KDA, when the $d$th-degree  polynomial kernel function is c
 \end{remark}
 
 
+
+
 \subsection{Computational complexity analysis}
 The order $d$ of the attack does not significantly influence the complexity of the KDA algorithm. Let $\nbProfilingTraces$ be the size of the training trace set and let $D$ be the trace length, then the KDA requires:
 \begin{itemize}
@@ -236,23 +238,24 @@ The order $d$ of the attack does not significantly influence the complexity of t
 \item the cost of the eigenvalue problem, that is $O(\nbProfilingTraces^3)$.
 \end{itemize} 
 
+In next sections we discuss the practical problems an attacker has to deal with when applying the KDA. The argumentation is conducted on the basis of experimental results whose setup is described hereafter.
 
 %----------------------------------------------------------------------------------------
 %	SECTION 4
 %----------------------------------------------------------------------------------------
-\section{Experiments over Atmega328P}
+\section{Experiments over Atmega328P}\label{sec:practice}
 \subsection{Experimental Setup}
-The target device is an 8-bit AVR microprocessor Atmega328P and we acquired power-consumption traces thanks to the ChipWhisperer platform \cite{o2014chipwhisperer}.\footnote{This choice has been done to allow for reproducibility of the experiments.} From the acquisitions we extracted some traces composed of 200 time samples, corresponding to 4 clock cycles (see Fig.\ref{fig:PP2} or \ref{fig:PP3} upper parts). Depending on the attack implementation, we ensure that the acquisitions contain either 2,3 or 4 shares respectively for $d=2,3$ or $4$. The shares satisfy $M_1 \oplus \dots \oplus M_d = Z$,
-where $Z = \Sbox(P\oplus K^\star)$. The goal of the attack is to recover the subkey $K^\star$. The plaintext $P$ is assumed to be known and the $M_i$ are assumed to be unknown random uniform values. For the characterization phase, the subkey $K^\star$ is also known. The training set has size $\NPoI=8960$, and the plaintexts $p_i$ have been chosen to balance the number of classes ($N_z=\frac{8960}{256}=35$  for each $z\in \Bbb{F}_2^8$) . We fixed the dimension $C$, \emph{aka} the dimension of the extractor output,  at the value $2$ (except for the 2-class KDA for which we chose $C=1$, see Remark~\ref{rem:numComp}): we therefore tried to build extractors $\extract^{\mathrm{KDA}}(\cdot) = (\extract^{\mathrm{KDA}}_1(\cdot), \extract^{\mathrm{KDA}}_2(\cdot))$ mapping traces of size 200 samples into new traces composed of 2 coordinates.\footnote{For PCA and LDA methods, it is known that a good component selection is fundamental to obtain an efficient subspace \cite{Cagli2016}, and that the first components not always represent the best choice. This is likely to be the case for the KDA as well, but in our experiments the choice of the two first components $\extract^{\mathrm{KDA}}_1, \extract^{\mathrm{KDA}}_2$ turns out to be satisfying, and therefore to simplify our study we preferred to not investigate other choices.} Afterwards, a bivariate template attack \cite{Chari2003} is then performed: some new profiling traces are used to estimate a Gaussian template for each class, and a maximum likelihood matching phase has then been performed to recover an unknown key $K^\star$ from some attack traces. \\
+The target device is an 8-bit AVR microprocessor Atmega328P and we acquired power-consumption traces thanks to the ChipWhisperer platform \cite{o2014chipwhisperer}.\footnote{This choice has been done to allow for reproducibility of the experiments.} From the acquisitions we extracted some traces composed of 200 time samples, corresponding to 4 clock cycles (see Fig.\ref{fig:PP2} or \ref{fig:PP3} upper parts). Depending on the attack implementation, we ensure that the acquisitions contain either 2,3 or 4 shares respectively for $d=2,3$ or $4$. The shares satisfy $M_1 \oplus \dots \oplus M_d = \sensRandVar$,
+where $\sensRandVar = \Sbox(P\oplus \keyRandVar^\star)$. The goal of the attack is to recover the subkey $K^\star$. The plaintext $P$ is assumed to be known and the $M_i$ are assumed to be unknown random uniform values. For the characterization phase, the subkey $K^\star$ is also known. The training set has size $\nbProfilingTraces=8960$, and the plaintexts $p_i$ have been chosen to balance the number of classes ($\nbTracesPerClass=\frac{8960}{256}=35$  for each $\sensVar\in \mathbb{F}_2^8$) . We fixed the dimension $\newTraceLength$  at the value $2$ (except for the 2-class KDA for which we chose $C=1$, see Remark~\ref{rem:numComp}): we therefore tried to build extractors $\extract^{\mathrm{KDA}}(\cdot) = (\extract^{\mathrm{KDA}}_1(\cdot), \extract^{\mathrm{KDA}}_2(\cdot))$ mapping traces of size 200 samples into new traces composed of 2 coordinates.\footnote{As we have seen in Chapter~\ref{ChapterLinear}, for PCA and LDA methods a good component selection is fundamental to obtain an efficient subspace, and that the first components not always represent the best choice. This is likely to be the case for the KDA as well, but in our experiments the choice of the two first components $\extract^{\mathrm{KDA}}_1, \extract^{\mathrm{KDA}}_2$ turns out to be satisfying, and therefore to simplify our study we preferred to not investigate other choices.} Afterwards, a bivariate Gaussian TA (see Sec.~\ref{sec:TA}). \\
 
-As discussed in Remark~\ref{remark:normalized}, the training traces are normalized. The average trace and the standard deviation trace used to perform the normalization are stored and reused to center the profiling and attack traces before projecting them onto the KDA components. In this way the new traces present a form as similar as possible to the training ones. Remark that, due to the over-fitting risk that will be discussed in Sec.~\ref{sec:mu}, it is worth to not reusing the training traces as profiling traces in the attack phase: the extractor $\extract^{\mathrm{KDA}}$ has a different behaviour when applied to the traces used to train it and to some new traces, and this might corrupt the profiling phase.
+As discussed in Remark~\ref{remark:normalized}, the training traces are normalized. The average trace and the standard deviation trace used to perform the normalization are stored and reused to center the profiling and attack traces before projecting them onto the KDA components. In this way the new traces present a form as similar as possible to the training ones. Remark that, due to the overfitting risk, discussed in general in Sec.~\ref{sec:overfitting} and that will be discussed in the particular case of KDA in Sec.~\ref{sec:mu}, it is worth to not reusing the training traces as profiling traces in the attack phase: the extractor $\extract^{\mathrm{KDA}}$ has a different behaviour when applied to the traces used to train it and to some new traces, and this might corrupt the profiling phase.
 
 \subsection{The Regularization Problem}\label{sec:mu}
 
 
 \begin{figure}
-\includegraphics[width=.5\textwidth]{figures/mu_comparison_new.pdf} 
-\includegraphics[width=.5\textwidth]{figures/good_bad_coeffs.pdf} 
+\includegraphics[width=.5\textwidth]{../Figures/CARDIS2016/mu_comparison_new.pdf} 
+\includegraphics[width=.5\textwidth]{../Figures/CARDIS2016/good_bad_coeffs.pdf} 
 \caption{On the left: template attack guessing entropy vs the number of traces for the attack phase, varying for choices of the constant $\mu$  \eqref{eq:mu}. On the right: the implicit coefficients assigned to pairs of time samples for $\mu_3$ (upper triangular part) and $\mu_5$ (lower triangular part). }\label{fig:mu}
 \end{figure}
 
@@ -264,18 +267,17 @@ By construction the matrix $\NNN$ in \eqref{eq:N} is not positive-definite, whic
 
 When applying such a regularization, the choice of the constant $\mu$ is crucial. For sure it has to be large enough to ensure that $\NNN$ turns to a positive-definite matrix, but we experimentally observed  that the minimal $\mu$ for which the positive-definitiveness of $\NNN$ is attained is often far from  being the one that provides a good extractor. In Fig.~\ref{fig:mu} (left) we observe the efficiency of a template attack run in combination with a KDA extractor. The matrix $\NNN$ is positive-definite for $\mu_1 = 10^{-3}$ but the value that provides the best extractor is much higher (namely $\mu_3 = 10^{7}$). Still raising the value of $\mu$ degrades the quality of the extractor. The right part of Fig.~\ref{fig:mu} shows the implicit coefficients of the extractor (see \eqref{eq:implicit}) obtained under $\mu_3$ (upper triangular part) and under $\mu_5$ (lower triangular part). The extractor corresponding to the former one leads to a successful attack and has high values concentrated over the interesting windows; the extractor corresponding to the latter one leads to an unsuccessful attack and shows lack of localization around interesting parts of the trace, highlighting the fact that the KDA tool failed in detecting generalisable class-distinguishing features in this case.\\
 
-As explained in \cite{scholkopf1999fisher}, the regularization \eqref{eq:mu} is not only a way to make the problem computationally stable (which explains why the minimal $\mu$ making $\NNN$ positive-definite may not be a good choice). It is also an answer to the fact that kernel methods are generally prone to over-fitting, \emph{i.e.} the aptitude to perfectly learn the training set without having the capacity to correctly classify  new examples. This means, in the case of the KDA, that $\extract^{\mathrm{KDA}}$ risks to perfectly separate the training traces in their classes, while failing in separating the attack traces. A regularization acts as an additional constraint of the problem, that makes the method less accurate in the learning phase, but in some cases more likely to correctly operate on new examples. The regularization \eqref{eq:mu} corresponds in particular to the additional requirement for $\nununu$ to have a small norm $\lVert\nununu\rVert^2$. 
+The regularization \eqref{eq:mu} is a proper regularization in the sense discussed in Sec.~\ref{sec:overfitting}: it is not only a way to make the problem computationally stable (which explains why the minimal $\mu$ making $\NNN$ positive-definite may not be a good choice), but also a answer to the overfitting phenomenon. In the case of the KDA the overfitting is observable when $\extract^{\mathrm{KDA}}$ almost perfectly separates the training traces in their classes, while failing in separating the attack ones. As explained in \cite{scholkopf1999fisher}, the regularization \eqref{eq:mu} corresponds to the additional requirement for $\nununu$ to have a small norm $\lVert\nununu\rVert^2$. As any regularization technique, it makes the method less accurate in the learning phase, but in some cases more likely to correctly operate on new examples.
 
 \begin{remark}
-Another regularization strategy may be to search for sparse vectors of implicit coefficients (see \eqref{eq:implicit}). This alternative might be more suitable for the side-channel context, since it would promote localized solutions, \emph{i.e.} projections for which only a few $d$-tuples of time samples contribute to the construction of the extractor (see \cite{Cagli2016} for an analogy in $1st$-order context). This approach is left for future developments.
+Another regularization strategy may be to search for sparse vectors of implicit coefficients (see \eqref{eq:implicit}). This alternative might be more suitable for the side-channel context, since it would promote localized solutions, \emph{i.e.} projections for which only a few $d$-tuples of time samples contribute to the construction of the extractor (see Chapter~\ref{ChapterLinear} for an analogy in $1st$-order context). This approach is left for future developments.
 \end{remark} 
 
 
-
-Some heuristics exist to choose the constant $\mu$; {\em e.g.} the average of the diagonal entries \cite{multiclassLDA} or the minimal constant that let $\NNN$ be diagonally dominant (implying positive-definite), etc. In \cite{centeno2006optimising} Centeno \emph{et al.} propose a maximization strategy to find the optimal regularization parameter, based on a probabilistic approach. The study of this approach is left for future works. For our study we simply performed  experiments for various values of $\mu$ and we kept the best obtained results.
+Some heuristics exist to choose the constant $\mu$; {\em e.g.} the average of the diagonal entries \cite{multiclassLDA} or the minimal constant that let $\NNN$ be diagonally dominant (implying positive-definite), etc. In \cite{centeno2006optimising} Centeno \emph{et al.} propose a maximization strategy to find the optimal regularization parameter, based on a probabilistic approach. The study of this approach is left for future works. For our study we simply performed experiments for various values of $\mu$ and we kept the best obtained results.
 
 \begin{remark}\label{rem:mu_criteria}
-A criterion to decide whether the chosen regularization is convenient consists in comparing the SNR computed over the extracted training traces $(\extract^{\mathrm{KDA}}(\sss[z_i]{i}))_{i=1,\dots,\NPoI}$ with the one computed over some extracted new traces $\yyy_i^{z_i}$ (\emph{e.g.} the profiling traces $(\extract^{\mathrm{KDA}}(\yyy^{z_i}_i))_{i=1,\dots,N_p}$, being $N_p$ the number of available profiling traces). If the latter is significantly lower than the former, the regularization failed and it is worth to try with another constant$\mu$.
+A criterion to decide whether the chosen regularization is convenient consists in comparing the SNR computed over the extracted training traces $(\extract^{\mathrm{KDA}}(\vLeakVec_i))_{i=1,\dots,\nbProfilingTraces}$ with the one computed over some extracted new traces $\yyy_i$ (\emph{e.g.} the profiling traces $(\extract^{\mathrm{KDA}}(\yyy_i))_{i=1,\dots,\nbProfilingTraces}$). If the latter is significantly lower than the former, the regularization failed and it is worth to try with another constant$\mu$.
 \end{remark}
 
 
@@ -283,21 +285,21 @@ A criterion to decide whether the chosen regularization is convenient consists i
 
 \begin{figure}[t]
 \subfigure[]{\label{fig:numClasses-2order}
-\includegraphics[width=.5\textwidth]{figures/2order_classes_TA.pdf}}
+\includegraphics[width=.5\textwidth]{../Figures/CARDIS2016/2order_classes_TA.pdf}}
 \subfigure[]{\label{fig:numClasses-3order}
-\includegraphics[width=.5\textwidth]{figures/3order_new.pdf}}
+\includegraphics[width=.5\textwidth]{../Figures/CARDIS2016/3order_new.pdf}}
 \caption{Comparison between 2-class,3-class, 9-class and 256-class KDA in $2$nd-order context \subref{fig:numClasses-2order} and in $3$rd-order context \subref{fig:numClasses-3order}. For $2$nd-order the KDA is efficient in providing separability between 256 classes, allowing an optimal attack. In $3$rd-order context the training data are not enough to succeed the 256-class learning phase. Decreasing the number of classes to be distinguished raises the efficiency of the learning problem and thus of the attack.}\label{fig:numClasses}
 \end{figure}
 
-As discussed in Sec.~\ref{sec:LDA}, the LDA, and by consequence the KDA, looks for a subspace of the feature space to optimally separate some given classes (for a well-chosen distance). Intuitively the more examples( \emph{i.e.} training traces) available the more accurate the resulting KDA. Nevertheless, the number of examples might be bounded by the acquisition context. Actually even when the number $\NPoI$ can be very high, it may be interesting to minimize it since the KDA complexity is $O(\NPoI^3)$. A trade-off must therefore be found between accuracy and efficiency. Assuming that the size of the training set  is fixed to $\NPoI$, which controls the efficiency, a way to gain in accuracy may be found by appropriately adjusting the number of classes to distinguish: again intuitively, the more examples per class, the more accurate the detection of a separating subspace. Then, if the total number of training traces is fixed, in order to raise the number of traces per class, a smaller number of classes must be considered. To do so, a non-injective model $m(\cdot)$ can be introduced, to create a smaller set of labels $m(\sensVarSet)$ from the initial set $\sensVarSet$. In the rest of the paper, the reduced number of classes, \emph{i.e.} the number of labels assigned to the training set after applying the model $m$, will be denoted by $W$ (it is the cardinality of $m(\mathcal{Z})$). In order to not corrupt the soundness of the KDA method in the SCA context, it is worth choosing a meaningful model. Since a widely-accepted power-consumption model for side-channel traces is provided by the Hamming Weight ($\HW$) function, it makes sense to group the different values of $Z$ according to their Hamming weights. In Fig.~\ref{fig:numClasses} we compared a $2$-class model ($m(z) =0$ if $\HW(z)<4$, $m(z) =1$ if $\HW(z)\geq4$), a $3$-class model ($m(z) =0$ if $\HW(z)<4$, $m(z) =1$ if $\HW(z)=4$, $m(z) =2$ if $\HW(z)>4$) and a $9$-class one ($m(z)=\HW(z)$).
+As discussed in Sec.~\ref{sec:LDA}, the LDA, and by consequence the KDA, looks for a subspace of the feature space to optimally separate some given classes (for a well-chosen distance). Intuitively the more examples( \emph{i.e.} training traces) available the more accurate the resulting KDA. Nevertheless, the number of examples might be bounded by the acquisition context. Actually even when the number $\nbProfilingTraces$ can be very high, it may be interesting to minimize it since the KDA complexity is $O(\nbProfilingTraces^3)$. A trade-off must therefore be found between accuracy and efficiency. Assuming that the size of the training set  is fixed to $\nbProfilingTraces$, which controls the efficiency, a way to gain in accuracy may be found by appropriately adjusting the number of classes to distinguish: again intuitively, the more examples per class, the more accurate the detection of a separating subspace. Then, if the total number of training traces is fixed, in order to raise the number of traces per class, a smaller number of classes must be considered. To do so, a non-injective model $m(\cdot)$ can be introduced, to create a smaller set of labels $m(\sensVarSet)$ from the initial set $\sensVarSet$. In the rest of the paper, the reduced number of classes, \emph{i.e.} the number of labels assigned to the training set after applying the model $m$, will be denoted by $W$ (it is the cardinality of $m(\sensVarSet)$). In order to not corrupt the soundness of the KDA method in the SCA context, it is worth choosing a meaningful model. As discussed in Sec.~\ref{sec:leakage_model}, a widely-accepted power-consumption model for side-channel traces is provided by the Hamming Weight ($\HW$) function, it makes sense to group the different values of $\sensRandVar$ according to their Hamming weights. In Fig.~\ref{fig:numClasses} we compared a $2$-class model ($m(\sensVar) =0$ if $\HW(\sensVar)<4$, $m(\sensVar) =1$ if $\HW(\sensVar)\geq4$), a $3$-class model ($m(\sensVar) =0$ if $\HW(\sensVar)<4$, $m(z) =1$ if $\HW(\sensVar)=4$, $m(\sensVar) =2$ if $\HW(\sensVar)>4$) and a $9$-class one ($m(\sensVar)=\HW(\sensVar)$).
 
 
 \begin{remark}
-A balanced training set of size $\NPoI=9000$ (instead of 8960) has been used to run the experiments for $2$-class, $3$-class and $9$-class KDA.
+A balanced training set of size $\nbProfilingTraces=9000$ (instead of 8960) has been used to run the experiments for $2$-class, $3$-class and $9$-class KDA.
 \end{remark}
 
 \begin{remark}\label{rem:efficiency}
-For the sake of consistency\footnote{A different approach is analysed in Sec.~\ref{sec:asymmetric}.} between the pre-processing phase and the attack phase, when a non-injective model is applied to the labels of the training set to reduce the number of classes, the same model is exploited to run the template attack: $W$ templates (one per each class) are computed and compared to the matching traces. Thus, in Fig.~\ref{fig:numClasses} the different multi-class extractors are compared using different template attacks. It may be remarked that as $W$ decreases the efficiency of the attack is supposed to decrease as well, because each attack trace contributes in distinguishing the right key $K^\star$ only from a growing-size set of indistinguishable hypotheses. 
+For the sake of consistency\footnote{A different approach is analysed in Sec.~\ref{sec:asymmetric}.} between the pre-processing phase and the attack phase, when a non-injective model is applied to the labels of the training set to reduce the number of classes, the same model is exploited to run the template attack: $W$ templates (one per each class) are computed and compared to the matching traces. Thus, in Fig.~\ref{fig:numClasses} the different multi-class extractors are compared using different template attacks. It may be remarked that as $W$ decreases the efficiency of the attack is supposed to decrease as well, because each attack trace contributes in distinguishing the right key $\keyRandVar^\star$ only from a growing-size set of indistinguishable hypotheses. 
 \end{remark}
 
 In $2$nd-order context, it can be observed in Fig.~\ref{fig:numClasses} that the KDA is provided with sufficient training traces to succeed a 256-class separation, which allows the finest characterization of the leakage, and leads as expected (see Remark~\ref{rem:efficiency}), to the most efficient template attack. Moving to the $3$-rd order context, the available training set is insufficient to make the multi-class approach succeed; nevertheless, turning the problem into a 2-class problem turns out to be a good strategy to trade extraction accuracy for attack efficiency.
@@ -311,7 +313,7 @@ The separating subspace given by the KDA has maximal dimension $(W-1)$, \emph{i.
 
 \begin{figure}
 \centering
-\includegraphics[width=.5\textwidth]{figures/2order_MULT.pdf}
+\includegraphics[width=.5\textwidth]{../Figures/CARDIS2016/2order_MULT.pdf}
 \caption{Performance of template attacks run over 3-class KDA subspaces: multi-class, one vs one and one vs all approaches compared.}\label{fig:3multi-class}
 \end{figure}
 
@@ -325,8 +327,8 @@ We tested this approach in the 3-class case: in this way the one-vs-one and the 
 \subsection{Asymmetric Preprocessing/Attack Approach}\label{sec:asymmetric}
 
 \begin{figure}
-\includegraphics[width=.5\textwidth]{figures/3order_2_9.pdf} 
-\includegraphics[width=.5\textwidth]{figures/4order_2_9.pdf} 
+\includegraphics[width=.5\textwidth]{../Figures/CARDIS2016/3order_2_9.pdf} 
+\includegraphics[width=.5\textwidth]{../Figures/CARDIS2016/4order_2_9.pdf} 
 \caption{Left: guessing entropy (over 10 independent tests) for a 2-class and a 9-class $3$rd-order template attack. Right: right key rank of a 2-class and a 9-class $4$th-order template attack.}\label{fig:3-4}
 \end{figure}
 In Remark~\ref{rem:efficiency} we appealed a consistency principle to justify the choice of running a $W$-class template attack after a $W$-class KDA extraction. Here we propose a different reasoning: the consistency principle does not grant that an extractor $\extract^{\mathrm{KDA}}$ trained with $W$ classes is not able to separate $W^\prime$ classes with $W^\prime > W$. As seen in Remark~\ref{rem:implicit}, an extractor $\extract^{\mathrm{KDA}}$ always implicitly performs a weighed sum, via the implicit coefficients, of centred products of time samples. If $\extract^{\mathrm{KDA}}$ is effective, the implicit coefficients which have the highest magnitude must correspond to time samples corresponding to the manipulation of sensitive data (\emph{e.g.} the variable shares when masking is applied). This property is not necessarily related to the number of classes used to train the the extractor.\\
@@ -339,6 +341,22 @@ We choose to run the $9$-class instead of the $256$-class template attack in ord
 
 
 \subsubsection{Comparison with Projection Pursuits}\label{sec:comparisonPP}
+
+To get a fair comparison, we run the PP algorithm (see Sec.~\ref{sec:PP_description}) over the same training set used to evaluate the KDA in Sec.\ref{sec:practice}. The best results in the $2$nd-order context were obtained with the HW model (\emph{i.e.}  $\lvert \sensVarSet \rvert=9$). In this case $T_{det}$ is fixed to $0.7$. Since 4 training sets are required, the 9000 training traces are split in 4 equally-sized groups.  Experimental observations allowed to fix  $W_{len}=5$, consequently suggesting $minWS=1$, $maxWS = 15$ and consistent global and local movements and resizes.
+ Given the heuristic asset of the algorithm, we run it 1000 times for $d=2$ and for $d=3$. An overview of the global behaviour of the obtained results is depicted in Figs~\ref{fig:PP2} and \ref{fig:PP3}: the lower parts of the figures show the sum of the 1000 outputs of the algorithm.
+  We recall that each coordinate of $\AAlpha$ is set to 1 for the windows identified to be of interest, and to 0 elsewhere, so for each time sample the sum of the values ($0$ or $1$) assigned by the $1000$ attempts give an intuition about its likelihood to be considered as interesting by the PP method. It can be observed that in the $2$-nd order case (Fig.~\ref{fig:PP2}) the results are excellent: 100\% of the tests highlight an informative part of the two clock-cycles where the sensitive shares are manipulated.\footnote{It can be observed that the regions selected by $\extract^{PP}$ correspond to those for which the $\extract^{KDA}$ exhibits the highest magnitude implicit coefficients (Fig.~\ref{fig:mu}, upper-triangular part on the right)}
+It means that $\extract^{PP}(\vaLeakVec)$ always contains information about $\sensRandVar$ and a successful attack can be mounted over such extracted traces. The efficiency of such an attack depending on many factors, there is no interest in comparing it to the performances of the template attacks run in $2$nd-order context using $\extract^{KDA}$ and depicted in Fig.~\ref{fig:numClasses-2order}.
+As it may be observed in Fig.~\ref{fig:PP3}, in the $3$-rd order case the experimental results are completely different: almost no $\AAlpha$ selects the clock-cycle where the second share is manipulated. Thus in this case the PP approach fails: $\extract^{PP}(\vaLeakVec)$ does not contain information about $\sensRandVar$, so any attack launched over the extracted traces would fail, while $\extract^{KDA}$ still allows successful attacks in $3$rd-order and $4$th-order case, as depicted in Fig.~\ref{fig:3-4}.\\
+
+\begin{figure}[t]
+\subfigure[]{\label{fig:PP2}
+\includegraphics[width=.5\textwidth]{../Figures/CARDIS2016/secondOrderPP_gimp.jpg}}
+\subfigure[]{\label{fig:PP3}
+\includegraphics[width=.5\textwidth]{../Figures/CARDIS2016/thirdOrderPP_gimp.jpg}}
+\caption{\subref{fig:PP2} Overview of PP outputs in $2$nd-order context. \subref{fig:PP3} Overview of PP outputs in $3$rd-order context. }
+\end{figure}
+
+We conclude that the KDA approach is a valuable alternative to the PP one, especially in contexts where the training set size is bounded and independent from the order $d$ of the attack.
 
 
 %----------------------------------------------------------------------------------------

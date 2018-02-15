@@ -115,8 +115,10 @@ Thus such a posterior probability is given by the sigmoid acting to a linear fun
 % E interessante discutere brevemente anche di un semplice modello generativo, basato su hp gaussiana, perche tale ipotesi, insieme ad un'altra, porta a costruire anch'essa un modello lineare, giustificando questa scelta in molti contesti...P(x|C)...log del quoziente, funzione sigmoid, logit...softmax...linear piu sigmoid, dove di nuovo la soluzione LDA è la parte lineare (verifica). Se togliamo l'ipotesi sulle covarianze allora resta la parte quadratica e è la QDA (in pratica la parte di classificazione usata nei template attacks)  
 
 \subsection{Training, Validation and Test Sets}
-\subsection{Capacity, Underfitting, Overfitting and Regularization}
+\subsection{Capacity, Underfitting, Overfitting and Regularization}\ref{sec:overfitting}
 % parla del linear basis model per regression (è quello che si usa in SCA e aumenta la capacità del modello) oltre alla regressione polinomiale
+
+A regularization acts as an additional constraint of the problem, that makes the method less accurate in the learning phase, but in some cases more likely to correctly operate on new examples.
 %\subsection{Data Augmentation}
 \subsection{No Free Lunch Theorem}\label{sec:NFL}
 
