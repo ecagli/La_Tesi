@@ -121,6 +121,8 @@ headsepline, % Uncomment to get a line under the header
 \newcommand*{\setDataAttack}{\mathcal{D}_{\text{attack}}}
 \newcommand*{\setTarget}{{\mathcal{Y}}}
 
+\newcommand*{\sPOI}{\tau} %signal strength
+
 
 \newcommand*{\publicParRandVar}{E}
 \newcommand*{\publicParVar}{e}
@@ -146,7 +148,7 @@ headsepline, % Uncomment to get a line under the header
 \newcommand*{\nbTraces}{N}
 \newcommand*{\nbProfilingTraces}{N_p}
 \newcommand*{\nbAttackTraces}{N_a}
-\newcommand*{\nbTracesPerClass}{N_\sensVar}
+\newcommand*{\nbTracesPerClass}[1][\sensVar]{N_{#1}}
 \newcommand*{\guessingEntropy}{\mathrm{GE}}
 \newcommand*{\newTraceLength}{C}
 \newcommand*{\traceLength}{D}
@@ -166,20 +168,21 @@ headsepline, % Uncomment to get a line under the header
 \newcommand*{\pdf}{p}
 \newcommand*{\mumumu}{\boldsymbol{\mu}}
 
-\newcommand{\measuresMatrix}{\textbf{M}}
-\newcommand{\projectingMatrix}{\textbf{A}}
-\newcommand{\SW}{\textbf{S}_{\textbf{W}}}
-\newcommand{\SB}{\textbf{S}_{\textbf{B}}}
-\newcommand{\ST}{\textbf{S}_{\textbf{T}}}
-\newcommand{\var}{\mathrm{Var}}
-\newcommand{\cov}{\mathrm{Cov}}
-\newcommand{\esperEst}{\hat{\mathbb{E}}}
-\newcommand{\varEst}{\hat{\mathrm{Var}}}
-\newcommand{\esper}{\mathbb{E}}
-\newcommand{\mmm}{\textbf{m}}
-\newcommand{\mmmX}{\overline{\textbf{x}}}
-\newcommand{\mmmXclass}[1][z]{\overline{\textbf{x}}^{#1}}
-\newcommand{\mmmY}{\overline{\textbf{y}}}
+\newcommand*{\measuresMatrix}{\textbf{M}}
+\newcommand*{\projectingMatrix}{\textbf{A}}
+\newcommand*{\SW}{\textbf{S}_{\textbf{W}}}
+\newcommand*{\SB}{\textbf{S}_{\textbf{B}}}
+\newcommand*{\ST}{\textbf{S}_{\textbf{T}}}
+\newcommand*{\var}{\mathrm{Var}}
+\newcommand*{\cov}{\mathrm{Cov}}
+\newcommand*{\esperEst}{\hat{\mathbb{E}}}
+\newcommand*{\varEst}{\hat{\mathrm{Var}}}
+\newcommand*{\esper}{\mathbb{E}}
+\newcommand*{\mmm}{\textbf{m}}
+\newcommand*{\mmmX}{\overline{\textbf{x}}}
+\newcommand*{\mmmXclass}[1][z]{\overline{\textbf{x}}_{#1}}
+\newcommand*{\mmmY}{\overline{\textbf{y}}}
+\newcommand*{\varXclass}[1][z]{\hat{\boldsymbol{\sigma}}^2_{#1}}
 
 \newcommand{\MMM}{\textbf{M}}
 \newcommand{\MMMclass}[1][z]{\textbf{M}_{#1}}
