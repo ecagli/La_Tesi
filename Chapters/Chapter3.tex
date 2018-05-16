@@ -143,19 +143,24 @@ The validation process just described may strongly depend on the way the trainin
 
 \subsection{No Free Lunch Theorem}\label{sec:NFL}
 A so-called \emph{No Free Lunch Theorem} has been formulated for optimization and machine learning algorithms around 1997 \cite{wolpert1997no}. It states that any learning algorithm, averaged over all possible data distributions, has the same performances over unseen test data. This means that there cannot exist a universal best machine learning algorithm: any of them performs in the same way, when performances are averaged over all possible tasks. Thus, making research over some kind of data, for example SCA traces, means trying to understand what kinds of machine learning algorithms perform well over such particular kind of data and point out the eventual interesting hyper-parameters of machine learning models that are responsible of the main performance variations. 
-Machine learning algorithms have started to be considered in SCA research in....
+
 
 
 
 %----------------------------------------------------------------------------------------
 %	SECTION 3
 %----------------------------------------------------------------------------------------
-\section{Machine Learning Applications in Side-Channel Context}
-\subsection{Profiled Attack as a Classification Problem}
-\todo{remark that LDA is first of all a linear method for classification and has been introduced in SCA many years ago as preprocessing for Gaussian TA}
-\subsubsection{Support Vector Machine}
-\subsubsection{Random Forest}
-\subsubsection{Neural Networks}
+\section{Overview of Machine Learning in Side-Channel Context}
+In 1991 Rivest pointed out for the first time a strong link between the fields of Machine Learning and Cryptanalysis \cite{rivest1991cryptography}. Starting from observing that the goal of cryptanalysis is identifying an unknown encryption function, indexed by a a secret key, and that a classic problem in ML consists as well in learning an unknown function, he drew a strong correspondence between terminology and concepts of the two fields.\\
+
+Machine Learning algorithms started to be investigated in in Side-Channel Attacks context in 2011 \cite{machineLearningSCA}. In this paper the authors formulated for the first time an attack in terms of classification problem and proposed the Support Vector Machine (SVM) \cite{cortes1995support,weston1998multi} as technique to solve it. They also equipped the SVM with a kernel function to allow the it to succeed even in case data would not be linearly separable. Such an approach is similar to the one the we will describe in Chapter~\ref{ChapterKernel}, to obtain Kernel Discriminant Analysis dimensionality reduction technique from the Linear Discriminant Analysis. Further works analysed the use of SVM in SCA context, proposing concrete attack scenarios \cite{intelligentMachineOmicide,effTA_SVM}. 
+The technique of Random Forest \cite{lior2014data} drew attention of the SCA community as well. As the SVM, it has been used as a classifier and evaluated in different works \cite{lerman2015machine,lerman2015template,lerman2014power}. As in recent years the privileged tools to tackle classification problem in Machine Learning area are the Neural Networks, whose multi-layer configuration has given name to the so-called \emph{Deep Learning} domain, such tools have as well be analysed in SCA context. Networks in the form of Multi-Layer Perceptrons (MLP) have been proposed as classifiers for side-channel traces in a series of works \cite{martinasek2013optimization,martinasek2013innovative,martinasek2015profiling,martinasek2016profiling}, while Convolutional Neural Network was firstly introduced in \cite{maghrebi2016breaking}. A part of this thesis contributions consists in the application of the convolutional paradigm as way to defeat misalignment countermeasures in side-channel attacks (see Chapter~\ref{ChapterCNN}).
+
+%\subsection{Profiled Attack as a Classification Problem}
+%\todo{remark that LDA is first of all a linear method for classification and has been introduced in SCA many years ago as preprocessing for Gaussian TA}
+%\subsubsection{Support Vector Machine}
+%\subsubsection{Random Forest}
+%\subsubsection{Neural Networks}
 
 %\begin{table}[]
 %\centering
