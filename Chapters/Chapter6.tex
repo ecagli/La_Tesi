@@ -107,7 +107,7 @@ In the general case of a $\newTraceLength$-dimensional projection space, it can 
 \begin{figure}
 \includegraphics[width=.5\textwidth]{../Figures/PCA_LDA_geometric/dataNoProjection_mV2.pdf} 
 \includegraphics[width=.5\textwidth]{../Figures/PCA_LDA_geometric/PCAprojection_mV2.pdf} 
-\caption{PCA: some 2-dimensional data projected into their 1-dimensional principal subspace.}\label{fig:PCAunsupervised}
+\caption{PCA: some 2-dimensional labelled data projected into their 1-dimensional principal subspace.}\label{fig:PCAunsupervised}
 \end{figure}
 The classical version of PCA method is unsupervised.
 % in the sense that is does not take into account the information about the value assumed by the target variable during the acquisition of data. 
@@ -132,7 +132,7 @@ However, if the attacker has a constraint for the reduced dimension $\newTraceLe
 \begin{figure}
 \includegraphics[width=.45\textwidth]{../Figures/CARDIS2015/DPAcontestPC1_new.pdf} 
 \includegraphics[width=.45\textwidth]{../Figures/CARDIS2015/DPAcontestPC6_new.pdf} 
-\caption{First and sixth PCs in DPA contest v4 trace set (between time samples 198001 and 199000)}\label{fig:DPAcontest}
+\caption[First and sixth PCs in DPA contest v4 trace set.]{First and sixth PCs in DPA contest v4 trace set (between time samples 198001 and 199000)}\label{fig:DPAcontest}
 \end{figure}
 To the best of our knowledge, a single method adapted to SCA context has been proposed until now to automatically choose PCs \cite{SCAclassProbl} while dealing with the issue raised in Fig.~\ref{fig:DPAcontest}. It is based on the following assumption:
 \begin{assumption}\label{assum:local}
@@ -152,7 +152,7 @@ The method we develop in this section is based on a compromise between the varia
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{../Figures/CARDIS2015/cumulativeELVallRectangle.pdf} 
 \includegraphics[width=0.5\textwidth]{../Figures/CARDIS2015/cumulativeELVzoomedRectangle.pdf} 
-\caption{Cumulative ELV trend of principal components. On the right a zoom of the plot on the left. Data acquisition described in Sec.~\ref{sec:experiments}.}\label{fig:ELVcumulative}
+\caption[Cumulative ELV trend of principal components.]{Cumulative ELV trend of principal components. On the right a zoom of the plot on the left. Data acquisition described in Sec.~\ref{sec:experiments}.}\label{fig:ELVcumulative}
 \end{figure}
 %
 Let us start by giving some intuition behind our new concept. Thinking to the observations ${\vLeakVec}^\intercal$, or to the class-averages ${\mmmX}^\intercal$ in class-oriented PCA case, as realizations of a random variable $\vaLeakVec^\intercal$, we have that $\lambda_i$ is an estimator for the variance of the random variable $\vaLeakVec^\intercal\cdot\AAlpha_i$. Developing, we obtain
@@ -177,7 +177,7 @@ The {\em Explained Local Variance} of a PC $\AAlpha_i$ in a sample $j$, is defin
 \includegraphics[width=0.31\textwidth]{../Figures/CARDIS2015/PC4.pdf} 
 \includegraphics[width=0.31\textwidth]{../Figures/CARDIS2015/PC5.pdf} 
 \includegraphics[width=0.31\textwidth]{../Figures/CARDIS2015/PC6.pdf} 
-\caption{The first six PCs. Acquisition campaign on an 8-bit AVR Atmega328P (see Sec.~\ref{sec:experiments}).}\label{fig:6components}
+\caption[The first six PCs. Acquisition campaign on an 8-bit AVR Atmega328P.]{The first six PCs. Acquisition campaign on an 8-bit AVR Atmega328P (see Sec.~\ref{sec:experiments}).}\label{fig:6components}
 \end{figure}
 Let $\mathcal{J}=\{j^i_1, j^i_2, \dots, j^i_{\traceLength}\}\subset\{1,2,\dots,\traceLength\}$ be a set of indexes sorted such that $\mathrm{ELV}(\AAlpha_i,j^i_1)\geq \mathrm{ELV}(\AAlpha_i,j^i_2)\geq \dots \geq \mathrm{ELV}(\AAlpha_i,j^i_\traceLength)$.
 It may be observed that the sum over all the $\mathrm{ELV}(\AAlpha_i,j)$, for $j\in[1,\dots,\traceLength],$   equals $\mathrm{EGV}(\AAlpha_i)$. If we operate such a sum in a cumulative way following the order provided by the sorted set $\mathcal{J}$, we obtain a complete description of the trend followed by the component $\AAlpha_i$ to achieve its EGV. As we can see in Fig.~\ref{fig:ELVcumulative}, where such cumulative ELVs are represented, the first 3 components are much slower in achieving their final EGV, while the $4^\text{th}$, the $5^\text{th}$ and the $6^\text{th}$ achieve a large part of their final EGVs very quickly ({\em i.e.} by adding the ELV contributions of much less time samples). For instance, for $i=4$, the sum of the $\mathrm{ELV}(\AAlpha_4, j^4_k)$, with $k\in[1,\dots,30]$, almost equals $\mathrm{EGV}(\AAlpha_4)$, whereas the same sum for $i=1$ only achieves about the 15\% of $\mathrm{EGV}(\AAlpha_1)$. Actually, the EGV of the $4^\text{th}$, the $5^\text{th}$ and the $6^\text{th}$ component only essentially depends on a very few time samples. This observation, combined with Assumption \ref{assum:local}, suggests that they are more suitable for SCA than the three first ones. To validate this statement, it suffices to look at the form of such components (Fig.~\ref{fig:6components}): the leading ones are strongly influenced by the clock, while the latest ones are well localised over the leaking points.\\

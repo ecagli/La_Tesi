@@ -256,7 +256,7 @@ As discussed in Remark~\ref{remark:normalized}, the training traces are normaliz
 \begin{figure}
 \includegraphics[width=.5\textwidth]{../Figures/CARDIS2016/mu_comparison_new.pdf} 
 \includegraphics[width=.5\textwidth]{../Figures/CARDIS2016/good_bad_coeffs.pdf} 
-\caption{On the left: template attack guessing entropy vs the number of traces for the attack phase, varying for choices of the constant $\mu$  \eqref{eq:mu}. On the right: the implicit coefficients assigned to pairs of time samples for $\mu_3$ (upper triangular part) and $\mu_5$ (lower triangular part). }\label{fig:mu}
+\caption[Dependence of KDA performances on the regularization parameter $\mu$. Implicit coefficients.]{On the left: template attack guessing entropy vs the number of traces for the attack phase, varying for choices of the constant $\mu$  \eqref{eq:mu}. On the right: the implicit coefficients assigned to pairs of time samples for $\mu_3$ (upper triangular part) and $\mu_5$ (lower triangular part). }\label{fig:mu}
 \end{figure}
 
 
@@ -288,7 +288,7 @@ A criterion to decide whether the chosen regularization is convenient consists i
 \includegraphics[width=.5\textwidth]{../Figures/CARDIS2016/2order_classes_TA.pdf}}
 \subfigure[]{\label{fig:numClasses-3order}
 \includegraphics[width=.5\textwidth]{../Figures/CARDIS2016/3order_new.pdf}}
-\caption{Comparison between 2-class,3-class, 9-class and 256-class KDA in $2$nd-order context \subref{fig:numClasses-2order} and in $3$rd-order context \subref{fig:numClasses-3order}. For $2$nd-order the KDA is efficient in providing separability between 256 classes, allowing an optimal attack. In $3$rd-order context the training data are not enough to succeed the 256-class learning phase. Decreasing the number of classes to be distinguished raises the efficiency of the learning problem and thus of the attack.}\label{fig:numClasses}
+\caption[Comparison between 2-class,3-class, 9-class and 256-class KDA.]{Comparison between 2-class,3-class, 9-class and 256-class KDA in $2$nd-order context \subref{fig:numClasses-2order} and in $3$rd-order context \subref{fig:numClasses-3order}. For $2$nd-order the KDA is efficient in providing separability between 256 classes, allowing an optimal attack. In $3$rd-order context the training data are not enough to succeed the 256-class learning phase. Decreasing the number of classes to be distinguished raises the efficiency of the learning problem and thus of the attack.}\label{fig:numClasses}
 \end{figure}
 
 As discussed in Sec.~\ref{sec:LDA}, the LDA, and by consequence the KDA, looks for a subspace of the feature space to optimally separate some given classes (for a well-chosen distance). Intuitively the more examples( \emph{i.e.} training traces) available the more accurate the resulting KDA. Nevertheless, the number of examples might be bounded by the acquisition context. Actually even when the number $\nbProfilingTraces$ can be very high, it may be interesting to minimize it since the KDA complexity is $O(\nbProfilingTraces^3)$. A trade-off must therefore be found between accuracy and efficiency. Assuming that the size of the training set  is fixed to $\nbProfilingTraces$, which controls the efficiency, a way to gain in accuracy may be found by appropriately adjusting the number of classes to distinguish: again intuitively, the more examples per class, the more accurate the detection of a separating subspace. Then, if the total number of training traces is fixed, in order to raise the number of traces per class, a smaller number of classes must be considered. To do so, a non-injective model $m(\cdot)$ can be introduced, to create a smaller set of labels $m(\sensVarSet)$ from the initial set $\sensVarSet$. In the rest of the paper, the reduced number of classes, \emph{i.e.} the number of labels assigned to the training set after applying the model $m$, will be denoted by $W$ (it is the cardinality of $m(\sensVarSet)$). In order to not corrupt the soundness of the KDA method in the SCA context, it is worth choosing a meaningful model. As discussed in Sec.~\ref{sec:leakage_model}, a widely-accepted power-consumption model for side-channel traces is provided by the Hamming Weight ($\HW$) function, it makes sense to group the different values of $\sensRandVar$ according to their Hamming weights. In Fig.~\ref{fig:numClasses} we compared a $2$-class model ($m(\sensVar) =0$ if $\HW(\sensVar)<4$, $m(\sensVar) =1$ if $\HW(\sensVar)\geq4$), a $3$-class model ($m(\sensVar) =0$ if $\HW(\sensVar)<4$, $m(z) =1$ if $\HW(\sensVar)=4$, $m(\sensVar) =2$ if $\HW(\sensVar)>4$) and a $9$-class one ($m(\sensVar)=\HW(\sensVar)$).
@@ -314,7 +314,7 @@ The separating subspace given by the KDA has maximal dimension $(W-1)$, \emph{i.
 \begin{figure}
 \centering
 \includegraphics[width=.5\textwidth]{../Figures/CARDIS2016/2order_MULT.pdf}
-\caption{Performance of template attacks run over 3-class KDA subspaces: multi-class, one vs one and one vs all approaches compared.}\label{fig:3multi-class}
+\caption[KDA: comparison between multi-class, one vs one and one vs all approaches.]{Performance of template attacks run over 3-class KDA subspaces: multi-class, one vs one and one vs all approaches compared.}\label{fig:3multi-class}
 \end{figure}
 
 An idea to avoid an excessive reduction of the number of separable classes $W$ can be found in the machine learning literature dealing with the so-called \emph{multi-class classification problems}. It consists in treating the $W$-class problem as  multiple 2-class problems. Two different \emph{modus operandi} exist: the \emph{one-vs-one} and the \emph{one-vs-all}. When applied to our context, the one-vs-one approach determines for each pair of classes the 1-dimensional subspace that best separates them and exploits all the obtained subspaces to run an attack (for $W$ classes we obtain ${W}\choose{2}$ dimensions and we run a ${W}\choose{2}$-variate template attack). The one-vs-all approach looks for dimensions that best separate each class from all the others (obtaining $W$ projections in total).\\
@@ -329,7 +329,7 @@ We tested this approach in the 3-class case: in this way the one-vs-one and the 
 \begin{figure}
 \includegraphics[width=.5\textwidth]{../Figures/CARDIS2016/3order_2_9.pdf} 
 \includegraphics[width=.5\textwidth]{../Figures/CARDIS2016/4order_2_9.pdf} 
-\caption{Left: guessing entropy (over 10 independent tests) for a 2-class and a 9-class $3$rd-order template attack. Right: right key rank of a 2-class and a 9-class $4$th-order template attack.}\label{fig:3-4}
+\caption[KDA preprocessing performance for  $3$rd-order and $4$th-order template attack]{Left: guessing entropy (over 10 independent tests) for a 2-class and a 9-class $3$rd-order template attack. Right: right key rank of a 2-class and a 9-class $4$th-order template attack.}\label{fig:3-4}
 \end{figure}
 In Remark~\ref{rem:efficiency} we appealed a consistency principle to justify the choice of running a $W$-class template attack after a $W$-class KDA extraction. Here we propose a different reasoning: the consistency principle does not grant that an extractor $\extract^{\mathrm{KDA}}$ trained with $W$ classes is not able to separate $W^\prime$ classes with $W^\prime > W$. As seen in Remark~\ref{rem:implicit}, an extractor $\extract^{\mathrm{KDA}}$ always implicitly performs a weighed sum, via the implicit coefficients, of centred products of time samples. If $\extract^{\mathrm{KDA}}$ is effective, the implicit coefficients which have the highest magnitude must correspond to time samples corresponding to the manipulation of sensitive data (\emph{e.g.} the variable shares when masking is applied). This property is not necessarily related to the number of classes used to train the the extractor.\\
 
@@ -353,7 +353,7 @@ As it may be observed in Fig.~\ref{fig:PP3}, in the $3$-rd order case the experi
 \includegraphics[width=.5\textwidth]{../Figures/CARDIS2016/secondOrderPP_gimp.jpg}}
 \subfigure[]{\label{fig:PP3}
 \includegraphics[width=.5\textwidth]{../Figures/CARDIS2016/thirdOrderPP_gimp.jpg}}
-\caption{\subref{fig:PP2} Overview of PP outputs in $2$nd-order context. \subref{fig:PP3} Overview of PP outputs in $3$rd-order context. }
+\caption[Overview of Projection Pursuit outputs in $2$nd-order and $3$rd-order context.]{\subref{fig:PP2} Overview of PP outputs in $2$nd-order context. \subref{fig:PP3} Overview of PP outputs in $3$rd-order context. }
 \end{figure}
 
 We conclude that the KDA approach is a valuable alternative to the PP one, especially in contexts where the training set size is bounded and independent from the order $d$ of the attack.
