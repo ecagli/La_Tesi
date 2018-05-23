@@ -264,7 +264,7 @@ Let us remark that, from a computational complexity point of view (see \cite{hua
 
 \section{Experimental Results}\label{sec:experiments}
 
-In this section we compare the different extractors (\ie functions applying a data dimensionality reduction, see Sec.~\ref{sec:extractors}) provided by the PCA and the LDA in association with the different techniques  of components selection. Defining an universal criterion to compare the different extractors would not make sense since the latter one should encompass a lot of parameters, sometimes opposite, that vary according to the context (amount of noise, specificity of the information leakage, nature of the side channel, etc.). For this reason we choose to split our comparisons into four scenarios. Each scenario has a single varying parameter that, depending on the attacker context, may wish to be minimized. Hereafter the definition of the four scenario. In the following only results of the two first is reported, the interested reader might refer to Appendix\ref{Appendix_scenario3_4_cardis2015} for results of in the two other scenarios.  
+In this section we compare the different extractors (\ie functions applying a data dimensionality reduction, see Sec.~\ref{sec:extractors}) provided by the PCA and the LDA in association with the different techniques  of components selection. Defining an universal criterion to compare the different extractors would not make sense since the latter one should encompass a lot of parameters, sometimes opposite, that vary according to the context (amount of noise, specificity of the information leakage, nature of the side channel, etc.). For this reason we choose to split our comparisons into four scenarios. Each scenario has a single varying parameter that, depending on the attacker context, may wish to be minimized. Hereafter the definition of the four scenarios: 
 \begin{itemize}
 \item[Scenario 1] varying parameter: number of attack traces $\nbAttackTraces$, 
 \item[Scenario 2] varying parameter: number of profiling traces $\nbProfilingTraces$, 
@@ -294,13 +294,8 @@ To analyse the dependence between the extraction methods presented in Sections~\
 
 
 \subsubsection{Scenario 2.}
-%\begin{figure}
-%\includegraphics[width=0.5\textwidth]{figures/Criterion2SSS.pdf}
-%\includegraphics[width=0.5\textwidth]{figures/Criterion2notSSS.pdf} 
-%\caption{Guessing Entropy as function of the number of profiling traces per class, for different extraction methods: on the left the LDA is substituted by its extensions to handle the SSS problem.}\label{fig:2}
-%\end{figure}
-Now we test the behaviour of the extraction methods as function of the number $N_z$ of available profiling traces per class. The number of components $\newTraceLength$ is still fixed to 3, $\numPoI=3996$ again and the number of attack traces is $\nbAttackTraces=100$. This scenario has to be divided into two parts: if $N_z\leq 15$, then $\nbProfilingTraces<\traceLength$ and the SSS problem occurs. Thus, in this case we test the four extensions of LDA presented in Sec.~\ref{sec:SSS}, associated to either the standard selection, to which we abusively refer as EGV,%\footnote{It consists in keeping the $\newTraceLength$ first LDCs, except for the Direct LDA, which asks to keep the last LDCs.}
-\footnote{It consists in keeping the $\newTraceLength$ first LDCs (the $C$ last for the Direct LDA)}
+
+Now we test the behaviour of the extraction methods as function of the number $N_z$ of available profiling traces per class. The number of components $\newTraceLength$ is still fixed to 3, $\numPoI=3996$ again and the number of attack traces is $\nbAttackTraces=100$. This scenario has to be divided into two parts: if $N_z\leq 15$, then $\nbProfilingTraces<\traceLength$ and the SSS problem occurs. Thus, in this case we test the four extensions of LDA presented in Sec.~\ref{sec:SSS}, associated to either the standard selection, to which we abusively refer as EGV,\footnote{It consists in keeping the $\newTraceLength$ first LDCs (the $C$ last for the Direct LDA)}
 or to the IPR selection.  We compare them to the class-oriented PCA associated to EGV, IPR or ELV. The ELV selection is not performed for the techniques extending LDA, since for some of them the projecting LDCs are not associated to some eigenvalues in a meaningful way. On the contrary, if $\nbTraces \geq 16$ there is no need to approximate the LDA technique, so the classical one is performed. Results for this scenario are shown in Fig.~\ref{fig:scenario2}. It may be noticed that the combinations class-oriented PCA + ELV/IPR select exactly the same components, for our data, see Fig.~\ref{fig:pcaclass} and do not suffer from the lack of profiling traces. They are slightly outperformed by the $\SW$ Null Space method associated with the EGV, see Fig.\ref{fig:swnullspace}. The Direct LDA (Fig.~\ref{fig:direct}) method also provides a good alternative, while the other tested methods do not show a stable behaviour. The results in absence of the SSS problem (Fig.\ref{fig:notSSS}) confirm that the standard PCA is not adapted to SCA, even when provided with more profiling traces. It also shows that among class-oriented PCA and LDA, the class-oriented PCA converges faster.
 
 
@@ -319,6 +314,31 @@ or to the IPR selection.  We compare them to the class-oriented PCA associated t
 \subfigure[]{\label{fig:notSSS}
 \includegraphics[width=0.5\textwidth]{../Figures/CARDIS2015/Criterion2notSSS.pdf}}
 \caption[Guessing Entropy as function of the number of profiling traces.]{Guessing Entropy as function of the number of profiling traces. Figures \subref{fig:fisherface}-\subref{fig:swnullspace}: methods extending the LDA in presence of SSS problem; Figure \subref{fig:pcaclass}: class-oriented PCA in presence of the SSS problem; Figure \subref{fig:notSSS}: number of profiling traces high enough to avoid the SSS problem.}\label{fig:scenario2}
+\end{figure}
+
+
+\subsubsection{Scenario 3.}
+Let  $\newTraceLength$ be now variable and let the other parameters be fixed as follows: $\nbAttackTraces = 100, N_z=200, \numPoI = 3996$. Looking at Fig.~\ref{fig:3}, we might observe that the standard PCA might actually well perform in SCA context if provided with a larger number of kept components; on the contrary, a little number of components suffices to the LDA. Finally, keeping more of the necessary components does not worsen the efficiency of the attack, which allows the attacker to choose $\newTraceLength$ as the maximum value supported by his computational means.
+
+\begin{figure}
+\includegraphics[width=\textwidth]{../Figures/CARDIS2015/Criterion3.pdf}
+\caption{Guessing Entropy as function of the trace size after reduction.}\label{fig:3}
+\end{figure}
+
+\begin{remark}
+In our experiments the ELV selection method only slightly outperforms the IPR. Nevertheless, since it relies on more sound and more general observations, {\em i.e.} the maximization of explained variance concentrated into few points, it is likely to be more robust and less case-specific. For example, in Fig.~\ref{fig:notSSS} it can be remarked that while the class-oriented PCA + ELV line keeps constant on the value 0 of guessing entropy, the class-oriented PCA + IPR is sometimes higher than 0.
+\end{remark}
+
+\subsubsection{Scenario 4.}
+
+This is the single scenario in which we allow the ELV selection method to not only select the components to keep but also to modify them, keeping only some coefficients within each component, setting the other ones to zero. We select pairs \textit{(component, time sample)} in decreasing order of the ELV values, allowing the presence of only $\newTraceLength = 3$ components and $\numPoI$ different times samples: {\em i.e.}, we impose that the matrix $A$ defining the extractor (see \eqref{eq:linearExtractor}) has $\newTraceLength = 3$ rows (storing the 3 chosen components, transposed) and exactly $\numPoI$ non-zero columns.
+Looking at Fig.~\ref{fig:4} we might observe that the LDA allows to achieve the maximal guessing entropy with only 1 PoI in each of the 3 selected components. 
+Actually, adding PoIs worsen its performances, which is coherent with the assumption that the vulnerable information leaks in only a few points. Such points are excellently detected by the LDA. Adding contribution from other points raises the noise, which is then compensated by the contributions of further noisy points, in a very delicate balance. Such a behaviour is clearly visible in standard PCA case: the first 10 points considered raise the level of noise, that is then balanced by the last 1000 points.
+
+\begin{figure}
+\includegraphics[width=0.5\textwidth]{../Figures/CARDIS2015/Criterion4.pdf}
+\includegraphics[width=0.5\textwidth]{../Figures/CARDIS2015/Criterion4cutted.pdf} 
+\caption{Guessing Entropy as function of the number of time samples contributing to the extractor computation.}\label{fig:4}
 \end{figure}
 
 \subsection{Overview of this Study and Conclusions}
@@ -364,7 +384,10 @@ LDA & IPR & {\bf +} & &{\bf +} & $\bigstar$ \\
 \caption{Overview of extractors performances in tested situations.}\label{table:results}
 \end{table}
 
-\todo{conclusions + cita choudary choudary2018efficient che ha provato la ELV ma dice che gli ha selezionato gli stessi autovettori della EGV quindi non ha potuto osservare miglioramenti...}
+This study focused two well-known techniques to construct extractors for side-channel traces, the PCA and the LDA. The LDA method is more adequate than the PCA one, thanks to its class-distinguishing asset, but more expensive and not always available in concrete situations. We deduced from a general consideration about side-channel traces, \ie the fact that for secured implementations the vulnerable leakages are concentrated into few points, a new methodology  for selecting components, called ELV. We showed that the class-oriented PCA, equipped with the ELV, achieves performances close to those of the LDA, becoming a cheaper and valid alternative to the LDA. Being our core consideration very general in side-channel context, we believe that our results are not case-specific. The ELV tool has been tested among others in a posterior study \cite{choudary2018efficient}: in this case it did not ameliorate the attack performances, neither made them worse, since it performed the same component selection as the EGV. \\
+A second part of the proposed study analysed experimentally some alternatives to the LDA in presence of SSS problem proposed in Pattern Recognition literature. Such experiments showed that the Direct LDA and the $\SW$ Null Space Method are promising techniques, exhibiting performances close to the ones given by the ELV-equipped class-oriented PCA.
+
+
 
 %----------------------------------------------------------------------------------------
 %	SECTION 7
