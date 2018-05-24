@@ -321,7 +321,8 @@ or to the IPR selection.  We compare them to the class-oriented PCA associated t
 Let  $\newTraceLength$ be now variable and let the other parameters be fixed as follows: $\nbAttackTraces = 100, N_z=200, \numPoI = 3996$. Looking at Fig.~\ref{fig:3}, we might observe that the standard PCA might actually well perform in SCA context if provided with a larger number of kept components; on the contrary, a little number of components suffices to the LDA. Finally, keeping more of the necessary components does not worsen the efficiency of the attack, which allows the attacker to choose $\newTraceLength$ as the maximum value supported by his computational means.
 
 \begin{figure}
-\includegraphics[width=\textwidth]{../Figures/CARDIS2015/Criterion3.pdf}
+\centering
+\includegraphics[width=.5\textwidth]{../Figures/CARDIS2015/Criterion3.pdf}
 \caption{Guessing Entropy as function of the trace size after reduction.}\label{fig:3}
 \end{figure}
 
@@ -331,18 +332,25 @@ In our experiments the ELV selection method only slightly outperforms the IPR. N
 
 \subsubsection{Scenario 4.}
 
-This is the single scenario in which we allow the ELV selection method to not only select the components to keep but also to modify them, keeping only some coefficients within each component, setting the other ones to zero. We select pairs \textit{(component, time sample)} in decreasing order of the ELV values, allowing the presence of only $\newTraceLength = 3$ components and $\numPoI$ different times samples: {\em i.e.}, we impose that the matrix $A$ defining the extractor (see \eqref{eq:linearExtractor}) has $\newTraceLength = 3$ rows (storing the 3 chosen components, transposed) and exactly $\numPoI$ non-zero columns.
-Looking at Fig.~\ref{fig:4} we might observe that the LDA allows to achieve the maximal guessing entropy with only 1 PoI in each of the 3 selected components. 
-Actually, adding PoIs worsen its performances, which is coherent with the assumption that the vulnerable information leaks in only a few points. Such points are excellently detected by the LDA. Adding contribution from other points raises the noise, which is then compensated by the contributions of further noisy points, in a very delicate balance. Such a behaviour is clearly visible in standard PCA case: the first 10 points considered raise the level of noise, that is then balanced by the last 1000 points.
-
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{../Figures/CARDIS2015/Criterion4.pdf}
 \includegraphics[width=0.5\textwidth]{../Figures/CARDIS2015/Criterion4cutted.pdf} 
 \caption{Guessing Entropy as function of the number of time samples contributing to the extractor computation.}\label{fig:4}
 \end{figure}
 
+This is the single scenario in which we allow the ELV selection method to not only select the components to keep but also to modify them, keeping only some coefficients within each component, setting the other ones to zero. We select pairs \textit{(component, time sample)} in decreasing order of the ELV values, allowing the presence of only $\newTraceLength = 3$ components and $\numPoI$ different times samples: {\em i.e.}, we impose that the matrix $A$ defining the extractor (see \eqref{eq:linearExtractor}) has $\newTraceLength = 3$ rows (storing the 3 chosen components, transposed) and exactly $\numPoI$ non-zero columns.
+Looking at Fig.~\ref{fig:4} we might observe that the LDA allows to achieve the maximal guessing entropy with only 1 PoI in each of the 3 selected components. 
+Actually, adding PoIs worsen its performances, which is coherent with the assumption that the vulnerable information leaks in only a few points. Such points are excellently detected by the LDA. Adding contribution from other points raises the noise, which is then compensated by the contributions of further noisy points, in a very delicate balance. Such a behaviour is clearly visible in standard PCA case: the first 10 points considered raise the level of noise, that is then balanced by the last 1000 points.
+
+
 \subsection{Overview of this Study and Conclusions}
+
+
+This study focused two well-known techniques to construct extractors for side-channel traces, the PCA and the LDA. The LDA method is more adequate than the PCA one, thanks to its class-distinguishing asset, but more expensive and not always available in concrete situations. We deduced from a general consideration about side-channel traces, \ie the fact that for secured implementations the vulnerable leakages are concentrated into few points, a new methodology  for selecting components, called ELV. We showed that the class-oriented PCA, equipped with the ELV, achieves performances close to those of the LDA, becoming a cheaper and valid alternative to the LDA. Being our core consideration very general in side-channel context, we believe that our results are not case-specific. The ELV tool has been tested among others in a posterior study \cite{choudary2018efficient}: in this case it did not ameliorate the attack performances, neither made them worse, since it performed the same component selection as the EGV. \\
+A second part of the proposed study analysed experimentally some alternatives to the LDA in presence of SSS problem proposed in Pattern Recognition literature. Such experiments showed that the Direct LDA and the $\SW$ Null Space Method are promising techniques, exhibiting performances close to the ones given by the ELV-equipped class-oriented PCA.
+
 \begin{table}
+\centering
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
 &&\multicolumn{4}{|>{\columncolor[gray]{0.7}}c|}{Parameter to minimize}\\
@@ -384,18 +392,12 @@ LDA & IPR & {\bf +} & &{\bf +} & $\bigstar$ \\
 \caption{Overview of extractors performances in tested situations.}\label{table:results}
 \end{table}
 
-This study focused two well-known techniques to construct extractors for side-channel traces, the PCA and the LDA. The LDA method is more adequate than the PCA one, thanks to its class-distinguishing asset, but more expensive and not always available in concrete situations. We deduced from a general consideration about side-channel traces, \ie the fact that for secured implementations the vulnerable leakages are concentrated into few points, a new methodology  for selecting components, called ELV. We showed that the class-oriented PCA, equipped with the ELV, achieves performances close to those of the LDA, becoming a cheaper and valid alternative to the LDA. Being our core consideration very general in side-channel context, we believe that our results are not case-specific. The ELV tool has been tested among others in a posterior study \cite{choudary2018efficient}: in this case it did not ameliorate the attack performances, neither made them worse, since it performed the same component selection as the EGV. \\
-A second part of the proposed study analysed experimentally some alternatives to the LDA in presence of SSS problem proposed in Pattern Recognition literature. Such experiments showed that the Direct LDA and the $\SW$ Null Space Method are promising techniques, exhibiting performances close to the ones given by the ELV-equipped class-oriented PCA.
-
-
-
 %----------------------------------------------------------------------------------------
 %	SECTION 7
 %----------------------------------------------------------------------------------------
 \section{Misaligning Effects}\label{sec:misalignment}
-\todo{give parameters: 6 4}
 \todo{citare Choudary, Template Attacks over different devices}
-In this section we experimentally show how the approach based on linear dimensionality reduction described in this chapter is affected by traces misalignment. To this aim, we simply take the same data and parameters exploited for Scenario 1 in Sec.~\ref{sec:experiments}, and artificially misalign them through the technique proposed in Appendix~\ref{appendix:artificial_jitter} with parameters \todo{parameters here}. Then we tried to pre-process attack them through the 9 methodology tested in Scenario 1. It may be noticed in Fig.~\ref{fig:PCA_LDA_misalignment} that none of the 9 techniques is still efficient, included the optimal LDA+EGV that lead to null guessing entropy the synchronized traces using less 7 attack traces. In this case it cannot lead to successful attack in less than 3000 traces.
+In this section we experimentally show how the approach based on linear dimensionality reduction described in this chapter is affected by traces misalignment. To this aim, we simply take the same data and parameters exploited for Scenario 1 in Sec.~\ref{sec:experiments}, and artificially misalign them through the technique proposed in Appendix~\ref{appendix:artificial_jitter} with parameters \textt{sigma}$= 6$, \texttt{B}$= 4$. Then we tried to pre-process attack them through the 9 methodology tested in Scenario 1. It may be noticed in Fig.~\ref{fig:PCA_LDA_misalignment} that none of the 9 techniques is still efficient, included the optimal LDA+EGV that lead to null guessing entropy the synchronized traces using less 7 attack traces. In this case it cannot lead to successful attack in less than 3000 traces.
 \begin{figure}
 \includegraphics[width=\textwidth]{../Figures/desynchro_results_PCA_LDA.pdf} 
 \caption{Degradation of linear-reduction-based template attacks in presence of misalignment.}\label{fig:PCA_LDA_misalignment}
