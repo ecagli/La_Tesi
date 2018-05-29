@@ -1,3 +1,37 @@
 \chapter{Cross-Validation} 
 
 \label{app:cross-validation} 
+
+In the Machine Learning community, several evaluation frameworks are commonly
+applied to assess the performances of a model or to select the best hyper-parameters
+for a learning algorithm. These methods aim to provide an
+estimator of the performance which does not
+depend on the choice of the training set $\setDataTrain$ (on which the model is trained) and of the
+test set $\setDataTest$ (on which the model is tested) but only on their size.
+
+The so-called \emph{$t$-fold
+cross-validation} \cite{friedman2001elements} is currently the preferred evaluation method. Let P be a
+performance metric, $\hat{f}$ a model to evaluate, and $\setDataTrain=(\setLeak, \setTarget)$ a labelled dataset, the outline of the method is the
+following: 
+\begin{enumerate}
+\item ~[optional] randomize the order of the labelled traces in $\setDataTrain$, 
+\item ~split the samples and their corresponding labels into $t$ disjoint parts
+of equal size $(\setLeak_1,\setTarget_1),\ldots,(\setLeak_t,\setTarget_t)$.
+For each $i\in [1..t]$, do:
+\begin{enumerate}
+\item set $\setDataValidation \doteq (\setLeak_i, \setTarget_i)$ and
+$\setDataTrain \doteq (\bigcup_{j\neq i} \setLeak_j, \bigcup_{j\neq
+i} \setTarget_j)$,
+\item (re-)train\footnote{The model is trained from scratch at each iteration of the loop over $t$.} the model $\hat{f}$ on $\setDataTrain$, 
+\item compute the performance metric by evaluating the model on $\setDataValidation$:
+\begin{equation}\label{equ:perMetric}
+\text{P}_i = \text{P}(\hat{f}, \setDataValidation) \enspace ,
+\end{equation}
+\end{enumerate}
+\item ~return the mean $\frac{1}{t}\sum_{i=1}^t \text{P}_i$.
+\end{enumerate}
+
+It is known that the $t$-fold cross-validation estimator is an unbiased
+estimator of the generalization performance. Its main drawback is its variance
+which may be large and difficult to estimate
+\cite{breiman1996heuristics,bengio2005bias}. 

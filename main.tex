@@ -67,6 +67,7 @@ headsepline, % Uncomment to get a line under the header
 %----------------------------------------------------------------------------------------
 %	MY NEW ENVIRONMENTS AND PACKAGES
 %----------------------------------------------------------------------------------------
+\usepackage{enumitem}
 
 \usepackage{amsmath,amsfonts,amsthm,amssymb}
 \usepackage{xcolor,colortbl}
@@ -113,11 +114,14 @@ headsepline, % Uncomment to get a line under the header
 \newcommand*{\vaLeakVec}{\vec{X}}
 \newcommand{\setLeakTrain}{\setLeak_{\text{train}}}
 \newcommand{\setLeakTest}{\setLeak_{\text{test}}}
+\newcommand{\setLeakValidation}{\setLeak_{\text{validation}}}
 \newcommand{\setTargetTrain}{\setTarget_{\text{train}}}
 \newcommand{\setTargetTest}{\setTarget_{\text{test}}}
+\newcommand{\setTargetValidation}{\setTarget_{\text{validation}}}
 
 \newcommand*{\setDataTrain}{\mathcal{D}_{\text{train}}}
 \newcommand*{\setDataTest}{\mathcal{D}_{\text{test}}}
+\newcommand*{\setDataValidation}{\mathcal{D}_{\text{validation}}}
 \newcommand*{\setDataProfiling}{\mathcal{D}_{\text{profiling}}}
 \newcommand*{\setDataAttack}{\mathcal{D}_{\text{attack}}}
 \newcommand*{\setTarget}{{\mathcal{Y}}}
