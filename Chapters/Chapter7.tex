@@ -210,17 +210,17 @@ where $\III$ is a $\nbTracesPerClass \times \nbTracesPerClass$ identity matrix, 
 
 
 \item[4)] Finally, the projection of a new trace $\vLeakVec$ over the $\ell$-th non-linear $d$-th order discriminant component can be computed as:
-\begin{equation}\label{eq:projection}
+\begin{equation}\label{eq:projectionKDA}
 \extract^{\mathrm{KDA}}_{\ell}(\vLeakVec) = \sum_{i=1}^{\nbProfilingTraces}\boldsymbol{\nu}_\ell[i]K(\vLeakVec{i}, \vLeakVec) \mbox{ .}
 \end{equation} 
 
 \end{itemize}
 \end{procedure}
-For the reasons discussed in the introduction of this section, the right-hand side of \eqref{eq:projection} may be viewed as an efficient way to process the $\ell$-coordinate of the vector $\extract^{LDA}(\Phi(\vLeakVec) = \textbf{w}_{\ell} \cdot \Phi(\vLeakVec)$,
+For the reasons discussed in the introduction of this section, the right-hand side of \eqref{eq:projectionKDA} may be viewed as an efficient way to process the $\ell$-coordinate of the vector $\extract^{LDA}(\Phi(\vLeakVec) = \textbf{w}_{\ell} \cdot \Phi(\vLeakVec)$,
 without evaluating $\Phi(\vLeakVec)$. The entries of $\textbf{w}_{\ell}$ are never computed, and will thus be referred to as \emph{implicit coefficients} (see Remark~\ref{rem:implicit}). It may be observed that each discriminant component $\extract^{\mathrm{KDA}}_{\ell}(\cdot)$ depends on the training set $(\vLeakVec_i, \sensVar_i)_{i=1, \dots , \nbProfilingTraces}$, on the kernel function $K$ and on the regularization parameters $\mu$.
 
 \begin{remark}[The implicit coefficients]\label{rem:implicit}
-As already said, the KDA, when the $d$th-degree  polynomial kernel function is chosen as kernel function, operates implicitly in the feature space of all products of $d$-tuples of time samples. In order to investigate the effect of projecting a new trace $\vLeakVec$ over a component $\extract^{\mathrm{KDA}}_{\ell}(\vLeakVec)$, we can compute for a small $d$ the implicit coefficients that are assigned to the $d$-tuples of time samples through \eqref{eq:projection}. For $d=2$ we obtain that in such a feature space the projection is given by the linear combination computed via the coefficients shown below: 
+As already said, the KDA, when the $d$th-degree  polynomial kernel function is chosen as kernel function, operates implicitly in the feature space of all products of $d$-tuples of time samples. In order to investigate the effect of projecting a new trace $\vLeakVec$ over a component $\extract^{\mathrm{KDA}}_{\ell}(\vLeakVec)$, we can compute for a small $d$ the implicit coefficients that are assigned to the $d$-tuples of time samples through \eqref{eq:projectionKDA}. For $d=2$ we obtain that in such a feature space the projection is given by the linear combination computed via the coefficients shown below: 
 \begin{equation}\label{eq:implicit}
 \extract^{\mathrm{KDA}}_{\ell}(\vLeakVec) = \sum_{j=1}^\traceLength \sum_{k=1}^\traceLength[ (\vLeakVec[j]\vLeakVec[k])\underbrace{(\sum_{i=1}^{\nbProfilingTraces}\boldsymbol{\nu}_{\ell}[i] \vLeakVec_i[j]\vLeakVec_{i}[k])}_{\mbox{implicit \\ coefficients}}]
 \end{equation}

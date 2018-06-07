@@ -18,7 +18,7 @@ The core of an RSA implementation is the computation of a modular exponentiation
 % aggiungi citazione di Sliding Right into Disaster: Left-to-Right Sliding Windows Leak per dire che ancora oggi la questione della resistenza delle implementazioni agli SCA è soggetto di ricerche
 \end{remark}
 
-\subsubsection{Sensitive Variable}
+\subsubsection{Sensitive Variable}\label{sec:sensVar}
 In order to make inference on the subkeys, an attacker acquires side-channels signals, \eg instantaneous power consumption or electromagnetic irradiation, during the execution of the algorithm. Such signals are collected into vectors called \emph{traces} (or \emph{acquisitions}). Such traces will be denoted as observations $\vLeakVec_i$ of a random real vector $\vaLeakVec$, where each coordinate corresponds to a time sample of the acquired signal. The goal of the side-channel analysis is finding the right association between a trace (or a set of traces) and the value assumed by a target \emph{sensitive variable} $\sensRandVar$ during its (their) acquisition. A sensitive variable is a quantity handled during the algorithm that tells something about a secret of the implementation. Actually, it would be better to call it \emph{sensitive target}, since it might not be variable. Some typical examples of sensitive variables include: 
 
 
@@ -26,7 +26,7 @@ In order to make inference on the subkeys, an attacker acquires side-channels si
 \begin{itemize}
 \item $\sensRandVar = \keyRandVar$ with $\keyRandVar$ a secret subkey - this is the most direct choice for a sensitive target, nevertheless it is often not variable, since in some cases a device exploits always the same key for a given embedded primitive. When the target is not variable we are performing a \emph{simple attack} (see below);
 \item a cryptographic variable that depends over a sufficiently small subkey and a part of a known input variable $\publicParRandVar$: $\sensRandVar = \sensFunction(\keyRandVar,\publicParRandVar)$ - this is the most classical choice to perform a so-called \emph{differential} or \emph{advanced} SCA (see below);
-\item any function of a cryptographic variable (ex: $\HW(\sensFunction(\keyRandVar,\publicParRandVar))$), where $\HW$ represent the Hamming weight. We will see later in which sense it can be interesting to not target a variable but a non-injective function of a variable as the Hamming weight is;
+\item any function of a cryptographic variable (ex: $\HW(\sensFunction(\keyRandVar,\publicParRandVar))$), where $\HW$ represent the Hamming weight. We will see later in which sense it can be interesting to not target a variable but a non-injective function of a variable as the Hamming weight is; when the identity function is applied we are in the previous case
 \item an operation (ex: $\sensRandVar \in \{\mathrm{square}, \mathrm{multiply}\}$)
 \item a register (ex: $\sensRandVar$ is the register used to store results of intermediate operations in a Montgomery ladder implementation of RSA)
 \end{itemize}
@@ -162,7 +162,7 @@ In \cite{Oren2014} a constraint solver is proposed to replace the bit-oriented S
 
 Since all these algebraic side-channel approach are based over a preliminary profiling phase, they are all largely concerned by the dimensionality reduction issue, which is often not explicitly taken into account in literature about this research axe. 
 
-\subsubsection{Efficiency of the SCAs}
+\subsubsection{Efficiency of the SCAs}\label{sec:metrics}
 In order to measure the efficiency of a side-channel attack, different security metrics have been proposed, the most exploited being the \emph{success rate of order} $\orderRate$ ($\SR_\orderRate$) and the \emph{guessing entropy} (GE). Referring to the formalization proposed by \cite{unifiedFramework}, a key recovery side-channel attack outputs a vector of key candidates,\footnote{In this thesis we will always target a subkey and we will use such metrics to evaluate the efficiency of an attack in recovering such subkeys. When a full-key recovery attack is run, some algorithms to merge subkey's outcomes and obtain the full key enumeration and a complete key rank estimation are deployed. This domain is out the scope of this thesis.} called {\em guessing vector} $\guessingVector = \left[\guessingVector[1], \dots, \guessingVector[{\lvert \keyVarSet \rvert}]\right]$, in which such candidates are sorted in decreasing order with respect to their likelihood after the attack phase. Being $\keyVar^\star$ the right candidate, its \emph{rank} is given by:
 \begin{equation}
 \mathrm{Rank}(\keyVar^\star) = i \mbox{ such that } \guessingVector[i] = \keyVar^\star \mbox{.}
