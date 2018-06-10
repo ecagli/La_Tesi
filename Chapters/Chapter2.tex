@@ -124,7 +124,7 @@ Representing the side channel traces as column vectors ${\bf x}$ in $\mathbb{R}^
 \end{equation} 
 A notable difference among them is that only the last two, SNR and SOST, take also the variances per class of the traces into account, given by
 \begin{equation}
-\varXclass = \varEst_i(vaLeakVec \given \sensRandVar = \sensVar) = \frac{1}{\nbTracesPerClass-1}\sum_{i\colon \sensVar_i=\sensVar} (\vLeakVec_i - \mmmXclass)^2 \mbox{ .}
+\varXclass = \varEst_i(\vaLeakVec \given \sensRandVar = \sensVar) = \frac{1}{\nbTracesPerClass-1}\sum_{i\colon \sensVar_i=\sensVar} (\vLeakVec_i - \mmmXclass)^2 \mbox{ .}
 \end{equation}
 
 The Table~\ref{table:PoIselectors} gives explicit formulas to compute such state-of-the-art sample-wise statistics. Once the chosen signal strength estimate $\sPOI$ is computed, it can be used as in a hypothesis test to reject the hypothesis that the sample mean values at time $t$ are equal. The instants $t$ in which such a hypothesis is rejected correspond to the PoIs, since the variation of the signals in such instants seems depend on the class belongingness. The construction of the subsampling $\extract$ is done on the base of such a test, for example selecting all time samples for which $\sPOI(t)$ is higher than a certain threshold. \\
