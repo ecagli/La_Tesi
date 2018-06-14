@@ -22,11 +22,11 @@ For each $i\in [1..t]$, do:
 \item set $\setDataValidation \doteq (\setLeak_i, \setTarget_i)$ and
 $\setDataTrain \doteq (\bigcup_{j\neq i} \setLeak_j, \bigcup_{j\neq
 i} \setTarget_j)$,
-\item (re-)train\footnote{The model is trained from scratch at each iteration of the loop over $t$.} the model $\hat{f}$ on $\setDataTrain$, 
-\item compute the performance metric by evaluating the model on $\setDataValidation$:
-\begin{equation}\label{equ:perMetric}
-\text{P}_i = \text{P}(\hat{f}, \setDataValidation) \enspace ,
-\end{equation}
+\item ~(re-)train\footnote{The model is trained from scratch at each iteration of the loop over $t$.} the model $\hat{f}$ on $\setDataTrain$, 
+\item ~compute the performance metric $P_i$ by evaluating the model $\hat{f}$ on $\setDataValidation$,
+%\begin{equation}\label{equ:perMetric}
+%\text{P}_i = \text{P}(\hat{f}, \setDataValidation) \enspace ,
+%\end{equation}
 \end{enumerate}
 \item ~return the mean $\frac{1}{t}\sum_{i=1}^t \text{P}_i$.
 \end{enumerate}
