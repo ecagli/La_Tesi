@@ -91,7 +91,7 @@ headsepline, % Uncomment to get a line under the header
 
 
 \theoremstyle{remark}
-\newtheorem*{remark}{Remark}
+\newtheorem{remark}{Remark}[chapter]
 \newtheorem{lemma}{Lemma}{\bfseries}{\itshape}
 \newtheorem{definition}{Definition}
 \newtheorem{assumption}{Assumption}{\bfseries}{\itshape}
@@ -116,10 +116,11 @@ headsepline, % Uncomment to get a line under the header
 \newcommand{\setLeakTrain}{\setLeak_{\text{train}}}
 \newcommand{\setLeakTest}{\setLeak_{\text{test}}}
 \newcommand{\setLeakValidation}{\setLeak_{\text{validation}}}
+\newcommand{\setLeakProfiling}{\setLeak_{\text{profiling}}}
 \newcommand{\setTargetTrain}{\setTarget_{\text{train}}}
 \newcommand{\setTargetTest}{\setTarget_{\text{test}}}
 \newcommand{\setTargetValidation}{\setTarget_{\text{validation}}}
-
+\newcommand{\setTargetProfiling}{\setTarget_{\text{profiling}}}
 
 \newcommand*{\setData}{\mathcal{D}}
 \newcommand*{\sizeSetData}{\lvert\setData\rvert}
@@ -129,6 +130,10 @@ headsepline, % Uncomment to get a line under the header
 \newcommand*{\setDataProfiling}{\mathcal{D}_{\text{profiling}}}
 \newcommand*{\setDataAttack}{\mathcal{D}_{\text{attack}}}
 \newcommand*{\setTarget}{\mathcal{Y}}
+%\newcommand*{\setDataKDA}{\mathcal{D}_{\text{KDA}}}
+%\newcommand{\setLeakKDA}{\setLeak_{\text{KDA}}}
+%\newcommand{\setTargetKDA}{\setTarget_{\text{KDA}}}
+
 
 \newcommand*{\sPOI}{\tau} %signal strength
 
@@ -162,8 +167,8 @@ headsepline, % Uncomment to get a line under the header
 \newcommand*{\SR}{\mathrm{SR}}
 \newcommand*{\newTraceLength}{C}
 \newcommand*{\traceLength}{D}
-\newcommand*{\AAlpha}{\boldsymbol{\alpha}}
-\newcommand*{\BBeta}{\boldsymbol{\beta}}
+\newcommand*{\AAlpha}{\vec{\alpha}}
+\newcommand*{\BBeta}{\vec{\beta}}
 \newcommand*{\covmat}{\textbf{S}}
 \newcommand*{\numPoI}{\sharp\mathrm{PoI}}
 \newcommand*{\leakFunction}{\phi}
@@ -179,7 +184,7 @@ headsepline, % Uncomment to get a line under the header
 
 \newcommand*{\prob}{\mathrm{Prob}}
 \newcommand*{\pdf}{p}
-\newcommand*{\mumumu}{\boldsymbol{\mu}}
+\newcommand*{\mumumu}{\vec{\mu}}
 
 \newcommand*{\measuresMatrix}{\textbf{M}}
 \newcommand*{\projectingMatrix}{\textbf{A}}
@@ -198,13 +203,13 @@ headsepline, % Uncomment to get a line under the header
 \newcommand*{\varXclass}[1][z]{\hat{\boldsymbol{\sigma}}^2_{#1}}
 
 \newcommand{\MMM}{\textbf{M}}
-\newcommand{\MMMclass}[1][z]{\textbf{M}_{#1}}
-\newcommand{\MMMT}{\textbf{M}_{\textbf{T}}}
+\newcommand{\MMMclass}[1][z]{\vec{M}_{#1}}
+\newcommand{\MMMT}{\vec{M}_{T}}
 \newcommand{\NNN}{\textbf{N}}
 \newcommand{\III}{\textbf{I}}
 \newcommand{\numEigenvectors}{Q}
 \newcommand{\kernelMatrix}{\textbf{K}}
-\newcommand{\nununu}{\boldsymbol{\nu}}
+\newcommand{\nununu}{\vec{\nu}}
 \newcommand{\mmmXPhi}{\overline{\Phi(\vec{x}})}
 \newcommand{\mmmXclassPhi}[1][z]{\overline{\Phi(\vec{x})}^{#1}}
 
