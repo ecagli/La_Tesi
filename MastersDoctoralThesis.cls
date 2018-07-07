@@ -240,6 +240,7 @@
 \ProvideDocumentCommand{\addchaptertocentry}{ m }{%
 	\addcontentsline{toc}{chapter}{#1}%
 }
+\setcounter{secnumdepth}{4}
 
 %----------------------------------------------------------------------------------------
 %	COLOURS

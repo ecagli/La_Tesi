@@ -10,6 +10,9 @@
 \section{Moving from Kernel Machines to Neural Networks}
 % The answers to the 3 drawbacks of previous chapter (misalignment, memory complexity and actual number of params, two phases approach)
 %"In practice, however, it is often worth investing substantial computational resources during the training phase in order to obtain a compact model that is fast at processing new data" (Bishop intro chap 5)
+
+% RICICLATO DALL'EX CAPITOLO 1
+Kernel techniques like the KDA  are as well inherited from Machine Learning domain and consist in strategies that allow to build interesting extensions of many algorithms. One of their characteristics, that turns to be a drawback to apply them in SCA context is that are memory-based: the entire set of profiling traces, \ie those acquired by observing the open samples, has to be stored and accessed in the attack phase. In this sense they are highly memory-consuming, and quite slow to apply: they do not scale well in presence of huge profiling trace sets as those that are often necessary to perform profiling SCAs. In contrast to them, models provided by Neural Networks (NNs) are Machine Learning solutions that are known to be easily scalable to huge datasets and not memory-based. We decided to explore such an approach and pointed out that it not only provided solutions to tackle such a computational performance drawback.
 \subsection{Multi-Layer Perceptrons}
 % descrizione (dal paper) 
 % universal approximation theorem (da pagg 194 e seguenti del deeplearningbook)
@@ -34,7 +37,7 @@
 %----------------------------------------------------------------------------------------
 
 \section{Data Augmentation for Misaligned Side-Channel Traces}
-\todo{cita o qui o all'inizio il paper di CARDIS 2017 sulla trace augmentation}
+%\todo{cita o qui o all'inizio il paper di CARDIS 2017 sulla trace augmentation}
 %----------------------------------------------------------------------------------------
 %	SECTION 5
 %----------------------------------------------------------------------------------------
