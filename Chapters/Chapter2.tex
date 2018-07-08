@@ -5,7 +5,45 @@
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
-\section{Notations and Basic Notions of Probability and Statistics}
+\section{Notations and Probability and Statistics Recalls}
+\paragraph*{Basic Notations}
+In this thesis we use calligraphic letters as $\mathcal{X}$ to denote
+sets, the corresponding upper-case letter $X$ to denote random variables (random
+vectors $\vec{X}$ if with an arrow) over $\mathcal{X}$, and the corresponding
+lower-case letter $x$ (resp. $\vec{x}$ for vectors) to denote realizations of
+$X$ (resp. $\vec{X}$). Matrices will be denoted with bold capital letters. The
+$i$-th entry of a vector $\vec{x}$ is denoted by $\vec{x}[i]$, while the $i$-th observation of a random variable $X$ is denoted by $x_i$. Observations will sometimes be grouped into datasets $\setData=\{x_1,\dots, \x_N\}$.\\
+
+\paragraph*{Probability Notations}
+The probability of a random variable $X$ assuming the value $x\in\mathcal{X}$ is denoted by $\prob(X=x)$. If $X$ is a discrete variable $\pdf_X$ denotes its probability mass function, in such a way that $\prob(X=x)=\pdf_X(x)$. The same symbol $\pdf_X$ is used to denote de probability density function (pdf for short) if $X$ is a continuous variable, in such a way that $\prob(a<X<b) = \int_{a}^{b}\pdf_X(x)dx$, for $[a,b]\subset\mathcal{X}$. When two random variables $X,Y$ are considered their joint probability is denoted by $\prob(X=x,Y=x)$, and their joint probability density (or mass) function is denoted by $\pdf_{X,Y}(x,y)$. The conditional probability of $X$ assuming the value $x$ given an outcome $y$ for $Y$ is denoted by $\prob{X=x\given Y=y}$. The conditional probability density (or mass) function of $X$ given an outcome $y$ for $Y$ is denoted by $\pdf{X\given Y=y}(x)$.
+
+\paragraph*{Bayes' Theorem}
+The symbol $\mean$ denotes the expected value, and might be subscripted by a random
+variable $\mean[X]$, or by a probability distribution $\mean[f_{X}]$, to specify
+under which probability distribution it is computed. Side-channel traces will be
+viewed as discrete realizations of a random column vector
+$\vaLeakVec$ with values in  $[0,\omega]^\dimLeak$ where $\omega$ depends on the vertical resolution of the oscilloscope used for the acquisitions (usually, we have $\omega\in \{8,10,12\}$). During their acquisition, a target sensitive
+variable $\vaTarget = \fAlgo(\vaPlaintext,\vaKey)$ is handled, where
+$\vaPlaintext$ denotes some public variable, \emph{e.g.} a plaintext chunk, and
+$\vaKey$ the part of a secret key the attacker aims to retrieve. The value
+assumed by such a variable is viewed as a realization $\vTarget\in \setTarget =
+\{\vTarget^1,\vTarget^2,\ldots,\vTarget^{|\setTarget|}\}$ of a discrete finite
+random variable $\vaTarget$.  
+
+
+Bayes theorem
+Prior probabilities
+Posterior probabilities
+Bayes theorem for mixed (discrete/continuous) variables (cita Feller 1966)
+
+abbiamo dei dati D {x_1, x_N} osservazioni di una variabile ignota, su cui vogliamo fare inferenza e modellizzare basandoci sull'osservazione dei dati -> statistical inference. Various approaches exist to make statistical inference. The two main ones are the frequentist approach and the Bayesian one. Frequentist inference of frequentist statistics is an approach that draws conclusions exclusively from sample data. It makes use of methodologies like the statistical hypothesis testing and the confidence interval, and in this thesis is sometimes referred to as classical statistics. In the frequentist approach, parameters that define the distribution of the analysed random variable are priorly considered as fixed and unknown, and are estimated or tested on the sole basis of the observation of D. A second approach is the Bayesian inference, for which parameters that describe the analysed random variable are admitted to be probabilistic: in Bayesian inference, before the observation of sample data, the parameters have a prior distribution that reflects the knowledge and belief of the data-scientist about them. The observation of data leads to an update procedure, based on the Bayes' theorem that allows such probability distribution of parameters become more and more appropriate, each time exploiting the new available information. 
+
+In molti ambiti il metodo di inferenza bayesiano è accettato e difeso a spada tratta. Noi lo endorsiamo: si basa sul teorema di bayes e è una tecnica che permette di aggiornare le ipotesi che si fanno su un modello di variabile basandosi sui dati.
+
+Bayesian inference : parametri, prior prob, posterior prob, likelihood. 
+Expectation, Variance and Covariance
+Estimators for expectation, variance and covariance (non biased or maximum likelihood)
+Gaussian distribution (real variable or multivariate variable)
 
 
 \section{Side-Channel Attacks}
@@ -105,12 +143,12 @@ This is also generally estimated in an empirical way, by performing the attack m
 
 \subsection{Profiling Side-Channel Attacks}\label{sec:profilingSCA}
 As anticipated in Sec.~\ref{sec:this_thesis_objectives}, when an open sample of the attacked device is available to make a prior characterisation of the leaking signals of a device, we talk about \emph{profiling} attacks. When this is not the case, we talk about \emph{non-profiling} attacks. \\
-A profiling attack is divided into two distinct phases. The first one, called \emph{profiling phase} or \emph{characterisation} phase exploits so-called \emph{profiling traces} to build a model of the leakages. Profiling traces are acquisitions taken under known values for the sensitive variable $\sensRandVar$, so are couples $(\vLeakVec_i, \sensVar_i)_{i=1, \dots , \nbProfilingTraces}$ for which the correct association trace/sensitive variable is known. The second phase of a profiling attack is the proper \emph{attack phase}, during which the attacker observes a new set of acquisitions, under unknown secret key, and takes advantage of the previous characterisation to infer over it. \\
+A profiling attack is divided into two distinct phases. The first one, called \emph{profiling phase} or \emph{characterisation} phase exploits so-called \emph{profiling traces} to build a model of the leakages. Profiling traces are acquisitions taken under known values for the sensitive variable $\sensRandVar$, so are couples $(\vLeakVec_i, \sensVar_i)_{i=1, \dots , \nbProfilingTraces}$ for which the correct association trace/sensitive variable is known. The second phase of a profiling attack is the proper \emph{attack phase}, during which the attacker observes a new set of acquisitions, under unknown secret key, and takes advantage of the previous characterisation to infer over it. Throughout this thesis, and each time a profiling attack scenario is supposed,  we will refer to elements of $\sensVarSet$ as \emph{labels}, each one identifying a \emph{class} of traces. We will say that acquired traces associated to a same value $\sensVar\in\sensVarSet$ \emph{belong} to the same class, identified by the label $\sensVar$. We will say as well that such traces are  \emph{labelled} by the value $\sensVar$. By abuse we will also refer to the class $\sensVar$ to denote the class of traces labelled by $\sensVar$. In such a context $\nbTracesPerClass$ will denote the number of profiling traces belonging to the class $\sensVar$.
+
+
 
 As we will see in Chapter~\ref{ChapterIntroML}, in machine learning domain the analogous of profiling attacks context is studied under the name of \emph{supervised machine learning}. In supervised machine learning, couples $(\vLeakVec_i, \sensVar_i)_{i=1, \dots , \nbProfilingTraces}$ are available and are called \emph{training examples}. The profiling phase is referred to as \emph{training} or \emph{learning} and the attack phase is assimilable to the so-called \emph{test phase}. The main difference between a machine learning test phase and a side-channel attack phase is that in the former one the examples are processed independently from each other, while in the latter the examples have something in common (typically a fixed secret key) and are used synergetically to guess it. If no example is available we talk about \emph{unsupervised machine learning}, that we can consider analogous to the non-profiling SCAs branch. 
 
-\subsubsection{Classes}
-Throughout this thesis, and each time a profiling attack scenario is supposed,  we will refer to elements of $\sensVarSet$ as \emph{labels}, each one identifying a \emph{class} of traces. We will say that acquired traces associated to a same value $\sensVar\in\sensVarSet$ \emph{belong} to the same class, identified by the label $\sensVar$. We will say as well that such traces are  \emph{labelled} by the value $\sensVar$. By abuse we will also refer to the class $\sensVar$ to denote the class of traces labelled by $\sensVar$. In such a context $\nbTracesPerClass$ will denote the number of profiling traces belonging to the class $\sensVar$.
 
 
 
@@ -124,7 +162,7 @@ eventually the prior densities $p_{\vaLeakVec}(\vLeakVec)$, $p_{\sensRandVar}(\s
 \begin{equation}\label{eq:a-posteriori}
 p_{\sensRandVar}(\sensVar \given \vaLeakVec = \vLeakVec) = \frac{p_{\vaLeakVec}(\vLeakVec \given \sensRandVar = \sensVar)p_{\sensRandVar}(\sensVar)} {p_{\vaLeakVec}(\vLeakVec)}\mbox{ .}
 \end{equation}
-In the attack phase the attacker acquires new traces that he only can associate to the public parameter $\publicParRandVar$, obtaining couples  $(\vLeakVec_i, \publicParVar_i)_{i=1, \dots , \nbAttackTraces}$. Then he makes key hypothesis $\keyVar \in \keyVarSet$ and, making the assumption that each acquisition is an independent observation of $\vaLeakVec$, he associates to each hypothesis $\keyVar \in \keyVarSet$ a score $\d_\keyVar$ given by the joint \textit{a-posteriori} probability that follows, and that he computes exploiting estimates \eqref{eq:a-posteriori}:
+In the attack phase the attacker acquires new traces that he only can associate to the public parameter $\publicParRandVar$, obtaining couples  $(\vLeakVec_i, \publicParVar_i)_{i=1, \dots , \nbAttackTraces}$. Then he makes key hypothesis $\keyVar \in \keyVarSet$ and, making the assumption that each acquisition is an independent observation of $\vaLeakVec$, he associates to each hypothesis $\keyVar \in \keyVarSet$ a score $d_\keyVar$ given by the joint \textit{a-posteriori} probability that follows, and that he computes exploiting estimates \eqref{eq:a-posteriori}:
 
 \begin{equation}\label{eq:joint_distr}
 d_{\keyVar} = \prod_{i=1}^{\nbAttackTraces} p_{\sensRandVar}(\sensFunction(\keyVar,\publicParVar_i) \given \vaLeakVec = \vLeakVec_i) \mbox{ .}
