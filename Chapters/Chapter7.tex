@@ -137,7 +137,7 @@ K(\vLeakVec_i,\vLeakVec_j) = \Phi(\vLeakVec_i)\cdot \Phi(\vLeakVec_j) \mbox{ ,}
 for each $i,j= 1,\dots, \nbTraces$, where $\cdot$ denote the dot product.
 
 
-Every map $\Phi$ has an associated kernel function given by \eqref{eq:kernelProperty}, for a given set of data. The converse is not true: all and only the functions $K\colon\mathbb{R}^D\times \mathbb{R}^D \rightarrow \mathbb{R}$ that satisfy a convergence condition known as {\em Mercer's condition} are associated to some map $\Phi:\mathbb{R}^D	\rightarrow \mathbb{R}^F$, for some $F$. Importantly, a kernel function is interesting only if it is computable directly from the rough data $\vLeakVec$, without evaluating the function $\Phi$. \\
+Every map $\Phi$ has an associated kernel function given by \eqref{eq:kernelProperty}, for a given set of data. The converse is not true: all and only the functions $K\colon\mathbb{R}^D\times \mathbb{R}^D \rightarrow \mathbb{R}$ that satisfy a convergence condition known as {\em Mercer's condition} are associated to some map $\Phi:\mathbb{R}^D	\rightarrow \mathbb{R}^\featureSpaceSize$, for some $\featureSpaceSize$. Importantly, a kernel function is interesting only if it is computable directly from the rough data $\vLeakVec$, without evaluating the function $\Phi$. \\
 
 The notion of kernel function is illustrated in the following example.
 
