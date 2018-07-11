@@ -45,7 +45,7 @@ Let $(\vLeakVec)_{i=1..\nbTraces}$ be a set of $\traceLength$-dimensional measur
 
 Let us assume for the moment that we have priorly fixed the dimension $\newTraceLength<\traceLength$ of the principal subspace we are looking for. 
 
-\paragraph{Compute the First Principal Component}
+\paragraph*{Compute the First Principal Component}
 Suppose in a first time that $\newTraceLength = 1$, i.e. that we want to represent our data by a unique variable $Y_1 =  \AAlpha_1 \vaLeakVec{}$, i.e. projecting data over a single $ 1 \times\traceLength$ vector $\AAlpha_1$, in such a way the the variance of the obtained data is maximal. The vector $\AAlpha_1$ that provides such a linear combination is called {\em first principal component}. 
 To avoid misunderstanding we will call {\em $j$-th principal component} (PC) the projecting vector $\AAlpha_j$, while we will refer to the variable $Y_j = \AAlpha_j \vaLeakVec{}$ as {\em $j$-th Principal Variable (PV)}. 
 Realizations of the PVs are given by the measured data projected over the $j$-th PC, for example we can collect, in a (row) vector $\yyy_1 = \AAlpha_1 \measuresMatrix $, $\nbTraces $ realizations of $Y_1$:
@@ -78,7 +78,7 @@ which implies that $\AAlpha_1^\intercal$ must be an eigenvector of $\covmat$, wi
 \end{equation}
 which means that the variance of the obtained variable $\yyy_1$ equals $\lambda$. For this reason $\AAlpha_1$ must be the leading eigenvector of $\covmat$, the one correspond to the maximal eigenvalue.
 
-\paragraph{Compute the Second and Following Principal Components}
+\paragraph*{Compute the Second and Following Principal Components}
 The PCs following the first one are defined in an incremental fashion by choosing new directions orthogonal to those already considered and such that the sum of the projected variances over each direction is maximal. Explicitly, if we look for two PCs, \ie $\newTraceLength = 2$,  we look for a $2$-dimensional variable $\YYY = \begin{psmallmatrix} \AAlpha_1 \\ \AAlpha_2 \end{psmallmatrix} \vaLeakVec$ such that the trace of its covariance matrix, \ie the sum of variances $\var(Y_1)+\var(Y_2)$, is maximal. It can be shown that the same result would be obtained maximizing the so-called \emph{generalized variance} of $\YYY$, which is defined as the determinant of its covariance matrix, instead of its trace. \\
 
 Consider, as in previous case, the Lagrangian of the problem

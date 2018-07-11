@@ -5,58 +5,71 @@
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
-\section{Notations and Probability and Statistics Recalls}
-\paragraph*{Basic Notations}
+\section{Notations and Probability and Statistics Recalls}\label{sec:notations}
+\paragraph*{Basic Notations.}
 In this thesis we use calligraphic letters as $\mathcal{X}$ to denote
 sets, the corresponding upper-case letter $X$ to denote random variables (random
 vectors $\vec{X}$ if with an arrow) over $\mathcal{X}$, and the corresponding
 lower-case letter $x$ (resp. $\vec{x}$ for vectors) to denote realizations of
-$X$ (resp. $\vec{X}$). Matrices will be denoted with bold capital letters. The
-$i$-th entry of a vector $\vec{x}$ is denoted by $\vec{x}[i]$, while the $i$-th observation of a random variable $X$ is denoted by $x_i$. Observations will sometimes be grouped into datasets $\setData=\{x_1,\dots, \x_N\}$.\\
+$X$ (resp. $\vec{X}$). The cardinality of a set $\mathcal{X}$ is denoted by $\lvert\mathcal{X}\rvert$. Matrices will be denoted with bold capital letters. The
+$i$-th entry of a vector $\vec{x}$ is denoted by $\vec{x}[i]$, while the transposed of a vector $\vec{x}$ is denoted as $\vec{x}^\intercal$. In general the $i$th observation of a random vector $X$ will be denoted by $x_i$. Observations will sometimes be grouped into datasets $\setData=\{x_1,\dots, x_N\}$. Throughout this thesis, a finite set $\sensVarSet = \{z^1, \dots, z^\nbClasses\}$ will be often considered: it will always denote the possible values for a \emph{sensitive variable} $\sensRandVar$ (see later). Its elements are ordered by overwritten indeces $z^1, z^2,\dots$ and are sometimes encoded via a so-called \emph{one-hot-encoding}: to each element $z^j$ a $\numClasses$-dimensional vector  $\vec{\sensVar}^j$ is associated,
+with all entries equal to $0$ and the $j$-th entry equal to $1$: $\sensVar^j
+\rightarrow \vec{\sensVar}^j = (0,\ldots , 0,\underbrace{1}_{j},0,\dots,0)$.
 
-\paragraph*{Probability Notations}
-The probability of a random variable $X$ assuming the value $x\in\mathcal{X}$ is denoted by $\prob(X=x)$. If $X$ is a discrete variable $\pdf_X$ denotes its probability mass function, in such a way that $\prob(X=x)=\pdf_X(x)$. The same symbol $\pdf_X$ is used to denote de probability density function (pdf for short) if $X$ is a continuous variable, in such a way that $\prob(a<X<b) = \int_{a}^{b}\pdf_X(x)dx$, for $[a,b]\subset\mathcal{X}$. When two random variables $X,Y$ are considered their joint probability is denoted by $\prob(X=x,Y=x)$, and their joint probability density (or mass) function is denoted by $\pdf_{X,Y}(x,y)$. The conditional probability of $X$ assuming the value $x$ given an outcome $y$ for $Y$ is denoted by $\prob{X=x\given Y=y}$. The conditional probability density (or mass) function of $X$ given an outcome $y$ for $Y$ is denoted by $\pdf{X\given Y=y}(x)$.
+\paragraph*{Probability Notations.}
+The probability of a random variable $X$ assuming the value $x\in\mathcal{X}$ is denoted by $\prob(X=x)$, or simply by $\prob{x}$ if not ambiguous. If $X$ is a discrete variable $\pdf_X$ denotes its probability mass function, in such a way that $\prob(X=x)=\pdf_X(x)$. The same symbol $\pdf_X$ is used to denote de probability density function (pdf for short) if $X$ is a continuous variable, in such a way that $\prob(a<X<b) = \int_{a}^{b}\pdf_X(x)dx$, for $[a,b]\subset\mathcal{X}$. 
+The symbol $\esper[f(X)]$, or equivalently $\esper_X[f(X)]$, denotes the expected value of a function $f$ of the random value $X$, under the distribution of $X$. In the same way, symbols $\var(X)$ and $\var_X(X)$ denote the variance of $X$.
 
-\paragraph*{Bayes' Theorem}
-The symbol $\mean$ denotes the expected value, and might be subscripted by a random
-variable $\mean[X]$, or by a probability distribution $\mean[f_{X}]$, to specify
-under which probability distribution it is computed. Side-channel traces will be
-viewed as discrete realizations of a random column vector
-$\vaLeakVec$ with values in  $[0,\omega]^\dimLeak$ where $\omega$ depends on the vertical resolution of the oscilloscope used for the acquisitions (usually, we have $\omega\in \{8,10,12\}$). During their acquisition, a target sensitive
-variable $\vaTarget = \fAlgo(\vaPlaintext,\vaKey)$ is handled, where
-$\vaPlaintext$ denotes some public variable, \emph{e.g.} a plaintext chunk, and
-$\vaKey$ the part of a secret key the attacker aims to retrieve. The value
-assumed by such a variable is viewed as a realization $\vTarget\in \setTarget =
-\{\vTarget^1,\vTarget^2,\ldots,\vTarget^{|\setTarget|}\}$ of a discrete finite
-random variable $\vaTarget$.  
+When two random variables $X,Y$ are considered their joint probability is denoted by $\prob(X=x,Y=x)$, or simply by $\prob(x,y)$ if not ambiguous, and their joint probability density (or mass) function is denoted by $\pdf_{X,Y}(x,y)$. The conditional probability of $X$ assuming the value $x$ given an outcome $y$ for $Y$ is denoted by $\prob (\given{X=x}{Y=y})$, or simply by $\prob(\given{x}{y})$ if not ambiguous. The conditional probability density (or mass) function of $X$ given an outcome $y$ for $Y$ is denoted by $\pdf_{\given{X} {Y=y}}(x)$. Finally, the covariance of the two variables is denoted by $\cov(X,Y)$.\\
 
 
-Bayes theorem
-Prior probabilities
-Posterior probabilities
-Bayes theorem for mixed (discrete/continuous) variables (cita Feller 1966)
+\paragraph*{Bayes' Theorem.}
+We recall some basic probability rules. For every $x\in\mathcal{X}$ and for every $y\in\mathcal{Y}$ we have what follows:
+\begin{itemize}
+\item \emph{Symmetry of joint probabilities: } $\pdf_{X,Y}(x,y)=\pdf_{Y,X}(y,x)$;
+\item \emph{Marginal probabilities from joint ones: } $\pdf_X(x) = \sum_{Y=y}\pdf_{X,Y}(x,y))$ (where the sum has to be intended as an integral if $Y$ is a continuous variable);
+\item \emph{Product rule: } $\pdf_{X,Y}(x,y) = \pdf_{\given{Y}{X=x}}(y)\pdf_{X}(x)$;
+\end{itemize} 
+These rules are sufficient to demonstrate, in the case of discrete random variables $X,Y$ a key stone of probability theory, the Bayes' theorem: 
+\begin{equation}
+\pdf_{\given{X}{Y=y}}(x) = \frac{\pdf_{\given{Y}{X=x}}\pdf_{X}(x)}{\pdf_{Y}(y)} \mbox{ ;}
+\end{equation}
+the marginal probability function $\pdf_X$ is referred to as \emph{prior} probability of $X$, and describes the distribution of $X$ without taking into account the variable $Y$. The conditional probability $\pdf_{\given{X}{Y=y}}$ is referred to as \emph{posterior} probability of $X$, and gives the distribution of $X$ once that the outcome $y$ of $Y$ is taken into account. Notions of measure's theory are needed to show that the Bayes's theorem is valid and keep unchanged in case of continuous random variables and in cases in which one of the two involved variables is discrete and the other one is continuous. The interest reader might refer to \cite{feller2008introduction}. 
 
-abbiamo dei dati D {x_1, x_N} osservazioni di una variabile ignota, su cui vogliamo fare inferenza e modellizzare basandoci sull'osservazione dei dati -> statistical inference. Various approaches exist to make statistical inference. The two main ones are the frequentist approach and the Bayesian one. Frequentist inference of frequentist statistics is an approach that draws conclusions exclusively from sample data. It makes use of methodologies like the statistical hypothesis testing and the confidence interval, and in this thesis is sometimes referred to as classical statistics. In the frequentist approach, parameters that define the distribution of the analysed random variable are priorly considered as fixed and unknown, and are estimated or tested on the sole basis of the observation of D. A second approach is the Bayesian inference, for which parameters that describe the analysed random variable are admitted to be probabilistic: in Bayesian inference, before the observation of sample data, the parameters have a prior distribution that reflects the knowledge and belief of the data-scientist about them. The observation of data leads to an update procedure, based on the Bayes' theorem that allows such probability distribution of parameters become more and more appropriate, each time exploiting the new available information. 
+\paragraph*{The Gaussian distribution.}
+The Gaussian or normal distribution is a widely used model for the distribution of continuous variables. We use the symbol $X\sim\mathcal{N}(\mu,\sigma^2)$ to denote a random variable $X$ that follows a Gaussian distribution with parameters $\mu\in\mathbb{R}$ and $\sigma^2\in\mathbb{R}^{+}$. For a $D$-dimensional random vector $\vec{X}$ we use the symbol $X\sim\mathcal{N}(\mumumu,\Sigma)$ to denote a vector that follows a multivariate Gaussian distribution with parameter $\mumumu\in\mathbb{R}^D$ and $\Sigma\in\mathbb{R}^{D\times D}$ positive-definite. The density of the Gaussian distribution is completely determined by the value of its two parameters. It is given by the following expressions, in unidimensional and multidimensional case: 
+\begin{equation}
+\pdf_X(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}\mbox{ ,}
+\end{equation}
+\begin{equation}
+\pdf_{\vec{X}}(\vec{x}) = \frac{1}{\sqrt{2\pi\det(\Sigma)}}\exp{-\frac{1}{2}\left(\vec{x}-\mumumu\right)^\intercal \Sigma^ {-1}(\vec{x}-\mumumu)} \mbox{ .}
+\end{equation}
+The expected value of a Gaussian distribution coincides with the parameter $\mu$ for the univariate case and with $\mumumu$ for the multivariate one. The parameter $\sigma^2$ coincides with the variance of the univariate distribution, while $\Sigma$ coincides with the covariance matrix of the multivariate one.
 
-In molti ambiti il metodo di inferenza bayesiano è accettato e difeso a spada tratta. Noi lo endorsiamo: si basa sul teorema di bayes e è una tecnica che permette di aggiornare le ipotesi che si fanno su un modello di variabile basandosi sui dati.
+\paragraph*{Basics of Statistics.}
+The word \emph{statistics}  refers to a branch of mathematics that aims to analysis, describe or interpret observed data. Differently, the word \emph{statistic} refers to any measure obtained applying a function to some observed data. Let $\setData = \{x_1,\dots,x_N\}$ be a dataset of observations of a random variable $X$. We might distinguish two sub-branches in statistics: the descriptive statistics, and the inferential statistics. In descriptive statistics data are described by means of more or less complex statistics (in the sense of measure), the most common of them being the \emph{arithmetic mean}: 
+\begin{equation}
+\overline{x} = \frac{1}{N}\sum_{i=1}^N x_i \mbox{ .}
+\end{equation}
 
-Bayesian inference : parametri, prior prob, posterior prob, likelihood. 
-Expectation, Variance and Covariance
-Estimators for expectation, variance and covariance (non biased or maximum likelihood)
-Gaussian distribution (real variable or multivariate variable)
+In inferential statistics data are considered as sample observation of random variables and the data analysis aims at modelling the distribution of such variables. Dealing with random variables, inferential statistics exploit the probability theory framework and theorems. Statistics of data (in the sense of measures) play an important role in inferential statistics as well, usually aiming to estimate some random variable parameters. In this case they are called \emph{estimators} and will be denoted by a hat: for example, $\esperEst[X]$  denotes an estimator for the expected value of $X$ and $\varEst(X)$ denotes an estimator for the variance of $X$. The most classical and estimator for the expected value is the arithmetic mean $\overline{x}$. It has several valuable properties, for example it is \emph{unbiased}, in the sense that, considering it as a random variable, its expected value coincides with the true value of $\esper[X]$. Moreover, it is the \emph{maximum-likelihood} estimator under the Gaussian distribution: for data that are independent among each other and drawn from a Gaussian distribution,  the arithmetic mean of the observed data $\setData$ is the value for the parameter $\mu$ that maximises the probability of observing the data $\setData$. A common unbiased estimator for the variance is the following so-called sample variance: 
+\begin{equation}
+\varEst = \frac{1}{N-1}\sum_{i=1}^N(x_i-\overline{x})^2 \mbox{ ;}
+\end{equation}
+when the random variable observed follows a Gaussian distribution, such an estimator differs from the maximum-likelihood one, in which the factor $\frac{1}{N-1}$ is substituted by $\frac{1}{N}$. In the same way, acting with Gaussian random vectors, the maximum-likelihood estimator of the covariance matrix is biased, and differs from the common unbiased one for a multiplicative factor. \\
+
+Various approaches exist to make statistical inference. The two main ones are the frequentist approach and the Bayesian one. The frequentist inference is an approach that draws conclusions exclusively from sample data. It makes use of methodologies like the statistical hypothesis testing and the confidence interval, and in this thesis is sometimes referred to as classical statistics. In the frequentist approach, parameters that define the distribution of the analysed random variable are priorly considered as fixed and unknown, and are estimated or tested on the sole basis of the observation of the sample data $\setData$. A second approach is the Bayesian inference, for which parameters that describe the analysed random variable are admitted to be probabilistic: in Bayesian inference, before the observation of sample data, the parameters have a prior distribution that reflects the knowledge and belief of the data-scientist about them. The observation of data leads to an update procedure, based on the Bayes' theorem, that allows such probability distribution of parameters become more and more appropriate, each time exploiting the new available information. For both approaches the maximum-likelihood is an optimal statistical principle and is widely exploited to choose parameters, in the frequentist approach, or to update parameters' probability distributions in the Bayesian one. Up-to-now the Bayesian inference has never explicitly influenced the Side-Channel Attack literature, nor we will use such a framework in this thesis. We leave this track opened for future works, briefly discussing its suitability for Side-Channel Attacks domain in Chapter~\ref{ChapterConclusions}.
 
 
 \section{Side-Channel Attacks}
 
-Side-Channel Attacks (SCA) belong to the cryptanalysis domain,  since they aim to breach cryptographic security systems. Usually their goal is to retrieve a secret variable of a cryptographic algorithm, typically a secret key. They distinguish from classic mathematical cryptanalysis techniques by the fact that they are based on information gained from the physical implementation of a cryptosystem, rather than theoretical weaknesses in the algorithms. 
+Side-Channel Attacks (SCA) belong to the cryptanalysis domain, since they aim to breach cryptographic security systems. Usually their goal is to retrieve a secret variable of a cryptographic algorithm, typically a secret key. They distinguish from classic mathematical cryptanalysis techniques by the fact that they are based on information gained from the physical implementation of a cryptosystem, rather than theoretical weaknesses in the algorithms. 
 
 \subsection{Attacks general strategy}
 \subsubsection{Grey-box and divide-and-conquer}
-Side-Channel Attacks go beyond the cryptographic complexity that assures resistance against classical cryptanalysis strategies.  Indeed, no matter the size of the secret variables manipulated by the algorithm and the algebraic complexity of the encrypting/decrypting operations, an hardware implementation of any algorithm always handles variables of a bounded size, that depends on the hardware architecture. For example, in an 8-bit architecture an AES with 128-bit-sized key will be necessarily implemented as multiple partial computations over 8-bit blocks of data. In classical cryptanalysis, the typical attacker model faces to a black-box that performs the cryptographic algorithm: an attacker may make queries to the black-box, asking for ciphertexts of given plaintexts or viceversa, but has no information about any partial computations. 
+Side-Channel Attacks go beyond the cryptographic complexity that assures resistance against classical cryptanalysis strategies.  Indeed, no matter the size of the secret variables manipulated by the algorithm and the algebraic complexity of the encrypting/decrypting operations, an hardware implementation of any algorithm always handles variables of a bounded size, that depends on the hardware architecture. For example, in an 8-bit architecture an AES with 128-bit-sized key will be necessarily implemented as multiple partial computations over 8-bit blocks of data. In classical cryptanalysis, the typical attacker model faces to a black-box that performs the cryptographic algorithm: an attacker may make queries to the black-box, asking for ciphertexts of given plaintexts or viceversa, but has no information about any partial computations. On the contrary, a side-channel attacker is said to face to a grey-box model: he has a way to obtain noised information about partial computations. This allows him to perform a \emph{divide-and-conquer} strategy: if his goal is to retrieve the full 128-bit AES key, he will smartly divide his problem into the recovery of small parts of such keys at time, called \emph{key chunks},\footnote{or \emph{subkeys} when they coincide to a byte of key for the AES algorithm} making the complexity of the attack significantly drop. 
 
 %OLD WITH RSA EXAMPLE For example, in an 8-bit architecture an RSA with 1024-bit-sized key, modulus and plaintext will be somehow implemented as multiple partial computations over 8-bit blocks of observable data. In classical cryptanalysis an attacker has no information about such partial computations. 
-
-On the contrary, a side-channel attacker is said to face to a grey-box model: he has a way to obtain noised information about partial computations. This allows him to perform a \emph{divide-and-conquer} strategy: if his goal is to retrieve the full 128-bit AES key, he will smartly divide his problem into the recovery of small parts of such keys at time, called \emph{key chunks},\footnote{or \emph{subkeys} when they coincide to a byte of key for the AES algorithm} making the complexity of the attack significantly drop. 
 
 %\begin{remark}
 %The core of an RSA implementation is the computation of a modular exponentiation with base, modulus and exponent being some big numbers (\eg 1024 bits). A myriad of different algorithms has been proposed to implement in hardware the RSA, which differ from each other for many factors: the representation data (\eg Montgomery representation, binary representations with signed bits, Chinese Reminder Theorem representation \dots), the way of scanning the exponent (\eg scan the exponent bit by bit, or window by window, from right to left or left to right, priorly decomposing the exponent or not, \dots), the way of performing in hardware the multiplication (\eg schoolbook, Montgomery, Barrett, \dots). Each choice impacts the size of the needed hardware and the time of the computation. A quite exhaustive state-of-the-art of such implementations is provided in \cite{koc1994high}. 
@@ -71,26 +84,27 @@ The noised information an attacker accesses, comes in form of side-channels sign
 \begin{itemize}
 \item $\sensRandVar = \keyRandVar$ with $\keyRandVar$ a secret subkey - this is the most direct choice for a sensitive target, nevertheless it is often not variable, since in some cases a device always manipulates the same key for a given embedded primitive. When the target is not variable we are performing a \emph{simple attack} (see below);
 \item a cryptographic variable that depends on a sufficiently small subkey and a part of a known input variable $\publicParRandVar$: $\sensRandVar = \sensFunction(\keyRandVar,\publicParRandVar)$ - this is the most classical choice to perform a so-called \emph{differential} or \emph{advanced} SCA (see below);
-\item any function of a cryptographic variable (ex: $\HW(\sensFunction(\keyRandVar,\publicParRandVar))$), where $\HW(\cdot)$ represents the Hamming weight operation, \ie the operation that counts the number of 1's in the binary string representing the variable $\cdot$. Sometimes, as for example we will see in Chapter~\ref{chapterKDA} (see Sec.~\ref{sec:multiclass}) it can be interesting not to target a variable but a non-injective function of a variable as the Hamming weight; when the identity function is applied we are in the previous case;
+\item any function of a cryptographic variable (ex: $\HW(\sensFunction(\keyRandVar,\publicParRandVar))$), where $\HW(\cdot)$ represents the Hamming weight operation, \ie the operation that counts the number of 1's in the binary string representing the entry. Sometimes, as for example we will see in Chapter~\ref{ChapterKernel} (see Sec.~\ref{sec:multiclass}) it can be interesting not to target a variable but a non-injective function of a variable as the Hamming weight; when the identity function is applied we are in the previous case;
 \item an operation (ex: $\sensRandVar \in \{\mathrm{square}, \mathrm{multiply}\}$)
 \item a register (ex: $\sensRandVar$ is the register used to store results of intermediate operations in a Montgomery ladder implementation of RSA)
 \end{itemize}
-In this thesis we will try as much as possible to abstract from the form of the sensitive variable, thinking of any entity $\sensRandVar$ that assumes values in a finite set $\sensVarSet$ and whose value permits an attacker to make inference on a secret of the implemented algorithm. Anyway, the choice of the sensitive variable is crucial for the successfulness of an attack. Interestingly, many notions and a wide and still-evolving taxonomy of  SCAs' typologies is in facts related to the choice of the sensitive variables. Some of these notions are reported in next two paragraphs by way of example.
+In this thesis we will try as much as possible to abstract from the form of the sensitive variable, thinking of any entity $\sensRandVar$ that assumes values in a finite set $\sensVarSet$ and whose value permits an attacker to make inference on a secret of the implemented algorithm. Anyway, the choice of the sensitive variable is crucial for the successfulness of an attack. Interestingly, many notions and a wide and still-evolving taxonomy of  SCAs' typologies is in facts related to the choice of the sensitive variables. Some of these notions are reported in next three paragraphs by way of example.
 
-\paragraph*{Vertical vs Horizontal SCAs}
+
+\paragraph*{Vertical vs Horizontal SCAs.}
 Attacks in which sensitive information
 is extracted from a single acquisition split into several parts are called \emph{horizontal}. Horizontal attacks may apply when several internal variables depend on the same sensitive variable (see for instance \cite{battistello2016horizontal}). Algebraic SCAs (see below) are horizontal attacks as well, in which inferences are not done over a single sensitive variable, but potentially over every cryptographic variable, followed by a deep analysis of the algebraic relations between these sensitive variables. Horizontal attacks differ from the so-called \emph{vertical} attacks where information is obtained from different algorithm executions. The nice notion of rectangle attack has been introduced in \cite{bauer2013horizontal} to refer to attacks that exploit both vertical and horizontal leakages.
 
 
-\paragraph*{Simple vs Advanced SCAs}
-A simple attack is an attack that only needs one trace to be applied,  except for eventually profiling acquisitions (see profiling attacks later). Such a one-trace attack can be seen as a classification problem in machine learning language: an attacker guesses the value of the secret key from the observation of a single side-channel trace;  in other words, setting $\sensRandVar$ equal to the definitive secret the attacker is looking for (\eg the whole secret key), the attack consists in classifying one observation, \ie assigning to the single attack trace the corresponding value of $\sensRandVar$. In 2002 Mangard \etal  \cite{mangard2002simple} proposed for example a simple power analysis (SPA) strategy, improved by Clavier \etal in 2014 \cite{clavier2014simple}, to retrieve the whole AES key observing leakages from a single execution of the AES key expansion. When Algebraic SCAs (see \ref{eventually}) appeared in literature in 2009, their aim was to be a strategy to perform simple attacks as well.  
+\paragraph*{Simple vs Advanced SCAs.}
+A simple attack is an attack that only needs one trace to be applied,  except for eventually profiling acquisitions (see profiling attacks later). Such a one-trace attack can be seen as a classification problem in machine learning language: an attacker guesses the value of the secret key from the observation of a single side-channel trace;  in other words, setting $\sensRandVar$ equal to the definitive secret the attacker is looking for (\eg the whole secret key), the attack consists in classifying one observation, \ie assigning to the single attack trace the corresponding value of $\sensRandVar$. In 2002 Mangard \etal  \cite{mangard2002simple} proposed for example a simple power analysis (SPA) strategy, improved by Clavier \etal in 2014 \cite{clavier2014simple}, to retrieve the whole AES key observing leakages from a single execution of the AES key expansion. When Algebraic SCAs (see below) appeared in literature in 2009, their aim was to be a strategy to perform simple attacks as well.  
 
 \begin{remark}
 Attacks for which many observations are acquired with fixed entry parameters and by consequence in which the observed leakage always corresponds to a fixed $\sensRandVar$ are still considered as simple attacks. The attacker may exploit the several acquisitions in mainly two ways: he computes their average before performing the classification, aiming to reduce the noise influence, or he performs the classification of each acquisition (expecting each gives the same outcome) and then applies a function to the several outcomes (\eg majority vote or computation of joint probabilities, if outcomes are probability distributions, see \ref{eq:joint_distr}) to guess the right label. We observe that this approach with several observations allows the attacker to reduce the noise impact, while observing many times the same variable. The relation between the variable and the key chunk being fixed, he will not exploit algebraic relations to ameliorate his inference over the latter.
 \end{remark}
 An advanced attack is a more powerful strategy: the attacker acquires several acquisitions making entry parameters vary, and by consequence observing leakages related to different values of $\sensRandVar$. This time the variation of the observed sensitive variable is interpretable as a raising of the amount of caught information. The attacker exploits synergistically the information coming from each acquisition: he evaluates each key hypothesis, taking advantage of the algebraic relation between (known) entries, keys and sensitive variables, to find out the one that would better justify the leakages he observed. Classical Differential Power Attacks (DPA) \cite{brier2004correlation} or Correlation Power Attacks (CPA) \cite{brier2004correlation}, as well as attacks based over Mutual Information Analysis (MIA) \cite{batina2011mutual} are advanced attacks. 
 
-\paragraph*{Algebraic Side-Channel Attacks}\label{sec:ASCA}
+\paragraph*{Algebraic Side-Channel Attacks.}\label{sec:ASCA}
 Algebraic SCAs (ASCA) were firstly proposed in 2009 \cite{ASCA,renauld2009algebraic}. Their aim was to combine profiling SCA strategies (see \ref{sec:profilingSCA}) to classical cryptanalysis techniques: in the latter seminal papers block ciphers implementations are attacked, and the authors added to plaintext and ciphertext knowledge, classically assumed in algebraic cryptanalysis, the access to the (exact) Hamming weights of  several intermediate computations, obtained by side-channel observation. Once recovered as many partial information as possible, it is expressed in the form of an equation system, then converted to a set of clauses treatable by a SAT solver. In opposition to classic SCAs, ASCA approach does not exploit a divide-and-conquer strategy: the whole secret key is retrieved at once, exploiting algebraic relations between intermediate variables. This means, in the case of block ciphers, that the attacker observes leakages occurring during each round of the algorithm, and not only those related to the first rounds, were the cryptographic diffusion is limited. This optimal exploitation of the information, allows the ASCA strategy to provide efficient simple attacks, \ie succeeding with a single attack trace.\\
 This approach presents two main weaknesses. First, it does not tolerate errors, implying that it is weak to noise: a wrong side-channel information may put the right key out of the list of key candidates. This is why seminal ASCA papers proposed to equip the strategy with some techniques of detection of impossibilities and likelihood rating. Second, the use of SAT solvers asks to express relations between cipher variables at a bit level. Since general block ciphers are byte-oriented this produces very large and complex instances, challenging to construct and hard to debug.\\
 Two works appeared in 2014 address these two weaknesses. In \cite{soft} a \emph{Soft Analytical Side Channel Attack} (SASCA) is proposed to make the ASCA strategy more tolerant to noise. The idea of such SASCAs is to replace the equation system representation of retrieved intermediate variables with a code, inspired by the low density parity check codes. This approach is still bit-oriented. Then the code is efficiently decoded by an algorithm known as \emph{Belief Propagation}, whose inputs are not the exact values of the retrieved intermediate variables, but their probability distributions, provided by the profiling phase. The noise tolerance is provided by the utilisation of such probabilities instead of exact values. \\
@@ -134,7 +148,7 @@ This is also generally estimated in an empirical way, by performing the attack m
 %\begin{equation}\label{eq:noise_model}
 %\vaLeak = \leakFunction(\sensRandVar) + \noise \mbox{ ,}
 %\end{equation}
-%with $\noise \approx \mathcal{N}(0,\sigma^2)$.
+%with $\noise \sim \mathcal{N}(0,\sigma^2)$.
 %\begin{remark}
 %In this model the leakage is a real value $\vaLeak$. In general leakages are acquired as traces, 
 %represented by column vectors $\vaLeakVec\in\mathbb{R}^\traceLength$ and model \eqref{eq:noise_model} refers to a single well-chosen \emph{point of interest} (see later for a definition).
@@ -156,16 +170,16 @@ As we will see in Chapter~\ref{ChapterIntroML}, in machine learning domain the a
 Introduced in 2002 by Chari \cite{Chari2003}, the so-called \emph{Template Attack} (TA) is the most well-established strategy to run a profiling SCA. It can be performed in a simple or advanced way. The idea of the TA is based over the construction of a so-called \emph{generative model}: in probability, statistics and machine learning \enquote{ ...approaches that explicitly or implicitly model the distribution of inputs as well as outputs are known as generative models, because by sampling from them it is possible to generate synthetic data points in the input space.} \cite{christopher2006pattern}.
 In TA the attacker observes the couples $(\vLeakVec_i, \sensVar_i)_{i=1, \dots , \nbProfilingTraces}$  and exploits them to estimate the class-conditional densities  
 \begin{equation}\label{eq:class-conditional}
-p_{\vaLeakVec}(\vLeakVec \given \sensRandVar = \sensVar)\mbox{ ,}
+\pdf_{\given{\vaLeakVec}{\sensRandVar = \sensVar}}(\vLeakVec)\mbox{ ,}
 \end{equation}
 eventually the prior densities $p_{\vaLeakVec}(\vLeakVec)$, $p_{\sensRandVar}(\sensVar)$, and finally the \textit{a-posteriori} density, by means of Bayes' theorem:
 \begin{equation}\label{eq:a-posteriori}
-p_{\sensRandVar}(\sensVar \given \vaLeakVec = \vLeakVec) = \frac{p_{\vaLeakVec}(\vLeakVec \given \sensRandVar = \sensVar)p_{\sensRandVar}(\sensVar)} {p_{\vaLeakVec}(\vLeakVec)}\mbox{ .}
+\pdf_{\given{\sensRandVar}{  \vaLeakVec = \vLeakVec}}(\sensVar) = \frac{\pdf_{\given{\vaLeakVec}{\sensRandVar = \sensVar}}(\vLeakVec)\pdf_{\sensRandVar}(\sensVar)} {\pdf_{\vaLeakVec}(\vLeakVec)}\mbox{ .}
 \end{equation}
 In the attack phase the attacker acquires new traces that he only can associate to the public parameter $\publicParRandVar$, obtaining couples  $(\vLeakVec_i, \publicParVar_i)_{i=1, \dots , \nbAttackTraces}$. Then he makes key hypothesis $\keyVar \in \keyVarSet$ and, making the assumption that each acquisition is an independent observation of $\vaLeakVec$, he associates to each hypothesis $\keyVar \in \keyVarSet$ a score $d_\keyVar$ given by the joint \textit{a-posteriori} probability that follows, and that he computes exploiting estimates \eqref{eq:a-posteriori}:
 
 \begin{equation}\label{eq:joint_distr}
-d_{\keyVar} = \prod_{i=1}^{\nbAttackTraces} p_{\sensRandVar}(\sensFunction(\keyVar,\publicParVar_i) \given \vaLeakVec = \vLeakVec_i) \mbox{ .}
+d_{\keyVar} = \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec_i}}(\sensFunction(\keyVar,\publicParVar_i) ) \mbox{ .}
 \end{equation}
 
 Finally, his best key candidate $\hat{\keyVar}$ is the one maximizing such a joint probability
@@ -182,9 +196,9 @@ In the special case of a simple attack, \ie $\nbAttackTraces = 1$, in which $\se
 
 This approach has the theoretical optimality that comes from the maximum likelihood criterion. The crucial point is the estimation of the class-conditional densities \eqref{eq:class-conditional}: the efficiency of the attack strongly depends on the quality of such estimates. 
 
-\paragraph*{The Gaussian Hypothesis} A well-established choice to construct class-conditional densities estimations \ref{eq:class-conditional} is the one applied in Gaussian TA \cite{Chari2003}: it consists in making a class-conditional multivariate Gaussian distribution assumption
+\paragraph*{The Gaussian Hypothesis.} A well-established choice to construct class-conditional densities estimations \ref{eq:class-conditional} is the one applied in Gaussian TA \cite{Chari2003}: it consists in making a class-conditional multivariate Gaussian distribution assumption
 \begin{equation}\label{eq:gaussian_assumption}
-\vaLeakVec\given \sensRandVar =\sensVar \approx \mathcal{N}(\mumumu_\sensVar, \Sigma_\sensVar)\mbox{ ,}
+\given{\vaLeakVec}{\sensRandVar} =\sensVar \sim \mathcal{N}(\mumumu_\sensVar, \Sigma_\sensVar)\mbox{ ,}
 \end{equation} 
 and exploits the profiling traces to estimate the  parameters $\mumumu_\sensVar$, \ie the mean vector of the Gaussian distributions, and $ \Sigma_\sensVar$, \ie the covariance matrices. \\
 
@@ -204,11 +218,11 @@ Side channel traces are usually acquired by oscilloscopes with a very high sampl
 The goal of researches in this context is to study and develop techniques to characterise PoIs and to apply convenient dimensionality reduction techniques, that allow reducing the size of the acquisitions while keeping the exploitable information held by data high enough to allow an SCA to succeed.
 Representing the side channel traces as column vectors ${\bf x}$ in $\mathbb{R}^\traceLength$, the compressing phase might be seen as the application of a function $\extract\colon \mathbb{R}^\traceLength\rightarrow \mathbb{R}^\newTraceLength$, with $\newTraceLength<\traceLength$, called {\em extractor} throughout this thesis. The first extractors proposed in SCA literature where actually some selectors of time samples, \ie functions that operate a simple subsampling of the traces on the base of the computation of some sample-wise statistics $\sPOI(t)$, whose aim is to quantify a sort of  signal strength. Several proposals exist for such a signal-strength estimate, among them the most deployed are the Difference of Means (DOM) \cite{Chari2003}, or the analogous but better specified Sum of Differences (SOD) \cite{Rechberger2005}, the Sum of Squared Differences (SOSD) \cite{gierlichs2006templates}, the Signal-to-Noise Ratio (SNR) \cite{mangard2008power,lomne2013behind} and  Sum of Squared $t$-differences SOST, corresponding to the $t$-test \cite{gierlichs2006templates}. All these statistics are similar, and exploit the sample mean per class of the traces, given by
 \begin{equation}
-\mmmXclass= \esperEst_i[\vaLeakVec \given \sensRandVar = \sensVar] = \frac{1}{\nbTracesPerClass}\sum_{i\colon \sensVar_i=\sensVar} \vLeakVec_i  \mbox{ .}
+\mmmXclass= \esperEst[\given{\vaLeakVec}{\sensRandVar = \sensVar}] = \frac{1}{\nbTracesPerClass}\sum_{i\colon \sensVar_i=\sensVar} \vLeakVec_i  \mbox{ .}
 \end{equation} 
 A notable difference among them is that only the last two, SNR and SOST, take also the variances per class of the traces into account, given by
 \begin{equation}
-\varXclass = \varEst_i(\vaLeakVec \given \sensRandVar = \sensVar) = \frac{1}{\nbTracesPerClass-1}\sum_{i\colon \sensVar_i=\sensVar} (\vLeakVec_i - \mmmXclass)^2 \mbox{ .}
+\varXclass = \varEst(\given{\vaLeakVec}{\sensRandVar = \sensVar}) = \frac{1}{\nbTracesPerClass-1}\sum_{i\colon \sensVar_i=\sensVar} (\vLeakVec_i - \mmmXclass)^2 \mbox{ .}
 \end{equation}
 
 The Table~\ref{table:PoIselectors} gives explicit formulas to compute such state-of-the-art sample-wise statistics. Once the chosen signal strength estimate $\sPOI$ is computed, it can be used as in a hypothesis test to reject the hypothesis that the sample mean values at time $t$ are equal. The instants $t$ in which such a hypothesis is rejected correspond to the PoIs, since the variation of the signals in such instants seems depend on the class belongingness. The construction of the subsampling $\extract$ is done on the base of such a test, for example selecting all time samples for which $\sPOI(t)$ is higher than a certain threshold. \\
@@ -231,7 +245,7 @@ SOST (version \cite{gierlichs2006templates}) & \parbox{6cm}{\begin{equation*} \s
 \hline
 SOST (version \cite{bar2010improved}) & \parbox{6cm}{\begin{equation*} \sPOI(t) = \frac{\sum_{\substack{\sensVar_1, \sensVar_2 \in \sensVarSet \\ \sensVar_1 \neq \sensVar_2}} (\mmmXclass[\sensVar_1](t) - \mmmXclass[\sensVar_2](t))^2}{\varXclass[\sensVar_1]+\varXclass[\sensVar_2]}  \end{equation*}}\\
 \hline
-SNR & \parbox{6cm}{\begin{equation} \sPOI(t) = \frac{\varEst_\sensVar(\mmmXclass(t))}{\esperEst_\sensVar[\varXclass(t)]}  \end{equation}\label{eq:SNR_formula}}\\
+SNR & \parbox{6cm}{\begin{equation} \sPOI(t) = \frac{\varEst(\mmmXclass[Z](t))}{\esperEst[\varXclass[Z](t)]}  \end{equation}\label{eq:SNR_formula}}\\
 \hline
 \end{tabular}
 

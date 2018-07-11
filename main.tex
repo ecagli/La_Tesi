@@ -223,7 +223,14 @@ headsepline, % Uncomment to get a line under the header
 %----------------------------------------------------------------------------------------
 % EDITORIAL DEFINITIONS
 %----------------------------------------------------------------------------------------
-\newcommand\given[1][\Big]{\:#1\vert\:}
+%\newcommand\given[1][\Big]{\:#1\vert\:}
+
+\makeatletter
+\newcommand{\@givenstar}[2]{#1\;\middle|\;#2}
+\newcommand{\@givennostar}[3][]{#1#2\;#1|\;#3#1}
+\newcommand{\given}{\@ifstar\@givenstar\@givennostar}
+\makeatother
+
 \DeclareMathOperator*{\argmin}{argmin}
 \DeclareMathOperator*{\argmax}{argmax}
 
@@ -452,15 +459,12 @@ $\mathbb{Z}_N^{*}$ & ...\\
 \include{Chapters/Chapter2} 
 \include{Chapters/Chapter3}
 \part{Contributions}
-%\include{Chapters/Chapter4} 
-%\include{Chapters/Chapter5} 
+
 \include{Chapters/Chapter6} 
 \include{Chapters/Chapter7}
 \include{Chapters/Chapter8}
-%include{Chapters/Chapter9}
-%\include{Chapters/Chapter10}
+
 \include{Chapters/Chapter11}
-%\include{Chapters/ChapterExample_instructions}
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES
 %----------------------------------------------------------------------------------------
