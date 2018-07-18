@@ -84,7 +84,7 @@ where the function $\sigma$ is the so-called \emph{logistic sigmoid}. This remar
 \prob(\given{\sensVar^j}{\vLeakVec})  = \frac{\prob(\given{\vLeakVec}{\sensVar^j})\prob(\sensVar^j)}{\prob(\vLeakVec)} = \frac{\prob(\given{\vLeakVec}{\sensVar^j})\prob(\sensVar^j)}{\sum_{k=1}^{\nbClasses}\prob(\given{\vLeakVec}{\sensVar^k})\prob(\sensVar^k )} = \softmax (\aaa)[j]\mbox{ ,}
 \end{equation}
 where $\aaa$ is a $\numClasses$-dimensional vector, whose entries are given by
-\begin{equation}
+\begin{equation}\label{eq:softmax_entries}
 \aaa[j] = \log\left[ \prob(\given{\vLeakVec}{\sensVar^j})\prob(\sensVar^j) \right] \mbox{ ,}
 \end{equation}
 and $\softmax$ is the so-called \emph{softmax} function, or \emph{normalised exponential}, that is defined, entry-wise by:
@@ -114,7 +114,7 @@ The quadratic terms in $\vLeakVec$, that appears in the exponent of the Gaussian
 Relaxing the assumption \ref{item:covariances} and allowing each class-conditional density $\pdf(\vLeakVec\mid \sensVar^j)$ to have its own covariance matrix $\Sigma_j$, then the cancellations seen above will no longer occur, and the discriminant $a$ turns out to be a quadratic function of $\vLeakVec$. This gives rise to the so-called \emph{Quadratic Discriminant Analysis}, that we already mentioned in Chapter~\ref{ChapterIntroductionSCA} for its analogy with Template Attacks.\\
 
 Assumptions \ref{item:gaussian} and \ref{item:covariances} also lead to the following expression for the posterior probability for $\sensVar^1$, directly implied by \eqref{eq:post_probs_sigmoid}: 
-\begin{equation}
+\begin{equation}\label{eq:binary_linear_classifier}
 \prob(\given{\sensVar^1}{\vLeakVec}) = \sigma(\www^\intercal \vLeakVec + w_0)\mbox{ .}
 \end{equation}
 Thus, such a posterior probability is given by the sigmoid acting to a linear function of $\vLeakVec$. Similarly, for the multi-class case, the posterior probability of class $\sensVar^j$ is given by the $j$-th entry of the softmax transformation of a linear function of $\vLeakVec$. This kind of \emph{generalised linear model} can be thus used in a probabilistic discriminant approach, where the posterior conditional probabilities are directly modelled from data without passing through the estimations of class-conditional densities and priors. Such a discriminative approach is the one that will be adopted in Chapter~\ref{ChapterCNN} when considering models constructed by neural networks.

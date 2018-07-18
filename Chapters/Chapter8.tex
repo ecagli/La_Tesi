@@ -1,17 +1,19 @@
 % Chapter Template
 
-\chapter{Convolutional Neural Networks against Jitter-Based Countermeasures} % Main chapter title
-
+\chapter{Convolutional Neural Networks} % Main chapter title
 \label{ChapterCNN}
 
-In this chapter we explore a new strategy to perform profiling SCAs, endorsing the Deep Learning (DL) paradigm. To this aim we revisit the publication \cite{cagli2017defeating} appeared at CHES 2017.\\
+% TODO: manca universal approximation theorem (da pagg 194 e seguenti del deeplearningbook)
 
+In this chapter we explore a new strategy to perform profiling SCAs, addressing the misalignment issue and endorsing the Deep Learning (DL) paradigm. To this aim we revisit the publication \cite{DBLP:conf/ches/CagliDP17} appeared at CHES 2017.\\
+
+\section{Introduction}
 Often Machine Learning approach declines in multiple pre-processing phases such as data alignment, feature selections or dimensionality reduction, followed by a final model optimisation. This is the case for the SCAs routines that we considered in previous chapters: a dimensionality reduction pre-processing $\extract$ is previously learned an applied, followed by a Gaussian template parameters estimation that are used to construct the model which solves the side-channel classification task.  Deep Learning is a branch of Machine Learning whose characteristic is to avoid any preliminary pre-processing step from the model construction work-flow. For example, in Deep Learning the data dimensionality reduction is not necessarily explicitly performed by a distinct learned  function $\extract$. Thus, DL models are in charge of directly and implicitly extracting interesting features and of estimating the opportune model to solve the task. The model is searched in a family of models that are composed by a cascade of parametrisable layers, which may be optimised in a single global learning process. Such models are called \emph{Artificial Neural Network}, or simply \emph{Neural Networks} (NNs). \\
 
 By construction, NNs are the ML answer to the drawback of work-flows we analysed in previous chapters and discussed as \emph{two-phased approach drawback} in last section of Chapter~\ref{ChapterKernel}. Actually, NNs are answers to other drawbacks pointed out in the same section. \\
 In particular they are not memory-based. It implies that, after the training phase whose computational complexity is influenced by the size of the training set, they do not need to access the training set any more. By consequence, the obtained model is in general faster in processing new data, with respect to those obtained \via kernel machines: the form of the obtained model (\ie the so-called \emph{architecture}) is independent from the size of the training set. This property, together with other computational optimizations they allow that will be discussed later, make NNs more easily scalable for huge training sets.\\
 Finally, we pointed out as drawback of techniques analysed in previous chapters their weakness to trace misalignment. In DL literature, a family of models called \emph{Convolutional Neural Networks} (CNNs) has been developed to treat difficulties usually met in image processing as misalignments, scaling, rotations, \dots We claim in this chapter, and verify through various experiments, that such CNNs provide an attack strategy that is robust to misalignment countermeasure. Attacks proposed in this chapter are performed against non-masked implementation. Nevertheless, since NNs are in general non-linear models, they naturally well-fit also the higher-order attack context, as discussed in \cite{maghrebi2016breaking} and \cite{DLwhitepaper}.\\
-The CNNs are a generalisation of the simplest NN architecture, named \emph{Multi-Layer Perceptron}, which is described hereafter. 
+The CNNs are a generalisation of the simplest NN architecture, named \emph{Feed-forward Neural Networks} or \emph{Multi-Layer Perceptron} (MLP). The name \emph{feedforward} is due to the fact that for this kind of models information ﬂows from  the input to the output, through the intermediate computations, without any feedback connection in which outputs of the model are fed back into itself. This is in opposition to the so-called \emph{Recurrent Neural Network} structures. A description of Neural Networks models, and classification-oriented MLP in particular, is provided in next section.
 
 % The answers to the 3 drawbacks of previous chapter (misalignment, memory complexity and actual number of params, two phases approach)
 %"In practice, however, it is often worth investing substantial computational resources during the training phase in order to obtain a compact model that is fast at processing new data" (Bishop intro chap 5)
@@ -20,12 +22,12 @@ The CNNs are a generalisation of the simplest NN architecture, named \emph{Multi
 %Kernel techniques like the KDA  are as well inherited from Machine Learning domain and consist in strategies that allow to build interesting extensions of many algorithms. One of their characteristics, that turns to be a drawback to apply them in SCA context is that are memory-based: the entire set of profiling traces, \ie those acquired by observing the open samples, has to be stored and accessed in the attack phase. In this sense they are highly memory-consuming, and quite slow to apply: they do not scale well in presence of huge profiling trace sets as those that are often necessary to perform profiling SCAs. In contrast to them, models provided by Neural Networks (NNs) are Machine Learning solutions that are known to be easily scalable to huge datasets and not memory-based. We decided to explore such an approach and pointed out that it not only provided solutions to tackle such a computational performance drawback.
 
 
-\subsection{Neural Networks and Multi-Layer Perceptrons}
+\section{Neural Networks and Multi-Layer Perceptrons}
 As anticipated in Chapters~\ref{ChapterIntroductionSCA} and \ref{ChapterIntroML}, we are interested in the NNs' solutions for the classification task, as we remarked a strong analogy between profiling SCAs and classical ML classification task. We recall from Chapters~\ref{ChapterIntroML} that for the classification task, the learning algorithm is asked to construct a function $\MLmodel\colon \mathbb{R}^\traceLength \rightarrow \{0,1\}^{\numClasses}$, where elements of $\sensVarSet$, \ie the set of classes, are here expressed \via the \emph{one-hot encoding}. The output of such a function is said to be \emph{categorical}, \ie $\sensVarSet$ is a discrete finite set. A variant of the classification task consists in finding a function $\MLmodel\colon \mathbb{R}^\traceLength \rightarrow [0,1]^{\numClasses}$ defining a probability distribution over classes. Often for this task, NNs are exploited to create discriminative models, \ie models that directly approximate the latter function $\MLmodel$ that describes the posterior conditional probability of a label given the observed trace. This is in opposition to the Template Attack we exploited in previous chapters, that is based over the construction of generative models, \ie the approximation of the \emph{templates}, which coincide with the conditional probabilities of the traces given a label, as described in Sec.~\ref{sec:TA}. \\
 
-Using NNs the function $\MLmodel$ is obtained by combining several simpler functions, called \emph{layers}. An NN has an \emph{input layer} (the identity over the input datum $\vLeakVec$), an output layer (the last function) and all other layers are called \emph{hidden} layers.  The output of $MLmodel$ is a $\numClasses$-sized vector $\vNNOutput$ of scores for the $\numClasses$ labels. Such a vector might or not represent the approximation of a probability distribution. The nature of the NN's  layers, their number and their dimension in particular, is called the \emph{architecture} of the NN. All the parameters that define an architecture, together with some other parameters that govern the training phase, are its \emph{hyper-parameters}. The so-called \emph{neurons}, that give the name to the NNs, are the computational units of the network and essentially process a scalar product between the coordinates of its input and a vector of  \emph{trainable weights} (or simply \emph{weights}) that have to be \emph{trained}. Each layer processes some neurons and the outputs of the neuron evaluations will form new input vectors for the subsequent layer. The training phase consists in an automatic tuning of the weights and it is done \emph{via} an iterative approach which locally applies the Stochastic Gradient Descent algorithm \cite{Goodfellow-et-al-2016} to minimize a  \emph{loss function} quantifying the classification error of the function $\MLmodel$ over the training set. We will not give further details about this classical optimization approach, and the interested reader may refer to \cite{Goodfellow-et-al-2016}.\\
+Using NNs the function $\MLmodel$ is obtained by combining several simpler functions, called \emph{layers}. An NN has an \emph{input layer} (the identity over the input datum $\vLeakVec$), an output layer (the last function) and all other layers are called \emph{hidden} layers.  The output of $\MLmodel$ is a $\numClasses$-sized vector $\vNNOutput$ of scores for the $\numClasses$ labels. Such a vector might or not represent the approximation of a probability distribution. The nature of the NN's  layers, their number and their dimension in particular, is called the \emph{architecture} of the NN. All the parameters that define an architecture, together with some other parameters that govern the training phase, are its \emph{hyper-parameters}. The so-called \emph{neurons}, that give the name to the NNs, are the computational units of the network and essentially process a scalar product between the coordinates of its input and a vector of  \emph{trainable weights} (or simply \emph{weights}) that have to be \emph{trained}. Each layer processes some neurons and the outputs of the neuron evaluations will form new input vectors for the subsequent layer. \\
 
-The {\em Multi-Layer Perceptrons} (MLPs), also called \emph{Feed-forward Neural Networks} are a family of NN's architectures, associated with a function $\MLmodel$  that is composed of multiple linear functions and some non-linear functions, called {\em activations}. The name \emph{feedforward} is due to the fact that for this kind of models information ﬂows from  the input to the output, through the intermediate computations used to deﬁne $\MLmodel$, without any feedback connection in which outputs of the model are fed back into itself. This is in opposition to the so-called \emph{Recurrent Neural Network} structures.\\
+The {\em Multi-Layer Perceptrons} (MLPs) are a family of NN's architectures, associated with a function $\MLmodel$  that is composed of multiple linear functions and some non-linear functions, called {\em activations}. \\
 
 We can express a typical classification-oriented MLP by the following equation:
 \begin{equation}\label{eq:MLP}
@@ -33,46 +35,138 @@ We can express a typical classification-oriented MLP by the following equation:
 \end{equation}
 where:
 \begin{itemize}
-\item The $\lambda_i$ functions are typically the so-called \emph{Fully-Connected} (FC) layers and are expressible as affine functions: denoting $\vLeakVec\in\mathbb{R}^D$ the input of an FC, its output is given by $\mathbb{A}\vLeakVec + \vec{b}$, being $\mathbb{A}\in\mathbb{R}^{D\times C}$ a matrix of weights and $\vec{b}\in\mathbb{R}^C$ a vector of biases. These weights and biases are the trainable weights of the FC layer. They are called \emph{Fully-Connected} because each $i$-th input coordinate is \emph{connected} to each $j$-th output via the $\mathbb{A}[i,j]$ weight. FC layers can be seen as a special case of the linear layers in general feedforward networks, in which not all the connections are present. The absence of some $(i,j)$-th connections can be formalized as a constraint for the matrix $\mathbb{A}$ consisting in forcing to $0$ its $(i,j)$-th coordinates.
+\item The $\lambda_i$ functions are typically the so-called \emph{Fully-Connected} (FC) layers and are expressible as affine functions: denoting $\vLeakVec\in\mathbb{R}^D$ the input of an FC, its output is given by $\textbf{A}\vLeakVec + \vec{b}$, being $\textbf{A}\in\mathbb{R}^{D\times C}$ a matrix of weights and $\vec{b}\in\mathbb{R}^C$ a vector of biases. These weights and biases are the trainable weights of the FC layer. They are called \emph{Fully-Connected} because each $i$-th input coordinate is \emph{connected} to each $j$-th output via the $\textbf{A}[i,j]$ weight. FC layers can be seen as a special case of the linear layers in general feedforward networks, in which not all the connections are present. The absence of some $(i,j)$-th connections can be formalized as a constraint for the matrix $\textbf{A}$ consisting in forcing to $0$ its $(i,j)$-th coordinates.
 
-\item  The $\sigma_i$ are the so-called \emph{activation functions} (ACT): an activation function is a non-linear real function that is applied independently to each coordinate of its input. We denote them by $\sigma$ since in general they are functions similar to the \emph{logistic sigmoid} introduced in \ref{example:LDA} and denoted by $\sigma$ as well: indeed historically sigmoidal functions where recommended, \ie real-valued, bounded, monotonic, and differentiable functions with a non-negative first derivative. Nevertheless, the recommended function in modern neural network literature is the so-called \emph{Rectified Linear Unit} (ReLU), introduced by \cite{nair2010rectified}} and defined as $\mathrm{ReLU}(\vLeakVec)[i] = max(0,\vLeakVec[i])$. Even it this function is not sigmoidal, not being bounded, nor differentiable, near transformation the fact of being a non-linear transformation but still piecewise linear, allows to preserve many of the properties that make linear models easy to optimize with gradient-
-function.
+\item  The $\sigma_i$ are the so-called \emph{activation functions} (ACT): an activation function is a non-linear real function that is applied independently to each coordinate of its input. In general it does not depend on trainable weights. We denote them by $\sigma$ since in general they are functions similar to the \emph{logistic sigmoid} introduced in \ref{example:LDA} and denoted by $\sigma$ as well: indeed historically sigmoidal functions where recommended, \ie real-valued, bounded, monotonic, and differentiable functions with a non-negative first derivative. Nevertheless, the recommended function in modern neural network literature is the so-called \emph{Rectified Linear Unit} (ReLU), introduced by \cite{nair2010rectified} and defined as $\mathrm{ReLU}(\vLeakVec)[i] = \max(0,\vLeakVec[i])$. Even it this function is not sigmoidal, not being bounded, nor differentiable, near transformation the fact of being a non-linear transformation but still piecewise linear, allows to preserve many of the properties that make linear models easy to optimize with gradient-
+function. 
 
-\item $\softmax$ is the  \emph{softmax}\footnote{To prevent underflow, the log-softmax is usually preferred if several classification outputs must be combined.} function (SOFT), already introduced in \ref{example:LDA}: $\softmax(\vLeakVec)[i] = \frac{e^{\vLeakVec[i]}}{\sum_{j}e^{\vLeakVec[j]}}$.
+\item $\softmax$ is the \emph{softmax}\footnote{To prevent underflow, the log-softmax is usually preferred if several classification outputs must be combined.} function (SOFT), already introduced in \ref{example:LDA}: $\softmax(\vLeakVec)[i] = \frac{e^{\vLeakVec[i]}}{\sum_{j}e^{\vLeakVec[j]}}$.
+\end{itemize}
+ 
+The choice of the softmax function as last layer of a neural network classifier is the most common one. It allows the model $MLmodel$ to be interpreted as a generalisation of the binary classifier described in \eqref{eq:binary_linear_classifier}, where the softmax takes the place of the sigmoid to make the model multi-class and the linear argument is substituted by all previous layers of $\MLmodel$. The previous layers takes in charge the feature extraction and preprocessing and are supposed to predict unnormalised log probabilities \eqref{eq:softmax_entries}. The role of the \emph{softmax} is thus to renormalise such output scores in such a way that they define a probability distribution $\MLmodel(\vLeakVec) \approx \pdf_{\given{\sensRandVar}{\vaLeakVec=\vLeakVec}}$. 
+
+\section{Loss Function and Training}
+The weights of an NN are tuned during a training phase. They are first initialized with random values and are afterwards updated  \via an
+iterative approach which locally applies the (Stochastic) Gradient Descent
+algorithm \cite{Goodfellow-et-al-2016} to minimize a loss function
+quantifying the \emph{classification error} of the function
+$\MLmodel(\vaLeakVec)$ over a training set which is a part of the profiling set. 
+
+
+\subsection{Training}
+The training is said to be \emph{full batch learning} if
+the full training database is processed before one update. At the opposite, if
+a single training input is processed at a time then the approach is named
+\emph{stochastic}. In practice, one often prefers to follow an approach in
+between, called \emph{mini-batch learning}, and to use small \emph{batch} (aka
+group) of training inputs at a time during the learning. In this case a step of the training consists in: 
+\begin{itemize}
+\item selecting a batch of traces $(\vLeakVec_i)_{i\in I}$ chosen in random order (here $I$ is a random set of indexes),
+\item computing the outputs, or scores, of the current model function for the batch inputs $(\vNNOutput_i = \MLmodel(\vLeakVec_i))_{i\in I}$, 
+\item evaluating the loss function from the obtained scores and from the correct labels $(\sensVar_i)_{i\in I}$,
+\item compute the partial derivatives of the loss function with respect to each trainable weight (this is done through a method called \emph{backpropagation} \cite{LeCun2012}),
+\item updating trainable parameters by subtracting from each a small multiple of the loss gradient (the used multiple is called \emph{learning rate}).
+\end{itemize}  
+
+The size of the mini-batch is generally
+driven by several efficiency/accuracy factors which are \eg discussed in
+\cite{GBC16} (\eg optimal use of the multi-core architectures, parallelisation
+with GPUs, trade-off between regularisation effect and stability, etc.). \\
+
+An iteration over all the training datasets during the Stochastic Gradient Descent is called an \emph{epoch}.
+The number of epochs is an important hyper-parameter to tune because
+small values may lead to underfitting and high values may lead to overfitting. In our experiments we chose to a so-called \emph{early stopping} approach in order to avoid the need of a prior tuning of the number of epochs. It will be described in \ref{XXXXXX}.\\
+
+% SEI ARRIVATA QUI
+\subsection{Cross-Entropy}
+The cross-entropy \cite{LCH05,Goodfellow-et-al-2016}
+metric is a classical (and often by default) choice for the loss function in a classification-oriented NN. It is smooth and
+decomposable, and therefore amenable to optimization with standard
+gradient-based methods. However, other metrics may be investigated and can
+potentially lead to better results \cite{MHK10,SSZU15}. 
+
+
+Fro our experiments and simulations, we selected the the averaged \emph{cross-entropy} between each $\yyy_i$ and the corresponding correct label $\zzz_i$ as loss function. Indeed nowadays this is the recommended choice for classification problems \cite{Goodfellow-et-al-2016}.  There are two ways to interpret such a choice. 
+
+\begin{itemize}
+\item First, recalling that $\yyy_i$ may be interpreted as an estimation of the conditional probability $\prob[\ZZZ | \XXX = \xxx_i]$, the principle of maximum-likelihood suggests to drive the training in such a way that for such an estimate the probability of the correct label $\zzz_i$ is as high as possible. Thus, if we suppose the correct label vector $\zzz_i=(0,\ldots , 0,\underbrace{1}_{j},0,\dots,0)$ corresponds to the one-hot encoding of the label $z^j$, we want to maximize $\yyy_i[j]$ (or equivalently to minimize $-\log{\yyy_i[j]}$).\footnote{We remark that thanks to the softmax function used as last network layer, each coordinate of $\yyy_i$ is always strictly positive.} It may be observed that such a log-likelihood rewrites as 
+\begin{equation}\label{eq:log_lik}
+-\log{\yyy_i[j]} = -\sum_{t=1}^{|\sensVarSet|}\zzz_i[t]\log{\yyy_i[t]} \mbox{ .}
+\end{equation}
+\item The second interpretation of the choice of the average cross-entropy comes from the observation that the vector $\zzz_i = (0,\ldots , 0,\underbrace{1}_{j},0,\dots,0)$ gives the value of the pmf of $\ZZZ| \ZZZ = \zzz_i$, which corresponds to the exact probability density we want the network to approximate. Informally speaking, the cross-entropy between two probability distributions $\zzz_i, \yyy_i$ gives a measure of dissimilarity between them, and is defined as follows:
+\begin{equation}
+\mathbb{H}(\zzz_i, \yyy_i) = \mathbb{H}(\zzz_i) + D_{KL}(\zzz_i || \yyy_i) = \esper_{\zzz_i}[-\log{\yyy_i}] = -\sum_{t=1}^{|\sensVarSet|}\zzz_i[t]\log{\yyy_i[t]} \mbox{ ,}
+\end{equation}
+where $\mathbb{H}$ denotes the entropy and $D_{KL}$ denotes the Kullback-Leibler divergence (see \cite{christopher2006pattern}-Sec. 1.6). Thus, this is an information-theoretic notion, that comes out to be equivalent to the negative log-likelihood formula given by \eqref{eq:log_lik}. 
+\end{itemize}
+In conclusion, depending on the point of view, minimizing the cross-entropy corresponds to maximize the likelihood of the right label, or to minimize the dissimilarity between the network estimation of a distribution and the right distribution that we want it to approximate.
+In practice, to train the neural network the loss function is given by the cross-entropy averaged over the traces contained in a batch:
+\begin{equation}
+\mathcal{L}(F,(\xxx_i)_{i\in I}) = \frac{1}{\mid I\mid}\sum_{i \in I}H(\zzz_i, F(\xxx_i)) \mbox{ .}
+\end{equation}
+ A good choice for the size of the batch is a value as large as possible but which avoids computational performances drop. An iteration over the entire training set is called {\em epoch}. To monitor the training of an NN and to evaluate its performances it is a good practice to separate the labelled data into $3$ sets: 
+\begin{itemize}
+\item the proper \emph{training set}, which is actually used to train the weights (in general it contains the greatest part of the labelled data)
+\item a \emph{validation set}, which is observed in general at the end of each epoch to monitor the training
+\item a \emph{test set}, which is kept unobserved during the training phase and which is involved to finally evaluate the performances of the trained NN.
 \end{itemize}
 
+For our experiments we will use the attack traces as test set, while we will split the profiling traces into a training set and a validation set.\footnote{The way how the profiling set is split into training and validation sets might induce a bias in the learned model. A good way to get rid of such a bias is to apply a \emph{cross-validation} technique, \emph{e.g.} a \emph{10-fold cross-validation}. The latter one consists in partitioning the profiling set into $10$ sub-sets, and in performing $10$ times the training while choosing each time one of the sub-sets for the validation and the union of the $9$ other ones for the training. An average over the performances of the $10$ obtained models gives a more robust estimation of the accuracies and performances. Results of this papers do not make use of such a cross-validation technique.}
 
- Examples of ACT layers are the {\em sigmoid} $f(\vLeakVec)[i] = (1+e^{-\vLeakVec[i]})^{-1}$ or the {\em rectified linear unit} (ReLU) $f(\vLeakVec)[i] = max(0,\vLeakVec[i])$. In general they do not depend on trainable weights.\\
- 
-The role of the \emph{softmax} is to renormalise the output scores in such a way that they define a probability distribution $\yyy \approx \mathrm{Pr}[\ZZZ | \XXX = \xxx]$.
+\subsubsection{The accuracy} is the most common metric to both monitor and evaluate an NN. It is defined as the successful classification rate reached over a dataset. The {\em training accuracy}, the \emph{validation accuracy} and the \emph{test accuracy} are the successful classification rates achieved respectively over the training, the validation and the test sets. At the end of each epoch it is useful to compute and to compare the training accuracy and the validation accuracy. For some trained models we will measure in this paper (see \emph{e.g.} Table~\ref{tab:res_CW_shift}) the following two additional quantities: 
+\begin{itemize}
+\item the \emph{maximal training accuracy}, corresponding to the maximum of the training accuracies computed at the end of each epoch
+\item the \emph{maximal validation accuracy}, corresponding to the maximum of the validation accuracies computed at the end of each epoch.
+\end{itemize}
+In addition to the two quantities above, we will also evaluate the performances of our trained model, by computing a \emph{test accuracy}. Sometimes it is useful to complete this evaluation by looking at the so-called \emph{confusion matrix} (see the bottom part of Fig. \ref{fig:CW_shift_history}). Indeed the latter matrix enables, in case of misclassification, for the identification of the classes which are confused. The confusion matrix corresponds to the distribution over the couples \emph{(true label, predicted label)} directly deduced from the results of the classification on the test set. A test accuracy of $100\%$ corresponds to a diagonal confusion matrix.\\
 
-In this way, the computed output does not only provide the most likely label to solve the classification problem, but also the likelihood of the remaining $|\sensVarSet|-1$ other labels. In the profiling SCA context, this form of output allows us to enter it in \eqref{eq:bayes} (setting the preprocessing function $\extract$ equal to the identity) to rank key candidates; actually \eqref{eq:MLP} may be viewed as an approximation of the pdf in \eqref{eq:prob_distr}.\footnote{Remarkably, this places SCAs based on MLP as a particular case of the classical profiling attack that exploits the maximum likelihood as distinguisher.}  We can thus rewrite \eqref{eq:bayes} as:
+\subsubsection{On the Need to also Consider the Guessing Entropy.} The accuracy metric is perfectly adapted to the machine learning classification problem, but corresponds in side-channel language to the success rate of a Simple Attack, \emph{i.e.} an attack where a single attack trace is available. When the attacker can acquire several traces for varying plaintexts, the accuracy metric is not sufficient alone to evaluate the attack performance.
+Indeed such a metric only takes into account the label corresponding to the maximal score and does not consider the other ones, whereas an SCA through~\eqref{eq:NN_SCA} does (and therefore exploits the full information).
+
+To take this remark into account, we will always associate the test accuracy to a side-channel metric defined as the minimal number  $N^\star$ of side-channel traces that makes the \emph{guessing entropy} (the average rank of the right key candidate) be permanently equal to 1 (see \emph{e.g.} Table~\ref{tab:res_CW_shift}). We will estimate such a guessing entropy through 10 independent attacks. \\
+
+As we will see in the sections dedicated to our attack experiments, applying Machine Learning in a context where at the same time (1) the model to recover is complex and (2) the amount of exploitable measurements for the training is limited, may be ineffective due to some overfitting phenomena.
+
+\subsubsection{Overfitting.} Often the training accuracy is higher than the validation one. When the gap between the two accuracies is excessive, we assist to the \emph{overfitting} phenomenon. It means that the NN is using its weights to \emph{learn by heart} the training set instead of detecting significant discriminative features. For this reason its performances are poor over the validation set, which is new to it. Overfitting occurs when an NN is excessively complex, \emph{i.e.} when it is able to express an excessively large family of functions. In order to keep the NN as complex as wished and hence limiting the overfitting, some \emph{regularization} techniques can be applied. For example, in this paper we will propose the use of the
+\emph{Data Augmentation} (DA)~\cite{simard2003best} that consists in artificially adding observations to the training set. Moreover we will take advantage of the \emph{early-stopping} technique~\cite{Prechelt2012} that consists in well choosing a stop condition based on the validation accuracy or on the validation loss (\emph{i.e.} the value taken by the loss function over the validation set).
+
+
+
+Several extensions and variants of the Stochastic Gradient Descent have been proposed in the context of DL. These variants, called \emph{optimizers}, aim to adapt the \emph{learning rate} (the step size) of the Gradient Descent during the training process. More details about the
+specification of neural networks will be given in the dedicated sections \ref{sec:FNN} and
+\ref{sec:cnn}, but we will not go further on the optimization approaches and the
+interested reader may refer to \cite{Goodfellow-et-al-2016}. 
+
+\section{Attack Strategy with an MLP}
+Looking back to the Template Attack strategy described in \ref{sec:TA}, we observe that the main difference between such a strategy and the exploitation of an MLP constructed as just described is the fact the the TA bases on a generative model, while MLPs are used to construct discriminative ones. Indeed, in TA the templates \eqref{eq:class-conditional} are priorly estimated, while with an MLP $\MLmodel(\vLeakVec) \approx \pdf_{\given{\sensRandVar}{\vaLeakVec=\vLeakVec}}$ one approximates directly posterior probabilities \eqref{eq:a-posteriori}. Once this approximation is done, the attack strategy proceeds in the same way for both approaches. The attacker acquires the new attack traces, that he only can associate to the public parameter $\publicParRandVar$, obtaining couples  $(\vLeakVec_i, \publicParVar_i)_{i=1, \dots , \nbAttackTraces}$. Then he makes key hypothesis $\keyVar \in \keyVarSet$ and, making the assumption that each acquisition is an independent observation of $\vaLeakVec$, he associates to each hypothesis $\keyVar \in \keyVarSet$ a score $d_\keyVar$ given by \eqref{eq:joint_distr}, that in terms of MLP model $\MLmodel$ rewrites  as:
 
 \begin{equation}\label{eq:NN_SCA}
-d_k = \prod_{i=1}^{N} F(\xxx_i)[f(p_i,k)].
+d_{\keyVar} = \prod_{i=1}^{\nbAttackTraces} \MLmodel(\vLeakVec_i)[\sensFunction(\keyVar,\publicParVar_i)] \mbox{ .}
 \end{equation}
 
-We refer to \cite{lin2016does} for an (excellent) explication over the relationship between the softmax function and the Bayes theorem.
+Finally, the best key candidate $\hat{\keyVar}$ is the one maximizing such a joint probability, as in \eqref{eq:max_classifier}
+\begin{equation}
+\hat{\keyVar} = \argmax_{\keyVar} d_{\keyVar} \mbox{ .}
+\end{equation}
 
 
 
-% descrizione (dal paper) 
-% universal approximation theorem (da pagg 194 e seguenti del deeplearningbook)
+
 
 %----------------------------------------------------------------------------------------
 %	SECTION 2
 %----------------------------------------------------------------------------------------
 
-\section{Misalignment of Side-Channel Traces}
+%\section{Misalignment of Side-Channel Traces}
 
-\subsection{The Necessity and the Risks of Applying Realignment Techniques}
-\subsection{Analogy with Image Recognition Issues}
+%\subsection{The Necessity and the Risks of Applying Realignment Techniques}
+%\subsection{Analogy with Image Recognition Issues}
 
 %----------------------------------------------------------------------------------------
 %	SECTION 3
 %----------------------------------------------------------------------------------------
 
-\section{Convolutional Layers to Impose Shift-Invariance}
+\section{Shift-Invariance and Convolutional Neural Network}
 
 %----------------------------------------------------------------------------------------
 %	SECTION 4
