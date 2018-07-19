@@ -61,9 +61,9 @@ a single training input is processed at a time then the approach is named
 between, called \emph{mini-batch learning}, and to use small \emph{batch} (aka
 group) of training inputs at a time during the learning. In this case a step of the training consists in: 
 \begin{itemize}
-\item selecting a batch of traces $(\vLeakVec_i)_{i\in I}$ chosen in random order (here $I$ is a random set of indexes),
+\item selecting a batch of training traces $(\vLeakVec_i, \vec{\sensVar_i})_{i\in I}$ chosen in random order (here $I$ is a random set of indexes),
 \item computing the outputs, or scores, of the current model function for the batch inputs $(\vNNOutput_i = \MLmodel(\vLeakVec_i))_{i\in I}$, 
-\item evaluating the loss function from the obtained scores and from the correct labels $(\sensVar_i)_{i\in I}$,
+\item evaluating the loss function,
 \item compute the partial derivatives of the loss function with respect to each trainable weight (this is done through a method called \emph{backpropagation} \cite{LeCun2012}),
 \item updating trainable parameters by subtracting from each a small multiple of the loss gradient (the used multiple is called \emph{learning rate}).
 \end{itemize}  
@@ -77,42 +77,39 @@ An iteration over all the training datasets during the Stochastic Gradient Desce
 The number of epochs is an important hyper-parameter to tune because
 small values may lead to underfitting and high values may lead to overfitting. In our experiments we chose to a so-called \emph{early stopping} approach in order to avoid the need of a prior tuning of the number of epochs. It will be described in \ref{XXXXXX}.\\
 
-% SEI ARRIVATA QUI
 \subsection{Cross-Entropy}
-The cross-entropy \cite{LCH05,Goodfellow-et-al-2016}
-metric is a classical (and often by default) choice for the loss function in a classification-oriented NN. It is smooth and
+The cross-entropy
+metric is a classical (and often by default) tool to construct the loss function in a classification-oriented NNs \cite{LCH05,Goodfellow-et-al-2016}. It is smooth and
 decomposable, and therefore amenable to optimization with standard
-gradient-based methods. However, other metrics may be investigated and can
-potentially lead to better results \cite{MHK10,SSZU15}. 
+gradient-based methods. Before providing the definition of cross-entropy in \eqref{eq:crossentropy}, we precise the chosen form for the loss function. Given a batch of training data $(\vLeakVec_i)_{i\in I}$ and their scores by the current model $(\vNNOutput_i)_{i\in I}$, the loss function is defined as the following averaged value:
 
+\begin{equation}\label{eq:lossfunction}
+\mathcal{L} = \frac{1}{\lvert I \rvert} \sum_{i\in \I} -\sum_{t=1}^{|\sensVarSet|}\vec{\sensVar_i}[t]\log{\vNNOutput_i[t]}
+\end{equation}   
 
-Fro our experiments and simulations, we selected the the averaged \emph{cross-entropy} between each $\yyy_i$ and the corresponding correct label $\zzz_i$ as loss function. Indeed nowadays this is the recommended choice for classification problems \cite{Goodfellow-et-al-2016}.  There are two ways to interpret such a choice. 
+There are two ways to interpret such a choice. 
 
 \begin{itemize}
-\item First, recalling that $\yyy_i$ may be interpreted as an estimation of the conditional probability $\prob[\ZZZ | \XXX = \xxx_i]$, the principle of maximum-likelihood suggests to drive the training in such a way that for such an estimate the probability of the correct label $\zzz_i$ is as high as possible. Thus, if we suppose the correct label vector $\zzz_i=(0,\ldots , 0,\underbrace{1}_{j},0,\dots,0)$ corresponds to the one-hot encoding of the label $z^j$, we want to maximize $\yyy_i[j]$ (or equivalently to minimize $-\log{\yyy_i[j]}$).\footnote{We remark that thanks to the softmax function used as last network layer, each coordinate of $\yyy_i$ is always strictly positive.} It may be observed that such a log-likelihood rewrites as 
+\item First, recalling that $\vNNOutput_i$ may be interpreted as an estimation of the conditional probability $\prob[\given{\sensRandVar}{\vaLeakVec=\vLeakVec_i}]$, the principle of maximum-likelihood suggests to drive the training in such a way that for such an estimate the probability of the correct label $\vec{\sensVar_i}$ is as high as possible. Thus, if we suppose that $\vec{\sensVar_i} = \vec{\sensVar}^j$, we want to maximize $\vNNOutput_i[j]$ (or equivalently to minimize $-\log{\vNNOutput_i[j]}$).\footnote{We remark that thanks to the softmax function used as last network layer, each coordinate of $\vNNOutput_i$ is always strictly positive.} It may be observed that such a log-likelihood rewrites as 
 \begin{equation}\label{eq:log_lik}
--\log{\yyy_i[j]} = -\sum_{t=1}^{|\sensVarSet|}\zzz_i[t]\log{\yyy_i[t]} \mbox{ .}
+-\log{\vNNOutput_i[j]} = -\sum_{t=1}^{|\sensVarSet|}\vec{\sensVar_i}[t]\log{\vNNOutput_i[t]} \mbox{ ,}
 \end{equation}
-\item The second interpretation of the choice of the average cross-entropy comes from the observation that the vector $\zzz_i = (0,\ldots , 0,\underbrace{1}_{j},0,\dots,0)$ gives the value of the pmf of $\ZZZ| \ZZZ = \zzz_i$, which corresponds to the exact probability density we want the network to approximate. Informally speaking, the cross-entropy between two probability distributions $\zzz_i, \yyy_i$ gives a measure of dissimilarity between them, and is defined as follows:
-\begin{equation}
-\mathbb{H}(\zzz_i, \yyy_i) = \mathbb{H}(\zzz_i) + D_{KL}(\zzz_i || \yyy_i) = \esper_{\zzz_i}[-\log{\yyy_i}] = -\sum_{t=1}^{|\sensVarSet|}\zzz_i[t]\log{\yyy_i[t]} \mbox{ ,}
+which equals to the quantity averaged in \eqref{eq:lossfunction}.
+\item The second interpretation of the chosen loss function is linked to fact that it actually represents the average of  the cross-entropy of pairs of well-chosen probability mass functions. Indeed we observe that the encoding $\vec{\sensVar}_i = (0,\ldots , 0,\underbrace{1}_{j},0,\dots,0)$ is interpretable as the pmf of $\given{\sensRandVar}{\sensRandVar = \sensVar_i}$, which corresponds to the exact probability density we want the network to approximate. Informally speaking, the cross-entropy between two probability distributions, in our case given by $\vec{\sensVar_i}$ and $\vNNOutput_i$ gives a measure of dissimilarity between them, and is defined as follows:
+\begin{equation}\label{eq:crossentropy}
+\entropy(\vec{\sensVar_i}, \vNNOutput_i) = \entropy(\vec{\sensVar_i}) + D_{KL}(\vec{\sensVar_i} || \vNNOutput_i) = \esper_{\vec{\sensVar_i}}[-\log{\vNNOutput_i}] = -\sum_{t=1}^{|\sensVarSet|}\vec{\sensVar_i}[t]\log{\vNNOutput_i[t]} \mbox{ ,}
 \end{equation}
-where $\mathbb{H}$ denotes the entropy and $D_{KL}$ denotes the Kullback-Leibler divergence (see \cite{christopher2006pattern}-Sec. 1.6). Thus, this is an information-theoretic notion, that comes out to be equivalent to the negative log-likelihood formula given by \eqref{eq:log_lik}. 
+where $\entropy$ denotes the entropy and $D_{KL}$ denotes the Kullback-Leibler divergence \cite{christopher2006pattern}. Thus, this is an information-theoretic notion, that comes out to be equivalent to the negative log-likelihood formula given by \eqref{eq:log_lik}. 
 \end{itemize}
-In conclusion, depending on the point of view, minimizing the cross-entropy corresponds to maximize the likelihood of the right label, or to minimize the dissimilarity between the network estimation of a distribution and the right distribution that we want it to approximate.
-In practice, to train the neural network the loss function is given by the cross-entropy averaged over the traces contained in a batch:
-\begin{equation}
-\mathcal{L}(F,(\xxx_i)_{i\in I}) = \frac{1}{\mid I\mid}\sum_{i \in I}H(\zzz_i, F(\xxx_i)) \mbox{ .}
-\end{equation}
- A good choice for the size of the batch is a value as large as possible but which avoids computational performances drop. An iteration over the entire training set is called {\em epoch}. To monitor the training of an NN and to evaluate its performances it is a good practice to separate the labelled data into $3$ sets: 
-\begin{itemize}
-\item the proper \emph{training set}, which is actually used to train the weights (in general it contains the greatest part of the labelled data)
-\item a \emph{validation set}, which is observed in general at the end of each epoch to monitor the training
-\item a \emph{test set}, which is kept unobserved during the training phase and which is involved to finally evaluate the performances of the trained NN.
-\end{itemize}
+In conclusion, depending on the point of view, minimizing the loss function \eqref{eq:log_lik}, which is the cross-entropy averaged over the traces contained in a batch, corresponds to maximize the likelihood of the right label, or to minimize the dissimilarity between the network estimation of a distribution and the right distribution that we want it to approximate. 
+We chose the loss function \eqref{eq:lossfunction} for our experiments. However, other metrics may be investigated and can
+potentially lead to better results \cite{MHK10,SSZU15}. \\
 
-For our experiments we will use the attack traces as test set, while we will split the profiling traces into a training set and a validation set.\footnote{The way how the profiling set is split into training and validation sets might induce a bias in the learned model. A good way to get rid of such a bias is to apply a \emph{cross-validation} technique, \emph{e.g.} a \emph{10-fold cross-validation}. The latter one consists in partitioning the profiling set into $10$ sub-sets, and in performing $10$ times the training while choosing each time one of the sub-sets for the validation and the union of the $9$ other ones for the training. An average over the performances of the $10$ obtained models gives a more robust estimation of the accuracies and performances. Results of this papers do not make use of such a cross-validation technique.}
+As justified in \ref{sec:validation}, we will for our experiments divide the side-channel profiling set into two sets: the training one and the validation one. The training set is the one processed by batch and used to update the NN's parameters. The validation set is exploited in general at the end of each epoch to monitor the training, and in particular to watch over the incoming of an overfitting phenomenon. Cross-validation has not been performed. We will use a side-channel attack set as test set as well, to finally evaluate the performance of the trained model.
 
+
+%SEI ARRIVATA QUI
+\section{Performance }
 \subsubsection{The accuracy} is the most common metric to both monitor and evaluate an NN. It is defined as the successful classification rate reached over a dataset. The {\em training accuracy}, the \emph{validation accuracy} and the \emph{test accuracy} are the successful classification rates achieved respectively over the training, the validation and the test sets. At the end of each epoch it is useful to compute and to compare the training accuracy and the validation accuracy. For some trained models we will measure in this paper (see \emph{e.g.} Table~\ref{tab:res_CW_shift}) the following two additional quantities: 
 \begin{itemize}
 \item the \emph{maximal training accuracy}, corresponding to the maximum of the training accuracies computed at the end of each epoch
