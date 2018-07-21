@@ -1,0 +1,5 @@
+# num_params, test_acc, num_tests_for_mean, mean(minNa)
+869341.00000
+   0.31800
+  10.00000
+  43.40000
