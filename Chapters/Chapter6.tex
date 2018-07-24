@@ -8,7 +8,7 @@ In this chapter, we explore solutions for dimensionality reduction of side-chann
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
-\section{Introduction}
+\section{Introduction}\label{sec:intro_chapter_linear}
 Linear dimensionality reduction methods produce a low-dimensional linear mapping of the original high-dimensional data that preserves some original feature of interest. An abundance of methods has been developed throughout statistics, machine learning, and applied fields for over a century, and these methods have become indispensable tools for analysing high dimensional, noisy data, such as side-channel traces.  Accordingly, linear dimensionality reduction can be used for visualizing or exploring structures in data, denoising or compressing data, extracting meaningful feature spaces, and more. A very complete survey about this great variety of linear dimensionality reduction technique has been published in 2015 by Cunningham and Ghahramani \cite{cunningham2015linear}. They proposed a generalized optimization framework for all linear dimensionality techniques, survey a dozen different techniques and mention some important extensions such as kernel mappings. \\
 
 Among the surveyed methods in \cite{cunningham2015linear} we find the two ones that are mainly considered in SCA literature: the Principal Component Analysis (PCA) and the Linear Discriminant Analysis (LDA). The PCA has been applied both in an {\em unsupervised} way (\ie non-profiling attacks) \cite{Batina2012,karsmakers2009side}, and in a {\em supervised} way (\ie profiling attacks) \cite{TAprincipal,choudaryefficient,choudary2014efficient,disassembler,Standaert2008}. As already remarked in \cite{disassembler}, and not surprisingly, the complete knowledge assumed in the supervised approach hugely raises performances. The main competitor of PCA in the profiling attacks context is the LDA, that thanks to its classification-oriented flavour (see Sec.~\ref{example:LDA}), is known to be more meaningful and informative \cite{lessIsMore,Standaert2008} than the PCA method  for side channels. Nevertheless, the LDA is often set aside because of its practical constraints; it is subject to the so-called {\em Small Sample Size problem (SSS)}, i.e. it requires a number of observations (traces) which must be higher than the dimension (size) $\traceLength$ of them. In some contexts it might be an excessive requirement, which may become unacceptable in many practical situations where the amount of observations is very limited and the traces size is huge.\\
@@ -23,7 +23,9 @@ of higher-order SCA. Thus this technique appears advantageous in higher-order co
  In SCA literature, one of the open issues for PCA application concerns the choice of the principal components that must be kept after the dimension reduction: as already remarked by Specht et al.  \cite{specht}, some papers declare that the leading components are those that contain almost all the useful information \cite{TAprincipal,choudary2014efficient}, while others propose to discard the leading components \cite{Batina2012}. In a specific attack context, Specht et al. compares the results obtained by choosing different subsets of consecutive components, starting from some empirically chosen index. They conclude that for their data the optimal result is obtained by selecting a single component, the fourth one, but they give no formal argumentation about this choice. Such a result is obviously very case-specific. Moreover, the possibility of keeping non-consecutive components is not considered in their analysis. \\
 
  
-In Sec.~\ref{sec:PCA} the classical PCA technique is described, then the previous applications of PCA in SCA context are recalled, highlighting the difference between its unsupervised and supervised declination. Finally our contribution to  \textquotedbl the choice of components open issue is described\textquotedbl \  is described:  it is based on the Explained Local Variance (ELV) notion, that we will define and argument in the same section. The reasoning behind the ELV selection methodology is essentially based on the observation that, for secure implementations, the leaking information, if existing, is spread over a few time samples of each trace. This observation has already been met by Mavroeidis et al. in \cite{SCAclassProbl}, where the authors  also proposed a components selection method. As we will see in Sec.~\ref{sec:ELV}, the main difference between their proposal and ours is that we do not discard the information given by the eigenvalues associated to the PCA components, but we synergistically exploit such information and the observation met.  We will argue about the generality and the soundness of this methodology and show that it can raise the PCA performances, making them close to those of the LDA, even in the supervised context. This makes PCA an interesting alternative to LDA in those cases where the LDA is inapplicable. The ELV selection tool has been tested in a successive experimental work \cite{choudary2018efficient}. Unfortunately, the authors of such a work could not observe an improvement (nor a worsening) using such a selector, because in their specific case it returned the selection of the first components by eigenvalues. The LDA technique will be described in Sec.~\ref{sec:LDA}, together with the description of the SSS problem and some solutions coming from the Pattern and Face Recognition communities \cite{eigenfaces,Chen2000,huang,Yu01adirect}. Through some experiments depicted in Sec.~\ref{sec:experiments} we will conclude about the effectiveness of the PCA-ELV solution. Finally, in Sec.~\ref{sec:misalignment} we will experimentally argue about the weakness of all these techniques to data misalignment.
+In Sec.~\ref{sec:PCA} the classical PCA technique is described, then the previous applications of PCA in SCA context are recalled, highlighting the difference between its unsupervised and supervised declination. Finally our contribution to  \textquotedbl the choice of components open issue is described\textquotedbl \  is described:  it is based on the Explained Local Variance (ELV) notion, that we will define and argument in the same section. The reasoning behind the ELV selection methodology is essentially based on the observation that, for secure implementations, the leaking information, if existing, is spread over a few time samples of each trace. This observation has already been met by Mavroeidis et al. in \cite{SCAclassProbl}, where the authors  also proposed a components selection method. As we will see in Sec.~\ref{sec:ELV}, the main difference between their proposal and ours is that in in \cite{SCAclassProbl} the information given by the eigenvalues associated to the PCA components is completely discarded, while the ELV methodology takes advantage of such information as well.  We will argue about the generality and the soundness of this methodology and we will show that it can raise the PCA performances, making them close to those of the LDA, even in the supervised context. This makes PCA an interesting alternative to LDA in those cases where the LDA is inapplicable due to the SSS problem. The ELV selection tool has been tested in a successive experimental work \cite{choudary2018efficient}. Unfortunately, the authors of this work could not observe an improvement (nor a worsening) using our new selector, because in their specific case its selection of components were equivalent to the classical one, that will be referred to as EGV in the following.\\
+
+ The LDA technique will be described in Sec.~\ref{sec:LDA}, together with the description of the SSS problem and some solutions coming from the Pattern and Face Recognition communities \cite{eigenfaces,Chen2000,huang,Yu01adirect}. Through some experiments depicted in Sec.~\ref{sec:experiments} we will conclude about the effectiveness of the PCA-ELV solution. Finally, in Sec.~\ref{sec:misalignment} we will experimentally argue about the weakness of all these techniques when data are misaligned.
 
 %----------------------------------------------------------------------------------------
 %	SECTION 2
@@ -36,66 +38,65 @@ In Sec.~\ref{sec:PCA} the classical PCA technique is described, then the previou
 \includegraphics[width=.5\textwidth]{../Figures/PCA_LDA_geometric/PCAprojection_unsupervised.pdf} 
 \caption{PCA: some 2-dimensional data (blue crosses) projected into their 1-dimensional principal subspace (represented by the green line).}\label{fig:PCAunsupervised}
 \end{figure}
-The Principal Component Analysis (PCA) is a technique for data dimensionality reduction. The PCA algorithm can be deduced from two different points of view, a statistical one and a geometrical one. In the former, PCA aims to project orthogonally the data onto a lower-dimensional linear space, the so-called \emph{principal subspace}, such that the variance of the projected data is maximized. In the latter, PCA aims to project data onto a lower-dimensional linear space in such a way that the average projection cost, defined as the mean square distance between the data and their projections, is minimized. In the following it is shown how the PCA algorithm is deduced by the statistical definition. The reader interested by the equivalence between the two approaches can refer to \cite[Ch.\ 12]{christopher2006pattern}. An example of 2-dimensional data projected over their 1-dimensional principal subspace is depicted in Fig.~\ref{fig:PCAunsupervised}.\\
+The Principal Component Analysis (PCA) is a technique for data dimensionality reduction. The PCA algorithm can be deduced from two different points of view, a statistical one and a geometrical one. In the former one, PCA aims to project orthogonally the data onto a lower-dimensional linear space, the so-called \emph{principal subspace}, such that the variance of the projected data is maximized. In the latter one, PCA aims to project data onto a lower-dimensional linear space in such a way that the average projection cost, defined as the mean square distance between the data and their projections, is minimized. In the following it is shown how the PCA algorithm is deduced by the statistical definition. The reader interested by the equivalence between the two approaches can refer to \cite[Ch.\ 12]{christopher2006pattern}. An example of 2-dimensional data projected over their 1-dimensional principal subspace is depicted in Fig.~\ref{fig:PCAunsupervised}.\\
 
 Let $(\vLeakVec)_{i=1..\nbTraces}$ be a set of $\traceLength$-dimensional measurements (or observations, or data), i.e. realizations of a $\traceLength$-dimensional zero-mean random vector $\vaLeakVec{}$, and collect them as columns of an $\traceLength \times \nbTraces$ matrix $\measuresMatrix$, so that the empirical covariance matrix of $\vaLeakVec{}$ can be computed as 
 \begin{equation}\label{eq:covmat}
 \covmat = \frac{1}{\nbTraces}\measuresMatrix\measuresMatrix^\intercal \mbox{ .}
 \end{equation}
 
-Let us assume for the moment that we have priorly fixed the dimension $\newTraceLength<\traceLength$ of the principal subspace we are looking for. 
+Let us first assume that we have priorly fixed the dimension $\newTraceLength<\traceLength$ of the principal subspace we are looking for. 
 
 \paragraph*{Compute the First Principal Component}
-Suppose in a first time that $\newTraceLength = 1$, i.e. that we want to represent our data by a unique variable $Y_1 =  \AAlpha_1 \vaLeakVec{}$, i.e. projecting data over a single $ 1 \times\traceLength$ vector $\AAlpha_1$, in such a way the the variance of the obtained data is maximal. The vector $\AAlpha_1$ that provides such a linear combination is called {\em first principal component}. 
-To avoid misunderstanding we will call {\em $j$-th principal component} (PC) the projecting vector $\AAlpha_j$, while we will refer to the variable $Y_j = \AAlpha_j \vaLeakVec{}$ as {\em $j$-th Principal Variable (PV)}. 
-Realizations of the PVs are given by the measured data projected over the $j$-th PC, for example we can collect, in a (row) vector $\yyy_1 = \AAlpha_1 \measuresMatrix $, $\nbTraces $ realizations of $Y_1$:
+Suppose in a first time that $\newTraceLength = 1$, i.e. that we want to represent our data by a unique variable $Y_1 =  \AAlpha_1^\intercal \vaLeakVec{}$, i.e. projecting data over a single $ 1 \times\traceLength$ vector $\AAlpha_1^\intercal$, in such a way the variance of the obtained data is maximal. The vector $\AAlpha_1^\intercal$ that provides such a linear combination is called {\em first principal component}. 
+To avoid misunderstanding we will call {\em $j$-th principal component} (PC) the projecting vector $\AAlpha_j^\intercal$, while we will refer to the variable $Y_j = \AAlpha_j^\intercal \vaLeakVec$ as the {\em $j$-th Principal Variable (PV)}. 
+Realizations of the PVs are given by the measured data projected over the $j$-th PC, for example we can collect, in a (row) vector $\yyy_1 = \AAlpha_1^\intercal \measuresMatrix $, $\nbTraces $ realizations of $Y_1$:
 \begin{equation}
-y_1[i] = \AAlpha_1 \vLeakVec \mbox{ for } i=1,\dots , \nbTraces \mbox{ .}
+y_1[i] = \AAlpha_1^\intercal \vLeakVec_i \mbox{ for } i=1,\dots , \nbTraces \mbox{ .}
 \end{equation}
 
 The mean of these realizations will be zero as they are linear combinations of zero-mean variables, and the variance turns to be expressible as
-\begin{equation}
-\frac{1}{\nbTraces}\yyy_1\yyy_1^\intercal = \frac{1}{\nbTraces}\AAlpha_1\measuresMatrix\measuresMatrix^\intercal\AAlpha_1^\intercal = \AAlpha_1\covmat\AAlpha_1^\intercal \mbox{ .}
+\begin{equation}\label{eq:PCAobjective}
+\frac{1}{\nbTraces}\yyy_1\yyy_1^\intercal = \frac{1}{\nbTraces}\AAlpha_1^\intercal\measuresMatrix\measuresMatrix^\intercal\AAlpha_1 = \AAlpha_1^\intercal\covmat\AAlpha_1 \mbox{ .}
 \end{equation}
-To compute $\AAlpha_1$ we have to look for the vector that maximize such a variance.\\
+To compute $\AAlpha_1^\intercal$ we have to look for the vector that maximises the variance in \eqref{eq:PCAobjective}.\\
 
-Obviously, one can attend a value for the variance as high as wished, raising the modulo $\|\AAlpha_1\| = \sqrt{\AAlpha_1^T\AAlpha_1}$. In order to let the maximization problem have a solution, a restriction is imposed: $\AAlpha_1^T\AAlpha_1 = 1$. 
-This constrained  optimization problem is handled making use of Lagrange multipliers:
+The maximisation problem by itself is not well posed, because the variance value is not limited until a restriction is not imposed to the modulo $\|\AAlpha_1^\intercal\| = \sqrt{\AAlpha_1^\intercal\AAlpha_1}$. In order to let the maximization problem have a solution, a restriction is thus imposed: $\AAlpha_1^\intercal\AAlpha_1 = 1$. 
+This constrained  optimization problem is handled by making use of Lagrange multipliers:
 \begin{equation}
-\Lambda(\AAlpha_1, \lambda) = \AAlpha_1\covmat\AAlpha_1^\intercal - \lambda(\AAlpha_1\AAlpha_1^\intercal-1) \mbox{ ,}
+\Lambda(\AAlpha_1, \lambda) = \AAlpha_1^\intercal\covmat\AAlpha_1 - \lambda(\AAlpha_1^\intercal\AAlpha_1-1) \mbox{ ,}
 \end{equation}
-and computing de partial derivative of $\Lambda$ with respect to $\AAlpha_1$:
+and by computing the partial derivative of $\Lambda$ with respect to $\AAlpha_1^\intercal$:
 \begin{equation}
-\frac{\partial\Lambda}{\partial\AAlpha_1} = 2\covmat\AAlpha_1^\intercal-2\lambda\AAlpha_1^\intercal \mbox{ .}
+\frac{\partial\Lambda}{\partial\AAlpha_1^\intercal} = 2\covmat\AAlpha_1-2\lambda\AAlpha_1 \mbox{ .}
 \end{equation}
-Thus, stationary points of $\Lambda$ verify
+Thus, stationary points of $\Lambda$ verify:
 \begin{equation}\label{eq:eigProblemPCA}
-\covmat\AAlpha_1^\intercal = \lambda\AAlpha_1^\intercal \mbox{ ,}
+\covmat\AAlpha_1 = \lambda\AAlpha_1 \mbox{ ,}
 \end{equation}
-which implies that $\AAlpha_1^\intercal$ must be an eigenvector of $\covmat$, with $\lambda$ its correspondent eigenvalue. Multiplying both sides of Eq.~(\ref{eq:eigProblemPCA}) by $\AAlpha_1$ on the left, we remark that
+which implies that $\AAlpha_1$ must be an eigenvector of $\covmat$, with $\lambda$ its correspondent eigenvalue. Multiplying both sides of Eq.~(\ref{eq:eigProblemPCA}) by $\AAlpha_1^\intercal$ on the left, we remark that
 \begin{equation}
-\AAlpha_1\covmat\AAlpha_1^\intercal = \lambda\AAlpha_1\AAlpha_1^\intercal = \lambda, 
+\AAlpha_1^\intercal\covmat\AAlpha_1 = \lambda\AAlpha_1^\intercal\AAlpha_1 = \lambda, 
 \end{equation}
-which means that the variance of the obtained variable $\yyy_1$ equals $\lambda$. For this reason $\AAlpha_1$ must be the leading eigenvector of $\covmat$, the one correspond to the maximal eigenvalue.
+which means that the variance of the obtained variable $\yyy_1$ equals $\lambda$. For this reason $\AAlpha_1$ must be the leading eigenvector of $\covmat$, the one corresponding to the maximal eigenvalue.
 
 \paragraph*{Compute the Second and Following Principal Components}
-The PCs following the first one are defined in an incremental fashion by choosing new directions orthogonal to those already considered and such that the sum of the projected variances over each direction is maximal. Explicitly, if we look for two PCs, \ie $\newTraceLength = 2$,  we look for a $2$-dimensional variable $\YYY = \begin{psmallmatrix} \AAlpha_1 \\ \AAlpha_2 \end{psmallmatrix} \vaLeakVec$ such that the trace of its covariance matrix, \ie the sum of variances $\var(Y_1)+\var(Y_2)$, is maximal. It can be shown that the same result would be obtained maximizing the so-called \emph{generalized variance} of $\YYY$, which is defined as the determinant of its covariance matrix, instead of its trace. \\
+The PCs others than the first are defined in an incremental fashion by choosing new directions orthogonal to those already considered and such that the sum of the projected variances over each direction is maximal. Explicitly, if we look for two PCs, \ie $\newTraceLength = 2$,  we look for a $2$-dimensional variable $\YYY = \begin{psmallmatrix} \AAlpha_1^\intercal \\ \AAlpha_2^\intercal \end{psmallmatrix} \vaLeakVec$ such that the trace of its covariance matrix, \ie the sum of variances $\var(Y_1)+\var(Y_2)$, is maximal. It can be shown that the same result would be obtained by maximising the so-called \emph{generalized variance} of $\YYY$, which is defined as the determinant of its covariance matrix, instead of its trace. \\
 
 Consider, as in previous case, the Lagrangian of the problem
-\begin{equation}
-\Lambda = \AAlpha_1 \covmat \AAlpha_1^\intercal + \AAlpha_2\covmat \AAlpha_2^\intercal - \lambda_1(\AAlpha_1\AAlpha_1^\intercal -1) - \lambda_2(\AAlpha_2\AAlpha_2^\intercal -1) \mbox{ ,}
+\begin{equation}\label{eq:lagrangian_2comps}
+\Lambda = \AAlpha_1^\intercal \covmat \AAlpha_1 + \AAlpha_2^\intercal\covmat \AAlpha_2 - \lambda_1(\AAlpha_1^\intercal\AAlpha_1 -1) - \lambda_2(\AAlpha_2^\intercal\AAlpha_2 -1) \mbox{ .}
 \end{equation}
 
-partial derivatives with respect to $\AAlpha_1$ and $\AAlpha_2$ attend zero under the following conditions:
+The partial derivatives of \eqref{eq:lagrangian_2comps} with respect to $\AAlpha_1^\intercal$ and $\AAlpha_2^\intercal$ are null under the following conditions:
 \begin{align}
-\covmat  \AAlpha_1^\intercal &= \lambda_1\AAlpha_1^\intercal\\
-\covmat  \AAlpha_2^\intercal &= \lambda_2\AAlpha_2^\intercal \mbox{ .}
+\covmat  \AAlpha_1 &= \lambda_1\AAlpha_1
+\covmat  \AAlpha_2 &= \lambda_2\AAlpha_2 \mbox{ .}
 \end{align}
 
-It means that $\AAlpha_1^\intercal$ and $\AAlpha_2^\intercal$ must be eigenvectors of $\covmat$ with correspondent eigenvalues given by $\lambda_1$ and $\lambda_2$. Moreover, as before, $\lambda_1$ and $\lambda_2$ equal the variances of variable components $Y_1$ and $Y_2$, and since the goal is maximizing the sum of such variables we have to choose $\AAlpha_1$ and $\AAlpha_2$ as the two leading vectors of $\covmat$.\\
-Let us remark that the covariance between $Y_1$ and $Y_2$ is given by $\AAlpha_1^T\covmat \AAlpha_2$ which equals zero, since $\AAlpha_1^T\AAlpha_2 = 0$, by orthogonality. In particular the principal variables are uncorrelated, which is a remarkable property of the PCA. \\
+It means that $\AAlpha_1$ and $\AAlpha_2$ must be eigenvectors of $\covmat$ with corresponding eigenvalues given by $\lambda_1$ and $\lambda_2$. Moreover, as before, $\lambda_1$ and $\lambda_2$ respectively equal the variance of the variable components $Y_1$ and $Y_2$, and since the goal is maximizing the sum of these variables we have to choose $\AAlpha_1$ and $\AAlpha_2$ as the two leading vectors of $\covmat$. Let us remark that the covariance between $Y_1$ and $Y_2$ is given by $\AAlpha_1^\intercal\covmat \AAlpha_2$ which equals zero, since $\AAlpha_1^\intercal\AAlpha_2 = 0$ by orthogonality. In particular the principal variables are uncorrelated, which is a remarkable property of the PCA. \\
 
-In the general case of a $\newTraceLength$-dimensional projection space, it can be shown by induction that the PCs would corresponds to the $\newTraceLength$ leading eigenvectors of the covariance matrix $\covmat$.
+In the general case of a $\newTraceLength$-dimensional projection space, it can be shown by induction that the PCs would correspond to the $\newTraceLength$ leading eigenvectors of the covariance matrix $\covmat$.
 
 
 
@@ -112,42 +113,44 @@ In the general case of a $\newTraceLength$-dimensional projection space, it can 
 \end{figure}
 The classical version of the PCA method is unsupervised.
 % in the sense that is does not take into account the information about the value assumed by the target variable during the acquisition of data. 
-On the other hand a profiling attacker is not only provided with a set of traces $(\vLeakVec)_{i=1..\nbTraces}$, but he also has the knowledge of the target values handled during each acquisition. We denote $(\vLeakVec_i, \sensVar_i)_{i=1..\nbProfilingTraces}$ the labelled set of traces . In Fig.~\ref{fig:2class-toys} the same toys data of Fig.~\ref{fig:PCAunsupervised} have been grouped into 2 classes. Even if before projection the two groups are clearly separable, projecting data over the first principal component given by the classical PCA algorithm \ref{fig:PCAunsupervised_lab}, such a separability is lost. In the supervised context, and for the sake of distinguishing the target value assumed by the target $\sensRandVar$ in new executions, the idea of the {\em Class-Oriented} PCA is to consider {\em equivalent} all traces belonging to the same class. Modelling traces of a same class as traces showing the same characteristic form plus a random noise, the denoised characteristic form can be estimated by the sample means of the traces in the class. Let 
-$$\mmmXclass = \frac{1}{\nbTracesPerClass}\sum_{i\colon \sensVar_i=\sensVar} \vLeakVec_i$$ 
-be the empirical mean of traces belonging to the same class $\sensVar$, being $\nbTracesPerClass$ be the number of traces belonging to class $\sensVar$. The class-oriented version of the PCA  consists in applying the PCA dimensionality reduction to the set $(\mmmXclass)_{\sensVar \in \sensVarSet}$, instead of applying it directly to the traces $\vLeakVec_i$. This implies that the empirical covariance matrix will be computed using only the $\nbClasses$ average traces. Equivalently, in case of \textit{balanced} acquisitions ($\nbTracesPerClass$ constant for each class $\sensVar$), it amounts to replace the covariance matrix $\covmat$ of data in \eqref{eq:covmat}  by the so-called {\em between-class} or  {\em inter-class scatter matrix}, given by:
+On the other hand a profiling attacker is not only provided with a set of traces $(\vLeakVec_i)_{i=1..\nbTraces}$, but he also has the knowledge of the target values handled during each acquisition. We denote by $(\vLeakVec_i, \sensVar_i)_{i=1..\nbProfilingTraces}$ the labelled set of traces . In Fig.~\ref{fig:2class-toys} the same data of Fig.~\ref{fig:PCAunsupervised} have been grouped into 2 classes. Even if before projection the two groups are clearly separable, after projecting data over the first principal component given by the classical PCA algorithm \ref{fig:PCAunsupervised_lab}, the separability is lost. In the supervised context, and for the sake of distinguishing the target value assumed by the target $\sensRandVar$ in new executions, the idea of the {\em Class-Oriented} PCA is to consider as {\em equivalent} all the traces belonging to the same class. Modelling traces of a same class as traces showing the same characteristic form plus a random noise, the denoised characteristic form can be estimated by the sample means of the traces in the class. Let us recall from \eqref{eq:mmmXclass} that the empirical mean of traces belonging to the same class $\sensVar$ is given by
+\begin{equation*}
+\mmmXclass = \frac{1}{\nbTracesPerClass}\sum_{i\colon \sensVar_i=\sensVar} \vLeakVec_i \mbox{ ,}
+\end{equation*}
+where  $\nbTracesPerClass$ is the number of traces belonging to class $\sensVar$. The class-oriented version of the PCA  consists in applying the PCA dimensionality reduction to the set $(\mmmXclass)_{\sensVar \in \sensVarSet}$, instead of applying it directly to the traces $\vLeakVec_i$. This implies that the empirical covariance matrix will be computed using only the $\nbClasses$ average traces. Equivalently, in case of \textit{balanced} acquisitions ($\nbTracesPerClass$ constant for each class $\sensVar$), it amounts to replace the covariance matrix $\covmat$ of data in \eqref{eq:covmat}  by the so-called {\em between-class} or  {\em inter-class scatter matrix}, given by:
 \begin{equation}\label{eq:SB}
 \SB = \sum_{\sensVar\in\sensVarSet}\nbTracesPerClass(\mmmXclass-\mmmX)(\mmmXclass-\mmmX)^\intercal \mbox{ .}
 \end{equation}
-Remark that $\SB$ coincides, up to a multiplicative factor, to the covariance matrix obtained using the class-averaged traces. In this way we focus the attention on information that discriminate the characteristic forms of classes, \ie target values. Figure~\ref{fig:PCAsupervised_lab} shows how the 2-class toy data are projected over the first class-oriented principal component: in the figure, black stars represent the class sample means. Projected data are kept slightly better separated than in Fig.~\ref{fig:PCAunsupervised_lab}.
+Remark that $\SB$ coincides, up to a multiplicative factor, to the covariance matrix obtained using the class-averaged traces. In this way we focus the attention on information that discriminate the characteristic forms of classes, \ie target values. Figure~\ref{fig:PCAsupervised_lab} shows how the 2-class toy data are projected over the first class-oriented principal component: in the figure, black stars represent the class sample means. Projected data are slightly better separated than in Fig.~\ref{fig:PCAunsupervised_lab}.
 
 
 
 \subsection{Computational Consideration}\label{sec:trick}
-Performing PCA (and LDA, as explained later) always asks to compute the eigenvector of some symmetric matrix $\covmat$, obtained by the multiplication of a constant, a matrix and the same matrix transposed, \eg $\covmat = \frac{1}{\nbTraces}\measuresMatrix\measuresMatrix^\intercal$ . Let $\measuresMatrix$ have dimension $\traceLength\times\nbTraces$, and suppose $\nbTraces\ll \traceLength$. This case is almost always attended when performing class-oriented PCA, because in such a case $\nbTraces$ corresponds to the number of classes $\nbClasses$. Anyway, for high-dimensional data, \ie $\traceLength$ high, it can be attended even when performing classical PCA. Thus, in such a common case, the $\traceLength\times\traceLength$ matrix $\covmat$ is far from being a full-rank matrix, since $\mathrm{rank}(\covmat)\leq \nbTraces\ll \traceLength$. That is why we expect to find a most $\nbTraces$ eigenvectors; often columns of $\measuresMatrix$ are linearly dependent, because for example they are forced to have zero mean, so actually the rank of $\covmat$ is strictly less than $\nbTraces$ and we expect to obtain at most $\nbTraces-1$ eigenvectors.
+Performing PCA (and LDA, as explained later) always implies to compute the eigenvector of some symmetric matrix $\covmat$, obtained by the multiplication of a constant with a matrix and the transposed same matrix, \eg $\covmat = \frac{1}{\nbTraces}\measuresMatrix\measuresMatrix^\intercal$ . Let $\measuresMatrix$ have dimension $\traceLength\times\nbTraces$, and suppose $\nbTraces\ll \traceLength$. This condition is almost always satisfied when performing class-oriented PCA, because in such a case $\nbTraces$ corresponds to the number of classes $\nbClasses$, and $\traceLength$ is the traces' size. Anyway, for high-dimensional data, \ie $\traceLength$ high, it can be satisfied even when performing classical PCA. Thus, in such a common case, the $\traceLength\times\traceLength$ matrix $\covmat$ is far from being a full-rank matrix, since $\mathrm{rank}(\covmat)\leq \nbTraces\ll \traceLength$. For this reason, we expect to find at most $\nbTraces$ eigenvectors; often columns of $\measuresMatrix$ are linearly dependent, because for example they are forced to have zero mean, so actually the rank of $\covmat$ is strictly less than $\nbTraces$ and we expect to obtain at most $\nbTraces-1$ eigenvectors.
 
-A practical problem in case of high-dimensional data, is represented by the computation and the storage of the $\traceLength\times\traceLength$ matrix $\covmat$. This problem can be bypassed exploiting the following lemma coming from linear algebra, as proposed by Archambeau \etal \cite{TAprincipal}:
+A practical problem in case of high-dimensional data, is represented by the computation and the storage of the $\traceLength\times\traceLength$ matrix $\covmat$. This problem can be bypassed by exploiting the following lemma coming from linear algebra, as proposed by Archambeau \etal \cite{TAprincipal}:
 \begin{lemma}
-For any $\traceLength\times\nbTraces$ matrix $\measuresMatrix$, mapping $\vLeakVec\mapsto \measuresMatrix\vLeakVec$ is a one-to-one mapping that maps eigenvectors of $\measuresMatrix^\intercal\measuresMatrix$ ($\nbTraces\times\nbTraces$) onto those of $\measuresMatrix\measuresMatrix^\intercal$ ($\traceLength\times\traceLength$).
+For any $\traceLength\times\nbTraces$ matrix $\measuresMatrix$, the function $\vLeakVec\mapsto \measuresMatrix\vLeakVec$ is a one-to-one mapping that maps eigenvectors of $\measuresMatrix^\intercal\measuresMatrix$ ($\nbTraces\times\nbTraces$) onto those of $\measuresMatrix\measuresMatrix^\intercal$ ($\traceLength\times\traceLength$).
 \end{lemma}
-This lemma allows to compute and store the smaller $\nbTraces\times\nbTraces$ matrix $\tilde{\covmat} = \frac{1}{\nbTraces}\measuresMatrix^\intercal\measuresMatrix$, compute its ($\nbTraces\times 1$)-sized eigenvectors $\BBeta_i$ and the relative eigenvalues $\lambda_i$, and then convert them into eigenvectors of $\covmat$, given by $\AAlpha_i =\measuresMatrix \BBeta_i$. Observing that by definition $\tilde{\covmat}\BBeta_i =\frac{1}{\nbTraces}\measuresMatrix^\intercal\measuresMatrix\BBeta_i =  \lambda_i\BBeta_i$ the lemma is easy to verify: 
+This lemma allows to compute and store the smaller $\nbTraces\times\nbTraces$ matrix $\tilde{\covmat} = \frac{1}{\nbTraces}\measuresMatrix^\intercal\measuresMatrix$, to compute its ($\nbTraces\times 1$)-sized eigenvectors $\BBeta_i$ and the relative eigenvalues $\lambda_i$, and then to convert them into eigenvectors of $\covmat$, given by $\AAlpha_i =\measuresMatrix \BBeta_i$. Observing that by definition $\tilde{\covmat}\BBeta_i =\frac{1}{\nbTraces}\measuresMatrix^\intercal\measuresMatrix\BBeta_i =  \lambda_i\BBeta_i$ the lemma is easy to verify: 
 \begin{equation}
 \covmat\AAlpha_i = \frac{1}{\nbTraces}\measuresMatrix\measuresMatrix^\intercal \measuresMatrix \BBeta_i = \lambda_i\measuresMatrix\BBeta_i = \lambda_i\AAlpha_i \mbox{ .}
 \end{equation}
-It is not guaranteed that eigenvectors $\AAlpha_i$ obtained in this way have norm equal to 1. This is why a normalization step should follow it we aim to obtain an orthonormal set of eigenvectors.
+However, it is not guaranteed that eigenvectors $\AAlpha_i$ obtained in this way have norm equal to 1. This is why a normalization step usually follows.
 
 
 
 \subsection{The Choice of the Principal Components}\label{sec:ELV}
 The introduction of the PCA method in SCA context (either in its classical or class-oriented version)  has raised some non-trivial questions: \textit{how many} principal components and \textit{which ones} are sufficient/necessary to reduce the trace size (and thus the attack processing complexity) without losing important discriminative information?\\
 
-Until 2015, an answer to the questions above was given in \cite{choudary2014efficient}, linked to the concept of {\em explained variance} (or {\em explained global variance}, EGV for short) of a PC $\AAlpha_i$:
+Until 2015, the sole attempt to give an answer to the questions above was made in \cite{choudary2014efficient}, linked to the concept of {\em explained variance} (or {\em explained global variance}, EGV for short) of a PC $\AAlpha_i^\intercal$:
 \begin{equation}\label{eq:EGV}
-\mathrm{EGV}(\AAlpha_i) =  \frac{\lambda_i}{\sum_{k=1}^r\lambda_k} \mbox{ ,}
+\mathrm{EGV}(\AAlpha_i^\intercal) =  \frac{\lambda_i}{\sum_{k=1}^r\lambda_k} \mbox{ ,}
 \end{equation}
-where $r$ is the rank of the covariance matrix $\covmat$, and $\lambda_j$ is the eigenvalue associated to the $j$-th PC $\AAlpha_j$. $\mathrm{EGV}(\AAlpha_i)$ is the variance of the data projected over the $i$-th PC (which equals $\lambda_i$) divided by the total variance of the original data (given by the trace of the covariance matrix $\covmat$, \ie by the sum of all its non-zero eigenvalues). By definition of EGV, the sum of all the EGV values is equal to $1$; for this reason this quantity is often multiplied by $100$ and expressed as percentage.
+where $r$ is the rank of the covariance matrix $\covmat$, and $\lambda_j$ is the eigenvalue associated to the $j$-th PC $\AAlpha_j^\intercal$. $\mathrm{EGV}(\AAlpha_i^\intercal)$ is the variance of the data projected over the $i$-th PC (which equals $\lambda_i$) divided by the total variance of the original data (given by the trace of the covariance matrix $\covmat$, \ie by the sum of all its non-zero eigenvalues). By definition of EGV, the sum of all the EGV values is equal to $1$; for this reason this quantity is often multiplied by $100$ and expressed as percentage.
 Exploiting the EGV to choose among the PCs consists in fixing a wished {\em cumulative explained variance} $\beta$ and in keeping $\newTraceLength$ different PCs, where $\newTraceLength$ is the minimum integer such that
 \begin{equation}
-\mbox{EGV}(\AAlpha_1) +\mbox{EGV}(\AAlpha_2) + \dots +\mbox{EGV}(\AAlpha_\newTraceLength) \geq \beta \mbox{ .}
+\mbox{EGV}(\AAlpha_1^\intercal) +\mbox{EGV}(\AAlpha_2^\intercal) + \dots +\mbox{EGV}(\AAlpha^\intercal_\newTraceLength) \geq \beta \mbox{ .}
 \end{equation}
 However, if the attacker has a constraint for the reduced dimension $\newTraceLength$, the EGV notion simply suggests to keep the first $\newTraceLength$ components, taking for granted that the optimal way to chose PCs is in their natural order. This assumption is not always confirmed in SCA context: in some works, researchers have already remarked that the first components sometimes contain more noise than information \cite{Batina2012,specht} and it is worth discarding them. For the sake of providing a first example of this behaviour on publicly accessible traces, we applied a class-oriented PCA on 3000 traces from the DPA contest v4 \cite{DPAcontest}; we focused over a small 1000-dimensional window in which, in complete knowledge about masks and other countermeasures, information about the first Sbox processing leaks (during the first round). In Fig.~\ref{fig:DPAcontest} the first and the sixth PCs are plotted. It may be noticed that the first component indicates that one can attend a high variance by exploiting the regularity of the traces, given by the clock signal, while the sixth one has high coefficients localised in a small time interval, very likely to signalize the instants in which the target sensitive variable leaks.
 
@@ -163,11 +166,11 @@ The leaking side-channel information is localised in few points of the acquired 
 Such an assumption \ref{assum:local} is reasonable in SCA contexts where the goal of the security developers is to minimize the number of leaking points.
 Under this assumption, the authors of \cite{SCAclassProbl} use for side-channel attack purposes the {\em Inverse Participation Ratio} (IPR), a measure widely exploited in Quantum Mechanics domain (see for example \cite{guhr1998random}). They propose to use such a score to evaluate the eigenvectors {\em localization}. It is defined as follows:
 \begin{equation}
-\mathrm{IPR}(\AAlpha_i) = \sum_{j=1}^\traceLength \AAlpha_i[j]^4 \mbox{ .}
+\mathrm{IPR}(\AAlpha_i^\intercal) = \sum_{j=1}^\traceLength \AAlpha_i^\intercal[j]^4 \mbox{ .}
 \end{equation}
 The authors of \cite{SCAclassProbl} suggest to collect the PCs in decreasing order with respect to the IPR score.\\
 
-The selection methods provided by the evaluation of the EGV and of the IPR are somehow complementary: the former is based only on the eigenvalues associated to the PCs and does not consider the form of the PCs themselves; the latter completely discards the information given by the eigenvalues of the PCs, considering only the distribution of their coefficients. In the next section we describe a new method, part of the contributions published in \cite{cagli2015enhancing}, that builds a bridge between the EGV and the IPR approaches. As we will argue, our method, based on the so-called {\em explained local variance}, does not only lead to the construction of a new selection criterion, but also permits  to modify the PCs, choosing individually the coefficients to keep and those to discard. 
+The selection methods provided by the evaluation of the EGV and of the IPR are somehow complementary: the former one is based only on the eigenvalues associated to the PCs and does not consider the form of the PCs themselves; the latter completely discards the information given by the eigenvalues of the PCs, considering only the distribution of their coefficients. In the next section we describe a new method, part of the contributions published in \cite{Cagli2016}, that builds a bridge between the EGV and the IPR approaches. As we will argue, our method, based on the so-called {\em explained local variance}, does not only lead to the construction of a new selection criterion, but also permits  to modify the PCs, choosing individually the coefficients to keep and those to discard. 
 
 \subsubsection{Explained Local Variance Selection Method}\label{sec:ELVmethod}
 The method we develop in this section is based on a compromise between the variance provided by each PC (more precisely its EGV) and the number of time samples necessary to achieve a consistent part of such a variance. To this purpose we  introduce the concept of {\em Explained Local Variance} (ELV).
@@ -177,19 +180,19 @@ The method we develop in this section is based on a compromise between the varia
 \caption[Cumulative ELV trend of principal components.]{Cumulative ELV trend of principal components. On the right a zoom of the plot on the left. Data acquisition described in Sec.~\ref{sec:experiments}.}\label{fig:ELVcumulative}
 \end{figure}
 %
-Let us start by giving some intuition behind our new concept. Thinking to the observations ${\vLeakVec}^\intercal$, or to the class-averages ${\mmmX}^\intercal$ in class-oriented PCA case, as realizations of a random variable $\vaLeakVec^\intercal$, we have that $\lambda_i$ is an estimator for the variance of the random variable $\vaLeakVec^\intercal\cdot\AAlpha_i$. Developing, we obtain
+Let us start by giving some intuition behind our new concept. Thinking to the observations ${\vLeakVec}^\intercal$, or to the class-averages ${\mmmX}^\intercal$ in class-oriented PCA case, as realizations of a random variable $\vaLeakVec^\intercal$, we have that $\lambda_i$ is an estimator for the variance of the random variable $\vaLeakVec^\intercal\AAlpha_i$. Developing, we obtain
 \begin{align}\label{eq:ELV}
 \lambda_i =& \hat{\var}(\sum_{j=1}^\traceLength \vaLeakVec^\intercal[j]\AAlpha_i[j]) = \sum_{j=1}^\traceLength\sum_{k=1}^\traceLength \hat{\cov}(\vaLeakVec^\intercal[j]\AAlpha_i[j], \vaLeakVec^\intercal[k]\AAlpha_i[k])=\\
-=& \sum_{j=1}^\traceLength \AAlpha_i[j]\sum_{k=1}^\traceLength\AAlpha_i[k]\hat{\cov}(\vaLeakVec^\intercal[j], \vaLeakVec^\intercal[k])= \sum_{j=1}^\traceLength \AAlpha_i[j] (\covmat_{j}^\intercal \cdot \AAlpha_i)=  \\
+=& \sum_{j=1}^\traceLength \AAlpha_i[j]\sum_{k=1}^\traceLength\AAlpha_i[k]\hat{\cov}(\vaLeakVec^\intercal[j], \vaLeakVec^\intercal[k])= \sum_{j=1}^\traceLength \AAlpha_i[j] (\covmat_{j}^\intercal \AAlpha_i)=  \\
 =& \sum_{j=1}^\traceLength \AAlpha_i[j] \lambda_i\AAlpha_i[j]= \sum_{j=1}^\traceLength  \lambda_i \AAlpha_i[j]^2 \label{eq:toJustify}
 \end{align}
 where $\covmat_{j}^\intercal$ denotes the $j$-th row of $\covmat$ and \eqref{eq:toJustify} is justified by the fact that $\AAlpha_i$ is an eigenvector of $\covmat$, with $\lambda_i$ its corresponding eigenvalue. The result of this computation is quite obvious, since $\parallel \AAlpha_i\parallel=1$, but it evidences the contribution of each time sample in the information held by the PC. This makes us introduce the following definition:
 \begin{definition}
 
 
-The {\em Explained Local Variance} of a PC $\AAlpha_i$ in a sample $j$, is defined by
+The {\em Explained Local Variance} of a PC $\AAlpha_i^\intercal$ in a sample $j$, is defined by
 \begin{equation}
-\mathrm{ELV}(\AAlpha_i,j) = \frac{\lambda_i \AAlpha_i[j]^2}{\sum_{k=1}^r\lambda_k} = \mathrm{EGV}(\AAlpha_i) \AAlpha_i[j]^2  \mbox{ .}
+\mathrm{ELV}(\AAlpha_i^\intercal,j) = \frac{\lambda_i \AAlpha_i^\intercal[j]^2}{\sum_{k=1}^r\lambda_k} = \mathrm{EGV}(\AAlpha_i^\intercal) \AAlpha_i^\intercal[j]^2  \mbox{ .}
 \end{equation}
 \end{definition}
 \begin{figure}
@@ -201,8 +204,8 @@ The {\em Explained Local Variance} of a PC $\AAlpha_i$ in a sample $j$, is defin
 \includegraphics[width=0.31\textwidth]{../Figures/CARDIS2015/PC6.pdf} 
 \caption[The first six PCs. Acquisition campaign on an 8-bit AVR Atmega328P.]{The first six PCs. Acquisition campaign on an 8-bit AVR Atmega328P (see Sec.~\ref{sec:experiments}).}\label{fig:6components}
 \end{figure}
-Let $\mathcal{J}=\{j^i_1, j^i_2, \dots, j^i_{\traceLength}\}\subset\{1,2,\dots,\traceLength\}$ be a set of indexes sorted such that $\mathrm{ELV}(\AAlpha_i,j^i_1)\geq \mathrm{ELV}(\AAlpha_i,j^i_2)\geq \dots \geq \mathrm{ELV}(\AAlpha_i,j^i_\traceLength)$.
-It may be observed that the sum over all the $\mathrm{ELV}(\AAlpha_i,j)$, for $j\in[1,\dots,\traceLength],$   equals $\mathrm{EGV}(\AAlpha_i)$. If we operate such a sum in a cumulative way following the order provided by the sorted set $\mathcal{J}$, we obtain a complete description of the trend followed by the component $\AAlpha_i$ to achieve its EGV. As we can see in Fig.~\ref{fig:ELVcumulative}, where such cumulative ELVs are represented, the first 3 components are much slower in achieving their final EGV, while the $4^\text{th}$, the $5^\text{th}$ and the $6^\text{th}$ achieve a large part of their final EGVs very quickly ({\em i.e.} by adding the ELV contributions of much less time samples). For instance, for $i=4$, the sum of the $\mathrm{ELV}(\AAlpha_4, j^4_k)$, with $k\in[1,\dots,30]$, almost equals $\mathrm{EGV}(\AAlpha_4)$, whereas the same sum for $i=1$ only achieves about the 15\% of $\mathrm{EGV}(\AAlpha_1)$. Actually, the EGV of the $4^\text{th}$, the $5^\text{th}$ and the $6^\text{th}$ component only essentially depends on a very few time samples. This observation, combined with Assumption \ref{assum:local}, suggests that they are more suitable for SCA than the three first ones. To validate this statement, it suffices to look at the form of such components (Fig.~\ref{fig:6components}): the leading ones are strongly influenced by the clock, while the latest ones are well localised over the leaking points.\\
+Let $\mathcal{J}=\{j^i_1, j^i_2, \dots, j^i_{\traceLength}\}\subset\{1,2,\dots,\traceLength\}$ be a set of indexes sorted such that $\mathrm{ELV}(\AAlpha^\intercal_i,j^i_1)\geq \mathrm{ELV}(\AAlpha^\intercal_i,j^i_2)\geq \dots \geq \mathrm{ELV}(\AAlpha^\intercal_i,j^i_\traceLength)$.
+It may be observed that the sum over all the $\mathrm{ELV}(\AAlpha^\intercal_i,j)$, for $j\in[1,\dots,\traceLength],$   equals $\mathrm{EGV}(\AAlpha^\intercal_i)$. If we operate such a sum in a cumulative way following the order provided by the sorted set $\mathcal{J}$, we obtain a complete description of the trend followed by the component $\AAlpha^\intercal_i$ to achieve its EGV. As we can see in Fig.~\ref{fig:ELVcumulative}, where such cumulative ELVs are represented, the first 3 components are much slower in achieving their final EGV, while the $4^\text{th}$, the $5^\text{th}$ and the $6^\text{th}$ achieve a large part of their final EGVs very quickly ({\em i.e.} by adding the ELV contributions of much less time samples). For instance, for $i=4$, the sum of the $\mathrm{ELV}(\AAlpha^\intercal_4, j^4_k)$, with $k\in[1,\dots,30]$, almost equals $\mathrm{EGV}(\AAlpha^\intercal_4)$, whereas the same sum for $i=1$ only achieves about the 15\% of $\mathrm{EGV}(\AAlpha^\intercal_1)$. Actually, the EGV of the $4^\text{th}$, the $5^\text{th}$ and the $6^\text{th}$ component only essentially depends on a very few time samples. This observation, combined with Assumption \ref{assum:local}, suggests that they are more suitable for SCA than the three first ones. To validate this statement, it suffices to look at the form of such components (Fig.~\ref{fig:6components}): the leading ones are strongly influenced by the clock, while the latest ones are well localised over the leaking points.\\
 
 Operating a selection of components {\em via} ELV, in analogy with the EGV, requires to fix the reduced space dimension $\newTraceLength$, or a threshold $\beta$ for the cumulative ELV. In the first case, the maximal ELVs of each PC are compared, and the $\newTraceLength$ components achieving the highest values of such ELVs are chosen. In the second case, all pairs (PC, time sample) are sorted in decreasing order with respect to their ELV, and summed until the threshold $\beta$ is achieved. Then only PCs contributing in this sum are selected. \\
 
@@ -244,7 +247,7 @@ Let $\covmat$ be the the global covariance matrix of data, also called {\em tota
 \end{equation}
 \end{remark}
 
-It can be shown that the vector $\AAlpha_1$ which maximizes \eqref{eq:LDA} must satisfy $\SB\AAlpha_1 = \lambda \SW \AAlpha_1$, for a constant $\lambda$, \textit{i.e.} has to be an eigenvector of $\SW^{-1} \SB$. Moreover, for any eigenvector $\AAlpha$ of $\SW^{-1}\SB$, with associated eigenvalue $\lambda$, the Rayleigh quotient equals such a $\lambda$:
+It can be shown that the vector $\AAlpha_1$ which maximizes \eqref{eq:LDA} must satisfy $\SB\AAlpha_1 = \lambda \SW \AAlpha^\intercal_1$, for a constant $\lambda$, \textit{i.e.} has to be an eigenvector of $\SW^{-1} \SB$. Moreover, for any eigenvector $\AAlpha$ of $\SW^{-1}\SB$, with associated eigenvalue $\lambda$, the Rayleigh quotient equals such a $\lambda$:
 \begin{equation}\label{eq:lambdas}
 \frac{\AAlpha^\intercal \SB \AAlpha}{\AAlpha^\intercal \SW \AAlpha} = \lambda \mbox{ .}
 \end{equation}
@@ -307,7 +310,7 @@ For scenarios in which $\nbProfilingTraces$ is fixed, the value of $\nbProfiling
 
 
 
-\subsubsection{The testing adversary.}  
+\subsection{The testing adversary.}  
 Our testing adversary attacks an 8-bit AVR microprocessor Atmega328P and acquires power-consumption traces via the ChipWhisperer platform \cite{o2014chipwhisperer}.\footnote{This choice has been done to allow for reproducibility of the experiments.} The target device stores a secret 128-bit key and performs the first steps of an AES: the loading of 16 bytes of the plaintext, the AddRoundKey step and the AES Sbox. It has been programmed twice: two different keys are stored in the device memory during the acquisition of the profiling and of the attack traces, to simulate the situation of two identical devices storing a different secret. The size $\traceLength$ of the traces equals $3996$. The sensitive target  variable is the output of the first Sbox processing, but, since the key is fixed also during the profiling phase, and both Xor and Sbox operations are bijective, we expect to detect three interesting regions (as those high-lighted by PCs 4, 5 and 6, in Fig.~\ref{fig:6components}): the reading of the first byte of the plaintext, the first AddRoundKey and the first Sbox. We consider an {\em identity classification} leaking function (i.e. we make minimal assumption on the leakage function, see Sec.~\ref{sec:sensVar}), which implies that the 256 possible values of the Sbox output yields to 256 classes. For each class we assume that the adversary acquires the same number $\nbTraces$ of traces, \textit{i.e.} $\nbProfilingTraces =\nbTraces\times 256$. After the application of the extractor $\extract$, the trace size is reduced to $\newTraceLength$. Then the attacker performs a Template Attack (see Sec.~\ref{sec:TA}), using $\newTraceLength$-variate Gaussian templates.
 
 
@@ -318,12 +321,12 @@ Our testing adversary attacks an 8-bit AVR microprocessor Atmega328P and acquire
 \includegraphics[width=0.5\textwidth]{../Figures/CARDIS2015//Criterion1Good.pdf}}
 \caption[Guessing Entropy as function of the number of attack traces]{Guessing Entropy as function of the number of attack traces for different extraction methods. All Guessing Entropies are estimated as the average rank of the right key over 100 independent experiments.}\label{fig:scenario1}
 \end{figure}
-\subsubsection{Scenario 1.}
+\subsection{Scenario 1.}
 To analyse the dependence between the extraction methods presented in Sections~\ref{sec:PCA} and \ref{sec:LDA} and the number of attack traces $\nbAttackTraces$ needed to achieve a given GE (Guessing Entropy, see Sec.~\ref{sec:metrics}), we fixed the other parameters as follows: $\nbTraces=50$ ($\nbProfilingTraces=50\times 256$), $\newTraceLength = 3$ and $\numPoI = 3996$ (all points are allowed to participate in the building of the PCs and of the LDCs). The experimental results, depicted in Fig.~\ref{fig:scenario1}\subref{fig:1.1}-\subref{fig:1.2}, show that the PCA standard method has very bad performances in SCA, while the LDA outperforms the others. Concerning the class-oriented PCA, we observe that its performance is close to that of LDA when combined with the selection methods ELV (which performs best) or IPR, while it is similar to the one of classic PCA when associated with the EGV selection.
 
 
 
-\subsubsection{Scenario 2.}
+\subsection{Scenario 2.}
 
 Now we test the behaviour of the extraction methods as function of the number $N_z$ of available profiling traces per class. The number of components $\newTraceLength$ is still fixed to 3, $\numPoI=3996$ again and the number of attack traces is $\nbAttackTraces=100$. This scenario has to be divided into two parts: if $N_z\leq 15$, then $\nbProfilingTraces<\traceLength$ and the SSS problem occurs. Thus, in this case we test the four extensions of LDA presented in Sec.~\ref{sec:SSS}, associated to either the standard selection, to which we abusively refer as EGV,\footnote{It consists in keeping the $\newTraceLength$ first LDCs (the $C$ last for the Direct LDA)}
 or to the IPR selection.  We compare them to the class-oriented PCA associated to EGV, IPR or ELV. The ELV selection is not performed for the techniques extending LDA, since for some of them the projecting LDCs are not associated to some eigenvalues in a meaningful way. On the contrary, if $\nbTraces \geq 16$ there is no need to approximate the LDA technique, so the classical one is performed. Results for this scenario are shown in Fig.~\ref{fig:scenario2}. It may be noticed that the combinations class-oriented PCA + ELV/IPR select exactly the same components, for our data, see Fig.~\ref{fig:pcaclass} and do not suffer from the lack of profiling traces. They are slightly outperformed by the $\SW$ Null Space method associated with the EGV, see Fig.\ref{fig:swnullspace}. The Direct LDA (Fig.~\ref{fig:direct}) method also provides a good alternative, while the other tested methods do not show a stable behaviour. The results in absence of the SSS problem (Fig.\ref{fig:notSSS}) confirm that the standard PCA is not adapted to SCA, even when provided with more profiling traces. It also shows that among class-oriented PCA and LDA, the class-oriented PCA converges faster.
@@ -347,7 +350,7 @@ or to the IPR selection.  We compare them to the class-oriented PCA associated t
 \end{figure}
 
 
-\subsubsection{Scenario 3.}
+\subsection{Scenario 3.}
 Let  $\newTraceLength$ be now variable and let the other parameters be fixed as follows: $\nbAttackTraces = 100, N_z=200, \numPoI = 3996$. Looking at Fig.~\ref{fig:3}, we might observe that the standard PCA might actually well perform in SCA context if provided with a larger number of kept components; on the contrary, a little number of components suffices to the LDA. Finally, keeping more of the necessary components does not worsen the efficiency of the attack, which allows the attacker to choose $\newTraceLength$ as the maximum value supported by his computational means. 
 
 \begin{figure}
@@ -360,7 +363,7 @@ Let  $\newTraceLength$ be now variable and let the other parameters be fixed as 
 In our experiments the ELV selection method only slightly outperforms the IPR. Nevertheless, since it relies on more sound and more general observations, {\em i.e.} the maximization of explained variance concentrated into few points, it is likely to be more robust and less case-specific. For example, in Fig.~\ref{fig:notSSS} it can be remarked that while the class-oriented PCA + ELV line keeps constant on the value 1 of guessing entropy, the class-oriented PCA + IPR is sometimes higher than 1.
 \end{remark}
 
-\subsubsection{Scenario 4.}
+\subsection{Scenario 4.}
 
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{../Figures/CARDIS2015/Criterion4.pdf}
@@ -385,7 +388,7 @@ A second part of the proposed study analysed experimentally some alternatives to
 \hline
 &&\multicolumn{4}{|>{\columncolor[gray]{0.7}}c|}{Parameter to minimize}\\
 \hline
-\multicolumn{1}{|>{\columncolor[gray]{0.7}}c|}{Method}&\multicolumn{1}{|>{\columncolor[gray]{0.7}}c|}{Selection}& $N$ &  $N'$ (SSS) &  $N'$ ($\neg$SSS) &  $C$ \\
+\multicolumn{1}{|>{\columncolor[gray]{0.7}}c|}{Method}&\multicolumn{1}{|>{\columncolor[gray]{0.7}}c|}{Selection}& $\nbAttackTraces$ &  $\nbProfilingTraces$ (SSS) &  $\nbProfilingTraces'$ ($\neg$SSS) &  $\newTraceLength$ \\
 \hline
 PCA standard & EGV & {\bf -} &  &{\bf -} &{\bf -} \\
 \hline
@@ -419,7 +422,7 @@ LDA & IPR & {\bf +} & &{\bf +} & $\bigstar$ \\
 \multicolumn{2}{|>{\columncolor[gray]{0.8}}c|}{$\ST$ Spanned Space}  & &\multicolumn{1}{|>{\columncolor[gray]{0.9}}c|}{{\bf -}} & & \\
 \hline
 \end{tabular}
-\caption[Linear Methods. Overview of extractors performances in tested situations.]{Overview of extractors performances in tested situations. Depending on the adversary purpose, given by the parameter to minimize, a $\bigstar$ denotes the best method, a ${\bf +}$ denotes a method with performances close to those of the best one and a ${\bf -}$ is for methods that show lower performances. Techniques introduced in \cite{cagli2015enhancing} are highlighted by a grey background.}\label{table:results}
+\caption[Linear Methods. Overview of extractors performances in tested situations.]{Overview of extractors performances in tested situations. Depending on the adversary purpose, given by the parameter to minimize, a $\bigstar$ denotes the best method, a ${\bf +}$ denotes a method with performances close to those of the best one and a ${\bf -}$ is for methods that show lower performances. Techniques introduced in \cite{Cagli2016} are highlighted by a grey background.}\label{table:results}
 \end{table}
 
 %----------------------------------------------------------------------------------------
