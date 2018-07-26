@@ -173,14 +173,29 @@ The Convolutional Neural Networks (CNNs) complete the classical  MLP model with 
 
 
 \paragraph*{Convolutional (CONV) layers} 
-Convolutional Layers (CONV) are linear layers that share weights across space. A representation is given in Fig.~\ref{fig:CNN_layers}-\subref{fig:conv_layer}; since CNNs have been introduced for images \cite{lecun1995convolutional}, such representation differs from the most common one in which layer interfaces are arranged in a 3D-fashion (height, weight and depth). In Fig.~\ref{fig:conv_layer} we show a 2D-CNN (length and depth) adapted to 1D-data as side-channel traces are. To apply a CONV to an input,
-$n_{\text{filter}}$ small column vectors, called \emph{convolutional filters}, of
-size $W$ (aka \emph{kernel size}) are slid over 
-the input by some amount of units, called \emph{stride}. 
-The column vectors form a
-window, called \emph{patch} in the Machine Learning language, which defines a
-linear transformation of $W$ consecutive points of the data into new
-vectors of size $V$, arranged in such a way that $V$ is the depth of the layer output. The length dimension of the output of a convolutional layer depends on several parameters: the input length, the stride, and the \emph{padding}. The two most common ways to pad the input are called \emph{same padding} and \emph{valid padding}: with the \emph{same padding} the input is padded with some zeros at the beginning and at the end, in such a way that, for a stride equal to 1, the output has the same
+% OLD VERSION WITH VECTORS
+%Convolutional Layers (CONV) are linear layers that share weights across space. A representation is given in Fig.~\ref{fig:CNN_layers}-\subref{fig:conv_layer}; since CNNs have been introduced for images \cite{lecun1995convolutional}, such representation differs from the most common one in which layer interfaces are arranged in a 3D-fashion (height, weight and depth). In Fig.~\ref{fig:conv_layer} we show a 2D-CNN (length and depth) adapted to 1D-data as side-channel traces are. To apply a CONV to an input,
+%$n_{\text{filter}}$ small column vectors, called \emph{convolutional filters}, of
+%size $W$ (aka \emph{kernel size}) are slid over 
+%the input by some amount of units, called \emph{stride}. 
+%The column vectors form a
+%window, called \emph{patch} in the Machine Learning language, which defines a
+%linear transformation of $W$ consecutive points of the data into new
+%vectors of size $V$, arranged in such a way that $V$ is the depth of the layer output. The length dimension of the output of a convolutional layer depends on several parameters: the input length, the stride, and the \emph{padding}. The two most common ways to pad the input are called \emph{same padding} and \emph{valid padding}: with the \emph{same padding} the input is padded with some zeros at the beginning and at the end, in such a way that, for a stride equal to 1, the output has the same
+%length than the input, for a stride equal to 2 the output length is exactly halved, for a stride equal to 3 it is exactly divided by 3, etc.  The \emph{valid padding} consists on the contrary to avoid any kind of padding. Only proper data points are used as input, and output length is adjusted: typically, for a stride equal to 1, the output length equals $\traceLength - W +1$, where $\traceLength$ is the input length. The
+%coordinates of the window (viewed as a $W\times n_{\text{filters}}$ matrix) are among the trainable weights of the model. They slid over the input, so they are multiplied by different parts of the datum, but the they are constrained to keep unchanged while sliding, \ie to behave in the same way no matter the position of the input entries on the global input datum. This constraint aims to allow the CONV layer to
+%learn shift-invariant features, \ie characteristics of the datum for which the position is not discriminant. Shift-invariant feature are largely present in image recognition context, which drove the development of CNNs. For examples the eyes, the nose and the mouth of a person in a picture, are discriminant features for the person no matter their position in the image. The ability at learning shift-invariant features makes CNNs robust to
+%geometrical deformations~\cite{lecun1995convolutional} or to temporal deformation when considering side-channel signals. For this reason they are adequate to counteract misalignment-based countermeasures.
+%%
+
+
+Convolutional Layers (CONV) are linear layers that share weights across space. A representation is given in Fig.~\ref{fig:conv_layer}; since CNNs have been introduced for images \cite{lecun1995convolutional}, such representation differs from the most common one in which layer interfaces are arranged in a 3D-fashion (height, weight and depth). In Fig.~\ref{fig:conv_layer} we show a 2D-CNN (length and depth) adapted to 1D-data as side-channel traces are. To apply a CONV to an input of size $\traceLength\times V$, where the initial depth $V$ is one, for 1D-data,
+$n_{\text{filter}}$ small matrices, called \emph{convolutional filters}, of
+size $W\times V$ (where $W$ is called \emph{kernel size}) are slid over 
+the length dimension of the input by some amount of units, called \emph{stride}. 
+The filters forms a window, called \emph{patch} in the Machine Learning language, which defines a
+linear transformation of $W\times V$ consecutive points of the data into new
+matrices of size $V^{\prime}$, arranged in such a way that $V^{\prime}$ is the depth of the layer output. The length dimension of the output of a convolutional layer depends on several parameters: the input length, the stride, and the \emph{padding}. The two most common ways to pad the input are called \emph{same padding} and \emph{valid padding}: with the \emph{same padding} the input is padded with some zeros at the beginning and at the end, in such a way that, for a stride equal to 1, the output has the same
 length than the input, for a stride equal to 2 the output length is exactly halved, for a stride equal to 3 it is exactly divided by 3, etc.  The \emph{valid padding} consists on the contrary to avoid any kind of padding. Only proper data points are used as input, and output length is adjusted: typically, for a stride equal to 1, the output length equals $\traceLength - W +1$, where $\traceLength$ is the input length. The
 coordinates of the window (viewed as a $W\times n_{\text{filters}}$ matrix) are among the trainable weights of the model. They slid over the input, so they are multiplied by different parts of the datum, but the they are constrained to keep unchanged while sliding, \ie to behave in the same way no matter the position of the input entries on the global input datum. This constraint aims to allow the CONV layer to
 learn shift-invariant features, \ie characteristics of the datum for which the position is not discriminant. Shift-invariant feature are largely present in image recognition context, which drove the development of CNNs. For examples the eyes, the nose and the mouth of a person in a picture, are discriminant features for the person no matter their position in the image. The ability at learning shift-invariant features makes CNNs robust to
@@ -189,15 +204,28 @@ geometrical deformations~\cite{lecun1995convolutional} or to temporal deformatio
 
 \paragraph*{Pooling (POOL) layers} 
 In the most typical example of convolutional layer, \ie a layer with stride equal to 1 and \emph{same padding}, the output size equals the input size multiplied by $n_{\text{filter}}$. If many of this kind of convolutional layers are stacked, it leads to a complexity exponential growing due to the increasing of data size through layers. To avoid such complexity explosion, the insertion of pooling (POOL) layers is recommended.  POOL layers 
-are non-linear layers that reduce the spatial size (see Fig. \ref{fig:CNN_layers}-\subref{fig:pool_layer}). As the CONV layers, they make a filter slide across the input. The filter is 1-dimensional, characterised by a length $W$, and usually the stride is chosen equal to its length; for example in Fig.\ref{fig:pool_layer} both the length and the stride equal 3, so that the selected segments of the input do not overlap. In contrast with convolutional layers, the pooling filter does not contain trainable weights. it only slides across the input to select a segment, then a pooling function is applied: the most common pooling functions are the \emph{max-pooling}, which outputs the maximum values within the segment, and the \emph{average-pooling}, which outputs the average of the coordinates of the segment. 
+are non-linear layers that reduce the spatial size (see Fig. \ref{fig:pool_layer}). As the CONV layers, they make a filter slide across the input. The filter is 1-dimensional, characterised by a length $W$, and usually the stride is chosen equal to its length; for example in Fig.\ref{fig:pool_layer} both the length and the stride equal 3, so that the selected segments of the input do not overlap. In contrast with convolutional layers, the pooling filter does not contain trainable weights. it only slides across the input to select a segment, then a pooling function is applied: the most common pooling functions are the \emph{max-pooling}, which outputs the maximum values within the segment, and the \emph{average-pooling}, which outputs the average of the coordinates of the segment. 
+
+%OLD
+%\begin{figure}[t]
+%\centering
+%\subfigure[]{\label{fig:conv_layer}
+%\includegraphics[width=.4\textwidth]{../Figures/CHES2017/conv_filt.pdf}}
+%\subfigure[]{\label{fig:pool_layer}
+%\includegraphics[width=.4\textwidth]{../Figures/CHES2017/max_pooling.pdf}}
+%\caption{\subref{fig:conv_layer} Convolutional filtering: $W=2$, $V=4$, $\mathrm{stride}=1$. \subref{fig:pool_layer} Max-pooling layer: $W = \mathrm{stride} = 3$.}\label{fig:CNN_layers}
+%\end{figure}
 
 \begin{figure}[t]
 \centering
-\subfigure[]{\label{fig:conv_layer}
-\includegraphics[width=.4\textwidth]{../Figures/CHES2017/conv_filt.pdf}}
-\subfigure[]{\label{fig:pool_layer}
-\includegraphics[width=.4\textwidth]{../Figures/CHES2017/max_pooling.pdf}}
-\caption{\subref{fig:conv_layer} Convolutional filtering: $W=2$, $V=4$, $\mathrm{stride}=1$. \subref{fig:pool_layer} Max-pooling layer: $W = \mathrm{stride} = 3$.}\label{fig:CNN_layers}
+\includegraphics[width=.4\textwidth]{../Figures/CHES2017/conv_filt.pdf}
+\caption{Convolutional filtering: $W=2$, $V^{\prime}=4$, $\mathrm{stride}=1$. }\label{fig:conv_layer}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=.4\textwidth]{../Figures/CHES2017/max_pooling.pdf}
+\caption{Max-pooling layer: $W = \mathrm{stride} = 3$. }\label{fig:pool_layer}
 \end{figure}
 
 \paragraph*{Discussion}
@@ -233,9 +261,9 @@ Instead of applying a proper regularization techniques, we choose to concentrate
 
 Data augmentation consists in artificially generating new training traces by deforming those previously acquired. The deformation is done by the application of transformations that preserve the  label information (\ie the value of the handled sensitive variable in our context). We choose two kinds of deformations, that we denote by \emph{Shifting} and \emph{Add-Remove}. 
 
-\paragraph*{Shifting Deformation ($\mathrm{SH}_{T^\star}$)} It simulates a random delay effect of maximal amplitude $T^\star$, by randomly selecting  a shifting window of the acquired trace, as shown in Fig. \ref{fig:DA}. Let $\traceLength$ denote the original size of the traces. We fix the size of the input layer of our CNN to $\traceLength^\prime = \traceLength - T^\star$. Then the technique $\mathrm{SH}_{T^\star}$  consists (1) in drawing a uniform random $t \in[0,T^\star]$, and (2) in selecting the $\traceLength^\prime$-sized window starting from the $t$-th point. For our study, we will compare the $\mathrm{SH}_T$ technique for different values $T \leq T^\star$, without changing the architecture of the CNN (in particular the input size $\traceLength^\prime$). Notably, $T \lneq T^\star$ implies that $T^\star-T$ time samples will never have the chance to be selected. As we suppose that the information is localized in the central part of the traces, we choose to center the shifting windows, discarding the heads and the tails of the traces (corresponding to the first and the last $\frac{T^\star-T}{2}$ points). 
+\paragraph*{Shifting Deformation ($\mathrm{SH}_{T^\star}$)} It simulates a random delay effect of maximal amplitude $T^\star$, by randomly selecting  a shifting window of the acquired trace, as shown in Fig. \ref{fig:SH}. Let $\traceLength$ denote the original size of the traces. We fix the size of the input layer of our CNN to $\traceLength^\prime = \traceLength - T^\star$. Then the technique $\mathrm{SH}_{T^\star}$  consists (1) in drawing a uniform random $t \in[0,T^\star]$, and (2) in selecting the $\traceLength^\prime$-sized window starting from the $t$-th point. For our study, we will compare the $\mathrm{SH}_T$ technique for different values $T \leq T^\star$, without changing the architecture of the CNN (in particular the input size $\traceLength^\prime$). Notably, $T \lneq T^\star$ implies that $T^\star-T$ time samples will never have the chance to be selected. As we suppose that the information is localized in the central part of the traces, we choose to center the shifting windows, discarding the heads and the tails of the traces (corresponding to the first and the last $\frac{T^\star-T}{2}$ points). 
 
-\paragraph*{Add-Remove Deformation ($\mathrm{AR}$)}  It simulates a clock jitter effect (Fig. \ref{fig:DA}). We will denote by $\mathrm{AR}_R$ the operation that consists in two steps:
+\paragraph*{Add-Remove Deformation ($\mathrm{AR}$)}  It simulates a clock jitter effect (Fig. \ref{fig:AR}). We will denote by $\mathrm{AR}_R$ the operation that consists in two steps:
 \begin{itemize}
 \item[(1)] in inserting $R$ time samples, whose positions are chosen uniformly at random and whose values are the arithmetic mean between the previous time sample and the following one,
 \item[(2)] in suppressing $R$ time samples, chosen uniformly at random.\\
@@ -243,15 +271,28 @@ Data augmentation consists in artificially generating new training traces by def
 
 The two deformations can be composed: we will denote by $\mathrm{SH}_T\mathrm{AR}_R$ the application of a $\mathrm{SH}_T$ followed by a $\mathrm{AR}_R$.
 
+%
+%\begin{figure}[t]
+%\includegraphics[width=.5\textwidth, height=0.13\textheight]{../Figures/CHES2017/Shifting_window.pdf}
+%\includegraphics[width=.5\textwidth, height=0.13\textheight]{../Figures/CHES2017/AR_example.pdf}
+%\caption{Left: Shifting technique for DA. Right: Add-Remove technique for DA (added points marked by red circles, removed points marked by black crosses).}\label{fig:DA}
+%\end{figure}
+
 
 \begin{figure}[t]
-\includegraphics[width=.5\textwidth, height=0.13\textheight]{../Figures/CHES2017/Shifting_window.pdf}
-\includegraphics[width=.5\textwidth, height=0.13\textheight]{../Figures/CHES2017/AR_example.pdf}
-\caption{Left: Shifting technique for DA. Right: Add-Remove technique for DA (added points marked by red circles, removed points marked by black crosses).}\label{fig:DA}
+\centering
+\includegraphics[width=.5\textwidth]{../Figures/CHES2017/Shifting_window.pdf}
+\caption{Shifting technique for DA.}\label{fig:SH}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=.5\textwidth]{../Figures/CHES2017/AR_example.pdf}
+\caption{Add-Remove technique for DA (added points marked by red circles, removed points marked by black crosses).}\label{fig:AR}
 \end{figure}
 
 \paragraph*{Discussion}
-The idea of applying trace augmentation in profiling side-channel context appeared independently from our work, in another publication in 2017 \cite{pu2017trace}. In this paper techniques proposed were.....XXXXXX. In real-case secure device evaluation contexts, the acquisition campaign may sometimes represent a bottleneck in terms of time. Further proposals and analyses of data augmentation techniques might be interesting tracks for future researches, if allowing to reduce such a time amount.
+The deformations we propose as Data Augmentation techniques are inspired by the way we modelise the countermeasures' effects. Actually, we propose to turn the misalignment problem into a virtue, enlarging the profiling trace set \via a random shift of the acquired traces and the AR distortion that together simulate a clock jitter effect. Paradoxically, instead of trying to realign the traces, we propose to further misalign them (a much easier task!). In real-case secure devices evaluation contexts, the acquisition campaign may sometimes represent a bottleneck in terms of time. Further proposals and analyses of  DA techniques, maybe inspired by other forms of noise present in side-channel acquisitions, might be interesting tracks for future researches. Actually, the idea of applying DA in profiling side-channel context appeared independently from our work, in another publication in 2017 \cite{pu2017trace}, under the name of \emph{Trace Augmentation}. In this paper, the augmentation is obtained with a shifting equivalent to our SH deformation, and it is applied as preliminary step for the profiling phase of a Gaussian TA. The authors' goal is to make Gaussian templates more robust to the discrepancy between profiling acquisitions and attack ones. Surprisingly, in the paper authors observe that this augmentation provides benefits to the attack routine both in case where some discrepancies are present, and in the ideal case. Data Augmentation seems thus to be a good practice independently of the presence or not of specific countermeasures, nor the exploitation or not of DL techniques.
 
 
 
@@ -263,15 +304,11 @@ The idea of applying trace augmentation in profiling side-channel context appear
 \caption{Left: one leakage protected by single uniform RDI. Right: two leaking operations protected by multiple uniform RDI.}\label{fig:CW_shift_traces}
 \end{figure}
 
-In this section we present a preliminary  experiment we have performed in order to validate the shift-invariance claimed by the CNN architecture, recalled in Sec.~\ref{sec:CNN}. In this experiment a single leaking operation was observed through the side-channel acquisitions, shifted in time by the insertion of a random number of dummy operations. We will refer to such a countermeasure as a kind of Random Delay Interrupt (RDI).  A CNN-based attack is run successfully, without effectuating any priorly realignment of the traces. We also performed a second experiment in which we targeted two leaking operations.\\
+In this section we present two preliminary  experiments, performed in order to validate the shift-invariance claimed by the CNN architecture, recalled in Sec.~\ref{sec:CNN}. In the first one, a single leaking operation was observed through the side-channel acquisitions, shifted in time by the insertion of a random number of dummy operations. We will refer to such a countermeasure as Random Delay Interrupt (RDI).  In the second one we targeted two leaking operations each delayed by RDI. We remark that this kind of countermeasure is nowadays considered defeated, \eg thanks to resynchronization by \emph{cross-correlation} \cite{nagashima2007dpa}. In this sense, the experiment we present in this section is not expected to be representative of real application cases. The complexity of the state-of-the-art resynchronization techniques strongly depends on the variability of the shift. When the latter variability is low, \ie when attacks are judged to be applicable, multiple random delays are recommended. It has even been proposed to adapt the probabilistic distributions of the random delays to achieve good compromises between the countermeasure efficiency and the chip performance overhead \cite{coron2009efficient,coron2010analysis}. Attacks have already been shown even against this multiple-RDI kind of countermeasures, \eg \cite{durvaux2012efficient}. The latter attack exploits some Gaussian templates to classify the leakage of each instruction; the classification scores are used to feed a Hidden Markov Model (HMM) that describes the complete chip execution, and the Viterbi algorithm is applied to find the most probable sequence of states for the HMM and to remove the random delays. We remark that this HMM-based attack exploits Gaussian templates to feed the HMM model, and the accuracy of such templates is affected by other misalignment reasons, \eg clock jitter. We believe that our  CNN approach proposal for operation classification, is a valuable alternative to  the Gaussian template one, and might even provide benefits to the HMM performances, by \eg improving the robustness of the attack in presence of both RDI and jitter-based countermeasures. This robustness w.r.t. of misalignment caused by the clock jitter will be analysed in Sec. \ref{sec:hard}.
 
-The goal of these preliminary performed experiences was to verify the shift-invariance property claimed by the CNN architecture. We achieved this objective by considering the case of a simple countermeasure, the uniform RDI, which injects shifts in side-channel traces. We remark that this kind of countermeasure is nowadays considered defeated, \eg thanks to resynchronization by \emph{cross-correlation} \cite{nagashima2007dpa}. In this sense, the experiment we present in this section is not expected to be representative of real application cases. The complexity of the state-of-the-art resynchronization techniques strongly depends on the variability of the shift. When the latter variability is low, \ie when attacks are judged to be applicable, multiple random delays are recommended. It has even been proposed to adapt the probabilistic distributions of the random delays to achieve good compromises between the countermeasure efficiency and the chip performance overhead \cite{coron2009efficient,coron2010analysis}. Attacks have already been shown even against this multiple-RDI kind of countermeasures, \eg \cite{durvaux2012efficient}. The latter attack exploits some Gaussian templates to classify the leakage of each instruction; the classification scores are used to feed a Hidden Markov Model (HMM) that describes the complete chip execution, and the Viterbi algorithm is applied to find the most probable sequence of states for the HMM and to remove the random delays. We remark that this HMM-based attack exploits Gaussian templates to feed the HMM model, and the accuracy of such templates is affected by other misalignment reasons, \eg clock jitter. We believe that our  CNN approach proposal for operation classification, is a valuable alternative to  the Gaussian template one, and might even provide benefits to the HMM performances, by \eg improving the robustness of the attack in presence of both RDI and jitter-based countermeasures. This robustness w.r.t. of misalignment caused by the clock jitter will be analysed in Sec. \ref{sec:hard}.
-
-\subsection{CNN-based Attack against Random Delays.}\label{sec:soft}
-For this experiment, we implemented, on an Atmega328P microprocessor, a uniform RDI \cite{tunstall2007efficient} to protect the leakage produced by a single target operation. Our RDI simply consists in a loop of  $r$ \emph{nop} instructions, with $r$  drawn uniformly in $[0,127]$.
-
-Some acquired traces are reported in the left side of Fig. \ref{fig:CW_shift_traces}, the target peak being highlighted with a red ellipse. They are composed of $3,996$ time samples, corresponding to an access to the AES-Sbox look-up table stored in NVM. For the training, we acquired only $1,000$ traces and 700 further traces were acquired as validation data. Our CNN has been trained to classify the traces according to the Hamming weight of the Sbox output; namely, our labels are the 9 values taken by $\sensRandVar = \HW(\Sbox(P\oplus \keyRandVar))$. This choice has been done to let each class contain more than only a few (i.e. about $1,000/256$) training traces.
-For Atmega328P devices, the Hamming weight is known to be particularly relevant to model the leakage occurring during register writing (see for example Chapters~\ref{ChapterLinear} and \ref{ChapterKDA} or \cite{BelaidCFGKP15}). Since $\sensRandVar$ is assumed to take 9 values and the position of the leakage depends on a random $r$ ranging over 128 values, it is clear that the $1,000$ training traces do not encompass the full $9 \times 128=1,152$ possible combinations $(z,r)\in [0,8]\times[0,127]$. We undersized the training set by purpose, in order to establish whether the CNN technique, equipped with DA, is able to catch the meaningful shift-invariant features without having been provided with all the possible observations.
+\subsection{One Leaking Operation}\label{sec:soft}
+For this experiment, we implemented, on an Atmega328P microprocessor, a uniform RDI \cite{tunstall2007efficient} to protect the leakage produced by a single target operation. Our RDI simply consists in a loop of  $r$ \emph{nop} instructions, with $r$  drawn uniformly in $[0,127]$. Some acquired traces are reported in the left side of Fig. \ref{fig:CW_shift_traces}, the target peak being highlighted with a red ellipse. They are composed of $3,996$ time samples, corresponding to an access to the AES-Sbox look-up table stored in NVM. For the training, we acquired only $1,000$ traces and 700 further traces were acquired as validation data. Our CNN has been trained to classify the traces according to the Hamming weight of the Sbox output; namely, our labels are the 9 values taken by $\sensRandVar = \HW(\Sbox(P\oplus \keyRandVar))$. This choice has been done to let each class contain more than only a few (i.e. about $1,000/256$) training traces.
+For Atmega328P devices, the Hamming weight is known to be particularly relevant to model the leakage occurring during register writing (see for example Chapters~\ref{ChapterLinear} and \ref{ChapterKernel} or \cite{BelaidCFGKP15}). Since $\sensRandVar$ is assumed to take 9 values and the position of the leakage depends on a random $r$ ranging over 128 values, it is clear that the $1,000$ training traces do not encompass the full $9 \times 128=1,152$ possible combinations $(z,r)\in [0,8]\times[0,127]$. We undersized the training set by purpose, in order to establish whether the CNN technique, equipped with DA, is able to catch the meaningful shift-invariant features without having been provided with all the possible observations.\\
 
 
 \begin{figure}[t]
@@ -293,7 +330,7 @@ To accelerate the training we introduced a \emph{Batch Normalization} layer \cit
 \begin{equation}
 \mathrm{tanh}(x) = \frac{e^x-e^{-x}}{e^x+e^{-x}} \mbox{ .}
 \end{equation}
-We trained our CNN by batches of size $32$.  In total the network contained $869,341$ trainable weights. The training and validation accuracies achieved after each epoch are depicted in Fig.\ref{fig:CW_shift_history} together with the confusion matrices that we obtained from the test set. Applying the early-stopping principle recalled in Sec.~\ref{sec:training},  we automatically stopped the training after $120$ epochs without decrement of the loss function evaluated over the validation set, and kept as final trained model the one that showed the minimal value for the loss function evaluation. Concerning the learning rate, i.e. the factor defining the size of the steps in the gradient descent optimization (see \cite{Goodfellow-et-al-2016}), we fixed the beginning one to $0.01$ and reduced it multiplying it by a factor of $\sqrt{0.1}$ after $5$ epochs without validation loss decrement.
+We trained our CNN by batches of size $32$.  In total the network contained $869,341$ trainable weights. The training and validation accuracies achieved after each epoch are depicted in Fig.\ref{fig:CW_shift_history} together with the confusion matrices that we obtained from the test set. Applying the early-stopping principle recalled in Sec.~\ref{sec:training},  we automatically stopped the training after $120$ epochs without decrement of the loss function evaluated over the validation set, and kept as final trained model the one that showed the minimal value for the loss function evaluation. Concerning the learning rate (see Sec.~\ref{sec:training}), we fixed the beginning one to $0.01$ and reduced it multiplying it by a factor of $\sqrt{0.1}$ after $5$ epochs without validation loss decrement.
 
 
 \begin{table}[t]
@@ -312,7 +349,7 @@ Table \ref{tab:res_CW_shift} summarizes the obtained results.  For each trained 
 
 These results confirm that our CNN model is able to characterize a wide range of points in a way that is robust to RDI. 
 
-\subsection{Two leaking operations.}
+\subsection{Two Leaking Operations}
 Here we study whether our CNN classifier suffers from the presence of multiple leaking operations with the same power consumption pattern. This situation occurs for instance any time the same operation is repeated several successive times over different pieces of data (\eg the SubByte operation for a software AES implementation is often performed by 16 successive look-up table access). To start our study we performed the same experiments as in Sec.~\ref{sec:soft} over a second traces set, where two look-up table accesses leak, each preceded by a random delay. Some examples of this second traces set are given in the right side of Fig.~\ref{fig:CW_shift_traces}, where the two leaking operations being highlighted by red and green ellipses. We trained the same CNN as in Sec.~\ref{sec:soft}, once to classify the first leakage, and a second time to classify the second leakage, applying $\mathrm{SH}_{500}$ as DA technique. Results are given in Table~\ref{tab:label}. They show that even if the CNN transforms spatial (or temporal) information into abstract discriminative features, it still holds an ordering notion: indeed if no ordering notion would have been held, the CNN could no way discriminate the first peak from the second one. 
 
 
@@ -341,14 +378,28 @@ $c$        & $d$       & 76.8\%            & 7                & 82.5\%          
 A classical hardware countermeasure against side-channel attacks consists in introducing instability in the clock. This implies the cumulation of a deforming effect that affects each single acquired clock cycle, and provokes traces misalignment on the adversary side. Indeed, since clock cycles do not have the same duration, they are sampled during the attack by a varying number of time samples. As a consequence, a simple translation of the acquisitions is not sufficient in this case to align with respect to an identified clock cycle. Several realignment techniques are available to manage this kind of deformations, \eg \cite{van2011improving}. In this context, our goal is to show that  we can get rid of the realignment pre-processing, letting the CNN deep structure take it in charge implicitly. 
 
 \subsection{Performances over Artificial Augmented Clock Jitter}\label{sec:artificial}
-In this section we present the results that we obtained over two datasets named \emph{DS\_low\_jitter} and \emph{DS\_high\_jitter}. Each one contains $10,000$ labelled traces, used for the training phase (more precisely, $9,000$ are used for the training, and $1,000$ for the validation), and $100,000$ attack traces. The traces are composed of $1,860$ time samples. The two datasets have been obtained by artificially adding a simulated jitter effect over some synchronized original traces. The original traces were measured on the same Atmega328P microprocessor used in the previous section. We verified that they originally encompass leakage on 34 instructions: 2 \emph{nops}, 16 loads from the NVM and 16 accesses to look-up tables. For our attack experiments, it is assumed that the target is the first look-up table access, \ie the 19th clock cycle. As in the previous section, the target is assumed to take the form $\sensRandVar=\HW(\Sbox(P\oplus \keyRandVar))$. To simulate the jitter effect we used the technique described in Appendix~	\ref{appendix:artificial_jitter}, fixing parameters $\texttt{sigma}=4$, $\texttt{B}=2$ for the \emph{DS\_low\_jitter} dataset,  and $\texttt{sigma}=6$, $\texttt{B}=4$ for the \emph{DS\_high\_jitter} dataset. As an example, some traces of  \emph{DS\_low\_jitter} are depicted in the left-hand side of Fig.~\ref{fig:jitter_traces}: the cumulative effect of the jitter is observable by remarking that the desynchronization raises with time. Some traces of \emph{DS\_high\_jitter} are depicted as well in the right-hand side of Fig.~\ref{fig:jitter_traces}. For both datasets we did not operate any PoI selection, but entered the entire traces into our CNN.
+In this section we present the results that we obtained over two datasets named \emph{DS\_low\_jitter} and \emph{DS\_high\_jitter}. Each one contains $10,000$ labelled traces, used for the training phase (more precisely, $9,000$ are used for the training, and $1,000$ for the validation), and $100,000$ attack traces. The traces are composed of $1,860$ time samples. The two datasets have been obtained by artificially adding a simulated jitter effect over some synchronized original traces. The original traces were measured on the same Atmega328P microprocessor used in the previous section. We verified that they originally encompass leakage on 34 instructions: 2 \emph{nops}, 16 loads from the NVM and 16 accesses to look-up tables. For our attack experiments, it is assumed that the target is the first look-up table access, \ie the 19th clock cycle. As in the previous section, the target is assumed to take the form $\sensRandVar=\HW(\Sbox(P\oplus \keyRandVar))$. To simulate the jitter effect we used the technique described in Appendix~	\ref{appendix:artificial_jitter}, fixing parameters $\texttt{sigma}=4$, $\texttt{B}=2$ for the \emph{DS\_low\_jitter} dataset,  and $\texttt{sigma}=6$, $\texttt{B}=4$ for the \emph{DS\_high\_jitter} dataset. As an example, some traces of  \emph{DS\_low\_jitter} are depicted in  Fig.~\ref{fig:jitter_traces22}: the cumulative effect of the jitter is observable by remarking that the desynchronization raises with time. Some traces of \emph{DS\_high\_jitter} are depicted in Fig.~\ref{fig:jitter_traces66}. For both datasets we did not operate any PoI selection, but entered the entire traces into our CNN.
 
+
+%\begin{figure}
+%\centering
+%\includegraphics[width=.7\textwidth]{../Figures/CHES2017/jitter_2_2_framed.png} 
+%\includegraphics[width=.7\textwidth]{../Figures/CHES2017/jitter_6_6_framed.png} 
+%\caption{Top: some traces of the \emph{DS\_low\_jitter} dataset, a zoom of the part highlighted by the red rectangle is given in the bottom part. Bottom: some traces (and the relative) of the \emph{DS\_high\_jitter} dataset. The interesting clock cycle is highlighted by the grey rectangular area.}\label{fig:jitter_traces}
+%\end{figure}
 
 \begin{figure}
-\includegraphics[width=.5\textwidth]{../Figures/CHES2017/jitter_2_2_framed.png} 
-\includegraphics[width=.5\textwidth]{../Figures/CHES2017/jitter_6_6_framed.png} 
-\caption{Left: some traces of the \emph{DS\_low\_jitter} dataset, a zoom of the part highlighted by the red rectangle is given in the bottom part. Right: some traces (and the relative) of the \emph{DS\_high\_jitter} dataset. The interesting clock cycle is highlighted by the grey rectangular area.}\label{fig:jitter_traces}
+\centering
+\includegraphics[width=.7\textwidth]{../Figures/CHES2017/jitter_2_2_framed.png} 
+\caption{Some traces of the \emph{DS\_low\_jitter} dataset, a zoom of the part highlighted by the red rectangle is given in the bottom part. }\label{fig:jitter_traces22}
 \end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=.7\textwidth]{../Figures/CHES2017/jitter_6_6_framed.png} 
+\caption{Some traces (and the relative) of the \emph{DS\_high\_jitter} dataset. The interesting clock cycle is highlighted by the grey rectangular area.}\label{fig:jitter_traces66}
+\end{figure}
+
 
 We used the same CNN architecture \eqref{eq:archi} as in previous section. We assisted again to a strong overfitting phenomenon and we successfully reduced it by applying the DA strategy introduced in Sec.~\ref{sec:DA}. This time we applied both the \emph{shifting} deformation $\mathrm{SH}_T$ with $T^\star = 200$ and $T\in\{0,20,40\}$ and the \emph{add-remove} deformation $\mathrm{AR}_R$ with $R\in \{0,100,200\}$, training the CNN model using the 9 combinations $\mathrm{SH}_T\mathrm{AR}_R$. We performed a further experiment with much higher DA parameters, \ie $\mathrm{SH}_{200}\mathrm{AR}_{500}$, to show that the benefits provided by the DA are limited: as expected, too much deformation affects the CNN performances (indeed results obtained with $\mathrm{SH}_{200}\mathrm{AR}_{500}$ will be worse than those obtained with \eg $\mathrm{SH}_{40}\mathrm{AR}_{200}$).
 
@@ -420,17 +471,26 @@ As a last (but most challenging) experiment we deployed our CNN architecture to 
 
 We applied the CNN approach onto the rough set of traces (without any alignement). First, a $2,500$-long window of the trace has been selected to input CNN. The window, identified by the vertical cursors in the bottom part of Fig.~\ref{fig:SNR}, has been selected to ensure that the pattern corresponding to the leakage of the second byte is inside the selection. At this step, it is important to notice that such a selection is not at all  as meticulous as the selection of PoIs required by a classical TA approach. The training phase has been performed using $98,000$ labelled traces; $1,000$ further traces have been used for the validation set. We performed the training phase over a desktop computer equipped with an Intel Xeon E5440 @2,83GHz processor, 24Gb of RAM and a GeForce GTS 450 GPU. Without data augmentation each epoch took about 200s.\footnote{raising to about $2,000$ seconds when $SH_{20}DA_{200}$ data augmentation is performed (data are augmented online during training)} The training stopped after 25 epochs. Considering that in this case we applied an early-stopping strategy that stopped training after 20 epochs without validation loss decrement, it means that the final trainable weights are obtained after 5 epochs (in about 15 minutes). The results that we obtained are summarized in Table~\ref{tab:res_AES}. They prove not only that our CNN is robust to the misalignment caused by the jitter but also that the DA technique is effective in raising its efficiency. A comparison between the CNN performances and the best results we obtained over the same dataset applying the realignment-TA strategy, is proposed in the right part of Fig.~\ref{fig:SNR}. Beyond the fact that the CNN approach slightly outperforms the realignment-TA one, and considering that both case-results shown here are surely non-optimal, what is remarkable is that the CNN approach is potentially suitable even in cases where realignment methods are impracticable or not satisfying. It is of particular interest in cases where sensitive information does not lie in proximity of peaks or of easily detectable patterns, since many resynchronization techniques are based on pattern or peak detection. If the resynchronization fails, the TA approach falls out of service, while the CNN one remains a further weapon in the hands of an attacker.
 
-
-  \begin{minipage}[c]{\textwidth}
-
+\begin{figure}
     \centering
-    \includegraphics[width=.45\textwidth]{../Figures/CHES2017/snrs.png} 
+    \includegraphics[width=\textwidth]{../Figures/CHES2017/snrs.png} 
+     \caption{In green the SNR for the first byte; in blue the SNR for the second byte; in red the SNR for the second byte after a trace realignment.}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{../Figures/CHES2017/TA_CNN_smartcard.pdf} 
+     \caption{comparison between a Gaussian template attack with realignment, and our CNN strategy, over the modern smart card with jitter.}
+\end{figure}
+
+
     \includegraphics[width=.45\textwidth]{../Figures/CHES2017/TA_CNN_smartcard.pdf} 
     \captionof{figure}{Top Left: in green the SNR for the first byte; in blue the SNR for the second byte; in red the SNR for the second byte after a trace realignment. Bottom Left: a zoom of the blue SNR trace. Right: comparison between a Gaussian template attack with realignment, and our CNN strategy, over the modern smart card with jitter.}\label{fig:SNR}
 
     \centering
 
-
+\begin{table}
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \multicolumn{8}{c}{}\\
 \hline
@@ -439,9 +499,9 @@ $a$        & $b$       & 35.0\%                     & 1.1\%                    &
 $c$        & $d$       & 1.2\%                      & 137                      & 1.3\%                       & 89                         & \textbf{1.8\%}              & \textbf{54}                \\ \hline
 \end{tabular}
 
-\captionof{table}{Results of our CNN over the modern smart card with jitter.}\label{tab:res_AES}
+\caption{Results of our CNN over the modern smart card with jitter.}\label{tab:res_AES}
+\end{table}
 
-  \end{minipage}
   
  \section{Conclusion}
- Attacks proposed in this chapter are performed against non-masked implementation. Nevertheless, since NNs are in general non-linear models, they naturally well-fit also the higher-order attack context, as discussed in \cite{maghrebi2016breaking} and \cite{DLwhitepaper}.\\
+In this chapter, we have proposed an end-to-end profiling attack approach, based on the CNNs. We claimed that such a strategy would be robust to trace misalignment, and we successfully verified our claim by performing CNN-based attacks against different kinds of misaligned data. This property represents a great practical advantage compared to the state-of-the-art Template Attacks, that require a meticulous trace realignment in order to be efficient. Our strategy based over CNNs differs from classical TA for mainly two points. First, it makes use of a discriminative model, instead of a generative one. Second it takes in charge into a unique training phase all eventual preprocessing phases necessary for the successfulness of a TA. Indeed, beyond the trace realignment, that is not necessary for the CNN approach, it represents as well a solution to the problem of the selection of points of interest issue: CNNs efficiently manage high-dimensional data, allowing the attacker to simply  select large windows. In this sense, the experiments described in Sec.~\ref{sec:AES} are very representative: our CNN retrieves information from a large window of points instead of an almost null instantaneous SNR. To guarantee the robustness to trace misalignment, we used a quite complex architecture for our CNN, and we clearly identified the risk of overfitting phenomenon. To deal with this classical issue in machine learning, we proposed two Data Augmentation techniques adapted to misaligned side-channel traces. All the experimental results we obtained have proved that they provide a great benefit to the CNN strategy.  Attacks proposed in this chapter are performed against non-masked implementation. Nevertheless, since NNs are in general non-linear models, they naturally well-fit also the higher-order attack context, as discussed in \cite{maghrebi2016breaking} and \cite{DLwhitepaper}.
