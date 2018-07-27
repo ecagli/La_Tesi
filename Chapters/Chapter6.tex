@@ -48,20 +48,20 @@ Let $(\vLeakVec)_{i=1..\nbTraces}$ be a set of $\traceLength$-dimensional measur
 Let us first assume that we have priorly fixed the dimension $\newTraceLength<\traceLength$ of the principal subspace we are looking for. 
 
 \paragraph*{Compute the First Principal Component}
-Suppose in a first time that $\newTraceLength = 1$, i.e. that we want to represent our data by a unique variable $Y_1 =  \AAlpha_1^\intercal \vaLeakVec{}$, i.e. projecting data over a single $ 1 \times\traceLength$ vector $\AAlpha_1^\intercal$, in such a way the variance of the obtained data is maximal. The vector $\AAlpha_1^\intercal$ that provides such a linear combination is called {\em first principal component}. 
-To avoid misunderstanding we will call {\em $j$-th principal component} (PC) the projecting vector $\AAlpha_j^\intercal$, while we will refer to the variable $Y_j = \AAlpha_j^\intercal \vaLeakVec$ as the {\em $j$-th Principal Variable (PV)}. 
-Realizations of the PVs are given by the measured data projected over the $j$-th PC, for example we can collect, in a (row) vector $\yyy_1 = \AAlpha_1^\intercal \measuresMatrix $, $\nbTraces $ realizations of $Y_1$:
+Suppose in a first time that $\newTraceLength = 1$, i.e. that we want to represent our data by a unique variable $Y_1 =  \AAlpha_1^\intercal \vaLeakVec{}$, i.e. projecting data over a single $\traceLength\times 1$ vector $\AAlpha_1$, in such a way the variance of the obtained data is maximal. The vector $\AAlpha_1$ that provides such a linear combination is called {\em first principal component}. 
+To avoid misunderstanding we will call {\em $j$-th principal component} (PC) the projecting vector $\AAlpha_j$, while we will refer to the variable $Y_j = \AAlpha_j^\intercal \vaLeakVec$ as the {\em $j$-th Principal Variable (PV)}. 
+Realizations of the PVs are given by the measured data projected over the $j$-th PC, for example we can collect, in a vector $\yyy_1^\intercal = \AAlpha_1^\intercal \measuresMatrix $, $\nbTraces $ realizations of $Y_1$:
 \begin{equation}
 y_1[i] = \AAlpha_1^\intercal \vLeakVec_i \mbox{ for } i=1,\dots , \nbTraces \mbox{ .}
 \end{equation}
 
-The mean of these realizations will be zero as they are linear combinations of zero-mean variables, and the variance turns to be expressible as
+The mean of these realizations will be zero as they are linear combinations of zero-mean variables, and the variance turns to be estimable as
 \begin{equation}\label{eq:PCAobjective}
 \frac{1}{\nbTraces}\yyy_1\yyy_1^\intercal = \frac{1}{\nbTraces}\AAlpha_1^\intercal\measuresMatrix\measuresMatrix^\intercal\AAlpha_1 = \AAlpha_1^\intercal\covmat\AAlpha_1 \mbox{ .}
 \end{equation}
-To compute $\AAlpha_1^\intercal$ we have to look for the vector that maximises the variance in \eqref{eq:PCAobjective}.\\
+To compute $\AAlpha_1$ we look for the vector that maximises the variance estimate in \eqref{eq:PCAobjective}.\\
 
-The maximisation problem by itself is not well posed, because the variance value is not limited until a restriction is not imposed to the modulo $\|\AAlpha_1^\intercal\| = \sqrt{\AAlpha_1^\intercal\AAlpha_1}$. In order to let the maximization problem have a solution, a restriction is thus imposed: $\AAlpha_1^\intercal\AAlpha_1 = 1$. 
+The maximisation problem by itself is not well posed, because the variance value is not limited until a restriction is not imposed to the modulo $\|\AAlpha_1| = \sqrt{\AAlpha_1^\intercal\AAlpha_1}$. In order to let the maximization problem have a solution, a restriction is thus imposed: $\AAlpha_1^\intercal\AAlpha_1 = 1$. 
 This constrained  optimization problem is handled by making use of Lagrange multipliers:
 \begin{equation}
 \Lambda(\AAlpha_1, \lambda) = \AAlpha_1^\intercal\covmat\AAlpha_1 - \lambda(\AAlpha_1^\intercal\AAlpha_1-1) \mbox{ ,}
@@ -90,11 +90,11 @@ Consider, as in previous case, the Lagrangian of the problem
 
 The partial derivatives of \eqref{eq:lagrangian_2comps} with respect to $\AAlpha_1^\intercal$ and $\AAlpha_2^\intercal$ are null under the following conditions:
 \begin{align}
-\covmat  \AAlpha_1 &= \lambda_1\AAlpha_1
+\covmat  \AAlpha_1 &= \lambda_1\AAlpha_1 \\
 \covmat  \AAlpha_2 &= \lambda_2\AAlpha_2 \mbox{ .}
 \end{align}
 
-It means that $\AAlpha_1$ and $\AAlpha_2$ must be eigenvectors of $\covmat$ with corresponding eigenvalues given by $\lambda_1$ and $\lambda_2$. Moreover, as before, $\lambda_1$ and $\lambda_2$ respectively equal the variance of the variable components $Y_1$ and $Y_2$, and since the goal is maximizing the sum of these variables we have to choose $\AAlpha_1$ and $\AAlpha_2$ as the two leading vectors of $\covmat$. Let us remark that the covariance between $Y_1$ and $Y_2$ is given by $\AAlpha_1^\intercal\covmat \AAlpha_2$ which equals zero, since $\AAlpha_1^\intercal\AAlpha_2 = 0$ by orthogonality. In particular the principal variables are uncorrelated, which is a remarkable property of the PCA. \\
+It means that $\AAlpha_1$ and $\AAlpha_2$ must be eigenvectors of $\covmat$ with corresponding eigenvalues given by $\lambda_1$ and $\lambda_2$. Moreover, as before, $\lambda_1$ and $\lambda_2$ respectively equal the estimated variances of the variable components $Y_1$ and $Y_2$, and since the goal is maximizing the sum of these variables we choose $\AAlpha_1$ and $\AAlpha_2$ as the two leading vectors of $\covmat$. Let us remark that the estimated covariance between $Y_1$ and $Y_2$ is given by $\AAlpha_1^\intercal\covmat \AAlpha_2$ which equals zero, since $\AAlpha_1^\intercal\AAlpha_2 = 0$ by orthogonality. In particular the principal variables are uncorrelated, which is a remarkable property of the PCA. \\
 
 In the general case of a $\newTraceLength$-dimensional projection space, it can be shown by induction that the PCs would correspond to the $\newTraceLength$ leading eigenvectors of the covariance matrix $\covmat$.
 
@@ -113,11 +113,11 @@ In the general case of a $\newTraceLength$-dimensional projection space, it can 
 \end{figure}
 The classical version of the PCA method is unsupervised.
 % in the sense that is does not take into account the information about the value assumed by the target variable during the acquisition of data. 
-On the other hand a profiling attacker is not only provided with a set of traces $(\vLeakVec_i)_{i=1..\nbTraces}$, but he also has the knowledge of the target values handled during each acquisition. We denote by $(\vLeakVec_i, \sensVar_i)_{i=1..\nbProfilingTraces}$ the labelled set of traces . In Fig.~\ref{fig:2class-toys} the same data of Fig.~\ref{fig:PCAunsupervised} have been grouped into 2 classes. Even if before projection the two groups are clearly separable, after projecting data over the first principal component given by the classical PCA algorithm \ref{fig:PCAunsupervised_lab}, the separability is lost. In the supervised context, and for the sake of distinguishing the target value assumed by the target $\sensRandVar$ in new executions, the idea of the {\em Class-Oriented} PCA is to consider as {\em equivalent} all the traces belonging to the same class. Modelling traces of a same class as traces showing the same characteristic form plus a random noise, the denoised characteristic form can be estimated by the sample means of the traces in the class. Let us recall from \eqref{eq:mmmXclass} that the empirical mean of traces belonging to the same class $\sensVar$ is given by
+On the other hand a profiling attacker is not only provided with a set of traces $(\vLeakVec_i)_{i=1..\nbTraces}$, but he also has the knowledge of the target values handled during each acquisition. We denote by $(\vLeakVec_i, \sensVar_i)_{i=1..\nbProfilingTraces}$ the labelled set of traces . In Fig.~\ref{fig:2class-toys} the same data of Fig.~\ref{fig:PCAunsupervised} have been grouped into 2 classes. Even if before projection the two groups are clearly separable, after projecting data over the first principal component given by the classical PCA algorithm, the separability is lost (Fig.\ref{fig:PCAunsupervised_lab}. In the supervised context, and for the sake of distinguishing the target value assumed by the target $\sensRandVar$ in new executions, the idea of the {\em Class-Oriented} PCA is to consider as {\em equivalent} all the traces belonging to the same class. Modelling traces of a same class as traces showing the same characteristic form plus a random noise, the denoised characteristic form can be estimated by the sample means of the traces in the class. Let us recall from \eqref{eq:mmmXclass} that the empirical mean of traces belonging to the same class $\sensVar$ is given by
 \begin{equation*}
 \mmmXclass = \frac{1}{\nbTracesPerClass}\sum_{i\colon \sensVar_i=\sensVar} \vLeakVec_i \mbox{ ,}
 \end{equation*}
-where  $\nbTracesPerClass$ is the number of traces belonging to class $\sensVar$. The class-oriented version of the PCA  consists in applying the PCA dimensionality reduction to the set $(\mmmXclass)_{\sensVar \in \sensVarSet}$, instead of applying it directly to the traces $\vLeakVec_i$. This implies that the empirical covariance matrix will be computed using only the $\nbClasses$ average traces. Equivalently, in case of \textit{balanced} acquisitions ($\nbTracesPerClass$ constant for each class $\sensVar$), it amounts to replace the covariance matrix $\covmat$ of data in \eqref{eq:covmat}  by the so-called {\em between-class} or  {\em inter-class scatter matrix}, given by:
+where  $\nbTracesPerClass$ is the number of traces belonging to class $\sensVar$. The class-oriented version of the PCA  consists in applying the PCA dimensionality reduction to the set $(\mmmXclass)_{\sensVar \in \sensVarSet}$, instead of applying it directly to the traces $\vLeakVec_i$. This implies that the empirical covariance matrix will be computed using only the $\nbClasses$ average traces. Equivalently, in case of \textit{balanced} acquisitions ($\nbTracesPerClass$ constant for each class $\sensVar$), it amounts to replace the empirical covariance matrix $\covmat$ of data in \eqref{eq:covmat}  by the so-called {\em between-class} or  {\em inter-class scatter matrix}, given by:
 \begin{equation}\label{eq:SB}
 \SB = \sum_{\sensVar\in\sensVarSet}\nbTracesPerClass(\mmmXclass-\mmmX)(\mmmXclass-\mmmX)^\intercal \mbox{ .}
 \end{equation}
@@ -143,14 +143,14 @@ However, it is not guaranteed that eigenvectors $\AAlpha_i$ obtained in this way
 \subsection{The Choice of the Principal Components}\label{sec:ELV}
 The introduction of the PCA method in SCA context (either in its classical or class-oriented version)  has raised some non-trivial questions: \textit{how many} principal components and \textit{which ones} are sufficient/necessary to reduce the trace size (and thus the attack processing complexity) without losing important discriminative information?\\
 
-Until 2015, the sole attempt to give an answer to the questions above was made in \cite{choudary2014efficient}, linked to the concept of {\em explained variance} (or {\em explained global variance}, EGV for short) of a PC $\AAlpha_i^\intercal$:
+Until 2015, the sole attempt to give an answer to the questions above was made in \cite{choudary2014efficient}, linked to the concept of {\em explained variance} (or {\em explained global variance}, EGV for short) of a PC $\AAlpha_i$:
 \begin{equation}\label{eq:EGV}
-\mathrm{EGV}(\AAlpha_i^\intercal) =  \frac{\lambda_i}{\sum_{k=1}^r\lambda_k} \mbox{ ,}
+\mathrm{EGV}(\AAlpha_i) =  \frac{\lambda_i}{\sum_{k=1}^r\lambda_k} \mbox{ ,}
 \end{equation}
-where $r$ is the rank of the covariance matrix $\covmat$, and $\lambda_j$ is the eigenvalue associated to the $j$-th PC $\AAlpha_j^\intercal$. $\mathrm{EGV}(\AAlpha_i^\intercal)$ is the variance of the data projected over the $i$-th PC (which equals $\lambda_i$) divided by the total variance of the original data (given by the trace of the covariance matrix $\covmat$, \ie by the sum of all its non-zero eigenvalues). By definition of EGV, the sum of all the EGV values is equal to $1$; for this reason this quantity is often multiplied by $100$ and expressed as percentage.
+where $r$ is the rank of the covariance matrix $\covmat$, and $\lambda_j$ is the eigenvalue associated to the $j$-th PC $\AAlpha_j^\intercal$. $\mathrm{EGV}(\AAlpha_i)$ is the variance of the data projected over the $i$-th PC (which equals $\lambda_i$) divided by the total variance of the original data (given by the trace of the covariance matrix $\covmat$, \ie by the sum of all its non-zero eigenvalues). By definition of EGV, the sum of all the EGV values is equal to $1$; for this reason this quantity is often multiplied by $100$ and expressed as percentage.
 Exploiting the EGV to choose among the PCs consists in fixing a wished {\em cumulative explained variance} $\beta$ and in keeping $\newTraceLength$ different PCs, where $\newTraceLength$ is the minimum integer such that
 \begin{equation}
-\mbox{EGV}(\AAlpha_1^\intercal) +\mbox{EGV}(\AAlpha_2^\intercal) + \dots +\mbox{EGV}(\AAlpha^\intercal_\newTraceLength) \geq \beta \mbox{ .}
+\mbox{EGV}(\AAlpha_1) +\mbox{EGV}(\AAlpha_2) + \dots +\mbox{EGV}(\AAlpha_\newTraceLength) \geq \beta \mbox{ .}
 \end{equation}
 However, if the attacker has a constraint for the reduced dimension $\newTraceLength$, the EGV notion simply suggests to keep the first $\newTraceLength$ components, taking for granted that the optimal way to chose PCs is in their natural order. This assumption is not always confirmed in SCA context: in some works, researchers have already remarked that the first components sometimes contain more noise than information \cite{Batina2012,specht} and it is worth discarding them. For the sake of providing a first example of this behaviour on publicly accessible traces, we applied a class-oriented PCA on 3000 traces from the DPA contest v4 \cite{DPAcontest}; we focused over a small 1000-dimensional window in which, in complete knowledge about masks and other countermeasures, information about the first Sbox processing leaks (during the first round). In Fig.~\ref{fig:DPAcontest} the first and the sixth PCs are plotted. It may be noticed that the first component indicates that one can attend a high variance by exploiting the regularity of the traces, given by the clock signal, while the sixth one has high coefficients localised in a small time interval, very likely to signalize the instants in which the target sensitive variable leaks.
 
@@ -163,10 +163,10 @@ A single method adapted to SCA context has been proposed until 2015 to automatic
 \begin{assumption}\label{assum:local}
 The leaking side-channel information is localised in few points of the acquired trace.
 \end{assumption}
-Such an assumption \ref{assum:local} is reasonable in SCA contexts where the goal of the security developers is to minimize the number of leaking points.
+This assumption is reasonable in SCA contexts where the goal of the security developers is to minimize the number of leaking points.
 Under this assumption, the authors of \cite{SCAclassProbl} use for side-channel attack purposes the {\em Inverse Participation Ratio} (IPR), a measure widely exploited in Quantum Mechanics domain (see for example \cite{guhr1998random}). They propose to use such a score to evaluate the eigenvectors {\em localization}. It is defined as follows:
 \begin{equation}
-\mathrm{IPR}(\AAlpha_i^\intercal) = \sum_{j=1}^\traceLength \AAlpha_i^\intercal[j]^4 \mbox{ .}
+\mathrm{IPR}(\AAlpha_i) = \sum_{j=1}^\traceLength \AAlpha_i[j]^4 \mbox{ .}
 \end{equation}
 The authors of \cite{SCAclassProbl} suggest to collect the PCs in decreasing order with respect to the IPR score.\\
 
@@ -180,7 +180,7 @@ The method we develop in this section is based on a compromise between the varia
 \caption[Cumulative ELV trend of principal components.]{Cumulative ELV trend of principal components. On the right a zoom of the plot on the left. Data acquisition described in Sec.~\ref{sec:experiments}.}\label{fig:ELVcumulative}
 \end{figure}
 %
-Let us start by giving some intuition behind our new concept. Thinking to the observations ${\vLeakVec}^\intercal$, or to the class-averages ${\mmmX}^\intercal$ in class-oriented PCA case, as realizations of a random variable $\vaLeakVec^\intercal$, we have that $\lambda_i$ is an estimator for the variance of the random variable $\vaLeakVec^\intercal\AAlpha_i$. Developing, we obtain
+Let us start by giving some intuition behind our new concept. Thinking to the observations ${\vLeakVec}$, or to the class-averages ${\mmmX}$ in class-oriented PCA case, as realizations of a random variable $\vaLeakVec$, we have that $\lambda_i$ is an estimator for the variance of the random variable $\vaLeakVec^\intercal\AAlpha_i$. Developing, we obtain
 \begin{align}\label{eq:ELV}
 \lambda_i =& \hat{\var}(\sum_{j=1}^\traceLength \vaLeakVec^\intercal[j]\AAlpha_i[j]) = \sum_{j=1}^\traceLength\sum_{k=1}^\traceLength \hat{\cov}(\vaLeakVec^\intercal[j]\AAlpha_i[j], \vaLeakVec^\intercal[k]\AAlpha_i[k])=\\
 =& \sum_{j=1}^\traceLength \AAlpha_i[j]\sum_{k=1}^\traceLength\AAlpha_i[k]\hat{\cov}(\vaLeakVec^\intercal[j], \vaLeakVec^\intercal[k])= \sum_{j=1}^\traceLength \AAlpha_i[j] (\covmat_{j}^\intercal \AAlpha_i)=  \\
@@ -190,9 +190,9 @@ where $\covmat_{j}^\intercal$ denotes the $j$-th row of $\covmat$ and \eqref{eq:
 \begin{definition}
 
 
-The {\em Explained Local Variance} of a PC $\AAlpha_i^\intercal$ in a sample $j$, is defined by
+The {\em Explained Local Variance} of a PC $\AAlpha_i$ in a sample $j$, is defined by
 \begin{equation}
-\mathrm{ELV}(\AAlpha_i^\intercal,j) = \frac{\lambda_i \AAlpha_i^\intercal[j]^2}{\sum_{k=1}^r\lambda_k} = \mathrm{EGV}(\AAlpha_i^\intercal) \AAlpha_i^\intercal[j]^2  \mbox{ .}
+\mathrm{ELV}(\AAlpha_i,j) = \frac{\lambda_i \AAlpha_i[j]^2}{\sum_{k=1}^r\lambda_k} = \mathrm{EGV}(\AAlpha_i) \AAlpha_i[j]^2  \mbox{ .}
 \end{equation}
 \end{definition}
 \begin{figure}
@@ -204,8 +204,8 @@ The {\em Explained Local Variance} of a PC $\AAlpha_i^\intercal$ in a sample $j$
 \includegraphics[width=0.31\textwidth]{../Figures/CARDIS2015/PC6.pdf} 
 \caption[The first six PCs. Acquisition campaign on an 8-bit AVR Atmega328P.]{The first six PCs. Acquisition campaign on an 8-bit AVR Atmega328P (see Sec.~\ref{sec:experiments}).}\label{fig:6components}
 \end{figure}
-Let $\mathcal{J}=\{j^i_1, j^i_2, \dots, j^i_{\traceLength}\}\subset\{1,2,\dots,\traceLength\}$ be a set of indexes sorted such that $\mathrm{ELV}(\AAlpha^\intercal_i,j^i_1)\geq \mathrm{ELV}(\AAlpha^\intercal_i,j^i_2)\geq \dots \geq \mathrm{ELV}(\AAlpha^\intercal_i,j^i_\traceLength)$.
-It may be observed that the sum over all the $\mathrm{ELV}(\AAlpha^\intercal_i,j)$, for $j\in[1,\dots,\traceLength],$   equals $\mathrm{EGV}(\AAlpha^\intercal_i)$. If we operate such a sum in a cumulative way following the order provided by the sorted set $\mathcal{J}$, we obtain a complete description of the trend followed by the component $\AAlpha^\intercal_i$ to achieve its EGV. As we can see in Fig.~\ref{fig:ELVcumulative}, where such cumulative ELVs are represented, the first 3 components are much slower in achieving their final EGV, while the $4^\text{th}$, the $5^\text{th}$ and the $6^\text{th}$ achieve a large part of their final EGVs very quickly ({\em i.e.} by adding the ELV contributions of much less time samples). For instance, for $i=4$, the sum of the $\mathrm{ELV}(\AAlpha^\intercal_4, j^4_k)$, with $k\in[1,\dots,30]$, almost equals $\mathrm{EGV}(\AAlpha^\intercal_4)$, whereas the same sum for $i=1$ only achieves about the 15\% of $\mathrm{EGV}(\AAlpha^\intercal_1)$. Actually, the EGV of the $4^\text{th}$, the $5^\text{th}$ and the $6^\text{th}$ component only essentially depends on a very few time samples. This observation, combined with Assumption \ref{assum:local}, suggests that they are more suitable for SCA than the three first ones. To validate this statement, it suffices to look at the form of such components (Fig.~\ref{fig:6components}): the leading ones are strongly influenced by the clock, while the latest ones are well localised over the leaking points.\\
+Let $\mathcal{J}=\{j^i_1, j^i_2, \dots, j^i_{\traceLength}\}\subset\{1,2,\dots,\traceLength\}$ be a set of indexes sorted such that $\mathrm{ELV}(\AAlpha_i,j^i_1)\geq \mathrm{ELV}(\AAlpha_i,j^i_2)\geq \dots \geq \mathrm{ELV}(\AAlpha_i,j^i_\traceLength)$.
+It may be observed that the sum over all the $\mathrm{ELV}(\AAlpha_i,j)$, for $j\in[1,\dots,\traceLength],$   equals $\mathrm{EGV}(\AAlpha_i)$. If we operate such a sum in a cumulative way following the order provided by the sorted set $\mathcal{J}$, we obtain a complete description of the trend followed by the component $\AAlpha_i$ to achieve its EGV. As we can see in Fig.~\ref{fig:ELVcumulative}, where such cumulative ELVs are represented, the first 3 components are much slower in achieving their final EGV, while the $4^\text{th}$, the $5^\text{th}$ and the $6^\text{th}$ achieve a large part of their final EGVs very quickly ({\em i.e.} by adding the ELV contributions of much less time samples). For instance, for $i=4$, the sum of the $\mathrm{ELV}(\AAlpha_4, j^4_k)$, with $k\in[1,\dots,30]$, almost equals $\mathrm{EGV}(\AAlpha_4)$, whereas the same sum for $i=1$ only achieves about the 15\% of $\mathrm{EGV}(\AAlpha_1)$. Actually, the EGV of the $4^\text{th}$, the $5^\text{th}$ and the $6^\text{th}$ component only essentially depends on a very few time samples. This observation, combined with Assumption \ref{assum:local}, suggests that they are more suitable for SCA than the three first ones. To validate this statement, it suffices to look at the form of such components (Fig.~\ref{fig:6components}): the leading ones are strongly influenced by the clock, while the latest ones are well localised over the leaking points.\\
 
 Operating a selection of components {\em via} ELV, in analogy with the EGV, requires to fix the reduced space dimension $\newTraceLength$, or a threshold $\beta$ for the cumulative ELV. In the first case, the maximal ELVs of each PC are compared, and the $\newTraceLength$ components achieving the highest values of such ELVs are chosen. In the second case, all pairs (PC, time sample) are sorted in decreasing order with respect to their ELV, and summed until the threshold $\beta$ is achieved. Then only PCs contributing in this sum are selected. \\
 
@@ -247,7 +247,7 @@ Let $\covmat$ be the the global covariance matrix of data, also called {\em tota
 \end{equation}
 \end{remark}
 
-It can be shown that the vector $\AAlpha_1$ which maximizes \eqref{eq:LDA} must satisfy $\SB\AAlpha_1 = \lambda \SW \AAlpha^\intercal_1$, for a constant $\lambda$, \textit{i.e.} has to be an eigenvector of $\SW^{-1} \SB$. Moreover, for any eigenvector $\AAlpha$ of $\SW^{-1}\SB$, with associated eigenvalue $\lambda$, the Rayleigh quotient equals such a $\lambda$:
+It can be shown that the vector $\AAlpha_1$ which maximizes \eqref{eq:LDA} must satisfy $\SB\AAlpha_1 = \lambda \SW \AAlpha_1$, for a constant $\lambda$, \textit{i.e.} has to be an eigenvector of $\SW^{-1} \SB$. Moreover, for any eigenvector $\AAlpha$ of $\SW^{-1}\SB$, with associated eigenvalue $\lambda$, the Rayleigh quotient equals such a $\lambda$:
 \begin{equation}\label{eq:lambdas}
 \frac{\AAlpha^\intercal \SB \AAlpha}{\AAlpha^\intercal \SW \AAlpha} = \lambda \mbox{ .}
 \end{equation}
