@@ -1,0 +1,92 @@
+\documentclass[xcolor=table,dvipsnames]{book}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{url}
+\usepackage[table]{xcolor}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{subfigure}
+\usepackage[font=small,labelfont=bf]{caption}
+
+\usepackage{tikz}
+\usetikzlibrary{tikzmark}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{fadings}
+\pgfkeys{/tikz/.cd,
+  dec_j/.store in=\dec_j,
+  dec_j=0   %% initial value, set to anything so that even if you don't specify a value later, it compiles
+   }
+\usepackage[rightcaption]{sidecap}
+
+
+  
+\newcommand\redout{\bgroup\markoverwith
+{\textcolor{red}{\rule[0.5ex]{2pt}{0.8pt}}}\ULon}
+
+%\usepackage{movie15}
+\definecolor{grey}{rgb}{0.7,0.7,0.7}
+\definecolor{gg}{rgb}{0.85,0.85,0.85}
+\definecolor{bb}{rgb}{0.4,0.4,0.4}
+%Define colors
+\definecolor{blue2}{rgb}{0.3,0.7,1}
+\definecolor{blue3}{rgb}{0.4,0.75,1}
+\definecolor{blue4}{rgb}{0.55,0.8,1}
+\definecolor{blue5}{rgb}{0.7,0.85,1}
+
+%define colors by uses
+\definecolor{simcolor}{cmyk}{0.683, 0.482, 0, 0.145} % couleur du simulateur
+\definecolor{modcolor}{cmyk}{0.119, 0.547, 0, 0.376} % couleur du modele
+\definecolor{gencolor}{cmyk}{0, 0.75, 1, 0.2} % couleur du generateur
+\definecolor{filecolor}{cmyk}{0, 0.109, 0.271, 0.031} % couleur des entrees/sorties
+\definecolor{gramcolor}{cmyk}{0, 0.4, 1, 0} % couleur du module de grammaire
+\definecolor{chipcolor}{cmyk}{0, 0.153, 1, 0} % couleur de la chip d'une càp
+\definecolor{attackcolor}{cmyk}{0, 0.2, 1, 0} % couleur des attaques
+
+\definecolor{cpucolor}{cmyk}{0,0.492,0.41,0.522} % couleur du processeur
+\definecolor{cocolor}{cmyk}{0.5,1,0,0.2} % couleur des coprocesseurs
+\definecolor{memcolor}{cmyk}{0.742,0,0.05,0.529} % couleur de la mémoire
+\definecolor{buscolor}{cmyk}{0.555,0,0.486,0.427} % couleur du bus de données
+\definecolor{circolor}{cmyk}{0,0,0,0.4} % couleur du fond de circuit
+
+\definecolor{trigcolorleft}{HTML}{7ACC29}
+\definecolor{trigcolorright}{HTML}{19D1FF}
+\definecolor{trigcolorbottom}{HTML}{336680}
+
+\usepackage{tikz}
+%\usepackage{pgfgantt}
+\usetikzlibrary{mindmap,backgrounds}
+\usetikzlibrary{shapes}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{arrows}
+\usetikzlibrary{patterns}
+\usetikzlibrary{calc}
+\usetikzlibrary{automata,positioning}
+%\usetikzlibrary{chains,positioning,shapes.symbols,fadings,shadows, backgrounds}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{shapes.callouts}
+%\usetikzlibrary{shapes.arrows, shadings}
+\usetikzlibrary{decorations.text}
+\usetikzlibrary{matrix}
+\usetikzlibrary{shapes}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{decorations.pathreplacing}
+
+
+
+\pagestyle{plain}
+
+
+
+
+
+\begin{document}
+\input{cnn_layer}
+\input{cnn_layer2}
+
+\end{document}

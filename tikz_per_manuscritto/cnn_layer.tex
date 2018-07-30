@@ -1,0 +1,220 @@
+\pgfmathsetmacro{\dimRec}{0.5}
+\pgfmathsetmacro{\dimEpsilon}{0.1}
+\pgfmathsetmacro{\vXOne}{random(1,10)}
+\pgfmathsetmacro{\vXTwo}{random(1,10)}
+\pgfmathsetmacro{\vXThree}{random(1,10)}
+\pgfmathsetmacro{\vXFour}{random(1,10)}
+\pgfmathsetmacro{\vXFive}{random(1,10)}
+\pgfmathsetmacro{\vXSix}{random(1,10)}
+\pgfmathsetmacro{\vXSeven}{random(1,10)}
+\pgfmathsetmacro{\vXEight}{random(1,10)}
+\pgfmathsetmacro{\vXNine}{random(1,10)}
+\pgfmathsetmacro{\vWOneOne}{random(1,10)}
+\pgfmathsetmacro{\vWOneTwo}{random(1,10)}
+\pgfmathsetmacro{\vWOneThree}{random(1,10)}
+\pgfmathsetmacro{\vWTwoOne}{random(1,10)}
+\pgfmathsetmacro{\vWTwoTwo}{random(1,10)}
+\pgfmathsetmacro{\vWTwoThree}{random(1,10)}
+
+
+\begin{tikzpicture}
+
+\draw (0.3,9.5*\dimRec) node {\small{Input Trace}	}; 
+\draw (-0.2,4.5*\dimRec) node[rotate=90,color=RubineRed!100] {\small{Length $=9$}	}; 
+
+
+\draw[fill=black,opacity=0.1,draw=black]  (0,0 * \dimRec) rectangle (\dimRec,0 *
+\dimRec + \dimRec) node[pos=.5,black,opacity=1] {$\vXNine$};
+\draw[fill=black,opacity=0.1,draw=black]  (0,1 * \dimRec) rectangle
+(\dimRec,1 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {$\vXEight$};
+\draw[fill=black,opacity=0.1,draw=black]  (0,2 * \dimRec) rectangle
+(\dimRec,2 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {$\vXSeven$};
+\draw[fill=black,opacity=0.1,draw=black]  (0,3 * \dimRec) rectangle
+(\dimRec,3 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {$\vXSix$};
+\draw[fill=black,opacity=0.1,draw=black]  (0,4 * \dimRec) rectangle
+(\dimRec,4 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {$\vXFive$};
+\draw[fill=black,opacity=0.1,draw=black]  (0,5 * \dimRec) rectangle
+(\dimRec,5 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {$\vXFour$};
+\draw[fill=black,opacity=0.1,draw=black]  (0,6 * \dimRec) rectangle
+(\dimRec,6 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {$\vXThree$};
+\draw[fill=black,opacity=0.1,draw=black]  (0,7 * \dimRec) rectangle
+(\dimRec,7 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {$\vXTwo$};
+\draw[fill=black,opacity=0.1,draw=black]  (0,8 * \dimRec) rectangle
+(\dimRec,8 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {$\vXOne$};
+
+\draw (0.3,0-0.9*\dimRec) node[color=RubineRed!100] {\small{Depth $=1$}	}; 
+
+% FOR ANIMATION
+%\draw[fill=red!10,draw=red,line width = 0.1mm,opacity=0.5]  (0,7 * \dimRec-\rangle) rectangle
+%(\dimRec,9 * \dimRec - \rangle);
+
+\draw[fill=red!10,draw=red,line width = 0.1mm,opacity=0.5]  (0,7 * \dimRec-1) rectangle
+(\dimRec,9 * \dimRec - 1);
+
+\draw[fill=green!10,draw=green,line width = 0.1mm,opacity=0.5]  (0,7 * \dimRec-1.5) rectangle
+(\dimRec,9 * \dimRec - 1.5);
+
+\draw[fill=YellowOrange!10,draw=YellowOrange,line width = 0.1mm,opacity=0.5]  (0,7 * \dimRec-2) rectangle
+(\dimRec,9 * \dimRec - 2);
+
+% FOR ANIMATION ma aggiungi i \dimEpsilon
+%\draw[fill=blue!70,opacity=0.2,draw=blue,line width = 0.1mm]  (2*\dimRec + 0 *
+%\dimRec,5 * \dimRec + 0 * \dimRec - \rangle) rectangle (3*\dimRec + 0 * \dimRec,6*\dimRec
+%+ 0 * \dimRec - \rangle) node[pos=.5,white,opacity=1] {$\vWTwoOne$};
+%\draw[fill=blue!70,opacity=0.2*2,draw=blue,line width = 0.1mm]  (2*\dimRec + 1 *
+%\dimRec,5 * \dimRec + 0 * \dimRec - \rangle) rectangle (3*\dimRec + 1 * \dimRec,6*\dimRec
+%+ 0 * \dimRec - \rangle) node[pos=.5,white,opacity=1] {$\vWTwoTwo$};
+%\draw[fill=blue!70,opacity=0.2*3,draw=blue,line width = 0.1mm]  (2*\dimRec + 2 *
+%\dimRec,5 * \dimRec + 0 * \dimRec - \rangle) rectangle (3*\dimRec + 2 * \dimRec,6*\dimRec
+%+ 0 * \dimRec - \rangle) node[pos=.5,white,opacity=1] {$\vWTwoThree$};
+%\draw[fill=blue!70,opacity=0.2*4,draw=blue,line width = 0.1mm]  (2*\dimRec + 3 *
+%\dimRec,5 * \dimRec + 0 * \dimRec - \rangle) rectangle (3*\dimRec + 3 * \dimRec,6*\dimRec
+%+ 0 * \dimRec - \rangle) node[pos=.5,white,opacity=1] {$\vWTwoFour$};
+
+\draw[fill=blue!70,opacity=0.2,draw=blue,line width = 0.1mm]  (2*\dimRec + 0 *
+\dimRec + 0*\dimEpsilon,5 * \dimRec + 0 * \dimRec - 0.25) rectangle (3*\dimRec + 0 * \dimRec + 0*\dimEpsilon,6*\dimRec + 0 * \dimRec - 0.25) node[pos=.5,white,opacity=1] {$\vWTwoOne$};
+\draw[fill=blue!70,opacity=0.2*2,draw=blue,line width = 0.1mm]  (2*\dimRec + 1 *
+\dimRec + 1*\dimEpsilon,5 * \dimRec + 0 * \dimRec - 0.25) rectangle (3*\dimRec + 1 * \dimRec + 1*\dimEpsilon,6*\dimRec + 0 * \dimRec - 0.25) node[pos=.5,white,opacity=1] {$\vWTwoTwo$};
+\draw[fill=blue!70,opacity=0.2*3,draw=blue,line width = 0.1mm]  (2*\dimRec + 2 *
+\dimRec + 2*\dimEpsilon,5 * \dimRec + 0 * \dimRec - 0.25) rectangle (3*\dimRec + 2 * \dimRec + 2*\dimEpsilon,6*\dimRec + 0 * \dimRec - 0.25) node[pos=.5,white,opacity=1] {$\vWTwoThree$};
+
+
+% FOR ANIMATION ma aggiungi i \dimEpsilon
+%\draw[fill=blue!70,opacity=0.2,draw=blue,line width = 0.1mm]  (2*\dimRec + 0 *
+%\dimRec,5 * \dimRec + 1 * \dimRec - \rangle) rectangle (3*\dimRec + 0 * \dimRec,6*\dimRec
+%+ 1 * \dimRec - \rangle) node[pos=.5,white,opacity=1] {$\vWOneOne$};
+%\draw[fill=blue!70,opacity=0.2*2,draw=blue,line width = 0.1mm]  (2*\dimRec + 1 *
+%\dimRec,5 * \dimRec + 1 * \dimRec - \rangle) rectangle (3*\dimRec + 1 * \dimRec,6*\dimRec
+%+ 1 * \dimRec - \rangle) node[pos=.5,white,opacity=1] {$\vWOneTwo$};
+%\draw[fill=blue!70,opacity=0.2*3,draw=blue,line width = 0.1mm]  (2*\dimRec + 2 *
+%\dimRec,5 * \dimRec + 1 * \dimRec - \rangle) rectangle (3*\dimRec + 2 * \dimRec,6*\dimRec
+%+ 1 * \dimRec - \rangle) node[pos=.5,white,opacity=1] {$\vWOneThree$};
+%\draw[fill=blue!70,opacity=0.2*4,draw=blue,line width = 0.1mm]  (2*\dimRec + 3 *
+%\dimRec,5 * \dimRec + 1 * \dimRec - \rangle) rectangle (3*\dimRec + 3 * \dimRec,6*\dimRec
+%+ 1 * \dimRec - \rangle) node[pos=.5,white,opacity=1] {$\vWOneFour$};
+
+\draw[fill=blue!70,opacity=0.2,draw=blue,line width = 0.1mm]  (2*\dimRec + 0 *
+\dimRec + 0*\dimEpsilon,5 * \dimRec + 1 * \dimRec - 0.25) rectangle (3*\dimRec + 0 * \dimRec + 0*\dimEpsilon,6*\dimRec + 1 * \dimRec - 0.25) node[pos=.5,white,opacity=1] {$\vWOneOne$};
+\draw[fill=blue!70,opacity=0.2*2,draw=blue,line width = 0.1mm]  (2*\dimRec + 1 *
+\dimRec + 1*\dimEpsilon,5 * \dimRec + 1 * \dimRec - 0.25) rectangle (3*\dimRec + 1 * \dimRec + 1*\dimEpsilon,6*\dimRec + 1 * \dimRec - 0.25) node[pos=.5,white,opacity=1] {$\vWOneTwo$};
+\draw[fill=blue!70,opacity=0.2*3,draw=blue,line width = 0.1mm]  (2*\dimRec + 2 *
+\dimRec + 2*\dimEpsilon,5 * \dimRec + 1 * \dimRec - 0.25) rectangle (3*\dimRec + 2 * \dimRec + 2*\dimEpsilon,6*\dimRec + 1 * \dimRec - 0.25) node[pos=.5,white,opacity=1] {$\vWOneThree$};
+
+
+
+\draw (4*\dimRec,1*\dimRec) node[rotate=0,text width=2cm,color=RubineRed!100] {{\small{$3$ conv.
+filters of size $2 \times 1$}}	}; 
+
+\pgfmathsetmacro{\decBis}{6*\dimRec + 2*\dimEpsilon}
+
+%\pgfmathsetmacro{\vTwoOne}{\vXTwo*\vWOneOne + \vXThree*\vWTwoOne}
+
+
+\pgfmathtruncatemacro\vOneOne{round(\vXOne*\vWOneOne + \vXTwo*\vWTwoOne)}
+\pgfmathtruncatemacro\vOneTwo{round(\vXOne*\vWOneTwo + \vXTwo*\vWTwoTwo)}
+\pgfmathtruncatemacro\vOneThree{round(\vXOne*\vWOneThree + \vXTwo*\vWTwoThree)}
+
+
+\pgfmathtruncatemacro\vTwoOne{round(\vXTwo*\vWOneOne + \vXThree*\vWTwoOne)}
+\pgfmathtruncatemacro\vTwoTwo{round(\vXTwo*\vWOneTwo + \vXThree*\vWTwoTwo)}
+\pgfmathtruncatemacro\vTwoThree{round(\vXTwo*\vWOneThree + \vXThree*\vWTwoThree)}
+
+
+\pgfmathtruncatemacro\vThreeOne{round(\vXThree*\vWOneOne + \vXFour*\vWTwoOne)}
+\pgfmathtruncatemacro\vThreeTwo{round(\vXThree*\vWOneTwo + \vXFour*\vWTwoTwo)}
+\pgfmathtruncatemacro\vThreeThree{round(\vXThree*\vWOneThree + \vXFour*\vWTwoThree)}
+
+\pgfmathtruncatemacro\vFourOne{round(\vXFour*\vWOneOne + \vXFive*\vWTwoOne)}
+\pgfmathtruncatemacro\vFourTwo{round(\vXFour*\vWOneTwo + \vXFive*\vWTwoTwo)}
+\pgfmathtruncatemacro\vFourThree{round(\vXFour*\vWOneThree + \vXFive*\vWTwoThree)}
+
+\pgfmathtruncatemacro\vFiveOne{round(\vXFive*\vWOneOne + \vXSix*\vWTwoOne)}
+\pgfmathtruncatemacro\vFiveTwo{round(\vXFive*\vWOneTwo + \vXSix*\vWTwoTwo)}
+\pgfmathtruncatemacro\vFiveThree{round(\vXFive*\vWOneThree + \vXSix*\vWTwoThree)}
+
+\draw (\decBis + 1.5*\dimRec ,9.5*\dimRec) node {\small{Filtered Traces}	}; 
+\draw (\decBis + 1.5*\dimRec ,0-0.9*\dimRec) node[color=RubineRed!100] {\small{Depth}$=3$	}; 
+
+
+\foreach \j in {0,...,2}
+{ 
+	\foreach \i in {0,1,2,3,7,8} 
+	{
+		\draw[fill=black,opacity=0.1*(\j+1),draw=black]  (\decBis + \j *
+		\dimRec,\i * \dimRec) rectangle (\decBis + \dimRec + \j * \dimRec,\i * \dimRec +
+		\dimRec);
+	}
+}
+
+\draw[fill=black,opacity=0.1,draw=black]  (\decBis + 0 * \dimRec,6 *
+\dimRec) rectangle (\decBis + \dimRec + 0 * \dimRec,6 * \dimRec + \dimRec)
+node[pos=.5,black,opacity=1] {$\vThreeOne$}; 
+\draw[fill=black,opacity=0.1*2,draw=black]  (\decBis + 1 * \dimRec,6 * \dimRec) rectangle (\decBis + \dimRec + 1 *
+\dimRec,6 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {$\vThreeTwo$};
+\draw[fill=black,opacity=0.1*3,draw=black]  (\decBis + 2 * \dimRec,6 *
+\dimRec) rectangle (\decBis + \dimRec + 2 * \dimRec,6 * \dimRec + \dimRec)
+node[pos=.5,black,opacity=1] {$\vThreeThree$}; 
+
+
+\draw[fill=black,opacity=0.1,draw=black]  (\decBis + 0 * \dimRec,5 *
+\dimRec) rectangle (\decBis + \dimRec + 0 * \dimRec,5 * \dimRec + \dimRec)
+node[pos=.5,black,opacity=1] {$\vFourOne$}; 
+\draw[fill=black,opacity=0.1*2,draw=black]  (\decBis + 1 * \dimRec,5 * \dimRec) rectangle (\decBis + \dimRec + 1 *
+\dimRec,5 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {$\vFourTwo$};
+\draw[fill=black,opacity=0.1*3,draw=black]  (\decBis + 2 * \dimRec,5 *
+\dimRec) rectangle (\decBis + \dimRec + 2 * \dimRec,5 * \dimRec + \dimRec)
+node[pos=.5,black,opacity=1] {$\vFourThree$}; 
+
+\draw[fill=black,opacity=0.1,draw=black]  (\decBis + 0 * \dimRec,4 *
+\dimRec) rectangle (\decBis + \dimRec + 0 * \dimRec,4 * \dimRec + \dimRec)
+node[pos=.5,black,opacity=1] {$\vFiveOne$}; 
+\draw[fill=black,opacity=0.1*2,draw=black]  (\decBis + 1 * \dimRec,4 * \dimRec) rectangle (\decBis + \dimRec + 1 *
+\dimRec,4 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {$\vFiveTwo$};
+\draw[fill=black,opacity=0.1*3,draw=black]  (\decBis + 2 * \dimRec,4 *
+\dimRec) rectangle (\decBis + \dimRec + 2 * \dimRec,4 * \dimRec + \dimRec)
+node[pos=.5,black,opacity=1] {$\vFiveThree$}; 
+
+
+
+% PER ANIMAZIONE
+%\draw[fill=red!10,draw=red,line width = 0.1mm,opacity=0.5] (\decBis + 0 * \dimRec,8 *
+%\dimRec - \rangle) rectangle (\decBis + \dimRec + 0 * \dimRec,8 * \dimRec + \dimRec - \rangle); 
+%\draw[fill=red!10,draw=red,line width = 0.1mm,opacity=0.5] (\decBis + 1 * \dimRec,8 * \dimRec - \rangle) rectangle (\decBis + \dimRec + 1 * \dimRec,8 * \dimRec + \dimRec - \rangle) ;
+%\draw[fill=red!10,draw=red,line width = 0.1mm,opacity=0.5] (\decBis + 2 * \dimRec,8 *
+%\dimRec - \rangle) rectangle (\decBis + \dimRec + 2 * \dimRec,8 * \dimRec + \dimRec - \rangle); 
+%\draw[fill=red!10,draw=red,line width = 0.1mm,opacity=0.5] (\decBis + 3 * \dimRec,8 * \dimRec - \rangle) rectangle (\decBis + \dimRec + 3 * \dimRec,8 * \dimRec + \dimRec - \rangle);
+
+
+\draw[fill=red!10,draw=red,line width = 0.1mm,opacity=0.5] (\decBis + 0 * \dimRec,8 *
+\dimRec - 1) rectangle (\decBis + \dimRec + 0 * \dimRec,8 * \dimRec + \dimRec - 1); 
+\draw[fill=red!10,draw=red,line width = 0.1mm,opacity=0.5] (\decBis + 1 * \dimRec,8 * \dimRec - 1) rectangle (\decBis + \dimRec + 1 * \dimRec,8 * \dimRec + \dimRec - 1) ;
+\draw[fill=red!10,draw=red,line width = 0.1mm,opacity=0.5] (\decBis + 2 * \dimRec,8 *
+\dimRec - 1) rectangle (\decBis + \dimRec + 2 * \dimRec,8 * \dimRec + \dimRec - 1); 
+
+\draw[fill=green!10,draw=green,line width = 0.1mm,opacity=0.5] (\decBis + 0 * \dimRec,8 *
+\dimRec - 1.5) rectangle (\decBis + \dimRec + 0 * \dimRec,8 * \dimRec + \dimRec - 1.5); 
+\draw[fill=green!10,draw=green,line width = 0.1mm,opacity=0.5] (\decBis + 1 * \dimRec,8 * \dimRec - 1.5) rectangle (\decBis + \dimRec + 1 * \dimRec,8 * \dimRec + \dimRec - 1.5) ;
+\draw[fill=green!10,draw=green,line width = 0.1mm,opacity=0.5] (\decBis + 2 * \dimRec,8 *
+\dimRec - 1.5) rectangle (\decBis + \dimRec + 2 * \dimRec,8 * \dimRec + \dimRec - 1.5); 
+
+\draw[fill=YellowOrange!10,draw=YellowOrange,line width = 0.1mm,opacity=0.5] (\decBis + 0 * \dimRec,8 *
+\dimRec - 2) rectangle (\decBis + \dimRec + 0 * \dimRec,8 * \dimRec + \dimRec - 2); 
+\draw[fill=YellowOrange!10,draw=YellowOrange,line width = 0.1mm,opacity=0.5] (\decBis + 1 * \dimRec,8 * \dimRec - 2) rectangle (\decBis + \dimRec + 1 * \dimRec,8 * \dimRec + \dimRec - 2) ;
+\draw[fill=YellowOrange!10,draw=YellowOrange,line width = 0.1mm,opacity=0.5] (\decBis + 2 * \dimRec,8 *
+\dimRec - 2) rectangle (\decBis + \dimRec + 2 * \dimRec,8 * \dimRec + \dimRec - 2); 
+
+
+\draw[red,dashed] (\dimRec,	9 * \dimRec-1) -- (2*\dimRec,7*\dimRec-0.25);
+\draw[red,dashed] (\dimRec,7 * \dimRec-1) -- (2*\dimRec,5*\dimRec -0.25);
+
+\draw[green,dashed] (\dimRec,	9 * \dimRec-1.5) -- (2*\dimRec,7*\dimRec-0.25);
+\draw[green,dashed] (\dimRec,7 * \dimRec-1.5) -- (2*\dimRec,5*\dimRec -0.25);
+
+
+\draw[red,dashed] (5*\dimRec+2*\dimEpsilon,	7*\dimRec-0.25) -- (6*\dimRec+2*\dimEpsilon,9 * \dimRec-1);
+\draw[red,dashed] (5*\dimRec+2*\dimEpsilon,5*\dimRec -0.25) -- (6*\dimRec+2*\dimEpsilon,9 * \dimRec-1.5);
+
+\draw[green,dashed] (5*\dimRec+2*\dimEpsilon,	7*\dimRec-0.25) -- (6*\dimRec+2*\dimEpsilon,9 * \dimRec-1.5);
+\draw[green,dashed] (5*\dimRec+2*\dimEpsilon,5*\dimRec -0.25) -- (6*\dimRec+2*\dimEpsilon,9 * \dimRec-2);
+
+\end{tikzpicture}
