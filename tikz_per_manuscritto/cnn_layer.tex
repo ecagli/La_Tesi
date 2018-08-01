@@ -1,25 +1,42 @@
 \pgfmathsetmacro{\dimRec}{0.5}
 \pgfmathsetmacro{\dimEpsilon}{0.1}
-\pgfmathsetmacro{\vXOne}{random(1,10)}
-\pgfmathsetmacro{\vXTwo}{random(1,10)}
-\pgfmathsetmacro{\vXThree}{random(1,10)}
-\pgfmathsetmacro{\vXFour}{random(1,10)}
-\pgfmathsetmacro{\vXFive}{random(1,10)}
-\pgfmathsetmacro{\vXSix}{random(1,10)}
-\pgfmathsetmacro{\vXSeven}{random(1,10)}
-\pgfmathsetmacro{\vXEight}{random(1,10)}
-\pgfmathsetmacro{\vXNine}{random(1,10)}
-\pgfmathsetmacro{\vWOneOne}{random(1,10)}
-\pgfmathsetmacro{\vWOneTwo}{random(1,10)}
-\pgfmathsetmacro{\vWOneThree}{random(1,10)}
-\pgfmathsetmacro{\vWTwoOne}{random(1,10)}
-\pgfmathsetmacro{\vWTwoTwo}{random(1,10)}
-\pgfmathsetmacro{\vWTwoThree}{random(1,10)}
+%\pgfmathsetmacro{\vXOne}{random(1,3)}
+%\pgfmathsetmacro{\vXTwo}{random(1,3)}
+%\pgfmathsetmacro{\vXThree}{random(1,3)}
+%\pgfmathsetmacro{\vXFour}{random(1,3)}
+%\pgfmathsetmacro{\vXFive}{random(1,3)}
+%\pgfmathsetmacro{\vXSix}{random(1,3)}
+%\pgfmathsetmacro{\vXSeven}{random(1,3)}
+%\pgfmathsetmacro{\vXEight}{random(1,3)}
+%\pgfmathsetmacro{\vXNine}{random(1,3)}
+%\pgfmathsetmacro{\vWOneOne}{random(1,3)}
+%\pgfmathsetmacro{\vWOneTwo}{random(1,3)}
+%\pgfmathsetmacro{\vWOneThree}{random(1,3)}
+%\pgfmathsetmacro{\vWTwoOne}{random(1,3)}
+%\pgfmathsetmacro{\vWTwoTwo}{random(1,3)}
+%\pgfmathsetmacro{\vWTwoThree}{random(1,3)}
+
+\pgfmathsetmacro{\vXOne}{0}
+\pgfmathsetmacro{\vXTwo}{1}
+\pgfmathsetmacro{\vXThree}{3}
+\pgfmathsetmacro{\vXFour}{2}
+\pgfmathsetmacro{\vXFive}{0}
+\pgfmathsetmacro{\vXSix}{2}
+\pgfmathsetmacro{\vXSeven}{3}
+\pgfmathsetmacro{\vXEight}{1}
+\pgfmathsetmacro{\vXNine}{0}
+\pgfmathsetmacro{\vWOneOne}{1}
+\pgfmathsetmacro{\vWOneTwo}{1}
+\pgfmathsetmacro{\vWOneThree}{3}
+\pgfmathsetmacro{\vWTwoOne}{0}
+\pgfmathsetmacro{\vWTwoTwo}{2}
+\pgfmathsetmacro{\vWTwoThree}{1}
+
 
 
 \begin{tikzpicture}
 
-\draw (0.3,9.5*\dimRec) node {\small{Input Trace}	}; 
+\draw (0.3,9.5*\dimRec) node {\small{Input}	}; 
 \draw (-0.2,4.5*\dimRec) node[rotate=90,color=RubineRed!100] {\small{Length $=9$}	}; 
 
 
@@ -132,7 +149,7 @@ filters of size $2 \times 1$}}	};
 \pgfmathtruncatemacro\vFiveTwo{round(\vXFive*\vWOneTwo + \vXSix*\vWTwoTwo)}
 \pgfmathtruncatemacro\vFiveThree{round(\vXFive*\vWOneThree + \vXSix*\vWTwoThree)}
 
-\draw (\decBis + 1.5*\dimRec ,9.5*\dimRec) node {\small{Filtered Traces}	}; 
+\draw (\decBis + 1.5*\dimRec ,9.5*\dimRec) node {\small{Output}	}; 
 \draw (\decBis + 1.5*\dimRec ,0-0.9*\dimRec) node[color=RubineRed!100] {\small{Depth}$=3$	}; 
 
 
