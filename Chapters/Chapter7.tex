@@ -185,7 +185,7 @@ Given a set of labelled training side-channel traces $(\vLeakVec_i, \sensVar_i)_
 
 where $\nbTracesPerClass$ denotes the number of training traces belonging to the class $\sensVar$,  $\MMMclass$ and $\MMMT$ are two $N$-sized vectors whose entries are given by:
 \begin{align}
-\MMMclass[\sensVar][j] = \frac{1}{\nbTracesPerClass}\sum_{i:\sensVar_i=\sensVar}^{\nbTracesPerClass}K(\vLeakVec_j,\vLeakVec_i)\\
+\MMMclass[\sensVar][j] = \frac{1}{\nbTracesPerClass}\sum_{i:\sensVar_i=\sensVar}K(\vLeakVec_j,\vLeakVec_i)\\
 \MMMT[j] = \frac{1}{\nbTrainingTraces}\sum_{i=1}^{\nbTrainingTraces}K(\vLeakVec_{j},\vLeakVec_{i}) \mbox{ .}
 \end{align}
 
