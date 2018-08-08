@@ -22,7 +22,7 @@ Machine Learning approaches often decline in multiple preprocessing phases such 
 \subsection*{Solution for the KDA Drawbacks}
 By construction, NNs are the ML answer to the drawback of work-flows we analysed in previous chapters and discussed as \emph{two-phased approach drawback} in last section of Chapter~\ref{ChapterKernel}. Actually, NNs are answers to other drawbacks pointed out in the same section. \\
 
-In particular NNs are not memory-based. This implies that, after the training phase whose computational complexity is influenced by the size of the training set, they do not need to access the training set any more. By consequence, the obtained model is in general faster in processing new data, than techniques obtained \via kernel machines: the form of the obtained model is independent of the size of the training set. This property makes part of the characteristics allowing NNs to be easily scalable to huge training sets.\\
+In particular NNs are not memory-based. This implies that, after the training phase whose computational complexity is influenced by the size of the training set, they do not need to access the training set any more. By consequence, the obtained model is in general faster in processing new data, than techniques obtained \via kernel machines, for which the training traces themselves are part of the model parameters. This property belongs to the characteristics allowing NNs to be easily scalable to huge training sets.\\
 
 Finally, we pointed out as drawback of techniques analysed in previous chapters their weakness to trace misalignment. Since the CNNs has been developed to treat difficulties as misalignments, scaling, rotations, etc. usually met in image processing,  we claim in this chapter, and verify through various experiments, that such CNNs provide an attack strategy that can keeps effective in presence of misalignment countermeasure. 
 
@@ -76,9 +76,9 @@ a single training input is processed at a time, then the approach is named
 between, called \emph{mini-batch learning}, and to use small \emph{batches}, \ie
 groups of training inputs, at a time during the learning. In this case a step of the training consists in: 
 \begin{itemize}
-\item selecting a batch of training traces $(\vLeakVec_i, \vec{\sensVar}_i)_{i\in I}$ chosen in random order (here $I$ is a random set of indexes),
+\item selecting a batch of training traces $(\vLeakVec_i, \sensVar_i)_{i\in I}$ chosen in random order (here $I$ is a random set of indexes),
 \item computing the outputs, or scores, of the current model function for the input batch $(\vNNOutput_i = \MLmodel(\vLeakVec_i))_{i\in I}$, 
-\item evaluating the loss function, which in general involves values $\vNNOutput_i$ and $\vec{\sensVar}_i$
+\item evaluating the loss function, which in general involves values $\vNNOutput_i$ and $\sensVar_i$
 \item computing the partial derivatives of the loss function with respect to each trainable weight (this is done through a method called \emph{backpropagation} \cite{LeCun2012}),
 \item updating trainable parameters by subtracting from each a small multiple of the loss gradient (the used multiple is called \emph{learning rate}).
 \end{itemize}  
@@ -95,21 +95,21 @@ The number of epochs is an important hyper-parameter. Intuitively, running a too
 The cross-entropy
 metric is a classical (and often by default) tool to define the \emph{loss function} in a classification-oriented NN \cite{LCH05,Goodfellow-et-al-2016}. It is smooth and
 decomposable, and therefore amenable to optimisation with standard
-gradient-based methods. Before providing the definition of cross-entropy in \eqref{eq:crossentropy}, we precise the chosen form for the \emph{loss function}. Given a batch of training data $(\vLeakVec_i, \vec{\sensVar}_i)_{i\in I}$ and their respective scores returned by the current model $(\vNNOutput_i)_{i\in I}$, the \emph{loss function} is defined as the following averaged value:
+gradient-based methods. Before providing the definition of cross-entropy in \eqref{eq:crossentropy}, we precise the chosen form for the \emph{loss function}. Given a batch of training data $(\vLeakVec_i, \sensVar_i)_{i\in I}$ and their respective scores returned by the current model $(\vNNOutput_i)_{i\in I}$, the \emph{loss function} is defined as the following averaged value:
 
 \begin{equation}\label{eq:lossfunction}
-\mathcal{L} = -\frac{1}{\lvert I \rvert} \sum_{i\in I} \sum_{t=1}^{|\sensVarSet|}\vec{\sensVar_i}[t]\log{\vNNOutput_i[t]} \mbox{ .}
+\mathcal{L} = -\frac{1}{\lvert I \rvert} \sum_{i\in I} \sum_{t=1}^{|\sensVarSet|}\vec{\sensVar_i}[t]\log{\vNNOutput_i[t]} \mbox{ ,}
 \end{equation}   
-
+where the vector $\vec{\sensVar_i}$ denotes the one-hot encoding of the value of the realisation $\sensVar_i=\sensVarValue{j}$, \ie the vector $\sensVarOneHot{j} = (0,\ldots , 0,\underbrace{1}_{j},0,\dots,0)$ (as defined in Sec.~\ref{sec:notations}).
 There are two ways to interpret such a choice. 
 
 \begin{itemize}
-\item First, recalling that $\vNNOutput_i$ may be interpreted as an estimation of the conditional probability $\prob[\given{\sensRandVar}{\vaLeakVec=\vLeakVec_i}]$, the maximum-likelihood principle suggests to drive the training in such a way that for such an estimate the probability of the correct label $\vec{\sensVar}_i$ is as high as possible. Thus, if we suppose that $\vec{\sensVar_i} = \vec{\sensVar}^j$, we want to maximize $\vNNOutput_i[j]$ (or equivalently to minimize $-\log{\vNNOutput_i[j]}$).\footnote{We remark that thanks to the softmax function used as last network layer, each coordinate of $\vNNOutput_i$ is always strictly positive.} It may be observed that, thanks to the one-hot encoding, in which all entries of $\vec{\sensVar}^j$ are null but the $j$th one, such a log-likelihood rewrites as 
+\item First, recalling that $\vNNOutput_i$ may be interpreted as an estimation of the conditional probability $\prob[\given{\sensRandVar}{\vaLeakVec=\vLeakVec_i}]$, the maximum-likelihood principle suggests to drive the training in such a way that for such an estimate the probability of the correct label $\sensVar_i$ is as high as possible. Thus, if we suppose that $\sensVar_i = \sensVarValue{j}$, we want to maximize $\vNNOutput_i[j]$ (or equivalently to minimize $-\log{\vNNOutput_i[j]}$).\footnote{We remark that thanks to the softmax function used as last network layer, each coordinate of $\vNNOutput_i$ is always strictly positive.} It may be observed that, thanks to the one-hot encoding, in which all entries of $\sensVarOneHot{j}$ are null but the $j$th one, such a log-likelihood rewrites as 
 \begin{equation}\label{eq:log_lik}
 -\log{\vNNOutput_i[j]} = -\sum_{t=1}^{|\sensVarSet|}\vec{\sensVar_i}[t]\log{\vNNOutput_i[t]} \mbox{ ,}
 \end{equation}
 which equals the quantity averaged in \eqref{eq:lossfunction}.
-\item The second interpretation of the chosen loss function is linked to the fact that it actually represents the average of  the cross-entropy of pairs of well-chosen probability mass functions. Indeed interpreting $\vec{\sensVar}_i = (0,\ldots , 0,\underbrace{1}_{j},0,\dots,0)$ as the pmf of $\given{\sensRandVar}{\sensRandVar = \sensVar^j}$, which corresponds to the exact probability density we want the network to approximate. Informally speaking, the cross-entropy between two probability distributions, in our case the probability mass functions defined by $\vec{\sensVar_i}$ and $\vNNOutput_i$, gives a measure of the dissimilarity between them, and is defined as follows:
+\item The second interpretation of the chosen loss function is linked to the fact that it actually represents the average of  the cross-entropy of pairs of well-chosen probability mass functions. Indeed interpreting $\vec{\sensVar_i} = (0,\ldots , 0,\underbrace{1}_{j},0,\dots,0)$ as the pmf of $\given{\sensRandVar}{\sensRandVar = \sensVarValue{j}}$, which corresponds to the exact probability density we want the network to approximate. Informally speaking, the cross-entropy between two probability distributions, in our case the probability mass functions defined by $\vec{\sensVar_i}$ and $\vNNOutput_i$, gives a measure of the dissimilarity between them, and is defined as follows:
 \begin{equation}\label{eq:crossentropy}
 \entropy(\vec{\sensVar_i}, \vNNOutput_i) = \entropy(\vec{\sensVar_i}) + D_{KL}(\vec{\sensVar_i} || \vNNOutput_i) = \esper_{\vec{\sensVar_i}}[-\log{\vNNOutput_i}] = -\sum_{t=1}^{|\sensVarSet|}\vec{\sensVar_i}[t]\log{\vNNOutput_i[t]} \mbox{ ,}
 \end{equation}
@@ -196,7 +196,7 @@ the length dimension of the input by some amount of units, called \emph{stride}.
 The filters form a window, called \emph{patch} in the Machine Learning language, which defines a
 linear transformation of $W\times V$ consecutive points of the data into new
 matrices of size $1\times n_{\text{filter}}$, arranged in such a way that$ n_{\text{filter}}$ is the depth of the layer output. The length dimension of the output of a convolutional layer depends on several parameters: the input length, the stride, and the \emph{padding}. The two most common ways to pad the input are called \emph{same padding} and \emph{valid padding}: with the \emph{same padding} the input is padded with some zeros at the beginning and at the end, in such a way that, for a stride equal to 1, the output has the same
-length than the input, for a stride equal to 2 the output length is exactly halved, for a stride equal to 3 it is exactly divided by 3, etc.  The \emph{valid padding} consists on the contrary to avoid any kind of padding. Only proper data points are used as input, and output length is adjusted: typically, for a stride equal to 1, the output length equals $\traceLength - W +1$, where $\traceLength$ is the input length. The
+length than the input, for a stride equal to 2 the input length is exactly halved, for a stride equal to 3 it is exactly divided by 3, etc.  The \emph{valid padding} consists on the contrary to avoid any kind of padding. Only proper data points are used as input, and output length is adjusted: typically, for a stride equal to 1, the output length equals $\traceLength - W +1$, where $\traceLength$ is the input length. The
 coordinates of the window are among the trainable weights of the model. They slid over the input, so they are multiplied by different parts of the datum, but  they are constrained to keep unchanged while sliding, \ie to behave in the same way no matter the position of the input entries on the global input datum. This constraint aims to allow the CONV layer to
 learn shift-invariant features, \ie characteristics of the datum for which the position is not discriminant. Shift-invariant features are largely present in image recognition context, which drove the development of CNNs. For examples the eyes, the nose and the mouth of a person in a picture, are discriminant features for the person no matter their position in the image. The ability at learning shift-invariant features makes CNNs robust to
 geometrical deformations~\cite{lecun1995convolutional} or to temporal deformation when considering side-channel signals. For this reason they are adequate to counteract misalignment-based countermeasures.
@@ -334,7 +334,7 @@ For the training of our CNN, we applied the $SH_T$ data augmentation, selecting 
   \softmax \circ [\lambda]^1 \circ[\delta \circ [\sigma \circ \gamma  ]^1 ]^4,   
 \end{equation}
 \emph{i.e.} \eqref{equ:CCN} with $n_1 = n_2 = 1$ and $n_3 = 4$.
-To accelerate the training we introduced a \emph{Batch Normalization} layer \cite{batch_norm} after each pooling $\delta$. The network transforms the $3,496 \times 1$ inputs in a $1 \times 256$ list of abstract features, before entering the last FC layer $\lambda:\mathbb{R}^{256}\rightarrow \mathbb{R}^9$. Even if the ReLU activation function \cite{nair2010rectified} is classically recommended for many applications in literature (see Sec.~\ref{sec:MLP}), we obtained in most cases better results using the hyperbolic tangent, defined as:
+To accelerate the training we applied a technique proposed in 2015 \cite{batch_norm}, consisting in the  introduction of a so-called \emph{Batch Normalization} layer \cite{batch_norm} after each pooling $\delta$. The network transforms the $3,496 \times 1$ inputs in a $1 \times 256$ list of abstract features, before entering the last FC layer $\lambda:\mathbb{R}^{256}\rightarrow \mathbb{R}^9$. Even if the ReLU activation function \cite{nair2010rectified} is classically recommended for many applications in literature (see Sec.~\ref{sec:MLP}), we obtained in most cases better results using the hyperbolic tangent, defined as:
 \begin{equation}
 \mathrm{tanh}(x) = \frac{e^x-e^{-x}}{e^x+e^{-x}} \mbox{ .}
 \end{equation}

@@ -163,6 +163,9 @@ headsepline, % Uncomment to get a line under the header
 \newcommand*{\keyVarSet}{\mathcal{K}}
 \newcommand*{\sensVar}{z}
 \newcommand*{\sensRandVar}{Z}
+\newcommand*{\sensVarValue}[1]{s_{#1}}
+\newcommand*{\sensVarGenValue}{s}
+\newcommand*{\sensVarOneHot}[1]{\vec{s_{#1}}}
 \newcommand*{\sensVarSet}{\mathcal{Z}}
 \newcommand*{\numClasses}{\lvert\sensVarSet\rvert}
 \newcommand*{\nbClasses}{\lvert\sensVarSet\rvert}
@@ -180,9 +183,9 @@ headsepline, % Uncomment to get a line under the header
 \newcommand*{\nbTraces}{N}
 \newcommand*{\nbTrainingTraces}{N_t}
 \newcommand*{\nbProfilingTraces}{N_p}
-\newcommand*{\nbProfilingTracesPerClass}{N_{p,\sensVar}}
+\newcommand*{\nbProfilingTracesPerClass}{N_{p,\sensVarGenValue}}
 \newcommand*{\nbAttackTraces}{N_a}
-\newcommand*{\nbTracesPerClass}[1][\sensVar]{N_{#1}}
+\newcommand*{\nbTracesPerClass}[1][\sensVarGenValue]{N_{#1}}
 \newcommand*{\guessingEntropy}{\mathrm{GE}}
 \newcommand*{\SR}{\mathrm{SR}}
 \newcommand*{\newTraceLength}{C}
@@ -206,7 +209,7 @@ headsepline, % Uncomment to get a line under the header
 \newcommand*{\HD}{\mathrm{HD}}
 \newcommand*{\HW}{\mathrm{HW}}
 
-\newcommand*{\prob}{\mathrm{Prob}}
+\newcommand*{\prob}{\mathrm{Pr}}
 \newcommand*{\pdf}{p}
 \newcommand*{\mumumu}{\vec{\mu}}
 
@@ -222,9 +225,9 @@ headsepline, % Uncomment to get a line under the header
 \newcommand*{\esper}{\mathbb{E}}
 \newcommand*{\mmm}{\vec{m}}
 \newcommand*{\mmmX}{\overline{\vec{x}}}
-\newcommand*{\mmmXclass}[1][z]{\overline{\vec{x}}^{#1}}
+\newcommand*{\mmmXclass}[1][\sensVarGenValue]{\vec{\mu}_{#1}}
 \newcommand*{\mmmY}{\overline{\vec{y}}}
-\newcommand*{\varXclass}[1][z]{\hat{\boldsymbol{\sigma}}^2_{#1}}
+\newcommand*{\varXclass}[1][\sensVarGenValue]{\vec{\varrho}_{#1}}
 
 \newcommand{\MMM}{\textbf{M}}
 \newcommand{\MMMclass}[1][z]{\vec{M}_{#1}}
@@ -480,7 +483,7 @@ $\mathbb{Z}_N^{*}$ & ...\\
 % Uncomment the lines as you write the chapters
 \part{Context and State of the Art}
 \include{Chapters/Chapter1}
-\include{Chapters/Chapter2} 
+\include{Chapters/Chapter2_new} 
 \include{Chapters/Chapter3}
 \part{Contributions}
 

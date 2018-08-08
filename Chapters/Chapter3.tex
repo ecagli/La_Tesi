@@ -65,27 +65,27 @@ The solution to such an optimization problem can be given in closed form, by mea
 In this thesis we point out a strict relationship between the profiling SCAs and the classification task in Machine Learning context. For this reason we introduce here a very brief overview of how classically such a task is tackled, by means of linear models. \\
 Classifying means assigning a label $\sensVar\in \sensVarSet$ to an example $\vLeakVec\in\mathbb{R}^\traceLength$ , or equivalently divide the input space $\mathbb{R}^\traceLength$ in \emph{decision regions}, whose boundaries are referred to as \emph{decision boundaries}. Making use of a linear model signifies exploiting some hyperplanes as decision boundaries. Datasets whose classes can be separated exactly by linear decision boundaries are said to be \emph{linearly separable}. Following the discussion kept by Bishop in \cite{christopher2006pattern}, two different approaches to tackle the classification task should be distinguished: the direct research for a discriminant function $\MLmodel$ that assigns to an example a label, or the prior construction of a probabilistic model. This second approach might in turn be distinguished into two options, depending on whether a generative model  (see Sec.~\ref{sec:TA}), or a discriminative model is constructed (\ie only conditional probability densities of outputs given the inputs are modelled). For this example we consider a probabilistic approach, constructing a generative model. This example will allow on one hand to introduce some interesting functions, such as the \emph{logistic sigmoid} and the \emph{softmax}, that will play a role in the construction of neural networks (see Chapter \ref{ChapterCNN}). On the other hand, the example justifies the large  exploitation of linear discriminant functions, even in contexts where the goal of the learning algorithm to make decisions directly, dispensing with any probabilistic interpretation. Indeed, linear models come out naturally when adding some assumptions on the data distributions, as those that will be introduced below. \\
 
-Constructing a generative probabilistic model implies modelling the class-conditional probabilities $\pdf_{\vaLeakVec}(\given{\vLeakVec}{\sensRandVar = \sensVar^j})$ for $j\in \{1,\dots,\numClasses\}$ as well as the class priors $\pdf_{\sensRandVar}(\sensVar^j)$ and $\pdf_{\vaLeakVec}(\vLeakVec)$. Let us first consider a 2-class context, \ie $\sensVarSet = \{\sensVar^1, \sensVar^2\}$. Then the posterior probability for the class $\sensVar^1$ is the following:
+Constructing a generative probabilistic model implies modelling the class-conditional probabilities $\pdf_{\vaLeakVec}(\given{\vLeakVec}{\sensRandVar = \sensVarValue{j}})$ for $j\in \{1,\dots,\numClasses\}$ as well as the class priors $\pdf_{\sensRandVar}(\sensVarValue{j})$ and $\pdf_{\vaLeakVec}(\vLeakVec)$. Let us first consider a 2-class context, \ie $\sensVarSet = \{\sensVarValue{1}, \sensVarValue{2}\}$. Then the posterior probability for the class $\sensVarValue{1}$ is the following:
 \begin{align}\label{eq:post_probs}
-\prob(\given{\sensVar^1}{\vLeakVec}) &= \frac{\prob(\given{\vLeakVec}{\sensVar^1})\prob(\sensVar^1)}{\prob(\vLeakVec)}=\\
-&=\frac{\prob(\given{\vLeakVec}{\sensVar^1})\prob(\sensVar^1)}{\prob(\given{\vLeakVec}{\sensVar^1})\prob(\sensVar^1) + \prob(\given{\vLeakVec}{\sensVar^2})\prob(\sensVar^2)}\mbox{ .}
+\prob(\given{\sensVarValue{1}}{\vLeakVec}) &= \frac{\prob(\given{\vLeakVec}{\sensVarValue{1}})\prob(\sensVarValue{1})}{\prob(\vLeakVec)}=\\
+&=\frac{\prob(\given{\vLeakVec}{\sensVarValue{1}})\prob(\sensVarValue{1})}{\prob(\given{\vLeakVec}{\sensVarValue{1}})\prob(\sensVarValue{1}) + \prob(\given{\vLeakVec}{\sensVarValue{2}})\prob(\sensVarValue{2})}\mbox{ .}
 \end{align}
 To compare the two classes, we can evaluate their \emph{log-likelihood ratio} defined as:
 \begin{equation}\label{eq:log-ratio}
-a = \log\left[\frac{\prob(\given{\sensVar^1}{\vLeakVec})}{\prob(\given{\sensVar^2}{\vLeakVec})}\right] =  \log\left[\frac{\prob(\given{\vLeakVec}{\sensVar^1})\prob(\sensVar^1)}{\prob(\given{\vLeakVec}{\sensVar^2})\prob(\sensVar^2)}\right].
+a = \log\left[\frac{\prob(\given{\sensVarValue{1}}{\vLeakVec})}{\prob(\given{\sensVarValue{2}}{\vLeakVec})}\right] =  \log\left[\frac{\prob(\given{\vLeakVec}{\sensVarValue{1}})\prob(\sensVarValue{1})}{\prob(\given{\vLeakVec}{\sensVarValue{2}})\prob(\sensVarValue{2})}\right].
 \end{equation}
-Then we might assign the label the class $\sensVar^1$ to $\vLeakVec$  if and only if $a>0$, which corresponds to take as decision boundary the surface defined by $\prob(\given{\vLeakVec}{\sensVar^1})\prob(\sensVar^1) = \prob(\given{\vLeakVec}{\sensVar^2})\prob(\sensVar^2)$.
+Then we might assign the label the class $\sensVarValue{1}$ to $\vLeakVec$  if and only if $a>0$, which corresponds to take as decision boundary the surface defined by $\prob(\given{\vLeakVec}{\sensVarValue{1}})\prob(\sensVarValue{1}) = \prob(\given{\vLeakVec}{\sensVarValue{2}})\prob(\sensVarValue{2})$.
 We remark that Eq.~\eqref{eq:post_probs} rewrites as:
 \begin{equation}\label{eq:post_probs_sigmoid}
-\prob(\given{\sensVar^1}{\vLeakVec}) = \frac{1}{1+e^{-a}} = \sigma(a)\mbox{ ,}
+\prob(\given{\sensVarValue{1}}{\vLeakVec}) = \frac{1}{1+e^{-a}} = \sigma(a)\mbox{ ,}
 \end{equation}
-where the function $\sigma$ is the so-called \emph{logistic sigmoid}. This remark translates in the multi-class case, \ie $\numClasses >2$, in the following way: the posterior probability for each class $\sensVar^j$ is given by
+where the function $\sigma$ is the so-called \emph{logistic sigmoid}. This remark translates in the multi-class case, \ie $\numClasses >2$, in the following way: the posterior probability for each class $\sensVarValue{j}$ is given by
 \begin{equation}\label{eq:post_probs_multi-class}
-\prob(\given{\sensVar^j}{\vLeakVec})  = \frac{\prob(\given{\vLeakVec}{\sensVar^j})\prob(\sensVar^j)}{\prob(\vLeakVec)} = \frac{\prob(\given{\vLeakVec}{\sensVar^j})\prob(\sensVar^j)}{\sum_{k=1}^{\nbClasses}\prob(\given{\vLeakVec}{\sensVar^k})\prob(\sensVar^k )} = \softmax (\aaa)[j]\mbox{ ,}
+\prob(\given{\sensVarValue{j}}{\vLeakVec})  = \frac{\prob(\given{\vLeakVec}{\sensVarValue{j}})\prob(\sensVarValue{j})}{\prob(\vLeakVec)} = \frac{\prob(\given{\vLeakVec}{\sensVarValue{j}})\prob(\sensVarValue{j})}{\sum_{k=1}^{\nbClasses}\prob(\given{\vLeakVec}{\sensVar^k})\prob(\sensVar^k )} = \softmax (\aaa)[j]\mbox{ ,}
 \end{equation}
 where $\aaa$ is a $\numClasses$-dimensional vector, whose entries are given by
 \begin{equation}\label{eq:softmax_entries}
-\aaa[j] = \log\left[ \prob(\given{\vLeakVec}{\sensVar^j})\prob(\sensVar^j) \right] \mbox{ ,}
+\aaa[j] = \log\left[ \prob(\given{\vLeakVec}{\sensVarValue{j}})\prob(\sensVarValue{j}) \right] \mbox{ ,}
 \end{equation}
 and $\softmax$ is the so-called \emph{softmax} function, or \emph{normalised exponential}, that is defined, entry-wise by:
 \begin{equation}\label{eq:softmax}
@@ -99,31 +99,31 @@ Let us now introduce two assumptions about the class-conditional densities:
 \end{enumerate}
 so that
 \begin{equation}
-\pdf_(\given{\vLeakVec}{\sensRandVar = \sensVar^j}) = \frac{1}{(2\pi)^{{\traceLength}/2}\lvert \Sigma\rvert^{1/2}}e^{-\frac{1}{2}(\vLeakVec- \mu_j)^\intercal\Sigma^{-1}(\vLeakVec- \mu_j)} \mbox{ .}
+\pdf(\given{\vLeakVec}{\sensRandVar = \sensVarValue{j}}) = \frac{1}{(2\pi)^{{\traceLength}/2}\lvert \Sigma\rvert^{1/2}}e^{-\frac{1}{2}(\vLeakVec- \mu_j)^\intercal\Sigma^{-1}(\vLeakVec- \mu_j)} \mbox{ .}
 \end{equation}
 Under these assumptions, and considering probability densities and masses instead of probability values\footnote{A formal justification the validity of formula above for continuous random variables is out of the scope of this section.} Eq.~\eqref{eq:log-ratio} rewrites as: 
 \begin{equation}\label{eq:LDA-2classes}
-a = \log\left[\frac{\pdf_{\sensRandVar}(\sensVar^1)}{\pdf_{\sensRandVar}(\sensVar^2)}\right] - \frac{1}{2}\mu_1^\intercal\Sigma^{-1}\mu_1 + \frac{1}{2}\mu_2^\intercal\Sigma^{-1}\mu_2 - \vLeakVec^\intercal\Sigma^{-1}(\mu_2-\mu_1) = \www^\intercal \vLeakVec + w_0, 
+a = \log\left[\frac{\pdf_{\sensRandVar}(\sensVarValue{1})}{\pdf_{\sensRandVar}(\sensVarValue{2})}\right] - \frac{1}{2}\mu_1^\intercal\Sigma^{-1}\mu_1 + \frac{1}{2}\mu_2^\intercal\Sigma^{-1}\mu_2 - \vLeakVec^\intercal\Sigma^{-1}(\mu_2-\mu_1) = \www^\intercal \vLeakVec + w_0, 
 \end{equation}
 where we set 
 \begin{align*}
 \www =& \Sigma^{-1}(\mu_1-\mu_2)\\
-w_0 =  & \log\left[\frac{\pdf_{\sensRandVar}(\sensVar^1)}{\pdf_{\sensRandVar}(\sensVar^2)}\right] - \frac{1}{2}\mu_1^\intercal\Sigma^{-1}\mu_1 + \frac{1}{2}\mu_2^\intercal\Sigma^{-1}\mu_2 . 
+w_0 =  & \log\left[\frac{\pdf_{\sensRandVar}(\sensVarValue{1})}{\pdf_{\sensRandVar}(\sensVarValue{2})}\right] - \frac{1}{2}\mu_1^\intercal\Sigma^{-1}\mu_1 + \frac{1}{2}\mu_2^\intercal\Sigma^{-1}\mu_2 . 
 \end{align*}
 The quadratic terms in $\vLeakVec$, that appears in the exponent of the Gaussian density, have cancelled thanks to the common variance assumption \ref{item:covariances}, thus we obtain that the decision boundary for the 2-class problem, given by $a=0$ is a $(\traceLength - 1)$-hyperplane of the input space.\footnote{An analogous result can be obtained in the multi-class problem.} This way of choosing linear boundaries is known under the name of \emph{Linear Discriminant Analysis}. Another way to view the same linear classification model is in terms of dimensionality reduction: intuitively, in the 2-class case\footnote{again extensible to the multi-class case} one can see the term $\www^\intercal \vLeakVec$ in \eqref{eq:LDA-2classes} as a projection of the input $\vLeakVec$ onto a one-dimensional subspace of $\mathbb{R}^\traceLength$ which is orthogonal to the decision boundary mentioned above. Then, the classification of the obtained dimensionality-reduced examples is done by the means of a real-valued threshold (that would correspond to $w_0$, in the optimal case). It can be shown that the dimensionality reduction obtained by the Fisher criterion that we will deploy in Chapter~\ref{ChapterLinear}, to which we will refer to as LDA dimensionality reduction by a widely accepted abuse, is equivalent to the dimensionality reduction obtained in this example, under both assumptions \ref{item:gaussian} and \ref{item:covariances}.  \\
-Relaxing the assumption \ref{item:covariances} and allowing each class-conditional density $\pdf(\vLeakVec\mid \sensVar^j)$ to have its own covariance matrix $\Sigma_j$, then the cancellations seen above will no longer occur, and the discriminant $a$ turns out to be a quadratic function of $\vLeakVec$. This gives rise to the so-called \emph{Quadratic Discriminant Analysis}, that we already mentioned in Chapter~\ref{ChapterIntroductionSCA} for its analogy with Template Attacks.\\
+Relaxing the assumption \ref{item:covariances} and allowing each class-conditional density $\pdf(\vLeakVec\mid \sensVarValue{j})$ to have its own covariance matrix $\Sigma_j$, then the cancellations seen above will no longer occur, and the discriminant $a$ turns out to be a quadratic function of $\vLeakVec$. This gives rise to the so-called \emph{Quadratic Discriminant Analysis}, that we already mentioned in Chapter~\ref{ChapterIntroductionSCA} for its analogy with Template Attacks.\\
 
-Assumptions \ref{item:gaussian} and \ref{item:covariances} also lead to the following expression for the posterior probability for $\sensVar^1$, directly implied by \eqref{eq:post_probs_sigmoid}: 
+Assumptions \ref{item:gaussian} and \ref{item:covariances} also lead to the following expression for the posterior probability for $\sensVarValue{1}$, directly implied by \eqref{eq:post_probs_sigmoid}: 
 \begin{equation}\label{eq:binary_linear_classifier}
-\prob(\given{\sensVar^1}{\vLeakVec}) = \sigma(\www^\intercal \vLeakVec + w_0)\mbox{ .}
+\prob(\given{\sensVarValue{1}}{\vLeakVec}) = \sigma(\www^\intercal \vLeakVec + w_0)\mbox{ .}
 \end{equation}
-Thus, such a posterior probability is given by the sigmoid acting to a linear function of $\vLeakVec$. Similarly, for the multi-class case, the posterior probability of class $\sensVar^j$ is given by the $j$-th entry of the softmax transformation of a linear function of $\vLeakVec$. This kind of \emph{generalised linear model} can be thus used in a probabilistic discriminant approach, where the posterior conditional probabilities are directly modelled from data without passing through the estimations of class-conditional densities and priors. Such a discriminative approach is the one that will be adopted in Chapter~\ref{ChapterCNN} when considering models constructed by neural networks.
+Thus, such a posterior probability is given by the sigmoid acting to a linear function of $\vLeakVec$. Similarly, for the multi-class case, the posterior probability of class $\sensVarValue{j}$ is given by the $j$-th entry of the softmax transformation of a linear function of $\vLeakVec$. This kind of \emph{generalised linear model} can be thus used in a probabilistic discriminant approach, where the posterior conditional probabilities are directly modelled from data without passing through the estimations of class-conditional densities and priors. Such a discriminative approach is the one that will be adopted in Chapter~\ref{ChapterCNN} when considering models constructed by neural networks.
 
 %the simplest representations of a linear discriminant function is obtained by taking
 %\begin{equation}
 %f(\vLeakVec) = \www\vLeakVec + w_0 \mbox{ ,}
 %\end{equation}
-%where $-w_0$ plays the role of a threshold. Here  $\vLeakVec$ is assigned to $\sensVar^1$ if $f(\vLeakVec)>0$, \ie $\www\vLeakVec>-w_0$, otherwise $\vLeakVec$ is assigned to $\sensVar^2$.
+%where $-w_0$ plays the role of a threshold. Here  $\vLeakVec$ is assigned to $\sensVarValue{1}$ if $f(\vLeakVec)>0$, \ie $\www\vLeakVec>-w_0$, otherwise $\vLeakVec$ is assigned to $\sensVarValue{2}$.
 
 
 
