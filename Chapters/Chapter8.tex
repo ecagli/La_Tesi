@@ -3,6 +3,9 @@
 \chapter{Convolutional Neural Networks} % Main chapter title
 \label{ChapterCNN}
 
+\epigraph{\textit{Aiutiamoli a fare da soli!}\newline
+\footnotesize{\textit{Let's help them to do themselves!}}}{--- \textup{Maria Montessori}}
+
 % TODO: manca universal approximation theorem (da pagg 194 e seguenti del deeplearningbook)
 
 In this chapter we explore a new strategy to perform profiling SCAs, addressing the misalignment issue and endorsing the Deep Learning (DL) paradigm. To this aim we present results published in \cite{DBLP:conf/ches/CagliDP17}, where Convolutional Neural Networks are proposed to help against misalignment-oriented countermeasures. Actually, the term Time-Delay Neural Network (TDNN) would be more appropriated than Convolutional Neural Network. Indeed the TDNNs  \cite{lang1990time} consist in the Convolutional Neural Networks applied to one-dimensional data, as side-channel traces are. Nevertheless, the fame that CNNs reached in last years, and especially since 2012, where a CNN architecture (the \textquotedbl AlexNet\textquotedbl) \cite{KSH12}  won the \emph{ImageNet Large Scale Visual Recognition Challenge}, a large-impact image recognition contest, leads to the disappearing of term TDNN from DL literature. Today, to specify the architecture of a TDNN in the most common DL libraries, one needs to exploit functionalities related to the CNNs' architecture, specifying \eg that one of the input dimensions equals 1. For these reasons we kept the term CNN for our discussion. 
@@ -386,17 +389,17 @@ $c$        & $d$       & 76.8\%            & 7                & 82.5\%          
 A classical hardware countermeasure against side-channel attacks consists in introducing instability in the clock. This implies the cumulation of a deforming effect that affects each single acquired clock cycle, and provokes traces misalignment on the adversary side. Indeed, since clock cycles do not have the same duration, they are sampled during the attack by a varying number of time samples. As a consequence, a simple translation of the acquisitions is not sufficient in this case to align with respect to an identified clock cycle. Several realignment techniques are available to manage this kind of deformations, \eg \cite{van2011improving}. In this context, our goal is to show that  we can get rid of the realignment pre-processing, letting the CNN deep structure take it in charge implicitly. 
 
 \subsection{Performances over Artificial Augmented Clock Jitter}\label{sec:artificial}
-In this section we present the results that we obtained over two datasets named \emph{DS\_low\_jitter} and \emph{DS\_high\_jitter}. Each one contains $10,000$ labelled traces, used for the training phase (more precisely, $9,000$ are used for the training, and $1,000$ for the validation), and $100,000$ attack traces. The traces are composed of $1,860$ time samples. The two datasets have been obtained by artificially adding a simulated jitter effect over some synchronised original traces. The original traces were measured on the same Atmega328P microprocessor used in the previous section. We verified that they originally encompass leakage on 34 instructions: 2 \emph{nops}, 16 loads from the NVM and 16 accesses to look-up tables. For our attack experiments, it is assumed that the target is the first look-up table access, \ie the 19th clock cycle. As in the previous section, the target is assumed to take the form $\sensRandVar=\HW(\Sbox(P\oplus \keyRandVar))$. To simulate the jitter effect we used the technique described in Appendix~\ref{appendix:artificial_jitter}, fixing parameters $\texttt{sigma}=4$, $\texttt{B}=2$ for the \emph{DS\_low\_jitter} dataset,  and $\texttt{sigma}=6$, $\texttt{B}=4$ for the \emph{DS\_high\_jitter} dataset. As an example, some traces of  \emph{DS\_low\_jitter} are depicted in  Fig.~\ref{fig:jitter_traces22}: the cumulative effect of the jitter is observable by remarking that the desynchronisation raises with time. Some traces of \emph{DS\_high\_jitter} are depicted in Fig.~\ref{fig:jitter_traces66}. For both datasets we did not operate any PoI selection, but entered the entire traces into our CNN.
+In this section we present the results that we obtained over two datasets named \emph{DS\_low\_jitter} and \emph{DS\_high\_jitter}. Each one contains $10,000$ labelled traces, used for the training phase (more precisely, $9,000$ are used for the training, and $1,000$ for the validation), and $100,000$ attack traces. The traces are composed of $1,860$ time samples. The two datasets have been obtained by artificially adding a simulated jitter effect over some synchronised original traces. The original traces were measured on the same Atmega328P microprocessor used in the previous section. We verified that they originally encompass leakage on 34 instructions: 2 \emph{nops}, 16 loads from the NVM and 16 accesses to look-up tables. For our attack experiments, it is assumed that the target is the first look-up table access, \ie the 19th clock cycle. As in the previous section, the target is assumed to take the form $\sensRandVar=\HW(\Sbox(P\oplus \keyRandVar))$. To simulate the jitter effect we used the technique described in Appendix~\ref{appendix:artificial_jitter}, fixing parameters $\texttt{sigma}=4$, $\texttt{B}=2$ for the \emph{DS\_low\_jitter} dataset,  and $\texttt{sigma}=6$, $\texttt{B}=4$ for the \emph{DS\_high\_jitter} dataset. In the same Appendix~\ref{appendix:artificial_jitter},  some traces of  \emph{DS\_low\_jitter} and  \emph{DS\_high\_jitter} are depicted (respectively in Fig.~\ref{fig:jitter_traces22} and in Fig.~\ref{fig:jitter_traces66}): the cumulative effect of the jitter is observable by remarking that the desynchronisation raises with time. For both datasets we did not operate any PoI selection, but entered the entire traces into our CNN.
 
-
-\begin{figure}
-\centering
-\subfigure[]{\label{fig:jitter_traces22}
-\includegraphics[width=\textwidth]{../Figures/CHES2017/jitter_2_2_framed.png} }
-\subfigure[]{\label{fig:jitter_traces66}
-\includegraphics[width=\textwidth]{../Figures/CHES2017/jitter_6_6_framed.png} }
-\caption[Hardware misalignment: \emph{DS\_low\_jitter} and \emph{DS\_high\_jitter} datasets.]{\subref{fig:jitter_traces22}  some traces of the \emph{DS\_low\_jitter} dataset, a zoom of the part highlighted by the red rectangle is given in the bottom part. \subref{fig:jitter_traces22} some traces of the \emph{DS\_high\_jitter} dataset. The interesting clock cycle is highlighted by the grey rectangular area.}\label{fig:jitter_traces}
-\end{figure}
+%
+%\begin{figure}
+%\centering
+%\subfigure[]{\label{fig:jitter_traces22}
+%\includegraphics[width=\textwidth]{../Figures/CHES2017/jitter_2_2_framed.png} }
+%\subfigure[]{\label{fig:jitter_traces66}
+%\includegraphics[width=\textwidth]{../Figures/CHES2017/jitter_6_6_framed.png} }
+%\caption[Hardware misalignment: \emph{DS\_low\_jitter} and \emph{DS\_high\_jitter} datasets.]{\subref{fig:jitter_traces22}  some traces of the \emph{DS\_low\_jitter} dataset, a zoom of the part highlighted by the red rectangle is given in the bottom part. \subref{fig:jitter_traces22} some traces of the \emph{DS\_high\_jitter} dataset. The interesting clock cycle is highlighted by the grey rectangular area.}\label{fig:jitter_traces}
+%\end{figure}
 
 
 %

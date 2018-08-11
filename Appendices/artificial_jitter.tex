@@ -31,12 +31,15 @@ def enlarge_reduce_window(window,sigma,B):
     
 \end{lstlisting}
 
-This deformation is applied to each clock pattern independently. We remark that is implies that, for example, The 19th clock cycle of a deformed acquisition suffers from the cumulation of the previous 18 deformations. For the sake of visualizing the effect of such a jitter simulation, in Fig.~\ref{fig:jitter_traces} we depict some traces of  \emph{DS\_low\_jitter} and of the \emph{DS\_high\_jitter} datasets, used for experiments in Sec~.\ref{sec:hard}. They are obtained by perfectly synchronous acquisitions, with parameters set to \texttt{sigma} $= 2$, \texttt{B}$= 2$ for the \emph{DS\_low\_jitter}  dataset and \texttt{sigma} $= 6$, \texttt{B}$= 6$ for the \emph{DS\_high\_jitter} one.
+This deformation is applied to each clock pattern independently. We remark that is implies that, for example, The 19th clock cycle of a deformed acquisition suffers from the cumulation of the previous 18 deformations. For the sake of visualizing the effect of such a jitter simulation, in Fig.~\ref{fig:jitter_traces} we depict some traces of  \emph{DS\_low\_jitter} \ref{fig:jitter_traces22} and of the \emph{DS\_high\_jitter} \ref{fig:jitter_traces66} datasets, used for experiments in Sec~.\ref{sec:hard}. They are obtained by perfectly synchronous acquisitions, with parameters set to \texttt{sigma} $= 2$, \texttt{B}$= 2$ for the \emph{DS\_low\_jitter}  dataset and \texttt{sigma} $= 6$, \texttt{B}$= 6$ for the \emph{DS\_high\_jitter} one.
+
 
 \begin{figure}
-\includegraphics[width=.5\textwidth]{../Figures/CHES2017/jitter_2_2_framed.png} 
-\includegraphics[width=.5\textwidth]{../Figures/CHES2017/jitter_6_6_framed.png} 
-\caption[]{Left: some traces of the \emph{DS\_low\_jitter} dataset, a zoom of the part highlighted by the red rectangle is given in the bottom part. Right: some traces (and the relative) of the \emph{DS\_high\_jitter} dataset. The interesting clock cycle for experiments in Sec.~\ref{sec:hard} is highlighted by the grey rectangular area.}\label{fig:jitter_traces}
+\centering
+\subfigure[]{\label{fig:jitter_traces22}
+\includegraphics[width=\textwidth]{../Figures/CHES2017/jitter_2_2_framed.png} }
+\subfigure[]{\label{fig:jitter_traces66}
+\includegraphics[width=\textwidth]{../Figures/CHES2017/jitter_6_6_framed.png} }
+\caption[Hardware misalignment: \emph{DS\_low\_jitter} and \emph{DS\_high\_jitter} datasets.]{\subref{fig:jitter_traces22}  some traces of the \emph{DS\_low\_jitter} dataset, a zoom of the part highlighted by the red rectangle is given in the bottom part. \subref{fig:jitter_traces22} some traces of the \emph{DS\_high\_jitter} dataset. The interesting clock cycle is highlighted by the grey rectangular area.}\label{fig:jitter_traces}
 \end{figure}
-
 
