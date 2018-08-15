@@ -10,15 +10,38 @@
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 
-\section{Summary}
-% ci siamo accorti che i nostri problemi non erano solo nostri
+\section{Conclusions}
+In this thesis, we focused over issues related to the side-channel profiling attacks, which play a fundamental role in the context of the evaluation of cryptographic secure devices. The opportunity of performing a characterisation of the device leakages opens the way to an optimal approach, allowing the estimation of the conditional probabilities needed to identify the target key through maximum likelihood. Nevertheless, the attempt to estimate the probability distributions of highly multi-dimensional data is hindered by the curse of dimensionality. Our first efforts were thus
+ focused over the development of dimensionality reduction techniques, and we proposed two works on this topic.\\
+ 
+First, in Chapter~\ref{ChapterLinear}, we presented an analysis of linear dimensionality reduction techniques, that had already been introduced in side-channel context before 2014, the PCA and the LDA. These techniques extract interesting features from data by means of linear combinations of time samples. Despite the fact that the LDA is mainly a technique that allows to build a linear classifier, it is its dimensionality reduction version, known as Fisher's Linear Discriminant that raised attention in side-channel context. We followed this trail, and exploited both PCA and LDA as preliminary phases for a Gaussian template attack. In this context, we tackled some open issues, in particular the problem of the component selections, proposing an automatic criterion to perform the choice, namely the ELV.  The obtained results were published at CARDIS 2015 \cite{Cagli2016}.\\
+
+In a second work we enlarged the linear model to non-linear ones, in order to treat the dimensionality reduction issue in presence of masking countermeasure. We focused on the rarely considered case in which the profiling phase does not enable the access to the randomly drawn masks. In this context we proposed a non-linear generalisation  of the LDA method, namely the KDA equipped with a polynomial kernel function. This KDA extracts features from signals through products of time samples (up to a fixed polynomial degree) and linear combinations. Even in this case, despite the KDA may naturally provide a non-linear classifier, the KDA application in our study were intended as preliminary phase of a Gaussian template attacks. The obtained results of this contribution were published at CARDIS 2016 \cite{cagli2016kernel}.
+
+
+ The third contribution of this thesis, presented in Chapter~\ref{ChapterCNN}, explores the Neural Networks models. Such models are a further generalisations of techniques like LDA and KDA: they extract features from data by means of several layers of linear combinations and non-linear functions. Neural Networks are widely used to build non-linear classifiers. Differently from the LDA classifier, NN ones may and may be easily constructed in a multi-class manner, and in such a way to that classification scores have a probabilistic meaning. In this way they are directly suitable for advanced side-channel attacks. Choosing this kind of construction, we could substitute the typical side-channel profiling routine divided into dimensionality reduction and Gaussian profiles estimation, with an integrated approach that directly extracts significant feature and estimates posterior probabilities. In this case such estimation dispensed of  the Gaussian hypothesis about data distribution, not justifiable \textit{a priori}. The estimation is guided by a single optimization criterion, aiming at reducing the classification error. The optimization algorithm is not in a closed form as for LDA and KDA technique, and there is no guaranties about the existence/uniqueness of a solution and the fact that the optimization algorithm is eventually able to find the solution. Anyway, many Machine Learning techniques are funded over the acceptance of this intrinsic non-optimality, and face in this way the curse of dimensionality that prohibit perfect estimations. Anyway, they demonstrate their validity in many real applications, and in side-channel analysis as well. In our contribution, iwe took advantage of the Convolutional Neural Network models, and we proposed some Data Augmentation techniques, to tackle the hiding countermeasures inducing misalignment in side-channel acquisitions. The obtained results were published at CHES 2017 \cite{DBLP:conf/ches/CagliDP17}.\\
+ 
+
+
+
 
 \section{Tracks for Future Works}
+
+The common thread of this thesis is the constantly growing awareness of the fact that practical problems we were facing in side-channel domain, were almost identical to those faced in many other domains. In particular, today an immense and still expansing number of applicative fields are based on the sense and the analysis of a huge quantify of highly multi-dimensional data, and all of them have to tackle the curse of dimensionality. The preliminary purpose of these researches was to determine a way to select features among the sensed ones, \ie select time samples. This approach implies a critical waste of potentially useful information, and we turned as soon as possible to methodologies aiming constructing new interesting features by means of increasingly complex models. This required a conversion of side-channel problems from a classical statistical asset into a Machine Learning one, and we believe that this conversion process should be pursued in future works.\\
+
+A first issue we left open is explicitly related to such a conversion. We exploited classifiers to perform advanced side-channel attacks. Nevertheless we observed that the classification task perfectly match with the simple attack scenario. Specialized metrics and optimization criteria should be proposed to tackle advanced attacks: the final goal of an advanced attack is indeed the identification of a secret value by means of the multiple observations, which does not coincide in general with the classification of the observations by the sensitive variable labels. Explicit this final goal to the Machine Learning tool may lead to great advantages. Moreover 
+
+% BAYESIAN APPROACH...and bayesian deep learning    \url{https://alexgkendall.com/computer_vision/bayesian_deep_learning_for_safe_ai/}
+
+Second, we remarked that the classical verification task perfectly match with the current collision attacks in side-channel domain. This topic is not developed in this thesis, but we already focused on the possibility of exploiting some so-called \emph{Siamese Neural Networks}, specialised for the verification task, to perform collision attacks. We obtained some promising preliminary results. \\
+
+Convinced 
+
 \subsection{Towards a Side-Channel Deep Learning Community}
+
+
 ASCAD\\
 definition of a DPA-specific machine learning task and proposition for specific metrics (\eg loss function, evaluation metrics...)
-\subsection{Bayesian Inference}
-and Bayesian Deep Learning...see \url{https://alexgkendall.com/computer_vision/bayesian_deep_learning_for_safe_ai/}
 
 \subsection{Strengthen Embedded Security against Powerful Increasing Machine Learning Attackers}
 from a successful attack understand which part of execution most contribute for the success...
