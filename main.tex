@@ -277,16 +277,16 @@ headsepline, % Uncomment to get a line under the header
 %	THESIS INFORMATION
 %----------------------------------------------------------------------------------------
 
-\thesistitle{Thesis Title} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
-\supervisor{Dr. James \textsc{Smith}} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
+\thesistitle{Titre de la Th\`ese} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
+\supervisor{Emmanuel \textsc{PROUFF}} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
 \examiner{} % Your examiner's name, this is not currently used anywhere in the template, print it elsewhere with \examname
-\degree{Doctor of Philosophy} % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
-\author{John \textsc{Smith}} % Your name, this is used in the title page and abstract, print it elsewhere with \authorname
+\degree{Docteur} % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
+\author{Eleonora \textsc{CAGLI}} % Your name, this is used in the title page and abstract, print it elsewhere with \authorname
 \addresses{} % Your address, this is not currently used anywhere in the template, print it elsewhere with \addressname
 
-\subject{Biological Sciences} % Your subject area, this is not currently used anywhere in the template, print it elsewhere with \subjectname
+\subject{Informatique} % Your subject area, this is not currently used anywhere in the template, print it elsewhere with \subjectname
 \keywords{} % Keywords for your thesis, this is not currently used anywhere in the template, print it elsewhere with \keywordnames
-\university{\href{http://www.university.com}{University Name}} % Your university's name and URL, this is used in the title page and abstract, print it elsewhere with \univname
+\university{\href{www.sorbonne-universite.fr}{Sorbonne Universit\'e}} % Your university's name and URL, this is used in the title page and abstract, print it elsewhere with \univname
 \department{\href{http://department.university.com}{Department or School Name}} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
 \group{\href{http://researchgroup.university.com}{Research Group Name}} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
 \faculty{\href{http://faculty.university.com}{Faculty Name}} % Your faculty's name and URL, this is used in the title page and abstract, print it elsewhere with \facname
@@ -308,42 +308,72 @@ headsepline, % Uncomment to get a line under the header
 %----------------------------------------------------------------------------------------
 
 \begin{titlepage}
+\includegraphics[height = 20mm]{LOGO_SU.jpg}
+\hfill
+\includegraphics[height = 20mm]{LOGO_LIP6}
 \begin{center}
 
-\vspace*{.06\textheight}
-{\scshape\LARGE \univname\par}\vspace{1.5cm} % University name
-\textsc{\Large Doctoral Thesis}\\[0.5cm] % Thesis type
+\vspace*{.04\textheight}
+{\scshape\huge Sorbonne Universit\'e\par}\vspace{1.0cm} % University name
+\textsc{\Large Ecole Doctorale n$^\circ$ 130 }\\
+\textsc{\large Informatique, T\'el\'ecommunications, \'Electronique de Paris}\\[0.3cm]
+\textsc{\large Laboratoire d'Informatique de Paris 6 }\\[0.5cm]
 
-\HRule \\[0.4cm] % Horizontal line
+
+\HRule \\[0.3cm] % Horizontal line
 {\huge \bfseries \ttitle\par}\vspace{0.4cm} % Thesis title
-\HRule \\[1.5cm] % Horizontal line
- 
-\begin{minipage}[t]{0.4\textwidth}
-\begin{flushleft} \large
-\emph{Author:}\\
-\href{http://www.johnsmith.com}{\authorname} % Author name - remove the \href bracket to remove the link
-\end{flushleft}
-\end{minipage}
-\begin{minipage}[t]{0.4\textwidth}
-\begin{flushright} \large
-\emph{Supervisor:} \\
-\href{http://www.jamessmith.com}{\supname} % Supervisor name - remove the \href bracket to remove the link  
-\end{flushright}
-\end{minipage}\\[3cm]
- 
-\vfill
+{\LARGE \bfseries Sous-titre \par}\vspace{0.4cm} % Thesis title
+\HRule \\[1.0cm] % Horizontal line
 
-\large \textit{A thesis submitted in fulfillment of the requirements\\ for the degree of \degreename}\\[0.3cm] % University requirement text
-\textit{in the}\\[0.4cm]
-\groupname\\\deptname\\[2cm] % Research group name and department name
- 
-\vfill
+\textsc{\Large Par }\href{}{\large \authorname}\\
+\textsc{Th\`ese de Doctorat de Informatique???}
 
-{\large \today}\\[4cm] % Date
-%\includegraphics{Logo} % University/department logo - uncomment to place it
- 
-\vfill
+\vspace*{.04\textheight}
+\textsc{Dirig\'ee par }\href{}{\supname}\\
+\textsc{Encadr\'ee par} C\'ecile \textsc{DUMAS}
+% 
+%\begin{minipage}[t]{0.4\textwidth}
+%\begin{flushleft} \large
+%\textsc{Par}
+%\href{}{\authorname}\\ % Author name - remove the \href bracket to remove the link
+%\textsc{Th\`ese de Doctorat de Informatique???}
+%\end{flushleft}
+%\end{minipage}
+%\begin{minipage}[t]{0.4\textwidth}
+%\begin{flushright} \large
+%\emph{Dirig\'ee par}
+%\href{}{\supname}\\% Supervisor name - remove the \href bracket to remove the link  
+%\emph{Encadr\'ee par} C\'ecile \textsc{DUMAS}
+%\end{flushright}
+%\end{minipage}\\[3cm]
+
+\vspace*{.04\textheight}
+\emph{Pr\'esent\'ee et soutenue publiquement le JJ/MM/AAAA}
 \end{center}
+
+
+\begin{minipage}[t]{\textwidth}
+\emph{Devant un jury compos\'e de:}\\
+Pr\'esident du Jury \hfill \textsc{Aaa BBB, } \textit{CCC}\\
+Rapporteur \hfill \textsc{Aaa BBB, } \textit{CCC}\\
+Rapporteur \hfill \textsc{Ddd EEE, } \textit{FFF}\\
+Examinateur \hfill \textsc{Ggg HHH, } \textit{III}\\
+Examinateur \hfill \textsc{Lll Mmm, } \textit{Nnn}\\
+Directeur de th\`ese \hfill \textsc{Emmanuel PROUFF,} \textit{ANSSI}\\
+Encadrante \hfill \textsc{C\'ecile DUMAS,} \textit{CEA Grenoble}
+
+\end{minipage}
+%\large \textit{A thesis submitted in fulfillment of the requirements\\ for the degree of \degreename}\\[0.3cm] % University requirement text
+%\textit{in the}\\[0.4cm]
+%\groupname\\\deptname\\[2cm] % Research group name and department name
+% 
+%\vfill
+%
+%{\large \today}\\[4cm] % Date
+%%\includegraphics{Logo} % University/department logo - uncomment to place it
+% 
+%\vfill
+
 \end{titlepage}
 
 %----------------------------------------------------------------------------------------
