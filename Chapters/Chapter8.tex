@@ -2,6 +2,7 @@
 
 \chapter{Convolutional Neural Networks} % Main chapter title
 \label{ChapterCNN}
+\setlength{\epigraphwidth}{0.3\textwidth}
 
 \epigraph{\textit{Aiutiamoli a fare da soli!}\newline
 \footnotesize{\textit{Let's help them to do themselves!}}}{--- \textup{Maria Montessori}}
@@ -107,7 +108,7 @@ where the vector $\vec{\sensVar_i}$ denotes the one-hot encoding of the value of
 There are two ways to interpret such a choice. 
 
 \begin{itemize}
-\item First, recalling that $\vNNOutput_i$ may be interpreted as an estimation of the conditional probability $\prob[\given{\sensRandVar}{\vaLeakVec=\vLeakVec_i}]$, the maximum-likelihood principle suggests to drive the training in such a way that for such an estimate the probability of the correct label $\sensVar_i$ is as high as possible. Thus, if we suppose that $\sensVar_i = \sensVarValue{j}$, we want to maximize $\vNNOutput_i[j]$ (or equivalently to minimize $-\log{\vNNOutput_i[j]}$).\footnote{We remark that thanks to the softmax function used as last network layer, each coordinate of $\vNNOutput_i$ is always strictly positive.} It may be observed that, thanks to the one-hot encoding, in which all entries of $\sensVarOneHot{j}$ are null but the $j$th one, such a log-likelihood rewrites as 
+\item First, recalling that $\vNNOutput_i$ may be interpreted as an estimation of the conditional probability $\prob[\given{\sensRandVar}{\vaLeakVec=\vLeakVec_i}]$, the maximum-\textit{a-posterior} principle suggests to drive the training in such a way that for such an estimate the probability of the correct label $\sensVar_i$ is as high as possible. Thus, if we suppose that $\sensVar_i = \sensVarValue{j}$, we want to maximize $\vNNOutput_i[j]$ (or equivalently to minimize $-\log{\vNNOutput_i[j]}$).\footnote{We remark that thanks to the softmax function used as last network layer, each coordinate of $\vNNOutput_i$ is always strictly positive.} It may be observed that, thanks to the one-hot encoding, in which all entries of $\sensVarOneHot{j}$ are null but the $j$th one, such a log-likelihood rewrites as 
 \begin{equation}\label{eq:log_lik}
 -\log{\vNNOutput_i[j]} = -\sum_{t=1}^{|\sensVarSet|}\vec{\sensVar_i}[t]\log{\vNNOutput_i[t]} \mbox{ ,}
 \end{equation}
@@ -118,7 +119,7 @@ which equals the quantity averaged in \eqref{eq:lossfunction}.
 \end{equation}
 where $\entropy$ denotes the entropy and $D_{KL}$ denotes the Kullback-Leibler divergence \cite{christopher2006pattern}. Thus, this is an information-theoretic notion, that comes out to be equivalent to the negative log-likelihood formula given by \eqref{eq:log_lik}. 
 \end{itemize}
-In conclusion, depending on the point of view, minimizing the loss function \eqref{eq:log_lik}, which is a cross-entropy averaged over the traces contained in a batch, corresponds to maximising the likelihood of the right label, or to minimize the dissimilarity between the network estimation of a distribution and the right distribution that we want it to approximate. 
+In conclusion, depending on the point of view, minimizing the loss function \eqref{eq:log_lik}, which is a cross-entropy averaged over the traces contained in a batch, corresponds to maximising the \textit{a-posterior} probability of the right label, or to minimize the dissimilarity between the network estimation of a distribution and the right distribution that we want it to approximate. 
 We chose the loss function \eqref{eq:lossfunction} for our experiments. However, other metrics may be investigated and can
 potentially lead to better results \cite{MHK10,SSZU15}. \\
 

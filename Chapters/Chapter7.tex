@@ -2,6 +2,9 @@
 
 \chapter{Kernel Discriminant Analysis} % Main chapter title
 \label{ChapterKernel}
+\setlength{\epigraphwidth}{0.3\textwidth}
+\epigraph{\textit{All models are wrong, but some are useful.}}{--- \textup{George E. P. Box}}
+
 
 In this chapter, we tackle the dimensionality reduction problem in the context of profiling attacks against implementations protected by masking countermeasure. For such attacks, the attacker might have or not access to the  random values drawn at every execution and used to mask the sensitive variables. If he has such a knowledge, then the dimensionality reduction problem turns to be equivalent to the case of unprotected implementations. Thus, the classic statistics for the PoIs search and the linear dimensionality reduction techniques described in the previous chapter are still applicable and efficient. On the contrary, when when the knowledge of the random values is denied, linear techniques are \emph{a priori} inefficient: a non-linear function of the PoIs must be considered in order to construct discriminant features from side-channel observations. In this chapter we propose to make use of Kernel Discriminant Analysis (KDA) technique to construct such a non-linear processing. To this aim we revisit the contents and the experimental results of the paper presented at CARDIS 2016 international conference \cite{cagli2016kernel}. After such a publication, the KDA has been compared to other non-linear dimensionality reduction techniques in \cite{manifold}, where manifold learning solutions such as ISOMAP, Locally Linear Embedding and Laplacian Eigenmaps are proposed. Moreover, a use of the KDA in an unsupervised way to perform a higher-order SCA (as a key candidate distinguisher and not as a dimensionality reduction technique) has been proposed at CARDIS 2017 \cite{zhou2017novel}.
 
