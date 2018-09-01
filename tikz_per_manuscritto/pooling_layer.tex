@@ -1,0 +1,115 @@
+
+\pgfmathsetmacro{\vOneOne}{8}
+\pgfmathsetmacro{\vTwoOne}{15}
+\pgfmathsetmacro{\vThreeOne}{10}
+\pgfmathsetmacro{\vFourOne}{9}
+\pgfmathsetmacro{\vFiveOne}{7}
+\pgfmathsetmacro{\vSixOne}{0}
+\pgfmathsetmacro{\vOneTwo}{1}
+\pgfmathsetmacro{\vTwoTwo}{11}
+\pgfmathsetmacro{\vThreeTwo}{25}
+
+\pgfmathsetmacro{\decTer}{0}
+\pgfmathsetmacro{\dimRec}{0.5}
+
+\begin{tikzpicture}
+
+
+
+\draw (\decTer + 2*\dimRec,9.5*\dimRec) node {\small{Before Pooling}	}; 
+\draw (\decTer + 2*\dimRec,0-0.9*\dimRec) node[color=RubineRed!100] {\small{Depth}$=4$	}; 
+
+
+\foreach \j in {0,...,0}
+{ 
+	\foreach \i in {0,...,5} 
+	{
+		\draw[fill=black,opacity=0.1*(\j+1),draw=black]  (\decTer + \j *
+		\dimRec,\i * \dimRec) rectangle (\decTer + \dimRec + \j * \dimRec,\i * \dimRec +
+		\dimRec);
+	}
+}
+
+\foreach \j in {1,...,3}
+{ 
+	\foreach \i in {0,...,8} 
+	{
+		\draw[fill=black,opacity=0.1*(\j+1),draw=black]  (\decTer + \j *
+		\dimRec,\i * \dimRec) rectangle (\decTer + \dimRec + \j * \dimRec,\i * \dimRec +
+		\dimRec);
+	}
+}
+
+
+\draw[fill=green!10,draw=green,line width = 0.1mm,opacity=0.5]   (\decTer + 0 * \dimRec,3 *
+\dimRec) rectangle (\decTer + \dimRec + 0 * \dimRec,3 * \dimRec + \dimRec)
+node[pos=.5,black,opacity=1] {$\vSixOne$}; \draw[fill=green!10,draw=green,line width = 0.1mm,opacity=0.5]   (\decTer + 0 * \dimRec,4 * \dimRec) rectangle (\decTer + \dimRec + 0 *
+\dimRec,4 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {$\vFiveOne$};
+\draw[fill=green!10,draw=green,line width = 0.1mm,opacity=0.5]   (\decTer + 0 * \dimRec,5 *
+\dimRec) rectangle (\decTer + \dimRec + 0 * \dimRec,5 * \dimRec + \dimRec)
+node[pos=.5,black,opacity=1] {$\vFourOne$};
+
+\draw[fill=red!10,draw=red,line width = 0.1mm,opacity=0.5]   (\decTer + 0 * \dimRec,6 *
+\dimRec) rectangle (\decTer + \dimRec + 0 * \dimRec,6 * \dimRec + \dimRec)
+node[pos=.5,black,opacity=1] {$\vThreeOne$}; \draw[fill=red!10,draw=red,line width = 0.1mm,opacity=0.5]   (\decTer + 0 * \dimRec,7 * \dimRec) rectangle (\decTer + \dimRec + 0 *
+\dimRec,7 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {$\vTwoOne$};
+\draw[fill=red!10,draw=red,line width = 0.1mm,opacity=0.5]   (\decTer + 0 * \dimRec,8 *
+\dimRec) rectangle (\decTer + \dimRec + 0 * \dimRec,8 * \dimRec + \dimRec)
+node[pos=.5,black,opacity=1] {$\vOneOne$};
+
+
+\draw[fill=blue!10,draw=blue,line width = 0.1mm,opacity=0.5]   (\decTer + 1 * \dimRec,6 *
+\dimRec) rectangle (\decTer + \dimRec + 1 * \dimRec,6 * \dimRec + \dimRec)
+node[pos=.5,black,opacity=1] {$\vThreeTwo$}; \draw[fill=blue!10,draw=blue,line width = 0.1mm,opacity=0.5]   (\decTer + 1 * \dimRec,7 * \dimRec) rectangle (\decTer + \dimRec + 1 *
+\dimRec,7 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {$\vTwoTwo$};
+\draw[fill=blue!10,draw=blue,line width = 0.1mm,opacity=0.5]   (\decTer + 1 * \dimRec,8 *
+\dimRec) rectangle (\decTer + \dimRec + 1 * \dimRec,8 * \dimRec + \dimRec)
+node[pos=.5,black,opacity=1] {$\vOneTwo$};
+\pgfmathsetmacro{\decFour}{7*\dimRec}
+
+\draw (\decFour + 2*\dimRec,6.5*\dimRec) node {\small{After Pooling}	}; \draw
+(\decFour + 2*\dimRec,3*\dimRec-0.9*\dimRec) node[color=RubineRed!100] {\small{Depth}$=4$	}; 
+
+
+\foreach \j in {1,...,3}
+{ 
+	\foreach \i in {0,...,2} 
+	{
+		\draw[fill=black,opacity=0.1*(\j+1),draw=black]  (\decFour + \j *
+		\dimRec,3 * \dimRec + \i * \dimRec) rectangle (\decFour + \dimRec + \j *
+		\dimRec,3 * \dimRec + \i * \dimRec + \dimRec);
+	}
+}
+
+\foreach \j in {0,...,0}
+{ 
+	\foreach \i in {0,...,1} 
+	{
+		\draw[fill=black,opacity=0.1,draw=black]  (\decFour + \j *
+		\dimRec,3 * \dimRec + \i * \dimRec) rectangle (\decFour + \dimRec + \j *
+		\dimRec,3 * \dimRec + \i * \dimRec + \dimRec);
+	}
+}
+
+\pgfmathtruncatemacro\vAfterPoolingOneOne{round(max(max(\vOneOne,\vTwoOne),\vThreeOne)}
+\pgfmathtruncatemacro\vAfterPoolingOneTwo{round(max(max(\vOneTwo,\vTwoTwo),\vThreeTwo)}
+\pgfmathtruncatemacro\vAfterPoolingTwoOne{round(max(max(\vFourOne,\vFiveOne),\vSixOne)}
+
+\draw[fill=green!10,draw=green,line width = 0.1mm,opacity=0.5]  (\decFour + 0 * \dimRec,3 *
+\dimRec + 1 * \dimRec) rectangle (\decFour + \dimRec + 0 * \dimRec,3 * \dimRec +
+1 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {$\vAfterPoolingTwoOne$};
+
+\draw[fill=red!10,draw=red,line width = 0.1mm,opacity=0.5]  (\decFour + 0 * \dimRec,3 *
+\dimRec + 2 * \dimRec) rectangle (\decFour + \dimRec + 0 * \dimRec,3 * \dimRec +
+2 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {$\vAfterPoolingOneOne$};
+
+\draw[fill=blue!10,draw=blue,line width = 0.1mm,opacity=0.5]  (\decFour + 1 * \dimRec,3 *
+\dimRec + 2 * \dimRec) rectangle (\decFour + \dimRec + 1 * \dimRec,3 * \dimRec +
+2 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {$\vAfterPoolingOneTwo$};
+
+
+\draw[red,dashed] (\decTer + \dimRec,9 * \dimRec) -- (\decFour,6*\dimRec);
+\draw[red,dashed] (\decTer + \dimRec,6 * \dimRec) -- (\decFour,5*\dimRec);
+
+
+\end{tikzpicture}
