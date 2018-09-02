@@ -1,0 +1,101 @@
+\pgfmathsetmacro{\dimRec}{0.5}
+\pgfmathsetmacro{\dimHalf}{0.25}
+
+
+\begin{tikzpicture}
+\linespread{0.4}
+
+\draw (0.3,9.5*\dimRec) node[color=RubineRed!100] {\small{Temporal Features}	}; 
+\draw (-0.2,4.5*\dimRec) node[rotate=90,color=black] {\small{Side-Channel Trace}	}; 
+
+
+\draw[fill=black,opacity=0.1,draw=black]  (0,1 * \dimRec) rectangle
+(\dimRec,1 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+\draw[fill=black,opacity=0.1,draw=black]  (0,2 * \dimRec) rectangle
+(\dimRec,2 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+\draw[fill=black,opacity=0.1,draw=black]  (0,3 * \dimRec) rectangle
+(\dimRec,3 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+\draw[fill=black,opacity=0.1,draw=black]  (0,4 * \dimRec) rectangle
+(\dimRec,4 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+\draw[fill=black,opacity=0.1,draw=black]  (0,5 * \dimRec) rectangle
+(\dimRec,5 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+\draw[fill=black,opacity=0.1,draw=black]  (0,6 * \dimRec) rectangle
+(\dimRec,6 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+\draw[fill=black,opacity=0.1,draw=black]  (0,7 * \dimRec) rectangle
+(\dimRec,7 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+\draw[fill=black,opacity=0.1,draw=black]  (0,8 * \dimRec) rectangle
+(\dimRec,8 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+
+\pgfmathsetmacro{\dimBis}{3*\dimRec}
+
+\draw (\dimBis-0.3,2*\dimRec) node[text width=1cm,color=ProcessBlue!100] {\tiny{CONV+ ACT+ POOL}	}; 
+
+\draw[fill=black,opacity=0.1,draw=black]  (\dimBis,3 * \dimRec) rectangle
+(\dimBis+\dimRec,3 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+\draw[fill=black,opacity=0.1,draw=black]  (\dimBis,4 * \dimRec) rectangle
+(\dimBis+\dimRec,4 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+\draw[fill=black,opacity=0.1,draw=black]  (\dimBis,5 * \dimRec) rectangle
+(\dimBis+\dimRec,5 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+\draw[fill=black,opacity=0.1,draw=black]  (\dimBis,6 * \dimRec) rectangle
+(\dimBis+\dimRec,6 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+
+\draw[fill=black,opacity=0.2,draw=black]  (\dimBis+1*\dimRec,3 * \dimRec) rectangle
+(\dimBis+\dimRec+1*\dimRec,3 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+\draw[fill=black,opacity=0.2,draw=black]  (\dimBis+1*\dimRec,4 * \dimRec) rectangle
+(\dimBis+\dimRec+1*\dimRec,4 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+\draw[fill=black,opacity=0.2,draw=black]  (\dimBis+1*\dimRec,5 * \dimRec) rectangle
+(\dimBis+\dimRec+1*\dimRec,5 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+\draw[fill=black,opacity=0.2,draw=black]  (\dimBis+1*\dimRec,6 * \dimRec) rectangle
+(\dimBis+\dimRec+1*\dimRec,6 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+
+\pgfmathsetmacro{\dimTer}{7*\dimRec}
+
+\draw (\dimTer-0.3,3*\dimRec) node[text width=1cm,color=ProcessBlue!100] {\tiny{CONV+ ACT+ POOL}	}; 
+
+
+\draw[fill=black,opacity=0.1,draw=black]  (\dimTer,4 * \dimRec) rectangle
+(\dimTer+\dimRec,4 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+\draw[fill=black,opacity=0.1,draw=black]  (\dimTer,5 * \dimRec) rectangle
+(\dimTer+\dimRec,5 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+
+\draw[fill=black,opacity=0.2,draw=black]  (\dimTer+1*\dimRec,4 * \dimRec) rectangle
+(\dimTer+\dimRec+1*\dimRec,4 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+\draw[fill=black,opacity=0.2,draw=black]  (\dimTer+1*\dimRec,5 * \dimRec) rectangle
+(\dimTer+\dimRec+1*\dimRec,5 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+
+\draw[fill=black,opacity=0.3,draw=black]  (\dimTer+2*\dimRec,4 * \dimRec) rectangle
+(\dimTer+\dimRec+2*\dimRec,4 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+\draw[fill=black,opacity=0.3,draw=black]  (\dimTer+2*\dimRec,5 * \dimRec) rectangle
+(\dimTer+\dimRec+2*\dimRec,5 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+
+\draw[fill=black,opacity=0.4,draw=black]  (\dimTer+3*\dimRec,4 * \dimRec) rectangle
+(\dimTer+\dimRec+3*\dimRec,4 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+\draw[fill=black,opacity=0.4,draw=black]  (\dimTer+3*\dimRec,5 * \dimRec) rectangle
+(\dimTer+\dimRec+3*\dimRec,5 * \dimRec + \dimRec) node[pos=.5,black,opacity=1] {};
+
+\pgfmathsetmacro{\dimQua}{13*\dimRec}
+
+\draw (\dimQua-0.3,3*\dimRec+\dimHalf) node[text width=1cm,color=ProcessBlue!100] {\tiny{CONV+ ACT+ POOL}	}; 
+
+
+\foreach \j in {0,...,7}
+{
+	\draw[fill=black,opacity=0.1+\j*0.1,draw=black]  (\dimQua+\j*\dimRec,4 * \dimRec+\dimHalf) rectangle
+	(\dimQua+\j*\dimRec+\dimRec,4 * \dimRec + \dimRec+\dimHalf) node[pos=.5,black,opacity=1] {};
+}
+
+\draw (\dimQua+ 4*\dimRec,6*\dimRec) node[color=RubineRed!100] {\small{Abstract Features}	}; 
+
+\pgfmathsetmacro{\dimCin}{23*\dimRec}
+
+\draw (\dimCin-0.3,4*\dimRec) node[text width=1cm,color=ProcessBlue!100] {\tiny{FC + Softmax}	}; 
+
+
+\draw[fill=blue,draw=black]  (\dimCin,4 * \dimRec+\dimHalf) rectangle
+(\dimCin+\dimRec,4 * \dimRec + \dimRec+\dimHalf) node[pos=.5,black,opacity=1] {};
+\draw[fill=red,draw=black]  (\dimCin+\dimRec,4 * \dimRec+\dimHalf) rectangle
+(\dimCin+2*\dimRec,4 * \dimRec + \dimRec+\dimHalf) node[pos=.5,black,opacity=1] {};
+
+\draw (\dimCin+ \dimRec,6*\dimRec) node[color=black] {\small{Scores}	}; 
+
+\end{tikzpicture}
