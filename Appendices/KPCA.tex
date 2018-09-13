@@ -104,10 +104,10 @@ Suppose now that we want to perform a class-oriented PCA in the image space of a
 where $\SB^\Phi$ is the between-scatter matrix in the feature space: 
 
 \begin{equation}
-\SB^\Phi = \sum_{\sensVar\in\sensVarSet}\nbTracesPerClass(\mmmXclassPhi-\mmmXPhi)(\mmmXclassPhi-\mmmXPhi)^\intercal \mbox{ .}
+\SB^\Phi = \sum_{\sensVarGenValue\in\sensVarSet}\nbTracesPerClass(\mmmXclassPhi-\mmmXPhi)(\mmmXclassPhi-\mmmXPhi)^\intercal \mbox{ .}
 \end{equation}
 
-Here $\mmmXclassPhi = \frac{1}{\nbTracesPerClass}\sum_{i=1\colon \sensVar_i=\sensVar}\Phi(\vLeakVec_{i})$ and $\mmmXPhi = \frac{1}{\nbProfilingTraces}\sum_{i=1}^{\nbProfilingTraces}\Phi(\vLeakVec_{i})$.\\
+Here $\mmmXclassPhi = \frac{1}{\nbTracesPerClass}\sum_{i=1\colon \sensVar_i=\sensVarGenValue}\Phi(\vLeakVec_{i})$ and $\mmmXPhi = \frac{1}{\nbProfilingTraces}\sum_{i=1}^{\nbProfilingTraces}\Phi(\vLeakVec_{i})$.\\
 
 As before, the eigenvectors $\AAlpha^\Phi_i$ are expressible as linear combination of the data images on $\mathcal{F}$, i.e. \eqref{eq:linearComb} is still true:
 
@@ -124,10 +124,14 @@ Moreover as before, the eigenvector problem \eqref{eq:eigProblemSB} can be trans
 where the matrix $\MMM$ is computed as
 
 \begin{equation}
-\MMM = \sum_{\sensVar\in\sensVarSet}\nbTracesPerClass(\MMMclass - \MMMT)(\MMMclass-\MMMT)\mbox{ ,}
+\MMM = \sum_{\sensVarGenValue\in\sensVarSet}\nbTracesPerClass(\MMMclass - \MMMT)(\MMMclass-\MMMT)\mbox{ ,}
 \end{equation}
 
-where $\MMMclass[j] = \frac{1}{\nbTracesPerClass}\sum_{i=1\colon \sensVar_i=\sensVar}K(\vLeakVec_{j},\vLeakVec{i})$ is an $\nbProfilingTraces$-sized column vector, and $\MMMT[j] = \frac{1}{\nbProfilingTraces}\sum_{i=1}^{\nbProfilingTraces}K(\vLeakVec_{j},\vLeakVec_{i})$.\\
+with $\MMMclass$ and $\MMMT$ being two $N$-sized vectors whose entries are given by:
+\begin{align}
+\MMMclass[\sensVarGenValue][j] = \frac{1}{\nbTracesPerClass}\sum_{i:\sensVar_i=\sensVarGenValue}K(\vLeakVec_j,\vLeakVec_i)\\
+\MMMT[j] = \frac{1}{\nbTrainingTraces}\sum_{i=1}^{\nbTrainingTraces}K(\vLeakVec_{j},\vLeakVec_{i}) \mbox{ .}
+\end{align}
 
 Finally, one the eigenvector $\nununu$ are found, to project a datum $\vLeakVec_{}$ onto the corresponding principal component in the feature space we proceed as in the previous case:
 
