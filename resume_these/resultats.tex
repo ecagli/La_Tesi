@@ -1,30 +1,31 @@
-\section{Résultats principaux}\label{sec:res}
+\section{R\'{e}sultats principaux}\label{sec:res}
 
 \subsection{Notations}
-Dans la thèse, le symbol $X$ désigne une variable aléatoire ($\vec{X}$ pour un vecteur colonne aléatoire) sur un ensemble $\mathcal{X}$, et $x$ (respectivement $\vec{x}$) désigne une réalisation de $X$ (respectivement $\vec{X}$). 
-La $i$-ème coordonnée d'un vecteur $\vec{x}$ est indiquée par $\vec{x}[i]$, et le transposé d'un vecteur $\vec{x}$ par $\vec{x}^\intercal$. Les traces acquises des canaux auxiliaires sont intérprétées comme réalisations $\vLeakVec_1, \dots , \vLeakVec_N$ d'un vecteur aléatoire réel $\vaLeakVec\in\mathbb{R}^\traceLength$, où $\traceLength$ est la longueur du signal. Quand une méthode de réduction de dimension est utilisée comme pré traitement, celle-ci amène à la définition d'une fonction appelée \emph{extracteur} et dénoté par $\extract \colon \mathbb{R}^\traceLength \rightarrow \mathbb{R}^\newTraceLength$. La variable sensible manipulée pendant l'acquisition des traces est indiquée par $\sensRandVar$. Celle-ci peut avoir différent formes, mais souvent dans cette thèse elle est définie comme $\sensRandVar = \sensFunction(\keyRandVar,\publicParRandVar)$, où $\publicParRandVar$ dénote une variable publique, par exemple une partie de message en clair, et $\keyRandVar$ une partie d'une clé secrète que l'attaquante souhaite retrouver. Les valeurs acquises par la variable sensible sont vus comme réalisation de la variable aléatoire $\sensRandVar$ en $\sensVarSet = \{\sensVarValue{1}, \dots, \sensVarValue{\nbClasses}\}$. Les éléments de $\sensRandVar$ sont parfois encodés via le \emph{one-hot-encoding}: à chaque élément $\sensVarValue{j}$ on associe un vecteur de dimension $\numClasses$ $\sensVarOneHot{j}$, avec toutes les entrées nulles, sauf la $j$-ème qui est égal à  $1$: $\sensVarValue{j}
-\rightarrow \sensVarOneHot{j} = (0,\ldots , 0,\underbrace{1}_{j},0,\dots,0)$. Un élément générique de $\sensVarSet$ sera indiqué par $\sensVarGenValue$, si spécifier son indexe  $i$ n'est pas nécessaire.
+Dans la th\`{e}se, le symbol $X$ d\'{e}signe une variable al\'{e}atoire ($\vec{X}$ pour un vecteur colonne al\'{e}atoire) sur un ensemble $\mathcal{X}$, et $x$ (respectivement $\vec{x}$) d\'{e}signe une r\'{e}alisation de $X$ (respectivement $\vec{X}$). 
+La $i$-\`{e}me coordonn\'{e}e d'un vecteur $\vec{x}$ est indiqu\'{e}e par $\vec{x}[i]$, et le transpos\'{e} d'un vecteur $\vec{x}$ par $\vec{x}^\intercal$. Les matrices sont indiqu\'{e}es par des majuscules en gras, $\textbf{A}$ ou $\covmat$. Les traces acquises des canaux auxiliaires sont interpr\'{e}t\'{e}es comme r\'{e}alisations $\vLeakVec_1, \dots , \vLeakVec_N$ d'un vecteur al\'{e}atoire r\'{e}el $\vaLeakVec\in\mathbb{R}^\traceLength$, o\`{u} $\traceLength$ est la longueur du signal. Quand une m\'{e}thode de r\'{e}duction de dimension est utilis\'{e}e comme pr\'{e} traitement, celle-ci am\`{e}ne \`{a} la d\'{e}finition d'une fonction appel\'{e}e \emph{extracteur} et d\'{e}not\'{e} par $\extract \colon \mathbb{R}^\traceLength \rightarrow \mathbb{R}^\newTraceLength$. La variable sensible manipul\'{e}e pendant l'acquisition des traces est indiqu\'{e}e par $\sensRandVar$. Celle-ci peut avoir diff\'{e}rent formes, mais souvent dans cette th\`{e}se elle est d\'{e}finie comme $\sensRandVar = \sensFunction(\keyRandVar,\publicParRandVar)$, o\`{u} $\publicParRandVar$ d\'{e}note une variable publique, par exemple une partie de message en clair, et $\keyRandVar$ une partie d'une cl\'{e} secr\`{e}te que l'attaquante souhaite retrouver. Les valeurs acquises par la variable sensible sont vus comme r\'{e}alisation de la variable al\'{e}atoire $\sensRandVar$ en $\sensVarSet = \{\sensVarValue{1}, \dots, \sensVarValue{\nbClasses}\}$. Les \'{e}l\'{e}ments de $\sensRandVar$ sont parfois encod\'{e}s via le \emph{one-hot-encoding}: \`{a} chaque \'{e}l\'{e}ment $\sensVarValue{j}$ on associe un vecteur de dimension $\numClasses$ $\sensVarOneHot{j}$, avec toutes les entr\'{e}es nulles, sauf la $j$-\`{e}me qui est \'{e}gal \`{a}  $1$: $\sensVarValue{j}
+\rightarrow \sensVarOneHot{j} = (0,\ldots , 0,\underbrace{1}_{j},0,\dots,0)$. Un \'{e}l\'{e}ment g\'{e}n\'{e}rique de $\sensVarSet$ sera indiqu\'{e} par $\sensVarGenValue$, si sp\'{e}cifier son indexe  $i$ n'est pas n\'{e}cessaire.
 
-\subsection{Techniques Linéaires de Réduction de Dimension}\label{sec:lin}
-Dans cette section sont décrites les études menées aux tour des méthodes linéaires d'extraction de caractéristiques, en particulier de l'Analyse aux Composantes Principales (PCA) et de l'Analyse Discriminante Linéaire (LDA). 
-\subsubsection{Analyse aux Composantes Principales, l'outil classique et le profilée}
-L'extracteur linéaire $\extract^{\mathrm{PCA}}(\vLeakVec) = $ se déduit des certains vecteurs propres $\AAlpha_1, \dots, \AAlpha_\newTraceLength$, appelés \emph{Composantes Principales} (PCs) 
-%The extractor $\extract^{\mathrm{PCA}}$ is deduced from some eigenvectors $\AAlpha_1, \dots, \AAlpha_\newTraceLength$, called \emph{Principal Components} (PCs) that are stored as rows in the matrix $A$ appearing in \eqref{eq:linearExtractor}. Classically, the PCA is provided with a non-labelled set of data $(\sss[]{i})_{i=1}^N$ and the eigenvectors are those of the covariance matrix of data:
-%
-%\begin{equation}\label{eq:covmat}
-%\covmat = \frac{1}{\NPoI} \sum_{i=1}^{\NPoI}(\sss[]{i} - \mmmX)(\sss[]{i} - \mmmX)^\intercal \mbox{ ,}
-%\end{equation}
-%where $\mmmX$ is the empirical mean of data. Let $r$ denote the rank of $S$ and $\AAlpha_1, \dots, \AAlpha_r$ and $\lambda_1, \dots, \lambda_r$ denote its eigenvectors and the corresponding eigenvalues, respectively, listed in the decreasing order of the values $\lambda_i$. It can be shown that each $\lambda_i$ equals the empirical variance of the data projected onto the corresponding PC $\AAlpha_i$. Since the data variability is associated to the amount of information, transforming data over the basis provided by the PCs leads to a dimensionality reduction that reinforces the information. \\
-%
-%In an attack scenario that allows a profiling phase, the classical tool described above is largely suboptimal, since it does not make use of the association trace-value  available for the training set $(\sss[z_i]{i})_{i=1}^N$.  In SCA literature \cite{TAprincipal,choudaryefficient,choudary2014efficient,disassembler,Standaert2008}  a {\em class-oriented} version of PCA is often used instead of the classical one. 
-%Let $\mmmXclass$ be the empirical mean of traces belonging to the same class $\sensVar$ (\emph{i.e.} traces labelled with the same $\sensVar$). The PCs are then the eigenvectors of the so-called {\em between-class} or  {\em inter-class scatter matrix}, given by:
-%\begin{equation}\label{eq:SB}
-%\SB = \sum_{\sensVar\in\sensVarSet}\numTraces(\mmmXclass-\mmmX)(\mmmXclass-\mmmX)^\intercal \mbox{ .}
-%\end{equation}
-%In this case the extractor guarantees that the class-centroids $\overline{\extract^{PCA}(\xxx)}^z$ are spread as much as possible.
-%
-%
-%
+\subsection{Techniques Lin\'{e}aires de R\'{e}duction de Dimension}\label{sec:lin}
+Dans cette section sont d\'{e}crites les \'{e}tudes men\'{e}es aux tour des m\'{e}thodes lin\'{e}aires d'extraction de caract\'{e}ristiques, en particulier de l'Analyse aux Composantes Principales (PCA) et de l'Analyse Discriminante Lin\'{e}aire (LDA). 
+\subsubsection{Analyse aux Composantes Principales, l'outil classique et le profil\'{e}e}
+L'extracteur lin\'{e}aire $\extract^{\mathrm{PCA}}(\vLeakVec) = \textbf{A}\vLeakVec$ se d\'{e}duit des certains vecteurs propres $\AAlpha_1, \dots, \AAlpha_\newTraceLength$, appel\'{e}s \emph{Composantes Principales} (PCs), dont les transpos\'{e}s sont arrang\'{e} en tant que lignes dans la matrice de projection $\textbf{A}$. Classiquement la PCA intervient sur des donn\'{e}es non labellis\'{e}es $\vLeakVec_1, \dots , \vLeakVec_N$, suppos\'{e} ayant moyenne nulle et arrang\'{e} comme colonnes dans une matrice  $\measuresMatrix$ de dimension $\traceLength \times \nbTraces$, de tel sort que la matrice de covariance des donn\'{e}es est la suivante:
+\begin{equation}\label{eq:covmat}
+\covmat = \frac{1}{\nbTraces}\measuresMatrix\measuresMatrix^\intercal \mbox{ .}
+\end{equation}
+
+Dans ce cas, les vecteur propres $\AAlpha_1, \dots, \AAlpha_\newTraceLength$ correspondent aux vecteurs propres de la matrice $\covmat$ et leur valeur propres associ\'{e}s sont d\'{e}not\'{e}s $\lambda_1, \dots, \lambda_r$. La PCA est la projection qui maximise la variance globale des caract\'{e}ristiques extraites. La variance \'{e}tant li\'{e}e \`{a} la quantit\'{e} d'information des donn\'{e}es, cette transformation est cens\'{e}e r\'{e}duire la dimension des traces tout en renforçant l'information contenue. Une propri\'{e}t\'{e} remarquable de la PCA est que chaque $\lambda_i$ correspond \`{a} la variance empirique des donn\'{e}es projet\'{e}es sur la PC correspondante $\AAlpha_i$.\\
+
+Dans un sc\'{e}nario d'attaque profil\'{e}e, cette outil classique est toutefois largement sous-optimal: ce n'exploite pas une phase de caract\'{e}risation. Dans cette derni\`{e}re on suppose que l'attaquante est en possession d'un ensemble de donn\'{e}es labellis\'{e}es  $(\vLeakVec_i, \sensVar_i)_{i=1..\nbProfilingTraces}$, c'est-\`{a}-dire o\`{u} l'association \emph{trace-variable sensible} est connue. Dans la litt\'{e}rature SCA \cite{TAprincipal,choudaryefficient,choudary2014efficient,disassembler,Standaert2008} une version \emph{profil\'{e}e} de la PCA a \'{e}t\'{e} introduite. En introduisant les moyennes empiriques par classe
+\begin{equation}\label{eq:mmmXclass}
+\mmmXclass= \esperEst[\given{\vaLeakVec}{\sensRandVar = \sensVarGenValue}] = \frac{1}{\nbTracesPerClass}\sum_{i\colon \sensVar_i=\sensVarGenValue} \vLeakVec_i  \mbox{ ,}
+\end{equation}
+la PCA profil\'{e}e utilise la matrice des \emph{\'{e}carts inter-classes} suivante \`{a} la place de la matrice de covariance $\covmat$:
+\begin{equation}\label{eq:SB}
+\SB = \sum_{\sensVarGenValue\in\sensVarSet}\nbTracesPerClass(\mmmXclass-\mmmX)(\mmmXclass-\mmmX)^\intercal \mbox{ ,}
+\end{equation}
+o\`{u} $\mmmX$ est la moyenne empirique de toutes les donn\'{e}es confondues. L'extracteur obtenu en cette mani\`{e}re garanties que les centro\"ides par classes des donn\'{e}es projet\'{e}es sont \'{e}cart\'{e}s au maximum.
+
+
 %\subsubsection{The Open Question: Choosing the Components to Keep}\label{sec:ELV}
 %The introduction of the PCA method in SCA context has raised some questions: \textit{how many} principal components and \textit{which ones} are sufficient/necessary to reduce the trace size without losing important discriminative information? \\
 %
@@ -244,4 +245,4 @@ L'extracteur linéaire $\extract^{\mathrm{PCA}}(\vLeakVec) = $ se déduit des ce
 %Finally, I effectuated a comparison between the KDA and the PP approach. In particular I compared their performances under a fixed training set size, concluding that the effectiveness of the KDA is much less affected by the increase of the order $d$ than the PP. Indeed, the latter failed the PoI detection at orders 3 and 4.
 
 
-\subsection{Réseau Neuronal Convolutif}\label{sec:cnn}
+\subsection{R\'{e}seau Neuronal Convolutif}\label{sec:cnn}
