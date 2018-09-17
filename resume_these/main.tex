@@ -101,6 +101,13 @@ basicstyle=\footnotesize, escapechar=@,style=customc,
 %    urlseen = {consulté le},
 %}
 
+\makeatletter
+\newcommand{\@givenstar}[2]{#1\;\middle|\;#2}
+\newcommand{\@givennostar}[3][]{#1#2\;#1|\;#3#1}
+\newcommand{\given}{\@ifstar\@givenstar\@givennostar}
+\makeatother
+
+
 
 \def\etal{\textit{et al.} }
 \newcommand {\ie}{{\em i.e.} }

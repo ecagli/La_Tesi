@@ -7,15 +7,16 @@ La $i$-\`{e}me coordonn\'{e}e d'un vecteur $\vec{x}$ est indiqu\'{e}e par $\vec{
 
 \subsection{Techniques Lin\'{e}aires de R\'{e}duction de Dimension}\label{sec:lin}
 Dans cette section sont d\'{e}crites les \'{e}tudes men\'{e}es autour des m\'{e}thodes lin\'{e}aires d'extraction de caract\'{e}ristiques, en particulier de l'Analyse aux Composantes Principales (PCA) et de l'Analyse Discriminante Lin\'{e}aire (LDA). 
+
 \subsubsection{Analyse aux Composantes Principales, l'outil classique et le profil\'{e}e}
 L'extracteur lin\'{e}aire $\extract^{\mathrm{PCA}}(\vLeakVec) = \textbf{A}\vLeakVec$ se d\'{e}duit des certains vecteurs propres $\AAlpha_1, \dots, \AAlpha_\newTraceLength$, appel\'{e}s \emph{Composantes Principales} (PCs), dont les transpos\'{e}s sont arrang\'{e} en tant que lignes dans la matrice de projection $\textbf{A}$. Classiquement la PCA intervient sur des donn\'{e}es non labellis\'{e}es $\vLeakVec_1, \dots , \vLeakVec_N$, suppos\'{e} ayant moyenne nulle et arrang\'{e} comme colonnes dans une matrice  $\measuresMatrix$ de dimension $\traceLength \times \nbTraces$, de tel sort que la matrice de covariance des donn\'{e}es est la suivante:
 \begin{equation}\label{eq:covmat}
 \covmat = \frac{1}{\nbTraces}\measuresMatrix\measuresMatrix^\intercal \mbox{ .}
 \end{equation}
 
-Dans ce cas, les vecteur propres $\AAlpha_1, \dots, \AAlpha_\newTraceLength$ correspondent aux vecteurs propres de la matrice $\covmat$ et leur valeur propres associ\'{e}s sont d\'{e}not\'{e}s $\lambda_1, \dots, \lambda_r$. La PCA est la projection qui maximise la variance globale des caract\'{e}ristiques extraites. La variance \'{e}tant li\'{e}e \`{a} la quantit\'{e} d'information des donn\'{e}es, cette transformation est cens\'{e}e r\'{e}duire la dimension des traces tout en renforçant l'information contenue. Une propri\'{e}t\'{e} remarquable de la PCA est que chaque $\lambda_i$ correspond \`{a} la variance empirique des donn\'{e}es projet\'{e}es sur la PC correspondante $\AAlpha_i$.\\
+Dans ce cas, les vecteur propres $\AAlpha_1, \dots, \AAlpha_\newTraceLength$ correspondent aux vecteurs propres de la matrice $\covmat$ et leurs valeurs propres associ\'{e}es sont not\'{e}es $\lambda_1, \dots, \lambda_r$. La PCA est la projection qui maximise la variance globale des caract\'{e}ristiques extraites. La variance \'{e}tant li\'{e}e \`{a} la quantit\'{e} d'information des donn\'{e}es, cette transformation est cens\'{e}e r\'{e}duire la dimension des traces tout en renforçant l'information contenue. Une propri\'{e}t\'{e} remarquable de la PCA est que chaque $\lambda_i$ correspond \`{a} la variance empirique des donn\'{e}es projet\'{e}es sur la PC correspondante $\AAlpha_i$.\\
 
-Dans un sc\'{e}nario d'attaque profil\'{e}e, cette outil classique est toutefois largement sous-optimal: ce n'exploite pas une phase de caract\'{e}risation. Dans cette derni\`{e}re on suppose que l'attaquante est en possession d'un ensemble de donn\'{e}es labellis\'{e}es  $(\vLeakVec_i, \sensVar_i)_{i=1..\nbProfilingTraces}$, c'est-\`{a}-dire o\`{u} l'association \emph{trace-variable sensible} est connue. Dans la litt\'{e}rature SCA \cite{TAprincipal,choudaryefficient,choudary2014efficient,disassembler,Standaert2008} une version \emph{profil\'{e}e} de la PCA a \'{e}t\'{e} introduite. En introduisant les moyennes empiriques par classe
+Dans un sc\'{e}nario d'attaque profil\'{e}e, cet outil classique est toutefois largement sous-optimal : il n'exploite pas une phase de caract\'{e}risation. Dans cette derni\`{e}re on suppose que l'attaquant est en possession d'un ensemble de donn\'{e}es étiquet'{e}es  $(\vLeakVec_i, \sensVar_i)_{i=1..\nbProfilingTraces}$, c'est-\`{a}-dire o\`{u} l'association \emph{trace-variable sensible} est connue. Dans la litt\'{e}rature SCA \cite{TAprincipal,choudaryefficient,choudary2014efficient,disassembler,Standaert2008} une version \emph{profil\'{e}e} de la PCA a \'{e}t\'{e} introduite. En introduisant les moyennes empiriques par classe
 \begin{equation}\label{eq:mmmXclass}
 \mmmXclass= \esperEst[\given{\vaLeakVec}{\sensRandVar = \sensVarGenValue}] = \frac{1}{\nbTracesPerClass}\sum_{i\colon \sensVar_i=\sensVarGenValue} \vLeakVec_i  \mbox{ ,}
 \end{equation}
@@ -23,7 +24,7 @@ la PCA profil\'{e}e utilise la matrice des \emph{\'{e}carts inter-classes} suiva
 \begin{equation}\label{eq:SB}
 \SB = \sum_{\sensVarGenValue\in\sensVarSet}\nbTracesPerClass(\mmmXclass-\mmmX)(\mmmXclass-\mmmX)^\intercal \mbox{ ,}
 \end{equation}
-o\`{u} $\mmmX$ est la moyenne empirique de toutes les donn\'{e}es confondues. L'extracteur obtenu en cette mani\`{e}re garanties que les centro\"ides par classes des donn\'{e}es projet\'{e}es sont \'{e}cart\'{e}s au maximum.
+o\`{u} $\mmmX$ est la moyenne empirique de toutes les donn\'{e}es confondues. L'extracteur obtenu de cette mani\`{e}re garantie que les centro\"ides par classes des donn\'{e}es projet\'{e}es sont \'{e}cart\'{e}s au maximum.
 
 
 %\subsubsection{The Open Question: Choosing the Components to Keep}\label{sec:ELV}
