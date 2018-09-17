@@ -241,7 +241,7 @@ where $\SB$ is the {\em between-class scatter matrix} already defined in \eqref{
 {\em within-class} (or intra-class) {\em scatter matrix}:
 
 \begin{equation}
-\SW = \sum_{\sensVarGenValue\in\sensVarSet}\sum_{i=1}^{\nbProfilingTraces}(\vLeakVec_i-\mmmXclass)(\vLeakVec_i-\mmmXclass)^\intercal \mbox{.}
+\SW = \sum_{\sensVarGenValue\in\sensVarSet}\sum_{i=1\colon \sensVar=\sensRandGenVal}(\vLeakVec_i-\mmmXclass)(\vLeakVec_i-\mmmXclass)^\intercal \mbox{.}
 \end{equation}
 
 
