@@ -26,18 +26,20 @@ la PCA profil\'{e}e utilise la matrice des \emph{\'{e}carts inter-classes} suiva
 o\`{u} $\mmmX$ est la moyenne empirique de toutes les donn\'{e}es confondues. L'extracteur obtenu en cette mani\`{e}re garanties que les centro\"ides par classes des donn\'{e}es projet\'{e}es sont \'{e}cart\'{e}s au maximum.
 
 
-%\subsubsection{The Open Question: Choosing the Components to Keep}\label{sec:ELV}
-%The introduction of the PCA method in SCA context has raised some questions: \textit{how many} principal components and \textit{which ones} are sufficient/necessary to reduce the trace size without losing important discriminative information? \\
+\subsubsection{L'enjeu du choix des composantes}\label{sec:ELV}
+L'introduction de la PCA dans le contexte des SCA a levée les questions suivantes: \textit{combien} de composants et \textit{lesquelles} sont suffisantes/nécessaires pour réduire la dimension des traces sans perdre de l'information discriminante importante ? 
 %
-%A first answer is provided in \cite{choudary2014efficient}, linked to the concept of {\em explained variance} (or {\em explained global variance}, EGV for short) of a PC $\AAlpha_i$:
-%\begin{equation}\label{eq:EGV}
-%\mathrm{EGV}(\AAlpha_i) =  \frac{\lambda_i}{\sum_{k=1}^r\lambda_k} \mbox{ .}
-%\end{equation}
-%By definition of EGV, the sum of all the EGV values is equal to $1$. Exploiting the EGV to choose among the PCs consists in fixing a wished {\em cumulative explained variance} $\beta$ and in keeping $\newTraceLength$ different PCs, where $\newTraceLength$ is the minimum integer such that
-%\begin{equation}
-%\mbox{EGV}(\AAlpha_1) +\mbox{EGV}(\AAlpha_2) + \dots +\mbox{EGV}(\AAlpha_\newTraceLength) \geq \beta \mbox{ .}
-%\end{equation}
-%However, if the adversary has a constraint for the reduced dimension $\newTraceLength$, the EGV notion simply suggests to keep the first $\newTraceLength$ components, taking for granted that the optimal way to chose PCs is in their natural order. This assumption is not always confirmed in SCA context:  As already remarked by Specht et al.  \cite{specht}, some papers declare that the leading components are those that contain almost all the useful information \cite{TAprincipal,choudary2014efficient}, while others propose to discard the leading components \cite{Batina2012,specht}. An example of this behaviour is provided in Fig.~\ref{fig:DPAcontest}. It may be noticed that the first component (plotted on the left) has high coefficients spread over the whole trace, while the sixth one  (on the right) has high coefficients localised in a small time interval, very likely to signalize the instants in which the target sensitive variable leaks.
+Une première réponse a été données dans \cite{choudary2014efficient}, en relation au concept de \emph{variance expliquée} (ou \emph{variance expliquée globale}, EGV) d'une PC $\AAlpha_i$:
+
+\begin{equation}\label{eq:EGV}
+\mathrm{EGV}(\AAlpha_i) =  \frac{\lambda_i}{\sum_{k=1}^r\lambda_k} \mbox{ .}
+\end{equation}
+Par définition, la somme de toutes les EGV est égal à $1$. Le choix des composantes basé sur le EGV consiste à fixer une valeur souhaité pour la \emph{variance expliquée cumulative} $\beta$ et à garder $\newTraceLength$ PCs distinctes, où $\newTraceLength$ est l'entier minimum tel que: 
+\begin{equation}
+\mbox{EGV}(\AAlpha_1) +\mbox{EGV}(\AAlpha_2) + \dots +\mbox{EGV}(\AAlpha_\newTraceLength) \geq \beta \mbox{  .}
+\end{equation}
+Si l'attaquant e une contrainte pour la dimension $\newTraceLength$, le choix par EGV consiste simplement à garder les $\newTraceLength$ premières composantes, dans l'ordre naturel des valeurs propres associées. Dans le contexte des SCA, ce type de choix ne semble pas être systématiquement le meilleur: des articles déclarent que les composantes leaders contiennent la plus grande quantité d'information, alors que d'autres suggèrent de défausser ces premières composantes \cite{Batina2012,specht}. 
+% An example of this behaviour is provided in Fig.~\ref{fig:DPAcontest}. It may be noticed that the first component (plotted on the left) has high coefficients spread over the whole trace, while the sixth one  (on the right) has high coefficients localised in a small time interval, very likely to signalize the instants in which the target sensitive variable leaks.
 %
 %\begin{figure}
 %\includegraphics[width=.45\textwidth]{figures/DPAcontestPC1_new.pdf} 
@@ -45,40 +47,36 @@ o\`{u} $\mmmX$ est la moyenne empirique de toutes les donn\'{e}es confondues. L'
 %\caption{First and sixth PCs in DPA contest v4 trace set (between time samples 198001 and 199000)}\label{fig:DPAcontest}
 %\end{figure}
 %
-%In SCA contexts, where the goal of the security developers is to minimize the number of leaking points, a reasonable assumption can be done:
+Dans le contexte des implémentations sécurisées, le but des développeurs est de minimiser les fuites, autrement dit, de réduire le nombre de points de fuite, d'où l'assomption suivante qui peut être raisonnablement faite: 
+
+\begin{assumption}\label{assum:local}
+L'information compromettante d'une trace acquis de canaux auxiliaires est localisée en peu de points. 
+\end{assumption}
+Sous cette assomption, les auteurs de \cite{SCAclassProbl} ont donné donnée une deuxième réponse au problème du choix des composantes: ils utilisent le \emph{ratio de participation inversé} (IPR) pour évaluer la \emph{localisation} des vecteurs propres. Le IPR est ainsi défini:
+\begin{equation}
+\mathrm{IPR}(\AAlpha_i) = \sum_{j=1}^\traceLength \AAlpha_i[j]^4 \mbox{ .}
+\end{equation}
+Les auteurs de \cite{SCAclassProbl} suggèrent de sélectionner les PCs en ordre inverse par rapport à leur IPR. \\
+
 %
-%\begin{assumption}\label{assum:local}
-%The leaking side-channel information is localised in few points of the acquired trace.
-%\end{assumption}
-%Under this assumption, the authors of \cite{SCAclassProbl} provided a second answer to the problem of the PCA components selection: they use the {\em Inverse Participation Ratio} (IPR) to evaluate the eigenvectors {\em localization}. It is defined as follows:
-%\begin{equation}
-%\mathrm{IPR}(\AAlpha_i) = \sum_{j=1}^\traceLength \AAlpha_i[j]^4 \mbox{ .}
-%\end{equation}
-%The authors of \cite{SCAclassProbl} suggest to collect the PCs in decreasing order with respect to the IPR score.\\
+\subsubsection{La méthode par variance expliquée locale} 
+\begin{figure}
+\includegraphics[width=0.5\textwidth]{figures/cumulativeELVallRectangle.pdf} 
+\includegraphics[width=0.5\textwidth]{figures/cumulativeELVzoomedRectangle.pdf} 
+\caption{Cumulative ELV trend of principal components. On the right a zoom of the plot on the left. Acquisition campaign on an 8-bit AVR Atmega328P.}\label{fig:ELVcumulative}
+\end{figure}
 %
-%
-%\subsubsection{The Explained Local Variance Selection Method} 
-%\begin{figure}
-%\includegraphics[width=0.5\textwidth]{figures/cumulativeELVallRectangle.pdf} 
-%\includegraphics[width=0.5\textwidth]{figures/cumulativeELVzoomedRectangle.pdf} 
-%\caption{Cumulative ELV trend of principal components. On the right a zoom of the plot on the left. Acquisition campaign on an 8-bit AVR Atmega328P.}\label{fig:ELVcumulative}
-%\end{figure}
-%
-%The EGV and the IPR selection methods are somehow complementary: the former one is based only on the eigenvalues associated to the PCs and does not consider the form of the PCs themselves; the latter one completely discards the information given by the eigenvalues of the PCs, considering only the distribution of their coefficients. In this panorama we proposed a new selection method that builds a bridge between the EGV and the IPR approaches. To do so, we introduced the \emph{Explained Local Variance} (ELV) of a PC $\AAlpha_i$ in a sample $j$, defined by
-%\begin{equation}
-%\mathrm{ELV}(\AAlpha_i,j) = \frac{\lambda_i \AAlpha_i[j]^2}{\sum_{k=1}^r\lambda_k} = \mathrm{EGV}(\AAlpha_i) \AAlpha_i[j]^2  \mbox{ .}
-%\end{equation}
-%
-%
-%Let $\mathcal{J}=\{j^i_1, j^i_2, \dots, j^i_{\traceLength}\}\subset\{1,2,\dots,\traceLength\}$ be a set of indices sorted such that $\mathrm{ELV}(\AAlpha_i,j^i_1)\geq \mathrm{ELV}(\AAlpha_i,j^i_2)\geq \dots \geq \mathrm{ELV}(\AAlpha_i,j^i_\traceLength)$.
-%It may be observed that the sum over all the $\mathrm{ELV}(\AAlpha_i,j)$, for $j\in[1,\dots,\traceLength],$   equals $\mathrm{EGV}(\AAlpha_i)$. If we operate such a sum in a cumulative way following the order provided by the sorted set $\mathcal{J}$, we obtain a complete description of the trend followed by the component $\AAlpha_i$ to achieve its EGV. As we can see in Fig.~\ref{fig:ELVcumulative}, where such cumulative ELVs are represented, the first 3 components are much slower in achieving their final EGV, while the $4^\text{th}$, the $5^\text{th}$ and the $6^\text{th}$ achieve a large part of their final EGVs very quickly ({\em i.e.} by adding the ELV contributions of much less time samples).
-%
-%The ELV selection method, in analogy with the EGV, requires to fix the reduced space dimension $\newTraceLength$, or a threshold $\beta$ for the cumulative ELV. In the first case, the maximal ELVs of each PC are compared, and the $\newTraceLength$ components achieving the highest values of such ELVs are chosen. In the second case, all pairs (PC, time sample) are sorted in decreasing order with respect to their ELV, and summed until the threshold $\beta$ is achieved. Then only PCs contributing in this sum are selected. \\
-%
+Les méthodes de sélection par EGV et IPR sont d'une certaine façon complémentaires : la première se base uniquement sur les valeurs propres associées aux PC et ne considère pas la forme des PC elles-mêmes; la seconde ne considère pas l'information donnée pas le valeurs propres, mais seulement la distribution des coefficients des PCs. Dans ce panorama nous avons proposé une nouvelle méthode se sélection qui fait un pont entre la EGV et la IPR : nous avons introduit la \emph{variance expliquée locale} (ELV) d'une PC $\AAlpha_i$ en un point $j$, définie par:
+\begin{equation}
+\mathrm{ELV}(\AAlpha_i,j) = \frac{\lambda_i \AAlpha_i[j]^2}{\sum_{k=1}^r\lambda_k} = \mathrm{EGV}(\AAlpha_i) \AAlpha_i[j]^2  \mbox{ .}
+\end{equation}
+Soit $\mathcal{J}=\{j^i_1, j^i_2, \dots, j^i_{\traceLength}\}\subset\{1,2,\dots,\traceLength\}$  un ensemble  d'indices ordonnés de tel sort que $\mathrm{ELV}(\AAlpha_i,j^i_1)\geq \mathrm{ELV}(\AAlpha_i,j^i_2)\geq \dots \geq \mathrm{ELV}(\AAlpha_i,j^i_\traceLength)$. On observe que la somme sur tous les $\mathrm{ELV}(\AAlpha_i,j)$, pour tout $j\in[1,\dots,\traceLength],$  est égal à $\mathrm{EGV}(\AAlpha_i)$. Si on opère cette somme en manière cumulative en suivant l'ordre donnée par l'ensemble ordonné $\mathcal{J}$, on obtient une description complète de la tendance suivie par la composante $\AAlpha_i$ pour atteindre son EGV. Comme montré in Fig.~\ref{fig:ELVcumulative}, où ces ELV cumulatives sont représentées, les trois premières composantes atteignent leur EGV finale très lentement, alors que la $4$ème, $5$ème et $6$ème atteignent une large partie de leur EGV très rapidement, c'est-à-dire an sommant les contributions ELV d'une moindre nombre de points. La sélection par ELV, en analogie avec EGV, demande de fixer une taille pour la dimension réduite du signal $\newTraceLength$, ou une seuil $\beta$ pour la ELV cumulative. Dans le premier cas les valeurs maximales de ELV de chaque PC sont comparées, et les $\newTraceLength$ montantes les valeurs plus élevées sont sélectionnées. Dans le second cas, tous les couple (PC, point temporel) sont ordonnés en ordre décroissant de ELV, et sommés jusqu'à atteindre le seuil $\beta$. Les PC qui contribuent à la somme sont sélectionnées.\\
 
 
 
-\subsubsection{LDA and the Small Sample Size problem}
+
+\subsubsection{LDA et le probl\`{e}me de la taille de l'\'{e}chantillonnage}
+L'extracteur $\extract^{\mathrm{LDA}}$ est une réduction de dimension optimale, sous certaines conditions, pour résoudre un problème de classification, c'est-à-dire un problème d'apprentissage où l'on vise à assigner à une donnée (une trace dans notre cas) un label (donné ici par la valeur de la variable $\sensRandVar$ manipulée lors de l'acquisition). Il a pour but non seulement d'écarter les centro\"ides par classe, mais aussi de reprocher au mieux les données appartenant à une même classe. La forte analogie entre les SCA et la tâche de classification en apprentissage automatique rend la LDA beaucoup plus adaptée 
 
 %The   extractor $\extract^{\mathrm{LDA}}$ aims not only to spread class-centroids apart, but also to make data belonging to a same class as close as possible. As widely discussed in the literature \cite{Cagli2016,disassembler,Standaert2008}, the LDA method is more expensive than the PCA but more efficient. As for the PCA, the construction of the matrix $A$ is done through that of some eigenvectors, called in this case \emph{Linear Discriminant Components} (LDCs), which correspond to those of the matrix $\SW^{-1} \SB$, where $\SB$ is defined as in \eqref{eq:SB} and $\SW$ is known as the \emph{within-class scatter matrix}:
 %
