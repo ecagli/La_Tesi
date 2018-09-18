@@ -298,7 +298,7 @@ Quand un réseau neuronal a une grande capacité, c'est-à-dire peut exprimer des m
 \paragraph*{Add-Remove ($\mathrm{AR}$)}  Cette technique simule un effet de jitter de l'horloge (Fig. \ref{fig:AR}). Nous dénotons par  $\mathrm{AR}_R$ l'opération qui consiste en deux étapes:
 \begin{itemize}
 \item[(1)] insérer  $R$ points temporels, dont la position est choisi de façon aléatoire uniforme et dont la valeur est obtenue par moyenne arithmétique entre le point qui suit et celui qui précède,
-\item[(2)] supprimer $R$ time samples, choisis de façon aléatoire uniforme.\\
+\item[(2)] supprimer $R$ points temporels, choisis de façon aléatoire uniforme.\\
 \end{itemize}
 
 Ces deux déformations peuvent être composées: nous dénotons par $\mathrm{SH}_T\mathrm{AR}_R$ l'application de $\mathrm{SH}_T$ suivie par celle de $\mathrm{AR}_R$.
@@ -307,12 +307,11 @@ Ces deux déformations peuvent être composées: nous dénotons par $\mathrm{SH}_T\m
 \subsubsection{Résultats expérimentaux}\label{sec:cnn_res}
 Pour les diverses expériences menées nous avons réglé et fixé une fois pour toutes l'architecture de réseau convolutif utilisée:
 \begin{equation}\label{eq:archi}
-  \softmax \circ [\lambda]^1 \circ[\delta \circ [\sigma \circ \gamma  ]^1 ]^4,   
+  \softmax \circ [\lambda]^1 \circ[\delta \circ [\sigma \circ \gamma  ]^1 ]^4. 
 \end{equation}
 
-
 \paragraph*{Attaque par réseau neuronal}\label{sec:attackNN}
-La stratégie que nous adoptons pour effectuer une attaque par canaux auxiliaires à l'aide d'un réseau neuronal est la même utilisé pour mener une attaque \emph{template} comme celles utilisées dans les cas d'études précédentes, et qui est décrite dans le chapitre 2 de la thèse. La différence est donnée par le fait que dans l'attaque template l'attaquant, après pré-traitement, approche les distributions des données à l'aide de modèles génératifs gaussiens, alors que les réseaux neuronals sont utilisés ici pour construire un modèle discriminatoire, c'est-à-dire en approchant directement les distributions \eqref{eq:a-posteriori} $\MLmodel(\vLeakVec) \approx \pdf_{\given{\sensRandVar}{\vaLeakVec=\vLeakVec}}$. Une fois cette approximation est faite, l'attaque suit la même stratégie dans les deux approches, propre aux attaques \emph{avancées} de la littérature: l'attaquant acquière des nouvelles traces d'attaque, à clé inconnu et sous entrées connues $\publicParRandVar$, en obtenant des couples  $(\vLeakVec_i, \publicParVar_i)_{i=1, \dots , \nbAttackTraces}$. Ensuite il effectue des hypothèses de clé $\keyVar \in \keyVarSet$ et associe à chaque hypothèse un score $d_\keyVar$ donné par un calcul de probabilité conjointe:
+La stratégie que nous adoptons pour effectuer une attaque par canaux auxiliaires à l'aide d'un réseau neuronal est la même utilisé pour mener une attaque \emph{template} comme celles utilisées dans les cas d'études précédentes, et qui est décrite dans le chapitre 2 de la thèse. La différence est donnée par le fait que dans l'attaque template l'attaquant, après pré-traitement, approche les distributions des données à l'aide de modèles génératifs gaussiens, alors que les réseaux neuronaux sont utilisés ici pour construire un modèle discriminatoire, c'est-à-dire en approchant directement les distributions \eqref{eq:a-posteriori} $\MLmodel(\vLeakVec) \approx \pdf_{\given{\sensRandVar}{\vaLeakVec=\vLeakVec}}$. Une fois cette approximation est faite, l'attaque suit la même stratégie dans les deux approches, propre aux attaques \emph{avancées} de la littérature: l'attaquant acquière des nouvelles traces d'attaque, à clé inconnu et sous entrées connues $\publicParRandVar$, en obtenant des couples  $(\vLeakVec_i, \publicParVar_i)_{i=1, \dots , \nbAttackTraces}$. Ensuite il effectue des hypothèses de clé $\keyVar \in \keyVarSet$ et associe à chaque hypothèse un score $d_\keyVar$ donné par un calcul de probabilité conjointe:
 
 \begin{equation}\label{eq:NN_SCA}
 d_{\keyVar} = \prod_{i=1}^{\nbAttackTraces} \MLmodel(\vLeakVec_i)[\sensFunction(\keyVar,\publicParVar_i)] \mbox{ .}
@@ -321,30 +320,24 @@ d_{\keyVar} = \prod_{i=1}^{\nbAttackTraces} \MLmodel(\vLeakVec_i)[\sensFunction(
 Finalement, le meilleur candidat de clé $\hat{\keyVar}$ est celui qui maximise ce score.
 
 
-\subsubsection{Performance Estimation}\label{sec:performances_NN}
-\paragraph*{Maximal Accuracies and Confusion Matrix} 
-The accuracy is the most common metric to both monitor and evaluate a classification-oriented NN. As already seen in Sec.~\ref{sec:validation}, the accuracy is defined as the successful classification rate reached over a dataset. The {\em training accuracy}, the \emph{validation accuracy} and the \emph{test accuracy} are the successful classification rates achieved respectively over the training, the validation and the test sets. At the end of each epoch it is useful to compute and to compare the training accuracy and the validation accuracy. For our study, we found interesting to consider the following two additional quantities: 
+\paragraph*{Estimation des performances} 
+Le taux de bonne prédiction (accuracy), définie comme le taux de succès sur un certain ensemble de données d'une classification, est la plus commune des métriques utiliser pour le monitorage et l'évaluation d'un réseau neuronal dédié à la classification. Il est habituel, afin de régler les hyperparamètres d'un réseau, d'extraire de l'ensemble d'apprentissage une partie des données, qui formeraient un ensemble de \emph{validation}. Ces données ne sont pas utilisées pour la descente de gradient, mais pour le monitorage de la généralisation des résultats du réseau, en particulier pour la prévention du surapprentissage. Le{\em taux de bonne prédiction d'apprentissage}, le \emph{taux de bonne prédiction de validation} et le \emph{taux de bonne prédiction de test} sont respectivement les taux de réussite de la classification sur l'ensemble d'apprentissage, de validation et de test. A la fin de chaque époque les taux de bonne prédiction d'apprentissage et de validation sont calculés. Dans la suite nous utiliserons aussi les quantités suivantes pour résumer les résultats:
 \begin{itemize}
-\item the \emph{maximal training accuracy}, corresponding to the maximum of the training accuracies computed at the end of each epoch,
-\item the \emph{maximal validation accuracy}, corresponding to the maximum of the validation accuracies computed at the end of each epoch.
+\item le \emph{taux maximale de bonne prédiction d'apprentissage}, qui est la valeur maximale sur toutes les époques atteinte par le taux  de bonne prédiction d'apprentissage,
+\item le \emph{taux maximale de bonne prédiction de validation}, qui est la valeur maximale sur toutes les époques atteinte par le taux  de bonne prédiction validation
 \end{itemize}
-In addition to the two quantities above, we will also evaluate the performances of our trained model, by computing a \emph{test accuracy}. Sometimes it is useful to complete this evaluation by looking at the so-called \emph{confusion matrix} (as the one appearing in the bottom part of Fig. \ref{fig:CW_shift_history}). Indeed the latter matrix enables for the identification of the classes which are confused, in case of misclassification. The confusion matrix corresponds to the distribution over the couples \emph{(true label, predicted label)} directly deduced from the results of the classification on the test set. A test accuracy of $100\%$ corresponds to a diagonal confusion matrix.\\
 
-\paragraph{Side-Channel-Oriented Metrics} The accuracy metric is perfectly adapted to the machine learning classification problem, but corresponds in side-channel language to the success rate of a Simple Attack, as already discussed in Chapter~\ref{ChapterIntroductionSCA}. When the attacker can acquire several traces with varying plaintexts, the accuracy metric is not sufficient alone to evaluate the attack performance.
-Indeed such a metric only takes into account the label corresponding to the maximal score and does not consider the other ones, whereas an SCA does, through~\eqref{eq:NN_SCA}. To take this remark into account, we will always associate the test accuracy to a side-channel metric defined as the minimal number  $N^\star$ of side-channel traces that makes the \emph{guessing entropy} (see \ref{sec:metrics}) be permanently equal to 1. In our experiments, we will estimate such a guessing entropy through 10 independent attacks. \\
+\'Etant le taux de bonne prédiction une métrique parfaitement adaptée au problème de classification, qui correspond au taux de réussite d'une attaque simple dans le contexte des canaux auxiliaires, nous utiliserons davantage une métrique plus adaptée à évaluer les performances d'une attaque avancée: nous dénotons par  $N^\star$ le nombre minimal de traces nécessaires pour rendre la  \emph{guessing entropy} égal stablement à 1.\\
 %
 
 \paragraph*{Expériences en cas de contremesure logicielle}
+Pour la première nous avons implémenté une contremesure par interruption aléatoire afin de protéger la fuite d'une seule opération de la forme $\sensRandVar = \HW(\subbytes(P\oplus \keyRandVar))$ exécuté par un microprocesseur Atmega328P. La contremesure consiste en introduire une boucle de $r$ instructions \emph{nop}, avec $r$ tiré aléatoirement dans $[0,127]$. Ceci provoque un déplacement aléatoire des PoIs des traces acquises, sans déformation des patterns liés aux cycles d'horloge. Nous avons acquis un nombre suffisamment petit de traces pour s'assurer de ne jamais pouvoir observer dans les acquisition chaque valeur de $\sensRandVar$ en chaque possible position. Ceci pour pouvoir conclure, en cas de succès, que la méthode a su extraire du signal des information invariantes par décalage. 
 
-For this experiment, we implemented, on an Atmega328P microprocessor, a uniform RDI \cite{tunstall2007efficient} to protect the leakage produced by a single target operation. Our RDI simply consists in a loop of  $r$ \emph{nop} instructions, with $r$  drawn uniformly in $[0,127]$. Some acquired traces are reported in the left side of Fig. \ref{fig:CW_shift_traces}, the target peak being highlighted with a red ellipse. They are composed of $3,996$ time samples, corresponding to an access to the AES-Sbox look-up table stored in NVM. For the training, we acquired only $1,000$ traces and 700 further traces were acquired as validation data. Our CNN has been trained to classify the traces according to the Hamming weight of the Sbox output; namely, the target sensitive variable is given by $\sensRandVar = \HW(\subbytes(P\oplus \keyRandVar))$. This choice has been done to let each class contain more than only a few (i.e. about $1,000/256$) training traces.
-For Atmega328P devices, the Hamming weight is known to be particularly relevant to model the leakage occurring during register writing (see for example Chapters~\ref{ChapterLinear} and \ref{ChapterKernel} or \cite{BelaidCFGKP15}). Since $\sensRandVar$ is assumed to take nine values and the position of the leakage depends on a random $r$ ranging over 128 values, it is clear that the $1,000$ training traces do not encompass the full $9 \times 128=1,152$ possible combinations $(z,r)\in [0,8]\times[0,127]$. We undersized the training set by purpose, in order to establish whether the CNN technique, equipped with DA, is able to catch the meaningful shift-invariant features without having been provided with all the possible observations.
-
-We trained our CNN by batches of size $32$.  In total the network contained $869,341$ trainable weights. The training and validation accuracies achieved after each epoch are depicted in Fig.~\ref{fig:CW_shift_history} together with the confusion matrices that we obtained from the test set. Applying the early-stopping principle recalled in Sec.~\ref{sec:training},  we automatically stopped the training after $120$ epochs without decrement of the loss function evaluated over the validation set, and kept as final trained model the one that showed the minimal value for the loss function evaluation. Concerning the learning rate (see Sec.~\ref{sec:training}), we fixed the beginning one to $0.01$ and reduced it multiplying it by a factor of $\sqrt{0.1}$ after $5$ epochs without validation loss decrement.
 
 
 \begin{table}[t]
 \centering
-\caption[Results of our CNN, for different DA techniques, in presence of an uniform RDI countermeasure protecting.]{Results of our CNN, for different DA techniques, in presence of an uniform RDI countermeasure protecting. For each technique, $4$ values are given: in position $a$ the maximal training accuracy, in position $b$ the maximal validation accuracy, in position $c$ the test accuracy, in position $d$ the value of $N^\star$ (see Sec.~\ref{sec:performances_NN} for definitions).}
+\caption{Résultat de l'attaque par CNN, pour diverse techniques DA, en présence d'interruption aléatoire. Pour toute technique, $4$ valeurs sont données: en position $a$ le taux maximale de bonne prédiction d'apprentissage, en position $b$ taux maximale de bonne prédiction de validation, en position $c$ le taux de bonne prédiction de test, obtenu sur les traces d'attaque, en position $d$ la valeur de $N^\star$.}
 \label{tab:res_CW_shift}
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline
@@ -354,12 +347,15 @@ $c$        & $d$       & \cellcolor[HTML]{EFEFEF}27.0\% & \cellcolor[HTML]{EFEFE
 \end{tabular}
 \end{table}
 
+Le Tableau \ref{tab:res_CW_shift} résume les résultats obtenus. En comparant les taux maximales de bonne prédiction d'apprentissage et de validation, on a un aperçu du risque de surapprentissage. Quand l'augmentation des données n'est pas appliquée (cas $\mathrm{SH}_{0}$) le surapprentissage est totale: la classification réussi à $100\%$ sur l'ensemble d'apprentissage alors que sur l'ensemble de validation elle reste au $27\%$. Ceci signifie qu'aucune caractéristique informative a été apprise, amenant à une attaque inconcluante ($N^\star>1,000$). Nous remarquons que l'augmentation des donnée baisse fortement le surapprentissage:, pour $mathrm{SH}_{500}$ l'ensemble d'apprentissage n'est jamais complètement appris et le taux de bonne prédiction de validation se lève à $78\%$, portant à une guessing entropy de $1$ avec seulement $N^{\star}=7$ traces d'attaque. Ces résultats confirment que le modèle CNN est capable de caractériser une large fenêtre de points de façon efficace en présence de désynchronisation logicielle. \\
+
 
 \paragraph*{Expériences en cas de contremesure matérielle simulée}
+Quand des contremesures matérielles agissent au niveau de l'horloge du composant, en perturbant sa fréquence, les traces acquises des signaux auxiliaires apparaissent compromises par une désynchronisation dû à l'accumulation des déformations de cycles d'horloge. Nos expériences suivantes visent à tester le réseau CNN en présence de ce type de déformation. Dans un premier temps nous avons menés ces tests sur des signaux parfaitement synchrone au moment de l'acquisition et désynchronisés de façon artificiel afin de pouvoir maîtriser l'effet déformant. 
 
 \begin{table}[t]
 \centering
-\caption[Results of our CNN in presence of artificially-generated jitter countermeasure, with different DA techniques.]{Results of our CNN in presence of artificially-generated jitter countermeasure, with different DA techniques. See the caption of Table \ref{tab:res_CW_shift} for a legend.}
+\caption{Results of our CNN in presence of artificially-generated jitter countermeasure, with different DA techniques. See the caption of Table \ref{tab:res_CW_shift} for a legend.}
 \label{table:results_all}
 
 
