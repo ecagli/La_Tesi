@@ -118,9 +118,9 @@ Quand une contre-mesure de masquage d'ordre $(d-1)$ est mise en place, la target
 L'outil central de l'astuce du noyau est la \emph{fonction noyau} $K \colon \mathbb{R}^\traceLength \times \mathbb{R}^\traceLength \rightarrow \mathbb{R}$, qui doit satisfaire la propriété suivante, en rélation avec la fonction $\Phi$:
 
 \begin{equation}\label{eq:kernelProperty}
-K(\sss[]{i},\sss[]{j}) = \Phi(\sss[]{i})\cdot \Phi(\sss[]{j}) \mbox{ ,}
+K(\vLeakVec,\yyy) = \Phi(\vLeakVec)\cdot \Phi(\yyy) \mbox{ ,}
 \end{equation}
-pour tout $i,j= 1,\dots, \NPoI$, où $\cdot$ est le produit scalaire.
+pour toute donnée $\vLeakVec$ et $\yyy$, où $\cdot$ est le produit scalaire.
 
 Toute fonction $\Phi$ a une fonction noyau associée, donnée \eqref{eq:kernelProperty}, pour un ensemble de données. Au contraire, seulement les fonctions $K\colon\mathbb{R}^D\times \mathbb{R}^D \rightarrow \mathbb{R}$ qui satisfont une condition de convergence connue comme {\em condition de Mercer} sont associées à une map $\Phi:\mathbb{R}^D \rightarrow \mathbb{R}^F$, pour quelque $F$. Les fonctions noyau éligibles pour une astuce du noyau sont celles qui sont calculables directement à partir des données brutes $\vLeakVec_i$, sans évaluer la fonction $\Phi$. \\
 %
@@ -186,7 +186,7 @@ et corresponde à la fonction $\Phi$ qui porte les coordonnées en entrée dans l'e
 \item[1)] Construire une matrice $\MMM$ (elle agit comme \emph{matrice des écarts inter-classe}):
 
 \begin{equation}
-\MMM = \sum_{\sensVar\in\sensVarSet}\numTraces(\MMMclass - \MMMT)(\MMMclass-\MMMT)^\intercal\mbox{ ,}
+\MMM = \sum_{\sensVarGenValue\in\sensVarSet}\nbTracesPerClass(\MMMclass - \MMMT)(\MMMclass-\MMMT)^\intercal\mbox{ ,}
 \end{equation}
 
 où $\MMMclass$ et $\MMMT$ sont deux vecteurs colonne de taille $N$, avec coordonnées données par:
