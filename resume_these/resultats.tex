@@ -241,4 +241,193 @@ Le deuxième aspect sur lequel nous nous sommes concentré est le rôle de la forme
 %Finally, I effectuated a comparison between the KDA and the PP approach. In particular I compared their performances under a fixed training set size, concluding that the effectiveness of the KDA is much less affected by the increase of the order $d$ than the PP. Indeed, the latter failed the PoI detection at orders 3 and 4.
 
 
-\subsection{R\'{e}seau Neuronal Convolutif}\label{sec:cnn}
+\subsection{Réseaux Neuronaux Convolutifs}\label{sec:cnn}
+Dans cette dernière partie, nous adoptons une stratégie d'attaque basée sur le paradigme de l'apprentissage profond: à l'aide de réseaux neuronaux à plusieurs couches nous ne séparons plus la routine d'apprentissage en pré-traitement et caractérisation, mais intégrions les pré-traitement de façon implicite dans l'apprentissage. Les réseaux neuronaux, grâce à leurs architectures facilement parallélisables, sont les outils privilégiés aujourd'hui pour résoudre le problème de la classification sur des données de grandes dimension, comme les signaux compromettants. Nous nous intéressons en particulier aux réseaux neuronaux convolutifs (\emph{Convolutional Neural Networks}, en anglais, CNN): étant conçus pour être robustes aux déformations géométriques des données, typiques dans le contexte de la reconnaissance de l'image, ils nous ouvrent une nouvelle stratégie pour faire face aux contremesures basées sur l'augmentation de la désynchronisation dans les acquisitions. Nous nous plaçons donc dans ce contexte, en menant des expériences d'attaque contre ce type de contremesures, en utilisant un réseau CNN, et en équipant la routine d'apprentissage de stratégies d'augmentation des données (\emph{Data Augmentation}, DA) désignées pour le contexte des signaux désynchronisés. Après une brève introduction de ces outils, nous reportons les résultats des expériences en Sec.~\ref{sec:cnn_res}.
+
+\subsubsection{Architecture et apprentissage}
+Les CNNs appartiennent à la famille plus répandue de réseaux neuronales est celle des \emph{Multi-Layer Perceptrons} (MLP). On peut exprimer un MLP destiné à la classification dans la forme:
+\begin{equation}\label{eq:MLP}
+\MLmodel(\vLeakVec) = \softmax\circ\lambda_n\circ\sigma_{n-1}\circ\lambda_{n-1}\circ\dots\circ \lambda_1(\vLeakVec)=\yyy \mbox{ ,}
+\end{equation}
+où:
+\begin{itemize}
+\item Les fonctions $\lambda_i$ sont appelées couches entièrement connectées (\emph{Fully-Connected},FC) et s'expriment comme fonctions affines $\textbf{A}\vLeakVec + \vec{b}$, avec $\textbf{A}\in\mathbb{R}^{D\times C}$ une matrice de poids et $\vec{b}\in\mathbb{R}^C$ un vecteur de biais, à optimiser à travers l'apprentissage. Ces couches extraient linéairement de l'information des données, de la même manière que les techniques PCA ou LDA.
+
+\item  Les fonctions $\sigma_i$ sont appelées couches d'\emph{activation} (ACT): elles sont généralement non-linéaires, s'appliquent souvent indépendamment à chaque coordonnée de l'entrée, et ne dépendent pas de paramètres entrainables. 
+ 
+
+\item $\softmax$ est la fonction \emph{softmax}:: $\softmax(\vLeakVec)[i] = \frac{e^{\vLeakVec[i]}}{\sum_{j}e^{\vLeakVec[j]}}$. Elle normalise la sortie du réseaux en la rendant interprétable comme distribution de probabilité $\MLmodel(\vLeakVec) \approx \pdf_{\given{\sensRandVar}{\vaLeakVec=\vLeakVec}}$.
+\end{itemize}
+ 
+Les réseaux convolutifs s'obtiennent en rajoutant aux MLPs deux autres typologies de couches:
+\begin{itemize}
+\item les couches convolutifs (CONV) $\gamma$, sont des couches linéaires qui partagent leurs poids à travers l'espace. Elles extraient de l'information linéairement à travers des filtres de poids qui agissent localement. Ces filtres glissent le long de leurs entrée et leur action locale est répétée sur toute position de l'entrée. Ceux sont les couches qui se chargent de rendre le réseau robuste aux déformations qui déplaceraient les informations le long de la traces, donc à la désynchronisation.
+\item Le couches de pooling (POOL) $\delta$ effectuent un sous-échantillonnage des données partielles traitées par le réseaux afin de réduire la complexité du calcul dérivée de l'extraction d'un nombre croissant de caractéristiques, niveau par niveau, par les couches CONV.
+\end{itemize}
+
+Les paramètres d'un réseau neuronal sont à entrainer pendant la phase d'apprentissage. La plus utilisée des méthodes d'optimisation est la \emph{descente de gradient stochastique}, qui est mise en place dans le but de minimiser un fonction de coût qui quantifie l'erreur de classification du réseau sur l'ensemble d'apprentissage. Elle consiste en:
+
+\begin{itemize}
+\item sélectionner un  \emph{mini-lot} de traces d'apprentissage $(\vLeakVec_i, \sensVar_i)_{i\in I}$ choisies en ordre aléatoire (ici $I$ est un ensemble aléatoire d'indices)
+\item calculer les outputs du modèle courant pour le mini-lot sélectionné $(\vNNOutput_i = \MLmodel(\vLeakVec_i))_{i\in I}$, 
+\item évaluer la fonction de coût, dans le cas de nos expériences il s'agit de l'entropie croisée:
+\begin{equation}\label{eq:lossfunction}
+\mathcal{L} = -\frac{1}{\lvert I \rvert} \sum_{i\in I} \sum_{t=1}^{|\sensVarSet|}\vec{\sensVar_i}[t]\log{\vNNOutput_i[t]} \mbox{ ,}
+\end{equation} 
+\item calculer les dérivées partielles de la fonction de coût, par rapport aux paramètres entrainables, à l'aide de la méthode de \emph{rétropropagation du gradient},
+\item mettre à jour les paramètres entrainables en soustrayant un petit multiple (appelé  \emph{taux d'apprentissage}) du gradient.
+\end{itemize}  
+
+Une itération complète sur l'ensemble d'apprentissage est appelée \emph{époque}.
+Le la nature des couche, leur nombre et leurs tailles sont les hyper-paramètres qui définissent l'architecture d'un réseaux. Le nombre d'époques, la taille des mini-lots et le taux d'apprentissage, sont aussi des hyper-paramètres qui règlent l'apprentissage. 
+
+
+\subsubsection{Augmentation des Données}\label{sec:DA}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=.4\textwidth]{../Figures/CHES2017/Shifting_window.pdf}
+\includegraphics[width=.4\textwidth]{../Figures/CHES2017/AR_example.pdf}
+\caption{Gauche: Méthode Shifting pour DA. Droite: Méthode Add-Remove pour DA (les points ajoutés sont marqués par des cercles rouges, les points supprimés par des croix noires.}\label{fig:AR}
+\end{figure}
+
+Quand un réseau neuronal a une grande capacité, c'est-à-dire peut exprimer des modèles très complexes, et est entrainer avec un nombre insuffisant de données, il risque de provoquer du surapprentissage. Une manière classique de réduire ce problème est l'introduction des méthodes d'augmentation des données. Elles consistent à générer artificiellement des nouvelles données d'apprentissage, en déformant celles réellement acquises. La déformation est obtenu en appliquant des déformations qui préservent la targette de la classification, c'est-à-dire la valeur de la variable sensible manipulée lors de l'acquisition. Nous avons proposée deux techniques d'augmentation des données appelées \emph{Shifting} et \emph{Add-Remove}
+
+\paragraph*{Shifting ($\mathrm{SH}_{T^\star}$)} Cette technique simule un effet de délai aléatoire d'amplitude maximale $T^\star$, en sélection une fenêtre glissante d'une signal acquis, comme montré en Fig. \ref{fig:AR}. Soit $\traceLength$ la taille originale du signal. Nous fixons la taille d'entrée de la première couche du réseau neuronal à  $\traceLength^\prime = \traceLength - T^\star$. La technique $\mathrm{SH}_{T^\star}$ consiste alors (1) à tirer un aléa uniform $t \in[0,T^\star]$, et (2) à sélectionner la fenêtre de taille $\traceLength^\prime$ à partir du $t$-ème point de la trace. Pour notre étude, nous souhaitons comparer les techniques $\mathrm{SH}_T$ pour différent valeurs de $T \leq T^\star$, sans changer l'architecture du réseau utilisé (en particulier la taille de l'entrée $\traceLength^\prime$). Notamment, $T \lneq T^\star$ implique que $T^\star-T$ points temporels ne sont certainement jamais sélectionnés. Comme nous supposons que l'information est localisée dans la partie centrale de l'acquisition, nous choisissons de centrer les fenêtre glissantes, en supprimant les premiers et les derniers $\frac{T^\star-T}{2}$ points des traces. 
+
+\paragraph*{Add-Remove ($\mathrm{AR}$)}  Cette technique simule un effet de jitter de l'horloge (Fig. \ref{fig:AR}). Nous dénotons par  $\mathrm{AR}_R$ l'opération qui consiste en deux étapes:
+\begin{itemize}
+\item[(1)] insérer  $R$ points temporels, dont la position est choisi de façon aléatoire uniforme et dont la valeur est obtenue par moyenne arithmétique entre le point qui suit et celui qui précède,
+\item[(2)] supprimer $R$ time samples, choisis de façon aléatoire uniforme.\\
+\end{itemize}
+
+Ces deux déformations peuvent être composées: nous dénotons par $\mathrm{SH}_T\mathrm{AR}_R$ l'application de $\mathrm{SH}_T$ suivie par celle de $\mathrm{AR}_R$.
+ 
+
+\subsubsection{Résultats expérimentaux}\label{sec:cnn_res}
+Pour les diverses expériences menées nous avons réglé et fixé une fois pour toutes l'architecture de réseau convolutif utilisée:
+\begin{equation}\label{eq:archi}
+  \softmax \circ [\lambda]^1 \circ[\delta \circ [\sigma \circ \gamma  ]^1 ]^4,   
+\end{equation}
+
+
+\paragraph*{Attaque par réseau neuronal}\label{sec:attackNN}
+La stratégie que nous adoptons pour effectuer une attaque par canaux auxiliaires à l'aide d'un réseau neuronal est la même utilisé pour mener une attaque \emph{template} comme celles utilisées dans les cas d'études précédentes, et qui est décrite dans le chapitre 2 de la thèse. La différence est donnée par le fait que dans l'attaque template l'attaquant, après pré-traitement, approche les distributions des données à l'aide de modèles génératifs gaussiens, alors que les réseaux neuronals sont utilisés ici pour construire un modèle discriminatoire, c'est-à-dire en approchant directement les distributions \eqref{eq:a-posteriori} $\MLmodel(\vLeakVec) \approx \pdf_{\given{\sensRandVar}{\vaLeakVec=\vLeakVec}}$. Une fois cette approximation est faite, l'attaque suit la même stratégie dans les deux approches, propre aux attaques \emph{avancées} de la littérature: l'attaquant acquière des nouvelles traces d'attaque, à clé inconnu et sous entrées connues $\publicParRandVar$, en obtenant des couples  $(\vLeakVec_i, \publicParVar_i)_{i=1, \dots , \nbAttackTraces}$. Ensuite il effectue des hypothèses de clé $\keyVar \in \keyVarSet$ et associe à chaque hypothèse un score $d_\keyVar$ donné par un calcul de probabilité conjointe:
+
+\begin{equation}\label{eq:NN_SCA}
+d_{\keyVar} = \prod_{i=1}^{\nbAttackTraces} \MLmodel(\vLeakVec_i)[\sensFunction(\keyVar,\publicParVar_i)] \mbox{ .}
+\end{equation}
+
+Finalement, le meilleur candidat de clé $\hat{\keyVar}$ est celui qui maximise ce score.
+
+
+\subsubsection{Performance Estimation}\label{sec:performances_NN}
+\paragraph*{Maximal Accuracies and Confusion Matrix} 
+The accuracy is the most common metric to both monitor and evaluate a classification-oriented NN. As already seen in Sec.~\ref{sec:validation}, the accuracy is defined as the successful classification rate reached over a dataset. The {\em training accuracy}, the \emph{validation accuracy} and the \emph{test accuracy} are the successful classification rates achieved respectively over the training, the validation and the test sets. At the end of each epoch it is useful to compute and to compare the training accuracy and the validation accuracy. For our study, we found interesting to consider the following two additional quantities: 
+\begin{itemize}
+\item the \emph{maximal training accuracy}, corresponding to the maximum of the training accuracies computed at the end of each epoch,
+\item the \emph{maximal validation accuracy}, corresponding to the maximum of the validation accuracies computed at the end of each epoch.
+\end{itemize}
+In addition to the two quantities above, we will also evaluate the performances of our trained model, by computing a \emph{test accuracy}. Sometimes it is useful to complete this evaluation by looking at the so-called \emph{confusion matrix} (as the one appearing in the bottom part of Fig. \ref{fig:CW_shift_history}). Indeed the latter matrix enables for the identification of the classes which are confused, in case of misclassification. The confusion matrix corresponds to the distribution over the couples \emph{(true label, predicted label)} directly deduced from the results of the classification on the test set. A test accuracy of $100\%$ corresponds to a diagonal confusion matrix.\\
+
+\paragraph{Side-Channel-Oriented Metrics} The accuracy metric is perfectly adapted to the machine learning classification problem, but corresponds in side-channel language to the success rate of a Simple Attack, as already discussed in Chapter~\ref{ChapterIntroductionSCA}. When the attacker can acquire several traces with varying plaintexts, the accuracy metric is not sufficient alone to evaluate the attack performance.
+Indeed such a metric only takes into account the label corresponding to the maximal score and does not consider the other ones, whereas an SCA does, through~\eqref{eq:NN_SCA}. To take this remark into account, we will always associate the test accuracy to a side-channel metric defined as the minimal number  $N^\star$ of side-channel traces that makes the \emph{guessing entropy} (see \ref{sec:metrics}) be permanently equal to 1. In our experiments, we will estimate such a guessing entropy through 10 independent attacks. \\
+%
+
+\paragraph*{Expériences en cas de contremesure logicielle}
+
+For this experiment, we implemented, on an Atmega328P microprocessor, a uniform RDI \cite{tunstall2007efficient} to protect the leakage produced by a single target operation. Our RDI simply consists in a loop of  $r$ \emph{nop} instructions, with $r$  drawn uniformly in $[0,127]$. Some acquired traces are reported in the left side of Fig. \ref{fig:CW_shift_traces}, the target peak being highlighted with a red ellipse. They are composed of $3,996$ time samples, corresponding to an access to the AES-Sbox look-up table stored in NVM. For the training, we acquired only $1,000$ traces and 700 further traces were acquired as validation data. Our CNN has been trained to classify the traces according to the Hamming weight of the Sbox output; namely, the target sensitive variable is given by $\sensRandVar = \HW(\subbytes(P\oplus \keyRandVar))$. This choice has been done to let each class contain more than only a few (i.e. about $1,000/256$) training traces.
+For Atmega328P devices, the Hamming weight is known to be particularly relevant to model the leakage occurring during register writing (see for example Chapters~\ref{ChapterLinear} and \ref{ChapterKernel} or \cite{BelaidCFGKP15}). Since $\sensRandVar$ is assumed to take nine values and the position of the leakage depends on a random $r$ ranging over 128 values, it is clear that the $1,000$ training traces do not encompass the full $9 \times 128=1,152$ possible combinations $(z,r)\in [0,8]\times[0,127]$. We undersized the training set by purpose, in order to establish whether the CNN technique, equipped with DA, is able to catch the meaningful shift-invariant features without having been provided with all the possible observations.
+
+We trained our CNN by batches of size $32$.  In total the network contained $869,341$ trainable weights. The training and validation accuracies achieved after each epoch are depicted in Fig.~\ref{fig:CW_shift_history} together with the confusion matrices that we obtained from the test set. Applying the early-stopping principle recalled in Sec.~\ref{sec:training},  we automatically stopped the training after $120$ epochs without decrement of the loss function evaluated over the validation set, and kept as final trained model the one that showed the minimal value for the loss function evaluation. Concerning the learning rate (see Sec.~\ref{sec:training}), we fixed the beginning one to $0.01$ and reduced it multiplying it by a factor of $\sqrt{0.1}$ after $5$ epochs without validation loss decrement.
+
+
+\begin{table}[t]
+\centering
+\caption[Results of our CNN, for different DA techniques, in presence of an uniform RDI countermeasure protecting.]{Results of our CNN, for different DA techniques, in presence of an uniform RDI countermeasure protecting. For each technique, $4$ values are given: in position $a$ the maximal training accuracy, in position $b$ the maximal validation accuracy, in position $c$ the test accuracy, in position $d$ the value of $N^\star$ (see Sec.~\ref{sec:performances_NN} for definitions).}
+\label{tab:res_CW_shift}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{2}{|c|}{} & \multicolumn{2}{c|}{$\mathrm{SH}_{0}$}                                    & \multicolumn{2}{c|}{$\mathrm{SH}_{100}$} & \multicolumn{2}{c|}{$\mathrm{SH}_{500}$} \\ \hline
+$a$        & $b$       & \cellcolor[HTML]{EFEFEF}100\%  & \cellcolor[HTML]{EFEFEF}25.9\%           & 100\%               & 39.4\%             & \textbf{98.4\%}     & \textbf{76.7\%}    \\ \hline
+$c$        & $d$       & \cellcolor[HTML]{EFEFEF}27.0\% & \cellcolor[HTML]{EFEFEF}\textgreater1000 & 31.8\%              & 101                & \textbf{78.0\%}     & \textbf{7}         \\ \hline
+\end{tabular}
+\end{table}
+
+
+\paragraph*{Expériences en cas de contremesure matérielle simulée}
+
+\begin{table}[t]
+\centering
+\caption[Results of our CNN in presence of artificially-generated jitter countermeasure, with different DA techniques.]{Results of our CNN in presence of artificially-generated jitter countermeasure, with different DA techniques. See the caption of Table \ref{tab:res_CW_shift} for a legend.}
+\label{table:results_all}
+
+
+
+\begin{tabular}{|c|c|cccccc|cc}
+\hline
+\multicolumn{10}{|c|}{\textbf{\emph{DS\_low\_jitter}}}\\
+\hline
+$a$                           & $b$                         & \multicolumn{2}{c|}{}                                                                                      & \multicolumn{2}{c|}{}                                                                                     & \multicolumn{2}{c|}{}                                                                                  & \multicolumn{2}{c|}{}                                      \\ \cline{1-2}
+$c$                           & $d$                         & \multicolumn{2}{c|}{\multirow{-2}{*}{$\mathrm{SH}_{0}$}}                                                   & \multicolumn{2}{c|}{\multirow{-2}{*}{$\mathrm{SH}_{20}$}}                                                 & \multicolumn{2}{c|}{\multirow{-2}{*}{$\mathrm{SH}_{40}$}}                                              & \multicolumn{2}{c|}{\multirow{-2}{*}{$\mathrm{SH}_{200}$}} \\ \hline
+\multicolumn{2}{|c|}{}                                      & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}100.0\%} & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}68.7\%} & \multicolumn{1}{c|}{99.8\%}                         & \multicolumn{1}{c|}{86.1\%}                         & \multicolumn{1}{c|}{98.9\%}                                  & 84.1\%                                  &                              &                             \\ \cline{3-8}
+\multicolumn{2}{|c|}{\multirow{-2}{*}{$\mathrm{AR}_{0}$}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}57.4\%}  & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}14}     & \multicolumn{1}{c|}{82.5\%}                         & \multicolumn{1}{c|}{6}                              & \multicolumn{1}{c|}{83.6\%}                                  & 6                                       &                              &                             \\ \cline{1-8}
+\multicolumn{2}{|c|}{}                                      & \multicolumn{1}{c|}{87.7\%}                          & \multicolumn{1}{c|}{88.2\%}                         & \multicolumn{1}{c|}{82.4\%}                         & \multicolumn{1}{c|}{88.4\%}                         & \multicolumn{1}{c|}{81.9\%}                                  & 89.6\%                                  &                              &                             \\ \cline{3-8}
+\multicolumn{2}{|c|}{\multirow{-2}{*}{$\mathrm{AR}_{100}$}} & \multicolumn{1}{c|}{86.0\%}                          & \multicolumn{1}{c|}{6}                              & \multicolumn{1}{c|}{87.0\%}                         & \multicolumn{1}{c|}{5}                              & \multicolumn{1}{c|}{87.5\%}                                  & 6                                       &                              &                             \\ \cline{1-8}
+\multicolumn{2}{|c|}{}                                      & \multicolumn{1}{c|}{83.2\%}                          & \multicolumn{1}{c|}{88.6\%}                         & \multicolumn{1}{c|}{81.4\%} & \multicolumn{1}{c|}{86.9\%} & \multicolumn{1}{c|}{\textbf{80.6\%}} &\textbf{88.9\%} &                              &                             \\ \cline{3-8}
+\multicolumn{2}{|c|}{\multirow{-2}{*}{$\mathrm{AR}_{200}$}} & \multicolumn{1}{c|}{86.6\%}                          & \multicolumn{1}{c|}{6}                              & \multicolumn{1}{c|}{85.7\%} & \multicolumn{1}{c|}{6}      & \multicolumn{1}{c|}{\textbf{87.7\%}} & \textbf{5}      &                              &                             \\ \hline
+\multicolumn{2}{|c|}{}                                      &                                                      &                                                     &                                                     &                                                     &                                                              &                                         & \multicolumn{1}{c|}{85.0\%}  & \multicolumn{1}{c|}{88.6\%} \\ \cline{9-10} 
+\multicolumn{2}{|c|}{\multirow{-2}{*}{$\mathrm{AR}_{500}$}} &                                                      &                                                     &                                                     &                                                     &                                                              &                                         & \multicolumn{1}{c|}{86.2\%}  & \multicolumn{1}{c|}{5}      \\ \cline{1-2} \cline{9-10}
+\multicolumn{10}{|c|}{}\\
+\hline
+\multicolumn{10}{|c|}{\textbf{\emph{DS\_high\_jitter}}}\\
+\hline
+$a$                          & $b$                         & \multicolumn{2}{c|}{\multirow{2}{*}{$\mathrm{SH}_{0}$}}   & \multicolumn{2}{c|}{\multirow{2}{*}{$\mathrm{SH}_{20}$}}  & \multicolumn{2}{c|}{\multirow{2}{*}{$\mathrm{SH}_{40}$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$\mathrm{SH}_{200}$}} \\ \cline{1-2}
+$c$                          & $d$                         & \multicolumn{2}{c|}{}                                     & \multicolumn{2}{c|}{}                                     & \multicolumn{2}{c|}{}                                    & \multicolumn{2}{c|}{}                                     \\ \hline
+\multicolumn{2}{|c|}{\multirow{2}{*}{$\mathrm{AR}_{0}$}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}100\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}45.0\%} & \multicolumn{1}{c|}{100\%}  & \multicolumn{1}{c|}{60.0\%} & \multicolumn{1}{l|}{98.5\%}           & 67.6\%           &                             &                             \\ \cline{3-8}
+\multicolumn{2}{|c|}{}                                     &  \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}40.6\%} & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}35}  & \multicolumn{1}{c|}{51.1\%} & \multicolumn{1}{c|}{9}      & \multicolumn{1}{c|}{62.4\%}           & 11               &                             &                             \\ \cline{1-8}
+\multicolumn{2}{|c|}{\multirow{2}{*}{$\mathrm{AR}_{100}$}} & \multicolumn{1}{c|}{90.4\%} & \multicolumn{1}{l|}{57.3\%} & \multicolumn{1}{c|}{76.6\%} & \multicolumn{1}{c|}{73.6\%} & \multicolumn{1}{c|}{78.5\%}           & 76.4\%           &                             &                             \\ \cline{3-8}
+\multicolumn{2}{|c|}{}                                     & \multicolumn{1}{c|}{50.2\%} & \multicolumn{1}{c|}{15}     & \multicolumn{1}{c|}{72.4\%} & \multicolumn{1}{c|}{11}     & \multicolumn{1}{c|}{73.5\%}           & 9                &                             &                             \\ \cline{1-8}
+\multicolumn{2}{|c|}{\multirow{2}{*}{$\mathrm{AR}_{200}$}} & \multicolumn{1}{c|}{83.1\%} & \multicolumn{1}{c|}{67.7\%} &\multicolumn{1}{c|}{\textbf{82.0\%}} & \multicolumn{1}{c|}{\textbf{77.1\%}} & \multicolumn{1}{l|}{82.6\%}           & 77.0\%           &                             &                             \\ \cline{3-8}
+\multicolumn{2}{|c|}{}                                     & \multicolumn{1}{c|}{64.0\%} & \multicolumn{1}{c|}{11}     & \multicolumn{1}{c|}{\textbf{75.5\%}} & \multicolumn{1}{c|}{\textbf{8}}   & \multicolumn{1}{c|}{74.4\%}           & 8                &                             &                             \\ \hline
+\multicolumn{2}{|c|}{\multirow{2}{*}{$\mathrm{AR}_{500}$}} &                             &                             &                             &                             &                                       &                  & \multicolumn{1}{c|}{83.6\%} & \multicolumn{1}{c|}{73.4\%} \\ \cline{9-10} 
+\multicolumn{2}{|c|}{}                                     &                             &                             &                             &                             &                                       &                  & \multicolumn{1}{c|}{68.2\%} & \multicolumn{1}{c|}{11}     \\ \cline{1-2} \cline{9-10}  
+\end{tabular}
+
+
+\end{table}
+
+
+\begin{figure}
+\includegraphics[width=.5\textwidth]{../Figures/CHES2017/results_low_jitter_new.pdf} 
+\includegraphics[width=.5\textwidth]{../Figures/CHES2017/results_high_jitter_new.pdf} 
+\caption[Comparison between a Gaussian template attack, with and without realignment, and our CNN strategy, over the  \emph{DS\_low\_jitter} and the  \emph{DS\_high\_jitter}.]{Comparison between a Gaussian template attack, with and without realignment, and our CNN strategy, over the  \emph{DS\_low\_jitter} (left) and the  \emph{DS\_high\_jitter} (right).}\label{fig:compareTA}
+\end{figure}
+
+\paragraph*{Expériences en cas de contremesure matérielle réelle}
+As a last (but most challenging) experiment we deployed our CNN architecture to attack an AES hardware implementation over a modern secure smartcard (secure implementation on 90nm technology node).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{../Figures/CHES2017/TA_CNN_smartcard.pdf} 
+     \caption{Comparison between a Gaussian template attack with realignment, and our CNN strategy, over the modern smart card with jitter.}\label{fig:TA_smartcard}
+\end{figure}
+
+%
+%    \includegraphics[width=.45\textwidth]{../Figures/CHES2017/TA_CNN_smartcard.pdf} 
+%    \captionof{figure}{Top Left: in green the SNR for the first byte; in blue the SNR for the second byte; in red the SNR for the second byte after a trace realignment. Bottom Left: a zoom of the blue SNR trace. Right: comparison between a Gaussian template attack with realignment, and our CNN strategy, over the modern smart card with jitter.}\label{fig:SNR}
+
+    
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\multicolumn{8}{c}{}\\
+\hline
+\multicolumn{2}{|c|}{} & \multicolumn{2}{c|}{$\mathrm{SH}_{0}\mathrm{AR}_{0}$} & \multicolumn{2}{c|}{$\mathrm{SH}_{10}\mathrm{AR}_{100}$} & \multicolumn{2}{c|}{$\mathrm{SH}_{20}\mathrm{AR}_{200}$} \\ \hline
+$a$        & $b$       & 35.0\%                     & 1.1\%                    & 12.5\%                      & 1.5\%                      & \textbf{10.4\%}             & \textbf{2.2\%}             \\ \hline
+$c$        & $d$       & 1.2\%                      & 137                      & 1.3\%                       & 89                         & \textbf{1.8\%}              & \textbf{54}                \\ \hline
+\end{tabular}
+
+\caption{Results of our CNN over the modern smart card with jitter.}\label{tab:res_AES}
+\end{table}
