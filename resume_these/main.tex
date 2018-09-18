@@ -29,6 +29,9 @@
 \usepackage{geometry}
 \geometry{hmargin = 3.0cm, vmargin=2.9cm}
 
+\usepackage{multirow}
+\usepackage{xcolor,colortbl}
+
 
 %%%% CONFIGURATION PAQUETAGES %%%%
 
@@ -107,7 +110,8 @@ basicstyle=\footnotesize, escapechar=@,style=customc,
 \newcommand{\given}{\@ifstar\@givenstar\@givennostar}
 \makeatother
 
-
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
 
 \def\etal{\textit{et al.} }
 \newcommand {\ie}{{\em i.e.} }
