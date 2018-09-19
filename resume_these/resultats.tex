@@ -351,11 +351,11 @@ Le Tableau \ref{tab:res_CW_shift} résume les résultats obtenus. En comparant les
 
 
 \paragraph*{Expériences en cas de contremesure matérielle simulée}
-Quand des contremesures matérielles agissent au niveau de l'horloge du composant, en perturbant sa fréquence, les traces acquises des signaux auxiliaires apparaissent compromises par une désynchronisation dû à l'accumulation des déformations de cycles d'horloge. Nos expériences suivantes visent à tester le réseau CNN en présence de ce type de déformation. Dans un premier temps nous avons menés ces tests sur des signaux parfaitement synchrone au moment de l'acquisition et désynchronisés de façon artificiel afin de pouvoir maîtriser l'effet déformant. 
+Quand des contremesures matérielles agissent au niveau de l'horloge du composant, en perturbant sa fréquence, les traces acquises des signaux auxiliaires apparaissent compromises par une désynchronisation dû à l'accumulation des déformations de cycles d'horloge. Nos expériences suivantes visent à tester le réseau CNN en présence de ce type de déformation. Dans un premier temps nous avons menés ces tests sur des signaux parfaitement synchrone au moment de l'acquisition et désynchronisés de façon artificiel afin de pouvoir maîtriser l'effet déformant. Les résultats, résumées dans la Tableau~\ref{table:results_all}, sont finalement obtenus sur deux bases de données, \emph{DS\_low\_jitter} et \emph{DS\_high\_jitter} respectivement moins affectée et plus affectée par la désynchronisation. Ces résultats confirment que l'approche par CNN reste efficace en présence de ce type de déformation, et montrent les bienfaits de l'application des techniques DA.
 
 \begin{table}[t]
 \centering
-\caption{Results of our CNN in presence of artificially-generated jitter countermeasure, with different DA techniques. See the caption of Table \ref{tab:res_CW_shift} for a legend.}
+\caption{Résultat de l'attaque par CNN, pour diverse techniques DA, en présence de désynchronisation matériellée simulée. Légende dans la didascalie du Tableau~\ref{tab:res_CW_shift}.}
 \label{table:results_all}
 
 
@@ -401,19 +401,6 @@ $c$                          & $d$                         & \multicolumn{2}{c|}
 \end{figure}
 
 \paragraph*{Expériences en cas de contremesure matérielle réelle}
-As a last (but most challenging) experiment we deployed our CNN architecture to attack an AES hardware implementation over a modern secure smartcard (secure implementation on 90nm technology node).
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{../Figures/CHES2017/TA_CNN_smartcard.pdf} 
-     \caption{Comparison between a Gaussian template attack with realignment, and our CNN strategy, over the modern smart card with jitter.}\label{fig:TA_smartcard}
-\end{figure}
-
-%
-%    \includegraphics[width=.45\textwidth]{../Figures/CHES2017/TA_CNN_smartcard.pdf} 
-%    \captionof{figure}{Top Left: in green the SNR for the first byte; in blue the SNR for the second byte; in red the SNR for the second byte after a trace realignment. Bottom Left: a zoom of the blue SNR trace. Right: comparison between a Gaussian template attack with realignment, and our CNN strategy, over the modern smart card with jitter.}\label{fig:SNR}
-
-    
 
 \begin{table}
 \centering
@@ -425,5 +412,14 @@ $a$        & $b$       & 35.0\%                     & 1.1\%                    &
 $c$        & $d$       & 1.2\%                      & 137                      & 1.3\%                       & 89                         & \textbf{1.8\%}              & \textbf{54}                \\ \hline
 \end{tabular}
 
-\caption{Results of our CNN over the modern smart card with jitter.}\label{tab:res_AES}
+\caption{Résultats de l'attaque par CNN sur carte à puce protégée par jitter.}\label{tab:res_AES}
 \end{table}
+
+Les résultats prometteurs du contexte simulé se retrouvent aussi dans le dernier scénario d'expérience, où la cible est une implémentation matérielle de l'AES sur composant sécurisée moderne. L'implémentation est protégé par un effet de jitter sur l'horloge. Comme montré dans le Tableau~\ref{tab:res_AES}, l'attaque par CNN est efficace et les techniques DA mitigent le surapprentissage du réseau en améliorant l'attaque. Dans ce contexte nous comparons la stratégie classique, qui consiste à effectuer une attaque template suite à une technique de ré-alignement et au choix minutieux des PoIs, et la stratégie par CNN sans ré-alignement ni extraction explicite de caractéristiques. L'attaque par CNN se montre légèrement plus efficace même en absence de pré-traitements. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.5\textwidth]{../Figures/CHES2017/TA_CNN_smartcard.pdf} 
+     \caption{Comparaison entre l'attaque template gaussienne avec ré-alignement, et la stratégie par CNN, sur carte à puce protégée par jitter.}\label{fig:TA_smartcard}
+\end{figure}
+
