@@ -2,21 +2,24 @@
 
 \subsection{Notations}
 Dans la th\`{e}se, le symbole $X$ d\'{e}signe une variable al\'{e}atoire ($\vec{X}$ pour un vecteur colonne al\'{e}atoire) sur un ensemble $\mathcal{X}$, et $x$ (respectivement $\vec{x}$) d\'{e}signe une r\'{e}alisation de $X$ (respectivement $\vec{X}$). 
-La $i$-\`{e}me coordonn\'{e}e d'un vecteur $\vec{x}$ est indiqu\'{e}e par $\vec{x}[i]$, et la transpos\'{e}e d'un vecteur $\vec{x}$ par $\vec{x}^\intercal$. Les matrices sont indiqu\'{e}es par des majuscules en gras, $\textbf{A}$ ou $\covmat$. Les traces acquises des canaux auxiliaires sont interprêt\'{e}es comme r\'{e}alisations $\vLeakVec_1, \dots , \vLeakVec_N$ d'un vecteur al\'{e}atoire r\'{e}el $\vaLeakVec\in\mathbb{R}^\traceLength$, o\`{u} $\traceLength$ est la longueur du signal. Quand une m\'{e}thode de r\'{e}duction de dimension est utilis\'{e}e comme pr\'{e}-traitement, celle-ci am\`{e}ne \`{a} la d\'{e}finition d'une fonction appel\'{e}e \emph{extracteur} et d\'{e}not\'{e}e par $\extract \colon \mathbb{R}^\traceLength \rightarrow \mathbb{R}^\newTraceLength$. La variable sensible manipul\'{e}e pendant l'acquisition des traces est not\'{e}e $\sensRandVar$. Celle-ci peut avoir diff\'{e}rentes formes, mais souvent dans cette th\`{e}se elle est d\'{e}finie comme $\sensRandVar = \sensFunction(\keyRandVar,\publicParRandVar)$, o\`{u} $\publicParRandVar$ d\'{e}note une variable publique, par exemple une partie de message en clair, et $\keyRandVar$ une partie d'une cl\'{e} secr\`{e}te que l'attaquant souhaite retrouver. Les valeurs acquises par la variable sensible sont vues comme r\'{e}alisations de la variable al\'{e}atoire $\sensRandVar$ en $\sensVarSet = \{\sensVarValue{1}, \dots, \sensVarValue{\nbClasses}\}$. Les \'{e}l\'{e}ments de $\sensRandVar$ sont parfois encod\'{e}s via le \emph{one-hot-encoding}: \`{a} chaque \'{e}l\'{e}ment $\sensVarValue{j}$ on associe un vecteur $\sensVarOneHot{j}$ de dimension $\numClasses$, avec toutes les entr\'{e}es nulles, sauf la $j$-\`{e}me qui est \'{e}gale \`{a}  $1$: $\sensVarValue{j}
+La $i$-\`{e}me coordonn\'{e}e d'un vecteur $\vec{x}$ est représent\'{e}e par $\vec{x}[i]$, et la transpos\'{e}e d'un vecteur $\vec{x}$ par $\vec{x}^\intercal$. Les matrices sont not\'{e}es en gras majuscules, $\textbf{A}$ ou $\covmat$. Les traces acquises des canaux auxiliaires sont interprêt\'{e}es comme r\'{e}alisations $\vLeakVec_1, \dots , \vLeakVec_N$ d'un vecteur al\'{e}atoire r\'{e}el $\vaLeakVec\in\mathbb{R}^\traceLength$, o\`{u} $\traceLength$ est la longueur du signal. Quand une m\'{e}thode de r\'{e}duction de dimension est utilis\'{e}e comme pr\'{e}-traitement, celle-ci am\`{e}ne \`{a} la d\'{e}finition d'une fonction appel\'{e}e \emph{extracteur} et not\'{e}e $\extract \colon \mathbb{R}^\traceLength \rightarrow \mathbb{R}^\newTraceLength$. La variable sensible manipul\'{e}e pendant l'acquisition des traces est not\'{e}e $\sensRandVar$. Celle-ci peut avoir diff\'{e}rentes formes, mais souvent dans cette th\`{e}se elle est d\'{e}finie comme $\sensRandVar = \sensFunction(\keyRandVar,\publicParRandVar)$, o\`{u} $\publicParRandVar$ d\'{e}signe une variable publique, par exemple une partie de message en clair, et $\keyRandVar$ une partie d'une cl\'{e} secr\`{e}te que l'attaquant souhaite retrouver. Les valeurs acquises par la variable sensible sont vues comme r\'{e}alisations de la variable al\'{e}atoire $\sensRandVar$ en $\sensVarSet = \{\sensVarValue{1}, \dots, \sensVarValue{\nbClasses}\}$. Les \'{e}l\'{e}ments de $\sensRandVar$ sont parfois encod\'{e}s via le \emph{one-hot-encoding}: \`{a} chaque \'{e}l\'{e}ment $\sensVarValue{j}$ on associe un vecteur $\sensVarOneHot{j}$ de dimension $\numClasses$, avec toutes les entr\'{e}es nulles, sauf la $j$-\`{e}me qui est \'{e}gale \`{a}  $1$: $\sensVarValue{j}
 \rightarrow \sensVarOneHot{j} = (0,\ldots , 0,\underbrace{1}_{j},0,\dots,0)$. Un \'{e}l\'{e}ment g\'{e}n\'{e}rique de $\sensVarSet$ sera not\'{e} $\sensVarGenValue$, si son indice  $i$ n'est pas n\'{e}cessaire.
 
 \subsection{Techniques Lin\'{e}aires de R\'{e}duction de Dimension}\label{sec:lin}
 Dans cette section sont d\'{e}crites les \'{e}tudes men\'{e}es autour des m\'{e}thodes lin\'{e}aires d'extraction de caract\'{e}ristiques, en particulier de l'Analyse aux Composantes Principales (PCA) et de l'Analyse Discriminante Lin\'{e}aire (LDA). 
 
 \subsubsection{Analyse aux Composantes Principales, l'outil classique et le profil\'{e}e}
-L'extracteur lin\'{e}aire $\extract^{\mathrm{PCA}}(\vLeakVec) = \textbf{A}\vLeakVec$ se d\'{e}duit des certains vecteurs propres $\AAlpha_1, \dots, \AAlpha_\newTraceLength$, appel\'{e}s \emph{Composantes Principales} (PCs), dont les transpos\'{e}s sont arrang\'{e} en tant que lignes dans la matrice de projection $\textbf{A}$. Classiquement la PCA intervient sur des donn\'{e}es non labellis\'{e}es $\vLeakVec_1, \dots , \vLeakVec_N$, suppos\'{e} ayant moyenne nulle et arrang\'{e} comme colonnes dans une matrice  $\measuresMatrix$ de dimension $\traceLength \times \nbTraces$, de tel sort que la matrice de covariance des donn\'{e}es est la suivante:
+L'extracteur lin\'{e}aire $\extract^{\mathrm{PCA}}(\vLeakVec) = \textbf{A}\vLeakVec$ se d\'{e}duit des certains vecteurs propres $\AAlpha_1, \dots, \AAlpha_\newTraceLength$, appel\'{e}s \emph{Composantes Principales} (PCs), dont les transpos\'{e}s sont arrang\'{e}es en tant que lignes dans la matrice de projection $\textbf{A}$. Classiquement la PCA intervient sur des donn\'{e}es non étiquet\'{e}es $\vLeakVec_1, \dots , \vLeakVec_N$, sont la moyenne est suppos\'{e}e nulle et rang\'{e}es en colonnes dans une matrice $\measuresMatrix$ de dimension $\traceLength \times \nbTraces$, de telle sorte que la matrice de covariance des donn\'{e}es soit la suivante :
 \begin{equation}\label{eq:covmat}
 \covmat = \frac{1}{\nbTraces}\measuresMatrix\measuresMatrix^\intercal \mbox{ .}
 \end{equation}
 
 Dans ce cas, les vecteur propres $\AAlpha_1, \dots, \AAlpha_\newTraceLength$ correspondent aux vecteurs propres de la matrice $\covmat$ et leurs valeurs propres associ\'{e}es sont not\'{e}es $\lambda_1, \dots, \lambda_r$. La PCA est la projection qui maximise la variance globale des caract\'{e}ristiques extraites. La variance \'{e}tant li\'{e}e \`{a} la quantit\'{e} d'information des donn\'{e}es, cette transformation est cens\'{e}e r\'{e}duire la dimension des traces tout en renforçant l'information contenue. Une propri\'{e}t\'{e} remarquable de la PCA est que chaque $\lambda_i$ correspond \`{a} la variance empirique des donn\'{e}es projet\'{e}es sur la PC correspondante $\AAlpha_i$.\\
 
-Dans un sc\'{e}nario d'attaque profil\'{e}e, cet outil classique est toutefois largement sous-optimal : il n'exploite pas une phase de caract\'{e}risation. Dans cette derni\`{e}re on suppose que l'attaquant est en possession d'un ensemble de donn\'{e}es étiquet'{e}es  $(\vLeakVec_i, \sensVar_i)_{i=1..\nbProfilingTraces}$, c'est-\`{a}-dire o\`{u} l'association \emph{trace-variable sensible} est connue. Dans la litt\'{e}rature SCA \cite{TAprincipal,choudaryefficient,choudary2014efficient,disassembler,Standaert2008} une version \emph{profil\'{e}e} de la PCA a \'{e}t\'{e} introduite. En introduisant les moyennes empiriques par classe
+% sugg CD
+% definir donnée étiquetée avant
+
+Dans un sc\'{e}nario d'attaque par profilage, cet outil classique est toutefois largement sous-optimal : il n'exploite aucune phase de caract\'{e}risation où l'attaquant est en possession d'un ensemble de donn\'{e}es étiquetées  $(\vLeakVec_i, \sensVar_i)_{i=1..\nbProfilingTraces}$. Dans la litt\'{e}rature SCA \cite{TAprincipal,choudaryefficient,choudary2014efficient,disassembler,Standaert2008} une version \emph{profil\'{e}e} de la PCA a \'{e}t\'{e} introduite. En utilisant les moyennes empiriques par classe :
 \begin{equation}\label{eq:mmmXclass}
 \mmmXclass= \esperEst[\given{\vaLeakVec}{\sensRandVar = \sensVarGenValue}] = \frac{1}{\nbTracesPerClass}\sum_{i\colon \sensVar_i=\sensVarGenValue} \vLeakVec_i  \mbox{ ,}
 \end{equation}
@@ -24,22 +27,22 @@ la PCA profil\'{e}e utilise la matrice des \emph{\'{e}carts inter-classes} suiva
 \begin{equation}\label{eq:SB}
 \SB = \sum_{\sensVarGenValue\in\sensVarSet}\nbTracesPerClass(\mmmXclass-\mmmX)(\mmmXclass-\mmmX)^\intercal \mbox{ ,}
 \end{equation}
-o\`{u} $\mmmX$ est la moyenne empirique de toutes les donn\'{e}es confondues. L'extracteur obtenu de cette mani\`{e}re garantie que les centro\"ides par classes des donn\'{e}es projet\'{e}es sont \'{e}cart\'{e}s au maximum.
+o\`{u} $\mmmX$ est la moyenne empirique de toutes les donn\'{e}es confondues. L'extracteur obtenu de cette mani\`{e}re garantie que les centro\"ides par classes des donn\'{e}es projet\'{e}es sont les plus éloignés possible.
 
 
 \subsubsection{L'enjeu du choix des composantes}\label{sec:ELV}
-L'introduction de la PCA dans le contexte des SCA a levée les questions suivantes: \textit{combien} de composants et \textit{lesquelles} sont suffisantes/nécessaires pour réduire la dimension des traces sans perdre de l'information discriminante importante ? 
+L'introduction de la PCA dans le contexte des SCA a levé les questions suivantes: \textit{combien} de composants et \textit{lesquelles} sont suffisantes/nécessaires pour réduire la dimension des traces sans perdre de l'information discriminante importante ? 
 %
-Une première réponse a été données dans \cite{choudary2014efficient}, en relation au concept de \emph{variance expliquée} (ou \emph{variance expliquée globale}, EGV) d'une PC $\AAlpha_i$:
+Une première réponse a été donnée dans \cite{choudary2014efficient}, en relation au concept de \emph{variance expliquée} (ou \emph{variance expliquée globale}, EGV) d'une PC $\AAlpha_i$:
 
 \begin{equation}\label{eq:EGV}
 \mathrm{EGV}(\AAlpha_i) =  \frac{\lambda_i}{\sum_{k=1}^r\lambda_k} \mbox{ .}
 \end{equation}
-Par définition, la somme de toutes les EGV est égal à  $1$. Le choix des composantes basé sur le EGV consiste à  fixer une valeur souhaité pour la \emph{variance expliquée cumulative} $\beta$ et à  garder $\newTraceLength$ PCs distinctes, où $\newTraceLength$ est l'entier minimum tel que: 
+Par définition, la somme de toutes les EGV est égale à  $1$. Le choix des composantes basé sur l'EGV consiste à  fixer un seuil $\beta$ pour la \emph{variance expliquée cumulative} et à garder $\newTraceLength$ PCs distinctes, où $\newTraceLength$ est l'entier minimum tel que: 
 \begin{equation}
 \mbox{EGV}(\AAlpha_1) +\mbox{EGV}(\AAlpha_2) + \dots +\mbox{EGV}(\AAlpha_\newTraceLength) \geq \beta \mbox{  .}
 \end{equation}
-Si l'attaquant e une contrainte pour la dimension $\newTraceLength$, le choix par EGV consiste simplement à  garder les $\newTraceLength$ premières composantes, dans l'ordre naturel des valeurs propres associées. Dans le contexte des SCA, ce type de choix ne semble pas être systématiquement le meilleur: des articles déclarent que les composantes leaders contiennent la plus grande quantité d'information, alors que d'autres suggèrent de défausser ces premières composantes \cite{Batina2012,specht}. 
+Si l'attaquant a une contrainte de dimension finale $\newTraceLength$, le choix par EGV consiste simplement à garder les $\newTraceLength$ premières composantes, dans l'ordre naturel des valeurs propres associées. Dans le contexte des SCA, ce type de choix ne semble pas être systématiquement le meilleur: des articles déclarent que les plus fortes composantes contiennent la plus grande quantité d'information, alors que d'autres suggèrent d'écarter ces premières composantes \cite{Batina2012,specht}. 
 % An example of this behaviour is provided in Fig.~\ref{fig:DPAcontest}. It may be noticed that the first component (plotted on the left) has high coefficients spread over the whole trace, while the sixth one  (on the right) has high coefficients localised in a small time interval, very likely to signalize the instants in which the target sensitive variable leaks.
 %
 %\begin{figure}
@@ -53,7 +56,7 @@ Dans le contexte des implémentations sécurisées, le but des développeurs est de 
 \begin{assumption}\label{assum:local}
 L'information compromettante d'une trace acquis de canaux auxiliaires est localisée en peu de points. 
 \end{assumption}
-Sous cette assomption, les auteurs de \cite{SCAclassProbl} ont donné donnée une deuxième réponse au problème du choix des composantes: ils utilisent le \emph{ratio de participation inversé} (IPR) pour évaluer la \emph{localisation} des vecteurs propres. Le IPR est ainsi défini:
+Sous cette hypothèse, les auteurs de \cite{SCAclassProbl} ont donné une deuxième réponse au problème du choix des composantes: ils utilisent le \emph{ratio de participation inversé} (IPR) pour évaluer la \emph{localisation} des vecteurs propres. Le IPR est défini ainsi :
 \begin{equation}
 \mathrm{IPR}(\AAlpha_i) = \sum_{j=1}^\traceLength \AAlpha_i[j]^4 \mbox{ .}
 \end{equation}
@@ -67,23 +70,25 @@ Les auteurs de \cite{SCAclassProbl} suggèrent de sélectionner les PCs en ordre i
 \caption{Cumulative ELV trend of principal components. On the right a zoom of the plot on the left. Acquisition campaign on an 8-bit AVR Atmega328P.}\label{fig:ELVcumulative}
 \end{figure}
 %
-Les méthodes de sélection par EGV et IPR sont d'une certaine façon complémentaires : la première se base uniquement sur les valeurs propres associées aux PC et ne considère pas la forme des PC elles-mêmes; la seconde ne considère pas l'information donnée pas le valeurs propres, mais seulement la distribution des coefficients des PCs. Dans ce panorama nous avons proposé une nouvelle méthode se sélection qui fait un pont entre la EGV et la IPR : nous avons introduit la \emph{variance expliquée locale} (ELV) d'une PC $\AAlpha_i$ en un point $j$, définie par:
+Les méthodes de sélection par EGV et IPR sont d'une certaine façon complémentaires : la première se base uniquement sur les valeurs propres associées aux PC et ne considère pas la forme des PC elles-mêmes; la seconde ne considère pas l'information donnée pas les valeurs propres, mais seulement la distribution des coefficients des PCs. Dans ce panorama nous avons proposé une nouvelle méthode de sélection qui fait un pont entre l'EGV et l'IPR : nous avons introduit la \emph{variance expliquée locale} (ELV) d'une PC $\AAlpha_i$ en un point $j$, définie par :
 \begin{equation}
 \mathrm{ELV}(\AAlpha_i,j) = \frac{\lambda_i \AAlpha_i[j]^2}{\sum_{k=1}^r\lambda_k} = \mathrm{EGV}(\AAlpha_i) \AAlpha_i[j]^2  \mbox{ .}
 \end{equation}
-Soit $\mathcal{J}=\{j^i_1, j^i_2, \dots, j^i_{\traceLength}\}\subset\{1,2,\dots,\traceLength\}$  un ensemble  d'indices ordonnés de tel sort que $\mathrm{ELV}(\AAlpha_i,j^i_1)\geq \mathrm{ELV}(\AAlpha_i,j^i_2)\geq \dots \geq \mathrm{ELV}(\AAlpha_i,j^i_\traceLength)$. On observe que la somme sur tous les $\mathrm{ELV}(\AAlpha_i,j)$, pour tout $j\in[1,\dots,\traceLength],$  est égal à  $\mathrm{EGV}(\AAlpha_i)$. Si on opère cette somme en manière cumulative en suivant l'ordre donnée par l'ensemble ordonné $\mathcal{J}$, on obtient une description complète de la tendance suivie par la composante $\AAlpha_i$ pour atteindre son EGV. Comme montré in Fig.~\ref{fig:ELVcumulative}, où ces ELV cumulatives sont représentées, les trois premières composantes atteignent leur EGV finale très lentement, alors que la $4$ème, $5$ème et $6$ème atteignent une large partie de leur EGV très rapidement, c'est-à -dire an sommant les contributions ELV d'une moindre nombre de points. La sélection par ELV, en analogie avec EGV, demande de fixer une taille pour la dimension réduite du signal $\newTraceLength$, ou une seuil $\beta$ pour la ELV cumulative. Dans le premier cas les valeurs maximales de ELV de chaque PC sont comparées, et les $\newTraceLength$ montantes les valeurs plus élevées sont sélectionnées. Dans le second cas, tous les couple (PC, point temporel) sont ordonnés en ordre décroissant de ELV, et sommés jusqu'à  atteindre le seuil $\beta$. Les PC qui contribuent à  la somme sont sélectionnées.\\
+Soit $\mathcal{J}=\{j^i_1, j^i_2, \dots, j^i_{\traceLength}\}\subset\{1,2,\dots,\traceLength\}$  un ensemble  d'indices ordonnés de telle sorte que $\mathrm{ELV}(\AAlpha_i,j^i_1)\geq \mathrm{ELV}(\AAlpha_i,j^i_2)\geq \dots \geq \mathrm{ELV}(\AAlpha_i,j^i_\traceLength)$. On observe que la somme sur tous les $\mathrm{ELV}(\AAlpha_i,j)$, pour tout $j\in[1,\dots,\traceLength],$  est égale à  $\mathrm{EGV}(\AAlpha_i)$. Si on cumule cette somme en suivant l'ordre donné par l'ensemble ordonné $\mathcal{J}$, on obtient une description complète de la tendance suivie par la composante $\AAlpha_i$ pour atteindre son EGV. Comme montré sur la figure~\ref{fig:ELVcumulative}, où ces ELV cumulatives sont représentées, les trois premières composantes atteignent leur EGV finale très lentement, alors que la $4$^{ème}, $5$^{ème} et $6$^{ème} atteignent une large partie de leur EGV très rapidement, c'est-à-dire en sommant les contributions ELV de peu de points. La sélection par ELV, par analogie avec l'EGV, demande de fixer la dimension réduite du signal $\newTraceLength$, ou un seuil $\beta$ pour la ELV cumulative. Dans le premier cas, les valeurs maximales d'ELV de chaque PC sont comparées, et les $\newTraceLength$ valeurs les plus élevées sont sélectionnées. Dans le second cas, tous les couples (PC, point temporel) sont ordonnés par ordre décroissant de leur ELV, et sommés jusqu'à  atteindre le seuil $\beta$. Les PC qui contribuent à  la somme sont sélectionnées.\\
 
 
 
 
 \subsubsection{LDA et le probl\`{e}me du petit échantillonnage}
-L'extracteur $\extract^{\mathrm{LDA}}$ est une réduction de dimension optimale, sous certaines conditions, pour résoudre un problème de classification, c'est-à -dire un problème d'apprentissage où l'on vise à  assigner à  une donnée (une trace dans notre cas) un label (donné ici par la valeur de la variable $\sensRandVar$ manipulée lors de l'acquisition). Il a pour but non seulement d'écarter les centro\"ides par classe, mais aussi de reprocher au mieux les données appartenant à  une même classe. La forte analogie entre les SCA et la tâche de classification en apprentissage automatique rend la LDA beaucoup plus adaptée de la PCA dans ce contexte, mais plus coûteux. Comme la PCA, la LDA construit une matrice de projection $\textbf{A}$ en juxtaposant des vecteurs propres, les composantes linéaires discriminantes (LDC), qui sont ceux de la matrice $\SW^{-1} \SB$, où $\SB$ est définie en \eqref{eq:SB} et $\SW$ est la matrice des \emph{écarts intra-classe}:
+L'extracteur $\extract^{\mathrm{LDA}}$ est une réduction de dimension optimale, sous certaines conditions, pour résoudre un problème de classification, c'est-à-dire un problème d'apprentissage où l'on vise à assigner à une donnée (une trace dans notre cas) une étiquette (donnée ici par la valeur de la variable $\sensRandVar$ manipulée lors de l'acquisition). Il a pour but non seulement d'éloigner les centro\"ides par classe, mais aussi de reprocher au mieux les données appartenant à une même classe. La forte analogie entre les SCA et la tâche de classification en apprentissage automatique rend la LDA beaucoup plus adaptée à notre contexte que la PCA, mais elle est plus coûteuse. Comme la PCA, la LDA construit une matrice de projection $\textbf{A}$ en juxtaposant des vecteurs propres, appelés composantes linéaires discriminantes (LDC), qui sont ceux de la matrice $\SW^{-1} \SB$, où $\SB$ est définie en \eqref{eq:SB} et $\SW$ est la matrice des \emph{écarts intra-classe}:
 
 \begin{equation}
 \SW = \sum_{\sensVarGenValue\in\sensVarSet}\sum_{i=1\colon \sensVar_i=\sensVarGenValue}(\vLeakVec_i-\mmmXclass)(\vLeakVec_i-\mmmXclass)^\intercal \mbox{.}
 \end{equation}
 
-Le désavantage principal de la LDA est appelé le \emph{problème du petit échantillonnage} et se réalise quand le nombre des traces $\nbTraces$ est inférieur ou égal à leur taille $\traceLength$. Ceci implique que la matrice $\SW$ n'est pas inversible. Si la LDA a été introduite relativement récemment dans la littérature SCA, la communauté de reconnaissance de patterns et apprentissage automatique cherche une solution à ce problème depuis les premières années quatre-vingt-dix. Nous avons exploré les solutions proposées, et les avons testés sur des traces compromettantes. 
+% sugg CD
+% je ne sais pas si petit échantillonnage est bien, j'avais suggérré dans objectif.tex sous-échantillonnage
+Le désavantage principal de la LDA est appelé le \emph{problème du petit échantillonnage} et apparaît quand le nombre des traces $\nbTraces$ est inférieur ou égal à leur taille $\traceLength$. Ceci implique que la matrice $\SW$ n'est pas inversible. Si la LDA a été introduite relativement tard dans la littérature SCA, la communauté en reconnaissance de formes et apprentissage automatique cherche une solution à ce problème depuis le début des années quatre-vingt-dix. Nous avons exploré les solutions proposées, et les avons testées sur des signaux compromettants. 
 
 %
 \subsubsection{Résultats et conclusions}
@@ -103,26 +108,32 @@ Le désavantage principal de la LDA est appelé le \emph{problème du petit échanti
 \caption{Guessing Entropy en fonction du nombre de traces de profilage. Figure \subref{fig:direct_PCA}: la meilleure extension de LDA et la PCA par profilage en présence du problème du petit échantillonnage; Figure \subref{fig:notSSS}: une comparaison en absence de problème du petit échantillonnage.}\label{fig:scenario2}
 \end{figure}
 
-Nous avons mené diverses analyses expérimentales pour évaluer la méthode de sélection de composantes par ELV et les techniques d'extension de la LDA en présence du petit échantillonnage. Dans cette section nous reportons les plus significatifs, en les extrayant du chapitre 4 de la thèse. Nous considérons ici deux scénarios: dans le premier (Scenario 1) l'attaquant a un large nombre de trace de profilage ($\nbProfilingTraces$) et veut minimiser le nombre de traces d'attaque ($nbAttackTraces$) pour obtenir une attaque réussie. En observant la Fig.~\ref{fig:scenario1} nous pouvons tirer trois conclusions: 
+Nous avons mené diverses analyses expérimentales pour évaluer la méthode de sélection de composantes par ELV et les techniques d'extension de la LDA en présence de petit échantillonnage. Dans cette section nous reportons les plus significatifs, en les extrayant du chapitre 4 de la thèse. Nous considérons ici deux scénarios: dans le premier (Scenario 1) l'attaquant a acquis un grand nombre de traces de profilage ($\nbProfilingTraces$) et veut minimiser le nombre de traces d'attaque ($nbAttackTraces$) pour obtenir une attaque réussie. En observant la figure~\ref{fig:scenario1} nous pouvons tirer trois conclusions : 
 \begin{itemize}
-\item nous confirmons que la PCA standard est bien sous-optimale par rapport à la PCA par profilage
-\item nous confirmons que la LDA est plus adaptée de la PCA pour pré-traiter le traces par canaux auxiliaires
-\item en équipant la PCA profilée avec la méthode de sélection par ELV (à la place de la EGV classique) les performances de l'attaque augmentent significativement, en se rapprochant de celles obtenues à travers la LDA.
+%sugg CD
+% par profilage profilée, je supposais qu'on pouvait définir PCS profilée (voir ci-dessus)
+\item nous confirmons que la PCA standard est bien sous-optimale par rapport à la PCA par profilée
+\item nous confirmons que la LDA est plus adaptée que la PCA pour pré-traiter les traces par canaux auxiliaires
+\item la PCA profilée, munie de la méthode de sélection par ELV (au lieu de la classique EGV), donne des performances de l'attaque significativement meilleures qui se rapprochent de celles obtenues à travers la LDA.
 \end{itemize}
-Dans le Scenario 2, l'attaquant veut au contraire minimiser le nombre de traces de profilage nécessaires pour obtenir une bonne méthode de pré-traitement et profilage. Dans ce cas, le problème du petit échantillonnage peut se vérifier. En observant la Fig.~\ref{fig:scenario2} nous concluons que encore une fois, en présence ou pas du petite échantillonnage, la PCA équipé de la sélection par ELV a performances proches de celles de la LDA ou de sa meilleure alternative en présence du petit échantillonnage.
+Dans le Scenario 2, l'attaquant veut au contraire minimiser le nombre de traces de profilage nécessaires pour obtenir une bonne méthode de pré-traitement et de profilage. Dans ce scenario, on observe le problème du petit échantillonnage. En observant la figure~\ref{fig:scenario2} nous concluons, encore une fois, en présence ou non de petit échantillonnage, que la PCA munie de la sélection par ELV a des performances proches de celles de la LDA ou de sa meilleure alternative en présence de petit échantillonnage.
 
 
-\subsection{Analyse Discriminante par Noyau}\label{sec:kda}
-Quand une contre-mesure de masquage d'ordre $(d-1)$ est mise en place, la targette $\sensRandVar$ est représentée par une $d$-uple de partie $M_i$ manipulées à différents instants temporels $t_1,\dots,t_d$ et l'information sensible réside dans le moment $\esper[\vaLeakVec[t_1]\vaLeakVec[t_2]\cdots \vaLeakVec[t_d]]$ d'ordre $d$, c'est-à-dire que la fonction  $f(z) = \esper[\vaLeakVec[t_1]\vaLeakVec[t_2]\cdots \vaLeakVec[t_d]\vert Z=z]$ n'est pas constante. Pour exploiter cette information cela a été montré  \cite{carlet2014achieving} qu'il est nécessaire de considérer une statistique des donnée qui, vu comme polynôme multivarié dans les coordonnées de $\vaLeakVec$, contient le monôme de degré $d$ $\prod_{i=1,\dots,d}\vaLeakVec[t_i]$. Comme en pratique les points $t_1,\dots,t_d$ sont inconnus à l'attaquant, une idée naïve pour obtenir un extracteur effectif et de chercher parmi les combinaisons linéaires des produits de tous les possibles $d$-uples de points. Ceci revient à immerger les données à travers une fonction non-linéaire $\Phi$ dans un espace de grand dimension $\featureSpace = \mathbb{R}^{D\choose{d}}$, et ici appliquer les méthodes d'extraction linéaires (LDA et PCA, par exemple). L'espace $\featureSpace$ est appelé dans \emph{espace des caractéristiques}, car c'est l'espace qui contient les caractéristiques informatives des traces. La croissance combinatoire de la taille de $\featureSpace$ est un obstacle d'un point de vu calculatoire, car ce demande de manipuler et stocker des traces de taille ${D\choose{d}}$. L'algorithme KDA permet à un attaquant d'utiliser l'extracteur LDA dans $\featureSpace$  sans effectuer de calculs dans l'espace $\featureSpace$, comme schématisé dans la Fig.~\ref{fig:scheme2}.\\
+\subsection{Analyse discriminante par noyau}\label{sec:kda}
+Quand une contremesure de masquage d'ordre $(d-1)$ est mise en place, la donnée ciblée $\sensRandVar$ est représentée par $d$ morceaux $M_i$ manipulés à différents instants temporels $t_1,\dots,t_d$ et l'information sensible réside dans le moment $\esper[\vaLeakVec[t_1]\vaLeakVec[t_2]\cdots \vaLeakVec[t_d]]$ d'ordre $d$, c'est-à-dire que la fonction  $f(z) = \esper[\vaLeakVec[t_1]\vaLeakVec[t_2]\cdots \vaLeakVec[t_d]\vert Z=z]$ n'est pas constante. Pour exploiter cette information il a été montré \cite{carlet2014achieving} qu'il est nécessaire de considérer une statistique des données qui, vue comme un polynôme multivarié dans les coordonnées de $\vaLeakVec$, contient le monôme de degré $d$ $\prod_{i=1,\dots,d}\vaLeakVec[t_i]$. Comme, en pratique, les points $t_1,\dots,t_d$ sont inconnus de l'attaquant, une idée naïve pour obtenir un extracteur efficace est de le chercher parmi toutes les combinaisons possibles du produit de $d$ points. Ceci revient à immerger les données à travers une fonction non-linéaire $\Phi$ dans un espace de grande dimension $\featureSpace = \mathbb{R}^{D\choose{d}}$, et d'ici à appliquer les méthodes d'extraction linéaires (LDA et PCA, par exemple). L'espace $\featureSpace$ est appelé \emph{espace des caractéristiques}, car c'est l'espace qui contient les caractéristiques informatives des traces. La croissance combinatoire de la taille de $\featureSpace$ est un obstacle d'un point de vu calculatoire, car cela demande de manipuler et stocker des traces de taille ${D\choose{d}}$. L'algorithme KDA permet à un attaquant d'utiliser l'extracteur LDA dans $\featureSpace$ sans effectuer de calculs dans l'espace $\featureSpace$, comme schématisé dans la figure~\ref{fig:scheme2}.\\
 
 L'outil central de l'astuce du noyau est la \emph{fonction noyau} $K \colon \mathbb{R}^\traceLength \times \mathbb{R}^\traceLength \rightarrow \mathbb{R}$, qui doit satisfaire la propriété suivante, en rélation avec la fonction $\Phi$:
 
 \begin{equation}\label{eq:kernelProperty}
 K(\vLeakVec,\yyy) = \Phi(\vLeakVec)\cdot \Phi(\yyy) \mbox{ ,}
 \end{equation}
-pour toute donnée $\vLeakVec$ et $\yyy$, où $\cdot$ est le produit scalaire.
+pour toutes données $\vLeakVec$ et $\yyy$, où $\cdot$ est le produit scalaire.
 
-Toute fonction $\Phi$ a une fonction noyau associée, donnée \eqref{eq:kernelProperty}, pour un ensemble de données. Au contraire, seulement les fonctions $K\colon\mathbb{R}^D\times \mathbb{R}^D \rightarrow \mathbb{R}$ qui satisfont une condition de convergence connue comme {\em condition de Mercer} sont associées à une map $\Phi:\mathbb{R}^D \rightarrow \mathbb{R}^F$, pour quelque $F$. Les fonctions noyau éligibles pour une astuce du noyau sont celles qui sont calculables directement à partir des données brutes $\vLeakVec_i$, sans évaluer la fonction $\Phi$. \\
+Toute fonction $\Phi$ a une fonction noyau associée, donnée par \eqref{eq:kernelProperty}, pour un ensemble de données. 
+%sugg CD
+% j'enlèverai cela
+%L'inverse n'est pas vrai : seules les fonctions $K\colon\mathbb{R}^D\times \mathbb{R}^D \rightarrow \mathbb{R}$ qui satisfont une condition de convergence connue comme la {\em condition de Mercer} sont associées à une certaine fonction $\Phi:\mathbb{R}^D \rightarrow \mathbb{R}^F$, pour un certain $F$. 
+Les fonctions noyau éligibles comme astuce du noyau sont celles qui sont calculables directement à partir des données brutes $\vLeakVec_i$, sans évaluer la fonction $\Phi$. \\
 %
 %The notion of kernel function is illustrated in the following example.
 %
@@ -171,14 +182,14 @@ column sep=3em, text height=1.5ex, text depth=0.25ex]
 
 \end{tikzpicture} 
 }
-\caption{Applying KDA and KPCA permits to by-pass computations in $\featureSpace$.}\label{fig:scheme2}
+\caption{Appliquer la KDA et la KPCA permet d'éviter des calculs dans l'espace $\featureSpace$.}\label{fig:scheme2}
 \end{figure}
 %
-La fonction noyau \emph{polynomiale de degré $d$} fait partie de ce type de fonctions. Elle est ainsi définie: 
+La fonction noyau \emph{polynomiale de degré $d$} fait partie de ce type de fonctions. Elle est définie ainsi : 
 \begin{equation}
 K(\vLeakVec_i,\vLeakVec_i) = (\vLeakVec_i \cdot \vLeakVec_j)^d \mbox{ ,}
 \end{equation}
-et corresponde à la fonction $\Phi$ qui porte les coordonnées en entrée dans l'espace des caractéristiques qui contient tous les possibles monômes de degré $d$ dans ces coordonnées, à constants près. Elle est donc, à constants près, la fonction $\Phi$ du schéma de Fig.~\ref{fig:scheme2}. L'algorithme pour obtenir $\extract^\mathrm{KDA}$ est le suivant.
+et correspond à la fonction $\Phi$ qui associe à ses coordonnées tous les monômes de degré $d$, à quelques constantes près. Elle est donc, à quelques constantes près, la fonction $\Phi$ du schéma de la figure~\ref{fig:scheme2}. L'algorithme pour obtenir $\extract^\mathrm{KDA}$ est donné dans le paragraphe suivant.
 %
 \subsubsection*{KDA pour traces masquées à l'ordre $d$}\label{procedure:KDA}
 Étant donné un ensemble de traces de profilage $(\vLeakVec{i},\sensVar_i)_{i=1,\dots, \nbTrainingTraces}$ et la fonction noyau $K(\vLeakVec,\yyy)= (\vLeakVec\cdot \yyy)^d$:
@@ -189,7 +200,7 @@ et corresponde à la fonction $\Phi$ qui porte les coordonnées en entrée dans l'e
 \MMM = \sum_{\sensVarGenValue\in\sensVarSet}\nbTracesPerClass(\MMMclass - \MMMT)(\MMMclass-\MMMT)^\intercal\mbox{ ,}
 \end{equation}
 
-où $\MMMclass$ et $\MMMT$ sont deux vecteurs colonne de taille $N$, avec coordonnées données par:
+où $\MMMclass$ et $\MMMT$ sont deux vecteurs colonne de taille $N$, avec des coordonnées données par :
 \begin{align}
 \MMMclass[\sensVarGenValue][j] = \frac{1}{\nbTracesPerClass}\sum_{i:\sensVar_i=\sensVarGenValue}K(\vLeakVec_j,\vLeakVec_i)\\
 \MMMT[j] = \frac{1}{\nbTrainingTraces}\sum_{i=1}^{\nbTrainingTraces}K(\vLeakVec_{j},\vLeakVec_{i}) \mbox{ .}
@@ -199,41 +210,41 @@ où $\MMMclass$ et $\MMMT$ sont deux vecteurs colonne de taille $N$, avec coordon
 \begin{equation}\label{eq:N}
 \NNN = \sum_{\sensVarGenValue\in\sensVarSet}\kernelMatrix_\sensVarGenValue(\III - \III_{\nbTracesPerClass})\kernelMatrix_\sensVarGenValue^\intercal\mbox{ ,}
 \end{equation}
-où $\III$ est la matrice identité de taille $\nbTracesPerClass \times \nbTracesPerClass$, $\III_{\nbTracesPerClass}$ est la matrice de taille $\nbTracesPerClass \times \nbTracesPerClass$ avec tous les éléments égals à $\frac{1}{\nbTracesPerClass}$ et $\kernelMatrix_{\sensVarGenValue}$ est la sous-matrice de $\kernelMatrix = (K(\vLeakVec_i,\vLeakVec_j))_{\substack{i=1,\dots,\nbTrainingTraces \\ j=1,\dots,\nbTrainingTraces}}$ de taille $\nbTrainingTraces \times \nbTracesPerClass$ qui contients toutes les colonnes indexées par les $i$ tels que $\sensVar_i=\sensVarGenValue$. 
+où $\III$ est la matrice identité de taille $\nbTracesPerClass \times \nbTracesPerClass$, $\III_{\nbTracesPerClass}$ est la matrice de taille $\nbTracesPerClass \times \nbTracesPerClass$ avec tous les éléments égals à $\frac{1}{\nbTracesPerClass}$ et $\kernelMatrix_{\sensVarGenValue}$ est la sous-matrice de $\kernelMatrix = (K(\vLeakVec_i,\vLeakVec_j))_{\substack{i=1,\dots,\nbTrainingTraces \\ j=1,\dots,\nbTrainingTraces}}$ de taille $\nbTrainingTraces \times \nbTracesPerClass$ qui contient toutes les colonnes d'indice $i$ tel que $\sensVar_i=\sensVarGenValue$. 
 
-\item[3)] Régulariser la matrice $\NNN$ pour garantir la stabilité calculatoire et gérer le \emph{surapprentissage}:
+\item[3)] Régulariser la matrice $\NNN$ pour garantir la stabilité calculatoire et gérer le \emph{sur-apprentissage}:
 \begin{equation}\label{eq:mu}
 \NNN = \NNN + \mu  \III
 \end{equation}
 
-\item[4)] Trouver les valeurs propres non nulles $\lambda_1, \dots, \lambda_\numEigenvectors$  de $\NNN^{-1}\MMM$ et le vecteurs propres correspondant $\nununu_1, \dots, \nununu_\numEigenvectors$; 
+\item[4)] Trouver les valeurs propres non nulles $\lambda_1, \dots, \lambda_\numEigenvectors$  de $\NNN^{-1}\MMM$ et les vecteurs propres correspondant $\nununu_1, \dots, \nununu_\numEigenvectors$; 
 
 
-\item[5)] Finalement, la projection d'une nouvelle trace $\vLeakVec$ sur la $\ell$-ième composante discriminante d'ordre $d$ se calcule ainsi:
+\item[5)] Finalement, la projection d'une nouvelle trace $\vLeakVec$ sur la $\ell$-ième composante discriminante d'ordre $d$ se calcule ainsi :
 \begin{equation}\label{eq:projectionKDA}
 \extract^{\mathrm{KDA}}_{\ell}(\vLeakVec) = \sum_{i=1}^{\nbTrainingTraces}{\nununu}_\ell[i]K(\vLeakVec_i, \vLeakVec) \mbox{ .}
 \end{equation} 
 
 \end{itemize}
 
-\subsubsection{Analyse and résultats}
+\subsubsection{Analyse et résultats}
 \begin{figure}[t]
 \subfigure[]{\label{fig:numClasses-2order}
 \includegraphics[width=.5\textwidth]{figures/2order_classes_TA.pdf}}
 \subfigure[]{\label{fig:numClasses-3order}
 \includegraphics[width=.5\textwidth]{figures/3order_new.pdf}}
-\caption{Comparaison entre KDA sous 2 classes, 3 classes, 9 classes and 256 classes KDA dans un contexte d'attaque de $2$nd ordre \subref{fig:numClasses-2order} et de $3$ème ordre \subref{fig:numClasses-3order}. Pour le $2$nd ordre, la KDA est efficace à dissocier les données en 256 classes, permettant une caractérisation optimale. Pour le $3$ème ordre les données de profilage ne sont pas en nombre suffisant pour réussir une phase de caractérisation en 256 classes distinguées. Diminuer le nombre de classes à dissocier, fait améliorer l'efficacité du pré-traitement et, en conséquence, de l'attaque. }\label{fig:numClasses}
+\caption{Comparaison entre les KDA à 2 classes, 3 classes, 9 classes et 256 classes dans un contexte d'attaque du $2$nd ordre \subref{fig:numClasses-2order} et du $3$ème ordre \subref{fig:numClasses-3order}. Pour le $2$nd ordre, la KDA arrive à dissocier les données en 256 classes, permettant une caractérisation optimale. Pour le $3$ème ordre les données de profilage ne sont pas en nombre suffisant pour réussir une phase de caractérisation avec 256 classes. Diminuer le nombre de classes améliore l'efficacité du pré-traitement et, par conséquence, de l'attaque. }\label{fig:numClasses}
 \end{figure}
 
-Le premier aspect de l'application de la KDA sur lequel nous nous sommes concentré est l'importance d'une bonne régularisation (obtenue par le choix du paramètre$\mu$ in \eqref{eq:N}) : cette régularisation est la réponse au fait que les méthodes par noyau sont souvent porté au surapprentissage: ceci signifie, dans le cas de la KDA, que $\extract^{\mathrm{KDA}}$ risque de grouper parfaitement les traces d'apprentissage dans leur classe, mais de ne pas réussir à dissocier les traces d'attaque. La régularisation consiste à rajouter une contrainte à la phase d'apprentissage, dans le but de créer un modèle qui ait le plus possible le même comportement avec les traces d'apprentissage et les nouvelles données sur lequel s'applique. Nous avons observé que le extracteurs issus d'une bonne régularisation tiraient leurs projections de zones des traces très localisées, ce qui est encore signe (comme pour les extracteurs linéaires) d'une bonne détection implicite des PoIs. 
+Le premier aspect de la KDA sur lequel nous nous sommes concentrés est l'importance d'une bonne régularisation (obtenue par le choix du paramètre $\mu$ dans l'équation \eqref{eq:N}) : cette régularisation est la réponse au fait que les méthodes par noyau sont souvent sujettes au sur-apprentissage : ceci signifie, dans le cas de la KDA, que $\extract^{\mathrm{KDA}}$ risque de grouper parfaitement les traces d'apprentissage dans leur classe, mais de ne pas réussir à bien classer les traces d'attaque. La régularisation consiste à rajouter une contrainte à la phase d'apprentissage, dans le but de créer un modèle qui ait le plus possible un même comportement avec les traces d'apprentissage qu'avec les nouvelles données. Nous avons observé que les extracteurs issus d'une bonne régularisation concentraient leurs projections sur des zones des traces très localisées, ce qui est encore le signe (comme pour les extracteurs linéaires) d'une bonne détection implicite des PoIs. 
 
 %
-Le deuxième aspect sur lequel nous nous sommes concentré est le rôle de la forme de la targette dans le compromis précision-efficacité. Du fait que la complexité calculatoire de la KDA est $O(\nbTrainingTraces^3)$, avec $\nbTrainingTraces$ est le nombre des traces d'apprentissage,  il peut être intéressant de diminuer ce nombre $\nbTrainingTraces$ pour augmenter l'efficacité du calcul. Cependant, borner $\nbTrainingTraces$ réduit la précision de la KDA. Une manière de pallier à cette perte de précision est de réduire le nombre de classes à dissocier, en choisissant comme targette une fonction non-injective d'une variable interne du calcul cryptographique $m(\sensRandVar)$. Par example, les valeurs de $\sensRandVar$ peuvent être groupés selon leur poids d'Hamming: un modèle à 2 classes est donné par ($m(z) =0$ if $\HW(z)<4$, $m(z) =1$ if $\HW(z)\geq4$). Une fois réalisé un pré-traitement basé sur un certain modèle non-injectif, il parait adéquat réaliser l'attaque en visant la même targette. Ayant fixé le nombre $\nbTrainingTraces$ pour les traces d'apprentissage, les résultats de ce type d'attaque sont montrés en Fig.~\ref{fig:numClasses} : si dans un contexte d'attaque de $2$nd ordre, on peut observer que la KDA s'entraîne sur un nombre suffisant de données pour réussir une séparation en 256 classes, pour des contextes d'ordre supérieur la conversion à un problème à 2 classes devient une meilleure stratégie.
+Le deuxième aspect sur lequel nous nous sommes concentrés est le rôle de la forme de la donnée ciblée dans le compromis précision-efficacité. Du fait que la complexité calculatoire de la KDA est $O(\nbTrainingTraces^3)$, avec $\nbTrainingTraces$ le nombre des traces d'apprentissage  il peut être intéressant de diminuer ce nombre $\nbTrainingTraces$ pour augmenter l'efficacité du calcul. Cependant, borner $\nbTrainingTraces$ réduit la précision de la KDA. Une manière de pallier à cette perte de précision est de réduire le nombre de classes, en choisissant plutôt une variable interne du calcul cryptographique auquelle on applique une fonction non-injective $m(\sensRandVar)$. Par exemple, les valeurs de $\sensRandVar$ peuvent être groupées selon leur poids de Hamming: un modèle à 2 classes est donné par ($m(z) =0$ si $\HW(z)<4$ et $m(z) =1$ si $\HW(z)\geq4$). Une fois qu'un pré-traitement basé sur un certain modèle non-injectif a été réalisé, il parait adéquat de réaliser l'attaque en visant la même donnée sensible. Ayant fixé $\nbTrainingTraces$ le nombre de traces d'apprentissage, les résultats de ce type d'attaque sont montrés en figure~\ref{fig:numClasses} : si dans un contexte d'attaque du $2$nd ordre, on peut observer que la KDA s'entraîne sur un nombre suffisant de données pour réussir une séparation en 256 classes, pour des contextes d'ordre supérieur la conversion vers un problème à 2 classes devient une meilleure stratégie.
 
 \begin{figure}
 \includegraphics[width=.5\textwidth]{figures/3order_2_9.pdf} 
 \includegraphics[width=.5\textwidth]{figures/4order_2_9.pdf} 
-\caption{Gauche: guessing entropy  pour des attaques \emph{template} d'ordre 3, à 2 classes et à 3 classes. Droite: rang de la bonne clé pour une attaque d'ordre 4 à 2 classes et à 9 classes.}\label{fig:3-4}
+\caption{Gauche: Rang moyen de la bonne clé pour des attaques \emph{template} d'ordre 3, à 2 classes et à 3 classes. Droite: Rang moyen de la bonne clé pour une attaque d'ordre 4 à 2 classes et à 9 classes.}\label{fig:3-4}
 \end{figure}
 
 %Third, I evaluated the soundness of an asymmetric preprocessing-attack approach. The success of a 2-class extractor always relies on a good exploitation of the PoIs, whose position does not depend on the chosen target model. For this reason, even if an extractor has been trained to separate $W$ classes, it does not mean that a finest characterization is useless. Results depicted in Fig.~\ref{fig:3-4} come from this asymmetric approach: the extractors used have been trained over $2$ classes, but the attacks that exploit a $9$-class characterization are more efficient.  
@@ -242,47 +253,50 @@ Le deuxième aspect sur lequel nous nous sommes concentré est le rôle de la forme
 
 
 \subsection{Réseaux Neuronaux Convolutifs}\label{sec:cnn}
-Dans cette dernière partie, nous adoptons une stratégie d'attaque basée sur le paradigme de l'apprentissage profond: à l'aide de réseaux neuronaux à plusieurs couches nous ne séparons plus la routine d'apprentissage en pré-traitement et caractérisation, mais intégrions les pré-traitement de façon implicite dans l'apprentissage. Les réseaux neuronaux, grâce à leurs architectures facilement parallélisables, sont les outils privilégiés aujourd'hui pour résoudre le problème de la classification sur des données de grandes dimension, comme les signaux compromettants. Nous nous intéressons en particulier aux réseaux neuronaux convolutifs (\emph{Convolutional Neural Networks}, en anglais, CNN): étant conçus pour être robustes aux déformations géométriques des données, typiques dans le contexte de la reconnaissance de l'image, ils nous ouvrent une nouvelle stratégie pour faire face aux contremesures basées sur l'augmentation de la désynchronisation dans les acquisitions. Nous nous plaçons donc dans ce contexte, en menant des expériences d'attaque contre ce type de contremesures, en utilisant un réseau CNN, et en équipant la routine d'apprentissage de stratégies d'augmentation des données (\emph{Data Augmentation}, DA) désignées pour le contexte des signaux désynchronisés. Après une brève introduction de ces outils, nous reportons les résultats des expériences en Sec.~\ref{sec:cnn_res}.
+Dans cette dernière partie, nous adoptons une stratégie d'attaque basée sur le paradigme de l'apprentissage profond: à l'aide de réseaux neuronaux à plusieurs couches nous évitons les deux étapes de l'apprentissage, pré-traitement puis caractérisation, mais nous intégrons les pré-traitement de façon implicite dans l'apprentissage. Les réseaux neuronaux, grâce à leurs architectures facilement parallélisables, sont les outils privilégiés aujourd'hui pour résoudre le problème de la classification sur des données de grande dimension, comme les signaux compromettants. Nous nous intéressons en particulier aux réseaux neuronaux convolutifs (\emph{Convolutional Neural Networks}, en anglais, CNN): étant conçus pour être robustes aux déformations géométriques des données, typiques dans le contexte de la reconnaissance de l'image, ils nous ouvrent une nouvelle stratégie pour faire face aux contremesures basées sur la désynchronisation dans les acquisitions. Nous nous plaçons donc dans ce contexte, en menant des expériences d'attaque contre ce type de contremesures, en utilisant un réseau CNN, avec des stratégies d'augmentation de données (\emph{Data Augmentation}, DA) bien adaptées au contexte de signaux désynchronisés. Après une brève introduction de ces outils, nous reportons les résultats des expériences en section~\ref{sec:cnn_res}.
 
 \subsubsection{Architecture et apprentissage}
-Les CNNs appartiennent à la famille plus répandue de réseaux neuronales est celle des \emph{Multi-Layer Perceptrons} (MLP). On peut exprimer un MLP destiné à la classification dans la forme:
+%sugg CD
+Les CNNs appartiennent aux réseaux neuronaux, dont la famille la plus répoandue est celle des \emph{Multi-Layer Perceptrons} (MLP).
+%Les CNNs appartiennent à la famille plus répandue de réseaux neuronales est celle des \emph{Multi-Layer Perceptrons} (MLP).
+On peut exprimer un MLP destiné à la classification sous la forme :
 \begin{equation}\label{eq:MLP}
 \MLmodel(\vLeakVec) = \softmax\circ\lambda_n\circ\sigma_{n-1}\circ\lambda_{n-1}\circ\dots\circ \lambda_1(\vLeakVec)=\yyy \mbox{ ,}
 \end{equation}
-où:
+où :
 \begin{itemize}
-\item Les fonctions $\lambda_i$ sont appelées couches entièrement connectées (\emph{Fully-Connected},FC) et s'expriment comme fonctions affines $\textbf{A}\vLeakVec + \vec{b}$, avec $\textbf{A}\in\mathbb{R}^{D\times C}$ une matrice de poids et $\vec{b}\in\mathbb{R}^C$ un vecteur de biais, à optimiser à travers l'apprentissage. Ces couches extraient linéairement de l'information des données, de la même manière que les techniques PCA ou LDA.
+\item Les fonctions $\lambda_i$ sont appelées couches denses (\emph{Fully-Connected},FC) et s'expriment comme fonctions affines $\textbf{A}\vLeakVec + \vec{b}$, avec $\textbf{A}\in\mathbb{R}^{D\times C}$ une matrice de poids et $\vec{b}\in\mathbb{R}^C$ un vecteur de biais, à optimiser à travers l'apprentissage. Ces couches extraient linéairement de l'information des données, de la même manière que les techniques PCA ou LDA.
 
 \item  Les fonctions $\sigma_i$ sont appelées couches d'\emph{activation} (ACT): elles sont généralement non-linéaires, s'appliquent souvent indépendamment à chaque coordonnée de l'entrée, et ne dépendent pas de paramètres entrainables. 
  
 
-\item $\softmax$ est la fonction \emph{softmax}:: $\softmax(\vLeakVec)[i] = \frac{e^{\vLeakVec[i]}}{\sum_{j}e^{\vLeakVec[j]}}$. Elle normalise la sortie du réseaux en la rendant interprétable comme distribution de probabilité $\MLmodel(\vLeakVec) \approx \pdf_{\given{\sensRandVar}{\vaLeakVec=\vLeakVec}}$.
+\item $\softmax$ est la fonction \emph{softmax}:: $\softmax(\vLeakVec)[i] = \frac{e^{\vLeakVec[i]}}{\sum_{j}e^{\vLeakVec[j]}}$. Elle normalise la sortie du réseaux en la rendant interprétable comme une distribution de probabilité $\MLmodel(\vLeakVec) \approx \pdf_{\given{\sensRandVar}{\vaLeakVec=\vLeakVec}}$.
 \end{itemize}
  
 Les réseaux convolutifs s'obtiennent en rajoutant aux MLPs deux autres typologies de couches:
 \begin{itemize}
-\item les couches convolutifs (CONV) $\gamma$, sont des couches linéaires qui partagent leurs poids à travers l'espace. Elles extraient de l'information linéairement à travers des filtres de poids qui agissent localement. Ces filtres glissent le long de leurs entrée et leur action locale est répétée sur toute position de l'entrée. Ceux sont les couches qui se chargent de rendre le réseau robuste aux déformations qui déplaceraient les informations le long de la traces, donc à la désynchronisation.
-\item Le couches de pooling (POOL) $\delta$ effectuent un sous-échantillonnage des données partielles traitées par le réseaux afin de réduire la complexité du calcul dérivée de l'extraction d'un nombre croissant de caractéristiques, niveau par niveau, par les couches CONV.
+\item Les couches de convolution (CONV) $\gamma$, sont des couches linéaires qui partagent leurs poids à travers l'espace. Elles extraient de l'information linéairement à travers des filtres de poids qui agissent localement. Ces filtres glissent le long de leurs entrées et leur action locale est répétée pour chaque entrée. Ceux sont les couches qui se chargent de rendre le réseau robuste aux déformations, lorsque l'information se déplace le long de la trace, et donc robuste à la désynchronisation.
+\item Les couches de mise en commun (pooling (POOL) en anglais) $\delta$ effectuent un sous-échantillonnage des données traitées par le réseau afin de réduire la complexité du calcul due à l'augmentation, niveau par niveau, du nombre de caractéristiques extraites par les couches CONV.
 \end{itemize}
 
-Les paramètres d'un réseau neuronal sont à entrainer pendant la phase d'apprentissage. La plus utilisée des méthodes d'optimisation est la \emph{descente de gradient stochastique}, qui est mise en place dans le but de minimiser un fonction de coût qui quantifie l'erreur de classification du réseau sur l'ensemble d'apprentissage. Elle consiste en:
+Les paramètres d'un réseau neuronal sont entrainés pendant la phase d'apprentissage. La méthode d'optimisation la plus utilisée est la \emph{descente de gradient stochastique}. Elle est mise en place dans le but de minimiser une fonction de coût qui quantifie l'erreur de classification du réseau sur l'ensemble d'apprentissage. Elle consiste en :
 
 \begin{itemize}
-\item sélectionner un  \emph{mini-lot} de traces d'apprentissage $(\vLeakVec_i, \sensVar_i)_{i\in I}$ choisies en ordre aléatoire (ici $I$ est un ensemble aléatoire d'indices)
-\item calculer les outputs du modèle courant pour le mini-lot sélectionné $(\vNNOutput_i = \MLmodel(\vLeakVec_i))_{i\in I}$, 
-\item évaluer la fonction de coût, dans le cas de nos expériences il s'agit de l'entropie croisée:
+\item sélectionner un \emph{mini-lot} de traces d'apprentissage $(\vLeakVec_i, \sensVar_i)_{i\in I}$ tirées aléatoirement (ici $I$ est un ensemble aléatoire d'indices)
+\item calculer les sorties du modèle courant pour le mini-lot sélectionné $(\vNNOutput_i = \MLmodel(\vLeakVec_i))_{i\in I}$, 
+\item évaluer la fonction de coût ; dans le cas de nos expériences il s'agit de l'entropie croisée:
 \begin{equation}\label{eq:lossfunction}
 \mathcal{L} = -\frac{1}{\lvert I \rvert} \sum_{i\in I} \sum_{t=1}^{|\sensVarSet|}\vec{\sensVar_i}[t]\log{\vNNOutput_i[t]} \mbox{ ,}
 \end{equation} 
 \item calculer les dérivées partielles de la fonction de coût, par rapport aux paramètres entrainables, à l'aide de la méthode de \emph{rétropropagation du gradient},
-\item mettre à jour les paramètres entrainables en soustrayant un petit multiple (appelé  \emph{taux d'apprentissage}) du gradient.
+\item mettre à jour les paramètres entrainables par soustraction d'un petit multiple du gradient  (appelé  \emph{taux d'apprentissage}).
 \end{itemize}  
 
 Une itération complète sur l'ensemble d'apprentissage est appelée \emph{époque}.
-Le la nature des couche, leur nombre et leurs tailles sont les hyper-paramètres qui définissent l'architecture d'un réseaux. Le nombre d'époques, la taille des mini-lots et le taux d'apprentissage, sont aussi des hyper-paramètres qui règlent l'apprentissage. 
+La nature des couches, leurs nombres et leurs tailles sont les hyper-paramètres qui définissent l'architecture d'un réseau. Le nombre d'époques, la taille des mini-lots et le taux d'apprentissage sont aussi des hyper-paramètres qui règlent l'apprentissage. 
 
 
-\subsubsection{Augmentation des Données}\label{sec:DA}
+\subsubsection{Augmentation de données}\label{sec:DA}
 
 \begin{figure}[t]
 \centering
@@ -291,27 +305,30 @@ Le la nature des couche, leur nombre et leurs tailles sont les hyper-paramètres 
 \caption{Gauche: Méthode Shifting pour DA. Droite: Méthode Add-Remove pour DA (les points ajoutés sont marqués par des cercles rouges, les points supprimés par des croix noires.}\label{fig:AR}
 \end{figure}
 
-Quand un réseau neuronal a une grande capacité, c'est-à-dire peut exprimer des modèles très complexes, et est entrainer avec un nombre insuffisant de données, il risque de provoquer du surapprentissage. Une manière classique de réduire ce problème est l'introduction des méthodes d'augmentation des données. Elles consistent à générer artificiellement des nouvelles données d'apprentissage, en déformant celles réellement acquises. La déformation est obtenu en appliquant des déformations qui préservent la targette de la classification, c'est-à-dire la valeur de la variable sensible manipulée lors de l'acquisition. Nous avons proposée deux techniques d'augmentation des données appelées \emph{Shifting} et \emph{Add-Remove}
+Quand un réseau neuronal a une grande capacité, c'est-à-dire qu'il peut représenter des modèles très complexes, et qu'il est entrainé avec un nombre insuffisant de données, il risque de provoquer du sur-apprentissage. Une manière classique de traiter ce problème est l'introduction des méthodes d'augmentation de données. Elles consistent à générer artificiellement des nouvelles données d'apprentissage, en déformant celles réellement acquises. La déformation est obtenue en appliquant des déformations qui préservent la cible de la classification, c'est-à-dire la valeur de la variable sensible manipulée lors de l'acquisition. Nous avons proposé deux techniques d'augmentation de données appelées \emph{Shifting} et \emph{Add-Remove}
 
-\paragraph*{Shifting ($\mathrm{SH}_{T^\star}$)} Cette technique simule un effet de délai aléatoire d'amplitude maximale $T^\star$, en sélection une fenêtre glissante d'une signal acquis, comme montré en Fig. \ref{fig:AR}. Soit $\traceLength$ la taille originale du signal. Nous fixons la taille d'entrée de la première couche du réseau neuronal à  $\traceLength^\prime = \traceLength - T^\star$. La technique $\mathrm{SH}_{T^\star}$ consiste alors (1) à tirer un aléa uniform $t \in[0,T^\star]$, et (2) à sélectionner la fenêtre de taille $\traceLength^\prime$ à partir du $t$-ème point de la trace. Pour notre étude, nous souhaitons comparer les techniques $\mathrm{SH}_T$ pour différent valeurs de $T \leq T^\star$, sans changer l'architecture du réseau utilisé (en particulier la taille de l'entrée $\traceLength^\prime$). Notamment, $T \lneq T^\star$ implique que $T^\star-T$ points temporels ne sont certainement jamais sélectionnés. Comme nous supposons que l'information est localisée dans la partie centrale de l'acquisition, nous choisissons de centrer les fenêtre glissantes, en supprimant les premiers et les derniers $\frac{T^\star-T}{2}$ points des traces. 
+\paragraph*{Shifting ($\mathrm{SH}_{T^\star}$)} Cette technique simule un effet de délai aléatoire d'amplitude maximale $T^\star$, en sélection une fenêtre glissante sur un signal, comme montré en figure~\ref{fig:AR}. Soit $\traceLength$ la taille d'origine du signal. Nous fixons la taille d'entrée de la première couche du réseau neuronal à  $\traceLength^\prime = \traceLength - T^\star$. La technique $\mathrm{SH}_{T^\star}$ consiste alors à (1) tirer un nombre aléatoire uniforme $t \in[0,T^\star]$, et à (2) sélectionner la fenêtre de taille $\traceLength^\prime$ à partir du $t$-ème point de la trace. Pour notre étude, nous souhaitons comparer les techniques $\mathrm{SH}_T$ pour différentes valeurs de $T \leq T^\star$, sans changer l'architecture du réseau utilisé (en particulier la taille de l'entrée $\traceLength^\prime$). Notamment, $T \lneq T^\star$ implique que $T^\star-T$ points temporels ne seront certainement jamais sélectionnés. Comme nous supposons que l'information est localisée dans la partie centrale de l'acquisition, nous choisissons de centrer les fenêtres glissantes, en supprimant les premiers et les derniers $\frac{T^\star-T}{2}$ points des traces. 
 
-\paragraph*{Add-Remove ($\mathrm{AR}$)}  Cette technique simule un effet de jitter de l'horloge (Fig. \ref{fig:AR}). Nous dénotons par  $\mathrm{AR}_R$ l'opération qui consiste en deux étapes:
+\paragraph*{Add-Remove ($\mathrm{AR}$)}  Cette technique simule un effet de gigue (jitter en anglais) de l'horloge (figure~\ref{fig:AR}). Nous notons $\mathrm{AR}_R$ cette déformation qui consiste en deux étapes:
 \begin{itemize}
-\item[(1)] insérer  $R$ points temporels, dont la position est choisi de façon aléatoire uniforme et dont la valeur est obtenue par moyenne arithmétique entre le point qui suit et celui qui précède,
-\item[(2)] supprimer $R$ points temporels, choisis de façon aléatoire uniforme.\\
+\item[(1)] insérer  $R$ points temporels, dont la position est choisie de façon uniformément aléatoire et dont la valeur est obtenue par la moyenne arithmétique des deux valeurs entre lesquelles il s'insère,
+\item[(2)] supprimer $R$ points temporels, choisis de façon uniformément aléatoire.\\
 \end{itemize}
 
-Ces deux déformations peuvent être composées: nous dénotons par $\mathrm{SH}_T\mathrm{AR}_R$ l'application de $\mathrm{SH}_T$ suivie par celle de $\mathrm{AR}_R$.
+Ces deux déformations peuvent être composées: nous notons $\mathrm{SH}_T\mathrm{AR}_R$ l'application de $\mathrm{SH}_T$ suivie par celle de $\mathrm{AR}_R$.
  
 
 \subsubsection{Résultats expérimentaux}\label{sec:cnn_res}
-Pour les diverses expériences menées nous avons réglé et fixé une fois pour toutes l'architecture de réseau convolutif utilisée:
+Pour toutes nos expériences nous avons réglé et fixé une fois pour toutes l'architecture de réseau convolutif utilisé :
 \begin{equation}\label{eq:archi}
   \softmax \circ [\lambda]^1 \circ[\delta \circ [\sigma \circ \gamma  ]^1 ]^4. 
 \end{equation}
 
 \paragraph*{Attaque par réseau neuronal}\label{sec:attackNN}
-La stratégie que nous adoptons pour effectuer une attaque par canaux auxiliaires à l'aide d'un réseau neuronal est la même utilisé pour mener une attaque \emph{template} comme celles utilisées dans les cas d'études précédentes, et qui est décrite dans le chapitre 2 de la thèse. La différence est donnée par le fait que dans l'attaque template l'attaquant, après pré-traitement, approche les distributions des données à l'aide de modèles génératifs gaussiens, alors que les réseaux neuronaux sont utilisés ici pour construire un modèle discriminatoire, c'est-à-dire en approchant directement les distributions \eqref{eq:a-posteriori} $\MLmodel(\vLeakVec) \approx \pdf_{\given{\sensRandVar}{\vaLeakVec=\vLeakVec}}$. Une fois cette approximation est faite, l'attaque suit la même stratégie dans les deux approches, propre aux attaques \emph{avancées} de la littérature: l'attaquant acquière des nouvelles traces d'attaque, à clé inconnu et sous entrées connues $\publicParRandVar$, en obtenant des couples  $(\vLeakVec_i, \publicParVar_i)_{i=1, \dots , \nbAttackTraces}$. Ensuite il effectue des hypothèses de clé $\keyVar \in \keyVarSet$ et associe à chaque hypothèse un score $d_\keyVar$ donné par un calcul de probabilité conjointe:
+%s sugg CD
+La stratégie que nous adoptons pour effectuer une attaque par canaux auxiliaires à l'aide d'un réseau neuronal est la même que pour l'attaque \emph{template}, décrite dans le chapitre 2 de la thèse. 
+%La stratégie que nous adoptons pour effectuer une attaque par canaux auxiliaires à l'aide d'un réseau neuronal est la même que celle utilisée pour mener une attaque \emph{template}, qui est utilisée aussi dans les cas d'études précédentes et décrite dans le chapitre 2 de la thèse. 
+La différence réside dans le fait que, dans l'attaque template, l'attaquant effectue éventuellement un pré-traitement puis approche les distributions des données à l'aide de modèles génératifs gaussiens, alors que les réseaux neuronaux sont utilisés ici pour construire un modèle discriminatoire, c'est-à-dire qu'ils approchent directement les distributions \eqref{eq:a-posteriori} $\MLmodel(\vLeakVec) \approx \pdf_{\given{\sensRandVar}{\vaLeakVec=\vLeakVec}}$. Une fois cette approximation faite, l'attaque suit la même stratégie dans les deux approches, propre aux attaques \emph{avancées} de la littérature: l'attaquant acquiert de nouvelles traces d'attaque, à clé inconnue et entrées connues $\publicParRandVar$ ; il obtient donc des couples  $(\vLeakVec_i, \publicParVar_i)_{i=1, \dots , \nbAttackTraces}$. Ensuite il effectue des hypothèses de clé $\keyVar \in \keyVarSet$ et associe à chaque hypothèse un score $d_\keyVar$ donné par un calcul de probabilité conjointe:
 
 \begin{equation}\label{eq:NN_SCA}
 d_{\keyVar} = \prod_{i=1}^{\nbAttackTraces} \MLmodel(\vLeakVec_i)[\sensFunction(\keyVar,\publicParVar_i)] \mbox{ .}
@@ -321,23 +338,22 @@ Finalement, le meilleur candidat de clé $\hat{\keyVar}$ est celui qui maximise c
 
 
 \paragraph*{Estimation des performances} 
-Le taux de bonne prédiction (accuracy), définie comme le taux de succès sur un certain ensemble de données d'une classification, est la plus commune des métriques utiliser pour le monitorage et l'évaluation d'un réseau neuronal dédié à la classification. Il est habituel, afin de régler les hyperparamètres d'un réseau, d'extraire de l'ensemble d'apprentissage une partie des données, qui formeraient un ensemble de \emph{validation}. Ces données ne sont pas utilisées pour la descente de gradient, mais pour le monitorage de la généralisation des résultats du réseau, en particulier pour la prévention du surapprentissage. Le{\em taux de bonne prédiction d'apprentissage}, le \emph{taux de bonne prédiction de validation} et le \emph{taux de bonne prédiction de test} sont respectivement les taux de réussite de la classification sur l'ensemble d'apprentissage, de validation et de test. A la fin de chaque époque les taux de bonne prédiction d'apprentissage et de validation sont calculés. Dans la suite nous utiliserons aussi les quantités suivantes pour résumer les résultats:
+Le taux de bonne prédiction (accuracy), défini comme le taux de succès sur un certain ensemble de données d'une classification, est la métrique la plus communément utilisée pour le monitorage et l'évaluation d'un réseau neuronal dédié à la classification. Afin de régler les hyperparamètres d'un réseau, il est habituel d'extraire de l'ensemble d'apprentissage une partie des données qui forme un ensemble de \emph{validation}. Ces données ne sont pas utilisées pour la descente de gradient, mais pour le monitorage de la généralisation des résultats du réseau, en particulier pour la prévention du sur-apprentissage. Le {\em taux de bonne prédiction d'apprentissage}, le \emph{taux de bonne prédiction de validation} et le \emph{taux de bonne prédiction de test} sont respectivement les taux de réussite de la classification sur l'ensemble d'apprentissage, de validation et de test. A la fin de chaque époque les taux de bonne prédiction d'apprentissage et de validation sont calculés. Dans la suite nous utiliserons aussi les quantités suivantes pour résumer les résultats:
 \begin{itemize}
-\item le \emph{taux maximale de bonne prédiction d'apprentissage}, qui est la valeur maximale sur toutes les époques atteinte par le taux  de bonne prédiction d'apprentissage,
-\item le \emph{taux maximale de bonne prédiction de validation}, qui est la valeur maximale sur toutes les époques atteinte par le taux  de bonne prédiction validation
+\item le \emph{taux maximal de bonne prédiction d'apprentissage}, qui est la valeur maximale sur toutes les époques atteinte par le taux  de bonne prédiction d'apprentissage,
+\item le \emph{taux maximal de bonne prédiction de validation}, qui est la valeur maximale sur toutes les époques atteinte par le taux de bonne prédiction validation.
 \end{itemize}
 
-\'Etant le taux de bonne prédiction une métrique parfaitement adaptée au problème de classification, qui correspond au taux de réussite d'une attaque simple dans le contexte des canaux auxiliaires, nous utiliserons davantage une métrique plus adaptée à évaluer les performances d'une attaque avancée: nous dénotons par  $N^\star$ le nombre minimal de traces nécessaires pour rendre la  \emph{guessing entropy} égal stablement à 1.\\
+Le taux de bonne prédiction est une métrique parfaitement adaptée au problème de classification, mais, dans le contexte des canaux auxiliaires, il correspond au taux de réussite d'une attaque simple. Pour cette raison, nous utiliserons davantage une autre métrique, plus adaptée à évaluer les performances d'une attaque avancée: nous notons $N^\star$ le nombre minimal de traces nécessaires pour rendre le rang moyen de la bonne clé (\emph{guessing entropy} en anglais) égal à 1 de façon stable.\\
 %
 
 \paragraph*{Expériences en cas de contremesure logicielle}
-Pour la première nous avons implémenté une contremesure par interruption aléatoire afin de protéger la fuite d'une seule opération de la forme $\sensRandVar = \HW(\subbytes(P\oplus \keyRandVar))$ exécuté par un microprocesseur Atmega328P. La contremesure consiste en introduire une boucle de $r$ instructions \emph{nop}, avec $r$ tiré aléatoirement dans $[0,127]$. Ceci provoque un déplacement aléatoire des PoIs des traces acquises, sans déformation des patterns liés aux cycles d'horloge. Nous avons acquis un nombre suffisamment petit de traces pour s'assurer de ne jamais pouvoir observer dans les acquisition chaque valeur de $\sensRandVar$ en chaque possible position. Ceci pour pouvoir conclure, en cas de succès, que la méthode a su extraire du signal des information invariantes par décalage. 
-
+Pour la première expérience, nous avons implémenté sur un microprocesseur Atmega328P une contremesure par interruption aléatoire afin de protéger la fuite d'une seule opération de la forme $\sensRandVar = \HW(\subbytes(P\oplus \keyRandVar))$. La contremesure consiste à introduire une boucle de $r$ instructions \emph{nop}, avec $r$ tiré aléatoirement dans $[0,127]$. Ceci provoque un décalage aléatoire des PoIs des traces acquises, sans déformation des motifs liés aux cycles d'horloge. Nous avons acquis un nombre suffisamment petit de traces pour s'assurer de ne jamais pouvoir observer dans les acquisitions toutes valeurs possibles de $\sensRandVar$ dans toutes les positions possibles. Ceci pour pouvoir conclure, en cas de succès, que la méthode a su extraire du signal des informations invariantes par décalage. 
 
 
 \begin{table}[t]
 \centering
-\caption{Résultat de l'attaque par CNN, pour diverse techniques DA, en présence d'interruption aléatoire. Pour toute technique, $4$ valeurs sont données: en position $a$ le taux maximale de bonne prédiction d'apprentissage, en position $b$ taux maximale de bonne prédiction de validation, en position $c$ le taux de bonne prédiction de test, obtenu sur les traces d'attaque, en position $d$ la valeur de $N^\star$.}
+\caption{Résultat de l'attaque CNN, pour diverses techniques DA, en présence d'interruption aléatoire. Pour chaque technique, $4$ valeurs sont données: en position $a$ le taux maximal de bonne prédiction d'apprentissage, en position $b$ taux maximal de bonne prédiction de validation, en position $c$ le taux de bonne prédiction de test, obtenu sur les traces d'attaque, en position $d$ la valeur de $N^\star$.}
 \label{tab:res_CW_shift}
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline
@@ -347,15 +363,15 @@ $c$        & $d$       & \cellcolor[HTML]{EFEFEF}27.0\% & \cellcolor[HTML]{EFEFE
 \end{tabular}
 \end{table}
 
-Le Tableau \ref{tab:res_CW_shift} résume les résultats obtenus. En comparant les taux maximales de bonne prédiction d'apprentissage et de validation, on a un aperçu du risque de surapprentissage. Quand l'augmentation des données n'est pas appliquée (cas $\mathrm{SH}_{0}$) le surapprentissage est totale: la classification réussi à $100\%$ sur l'ensemble d'apprentissage alors que sur l'ensemble de validation elle reste au $27\%$. Ceci signifie qu'aucune caractéristique informative a été apprise, amenant à une attaque inconcluante ($N^\star>1,000$). Nous remarquons que l'augmentation des donnée baisse fortement le surapprentissage:, pour $mathrm{SH}_{500}$ l'ensemble d'apprentissage n'est jamais complètement appris et le taux de bonne prédiction de validation se lève à $78\%$, portant à une guessing entropy de $1$ avec seulement $N^{\star}=7$ traces d'attaque. Ces résultats confirment que le modèle CNN est capable de caractériser une large fenêtre de points de façon efficace en présence de désynchronisation logicielle. \\
+Le tableau~\ref{tab:res_CW_shift} résume les résultats obtenus. En comparant les taux maximaux de bonne prédiction d'apprentissage et de validation, on a un aperçu du risque de sur-apprentissage. Quand l'augmentation de données n'est pas appliquée (cas $\mathrm{SH}_{0}$) le sur-apprentissage est total: la classification réussit à $100\%$ sur l'ensemble d'apprentissage alors que sur l'ensemble de validation elle reste à $27\%$. Ceci signifie qu'aucune caractéristique informative a été apprise, amenant à une attaque non conclusive ($N^\star>1,000$). Nous remarquons que l'augmentation de données diminue fortement le sur-apprentissage: pour $mathrm{SH}_{500}$ l'ensemble d'apprentissage n'est jamais complètement appris et le taux de bonne prédiction de validation s'élève à $78\%$, pour une guessing entropy de $1$ avec seulement $N^{\star}=7$ traces d'attaque. Ces résultats confirment que le modèle CNN est capable de caractériser une large fenêtre de points de façon efficace en présence de désynchronisation logicielle. \\
 
 
 \paragraph*{Expériences en cas de contremesure matérielle simulée}
-Quand des contremesures matérielles agissent au niveau de l'horloge du composant, en perturbant sa fréquence, les traces acquises des signaux auxiliaires apparaissent compromises par une désynchronisation dû à l'accumulation des déformations de cycles d'horloge. Nos expériences suivantes visent à tester le réseau CNN en présence de ce type de déformation. Dans un premier temps nous avons menés ces tests sur des signaux parfaitement synchrone au moment de l'acquisition et désynchronisés de façon artificiel afin de pouvoir maîtriser l'effet déformant. Les résultats, résumées dans la Tableau~\ref{table:results_all}, sont finalement obtenus sur deux bases de données, \emph{DS\_low\_jitter} et \emph{DS\_high\_jitter} respectivement moins affectée et plus affectée par la désynchronisation. Ces résultats confirment que l'approche par CNN reste efficace en présence de ce type de déformation, et montrent les bienfaits de l'application des techniques DA.
+Les contremesures matérielles de gigue agissent au niveau de l'horloge du composant ; en perturbant sa fréquence, des déformations temporelles apparaissent. Les traces acquises présentent des désynchronisations qui s'accumulent au cours des cycles d'horloge. Les expériences suivantes visent à tester le réseau CNN en présence de ce type de déformation. Dans un premier temps nous avons mené ces tests sur des signaux parfaitement synchrones au moment de l'acquisition et désynchronisés de façon artificielle afin de pouvoir maîtriser l'effet déformant. Les résultats, résumés dans le tableau~\ref{table:results_all}, sont finalement obtenus sur deux bases de données, \emph{DS\_low\_jitter} et \emph{DS\_high\_jitter} respectivement moins affectée et plus affectée par la désynchronisation. Ces résultats confirment que l'approche par CNN reste efficace en présence de ce type de déformation, et montrent les bienfaits de l'application des techniques DA.
 
 \begin{table}[t]
 \centering
-\caption{Résultat de l'attaque par CNN, pour diverse techniques DA, en présence de désynchronisation matériellée simulée. Légende dans la didascalie du Tableau~\ref{tab:res_CW_shift}.}
+\caption{Résultat de l'attaque CNN, pour différentes techniques DA, en présence de désynchronisation matériellée simulée. Légende identique au tableau~\ref{tab:res_CW_shift}.}
 \label{table:results_all}
 
 
@@ -397,7 +413,7 @@ $c$                          & $d$                         & \multicolumn{2}{c|}
 \begin{figure}
 \includegraphics[width=.5\textwidth]{../Figures/CHES2017/results_low_jitter_new.pdf} 
 \includegraphics[width=.5\textwidth]{../Figures/CHES2017/results_high_jitter_new.pdf} 
-\caption[Comparison between a Gaussian template attack, with and without realignment, and our CNN strategy, over the  \emph{DS\_low\_jitter} and the  \emph{DS\_high\_jitter}.]{Comparison between a Gaussian template attack, with and without realignment, and our CNN strategy, over the  \emph{DS\_low\_jitter} (left) and the  \emph{DS\_high\_jitter} (right).}\label{fig:compareTA}
+\caption[Comparison entre une attaque template gaussienne, avec et sans réalignement, et notre stratégie CNN, sur les bases \emph{DS\_low\_jitter} et \emph{DS\_high\_jitter}.]{Comparison entre une attaque template, avec et sans réalignement, et notre stratégie CNN, sur les bases \emph{DS\_low\_jitter} (left) et \emph{DS\_high\_jitter} (right).}\label{fig:compareTA}
 \end{figure}
 
 \paragraph*{Expériences en cas de contremesure matérielle réelle}
@@ -412,14 +428,14 @@ $a$        & $b$       & 35.0\%                     & 1.1\%                    &
 $c$        & $d$       & 1.2\%                      & 137                      & 1.3\%                       & 89                         & \textbf{1.8\%}              & \textbf{54}                \\ \hline
 \end{tabular}
 
-\caption{Résultats de l'attaque par CNN sur carte à puce protégée par jitter.}\label{tab:res_AES}
+\caption{Résultats de l'attaque CNN sur carte à puce protégée par jitter.}\label{tab:res_AES}
 \end{table}
 
-Les résultats prometteurs du contexte simulé se retrouvent aussi dans le dernier scénario d'expérience, où la cible est une implémentation matérielle de l'AES sur composant sécurisée moderne. L'implémentation est protégé par un effet de jitter sur l'horloge. Comme montré dans le Tableau~\ref{tab:res_AES}, l'attaque par CNN est efficace et les techniques DA mitigent le surapprentissage du réseau en améliorant l'attaque. Dans ce contexte nous comparons la stratégie classique, qui consiste à effectuer une attaque template suite à une technique de ré-alignement et au choix minutieux des PoIs, et la stratégie par CNN sans ré-alignement ni extraction explicite de caractéristiques. L'attaque par CNN se montre légèrement plus efficace même en absence de pré-traitements. 
+Les résultats prometteurs obtenus dans le contexte simulé se retrouvent aussi dans le dernier scénario d'expérience, où la cible est une implémentation matérielle de l'AES sur composant sécurisée moderne. L'implémentation est protégée par un effet de jitter sur l'horloge. Comme montré dans le tableau~\ref{tab:res_AES}, l'attaque CNN est efficace et les techniques DA atténuent le sur-apprentissage du réseau en améliorant l'attaque. Dans ce contexte nous comparons la stratégie classique, qui consiste à effectuer un réalignement, suivi d'un choix minutieux des PoIs, puis d'une attaque template, avec la stratégie par CNN sans réalignement ni extraction explicite de caractéristiques. L'attaque CNN se montre légèrement plus efficace même en absence de pré-traitements. 
 
 \begin{figure}
     \centering
     \includegraphics[width=.5\textwidth]{../Figures/CHES2017/TA_CNN_smartcard.pdf} 
-     \caption{Comparaison entre l'attaque template gaussienne avec ré-alignement, et la stratégie par CNN, sur carte à puce protégée par jitter.}\label{fig:TA_smartcard}
+     \caption{Comparaison entre l'attaque template gaussienne avec réalignement, et la stratégie par CNN, sur carte à puce protégée par jitter.}\label{fig:TA_smartcard}
 \end{figure}
 
