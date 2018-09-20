@@ -268,77 +268,143 @@ basicstyle=\footnotesize, escapechar=@,style=customc,
 %%%% DEBUT DOCUMENT %%%%
 
 \begin{document}
-
-\begin{center}
-\makebox[\textwidth][l]{
-\raisebox{-8pt}[0pt][0pt]{
-\includegraphics[scale=0.8]{figures/cea.png}
-}
-}
-\makebox[\textwidth][r]{
-\raisebox{0pt}[0pt][0pt]{
-\includegraphics[scale=0.6]{figures/edite.png}
-}
-}
-{\Large EDITE de Paris\\
-\'Ecole Doctorale Informatique, T\'el\'ecommunications et \'Electronique}\\
-\vspace{3cm}
-{\LARGE R\'esum\'e en fran\c{c}ais}\\
-\vspace{1cm}
-CEA/CESTI-LETI\\
-\vspace{2cm}
-\shadowbox{
-\begin{minipage}{1\textwidth}
-\begin{center}
-{\Huge Extraction de Caract\'eristiques pour les Attaques par Canaux Auxiliaires}\\
-\end{center}
-\end{minipage}
-}\\
-\vspace{3cm}
-Eleonora Cagli\\
-Id. 3373691\\
-
+%\includegraphics[height = 20mm]{../Figures/LOGO_SU.jpg}
+%\hfill
+%\includegraphics[height = 20mm]{../Figures/LOGO_LIP6}
+%
+%{\Large EDITE de Paris\\
+%\'Ecole Doctorale Informatique, T\'el\'ecommunications et \'Electronique}\\
+%\vspace{3.5cm}
+%\centering
+%\includegraphics[scale=0.6]{figures/edite.png}
+%
+%{\LARGE R\'esum\'e en fran\c{c}ais}\\
+%\vspace{1cm}
+%CEA/CESTI-LETI\\
+%\vspace{2cm}
+%\shadowbox{
+%\begin{minipage}{1\textwidth}
+%\begin{center}
+%{\Huge Extraction de Caract\'eristiques pour les Attaques par Canaux Auxiliaires}\\
+%\end{center}
+%\end{minipage}
+%}\\
+%\vspace{3cm}
+%\large{Eleonora Cagli}\\
+%\large{Id. 3373691}\\
+%
+%
+%
+%
+%%\vspace{3.5cm}
+%%\begin{tabular}{p{10cm}p{10cm}}
+%%{\bf CEA Grenoble}                  &{\bf Directeur de Th\`ese}\\
+%%{\footnotesize 17 rue des Martyrs}       & ~~~Emmanuel Prouff\\
+%%{\footnotesize 38054 Grenoble Cedex 9}   &{\bf Encadrante}\\
+%%{}                         & ~~~C\'ecile Dumas\\
+%%\end{tabular}
+%
 %\vspace{3.5cm}
 %\begin{tabular}{p{10cm}p{10cm}}
-%{\bf CEA Grenoble}                  &{\bf Directeur de Th\`ese}\\
-%{\footnotesize 17 rue des Martyrs}       & ~~~Emmanuel Prouff\\
-%{\footnotesize 38054 Grenoble Cedex 9}   &{\bf Encadrante}\\
+%{\textcolor{white}{\bf CEA Grenoble}}                  &{\bf Directeur de Th\`ese}\\
+%{\textcolor{white}{\footnotesize 17 rue des Martyrs}}       & ~~~Emmanuel Prouff\\
+%{\textcolor{white}{\footnotesize 38054 Grenoble Cedex 9}}   &{\bf Encadrante}\\
 %{}                         & ~~~C\'ecile Dumas\\
 %\end{tabular}
 
-\vspace{3.5cm}
-\begin{tabular}{p{10cm}p{10cm}}
-{\textcolor{white}{\bf CEA Grenoble}}                  &{\bf Directeur de Th\`ese}\\
-{\textcolor{white}{\footnotesize 17 rue des Martyrs}}       & ~~~Emmanuel Prouff\\
-{\textcolor{white}{\footnotesize 38054 Grenoble Cedex 9}}   &{\bf Encadrante}\\
-{}                         & ~~~C\'ecile Dumas\\
-\end{tabular}
-\end{center}
 %\newpage
 %\thispagestyle{empty}
 %\cleardoublepage
+%
+%\vspace{-8mm}
+%\noindent%
+%\small\includegraphics[height=0.7cm]{figures/leti.png}\\
+%  \color{blue!60!black}\\[-1.5ex]
+%  {Laboratoire d'\'electronique et de technologie de l'information}\\
+%  \includegraphics[height=0.5mm,width=8cm]{figures/greenline.png}
+%
+%\footnotesize\color{gray!50!black}Commissariat \'a l'\'energie atomique et aux \'energies alternatives
+%  \hspace{1.9cm}\hbox{Direction de la recherche technologique}\\[-0.5ex]
+%  MINATEC Campus \textbar{} 17 rue des Martyrs \textbar{} 38054 Grenoble Cedex 9\\[-0.5ex]
+%  %\ifx\cealeti@common@telephone\@empty
+%  %\else
+%  %    T. \cealeti@common@telephone{}
+%  %    \ifx\cealeti@common@fax\@empty
+%  %    \else
+%  %        \textbar{} F. \cealeti@common@fax
+%  %    \fi
+%      \\[-2.5ex]
+%  %\fi
+%  \url{www-leti.cea.fr}\\[-0.5ex]
+%  {\scriptsize \'Etablissement public \'a caract\`ere industriel et commercial RCS Paris B 775 685 019}
 
-\vspace{-8mm}
-\noindent%
-\small\includegraphics[height=0.7cm]{figures/leti.png}\\
-  \color{blue!60!black}\\[-1.5ex]
-  {Laboratoire d'\'electronique et de technologie de l'information}\\
-  \includegraphics[height=0.5mm,width=8cm]{figures/greenline.png}
 
-\footnotesize\color{gray!50!black}Commissariat \'a l'\'energie atomique et aux \'energies alternatives
-  \hspace{1.9cm}\hbox{Direction de la recherche technologique}\\[-0.5ex]
-  MINATEC Campus \textbar{} 17 rue des Martyrs \textbar{} 38054 Grenoble Cedex 9\\[-0.5ex]
-  %\ifx\cealeti@common@telephone\@empty
-  %\else
-  %    T. \cealeti@common@telephone{}
-  %    \ifx\cealeti@common@fax\@empty
-  %    \else
-  %        \textbar{} F. \cealeti@common@fax
-  %    \fi
-      \\[-2.5ex]
-  %\fi
-  \url{www-leti.cea.fr}\\[-0.5ex]
-  {\scriptsize \'Etablissement public \'a caract\`ere industriel et commercial RCS Paris B 775 685 019}
+\includegraphics[height = 20mm]{../Figures/LOGO_SU.jpg}
+\hfill
+\includegraphics[height = 20mm]{../Figures/LOGO_LIP6}
+\begin{center}
+
+\vspace*{.04\textheight}
+{\scshape\huge Sorbonne Universit\'e\par}\vspace{1.0cm} % University name
+\textsc{\Large Ecole Doctorale n$^\circ$ 130 }\\
+\textsc{\large Informatique, T\'el\'ecommunications, \'Electronique de Paris}\\[0.3cm]
+\textsc{\large Laboratoire d'Informatique de Paris 6 }\\[0.5cm]
+
+\textsc{\large Résumé de th\`ese en Français}
+
+{\scshape\huge \bfseries  Extraction de Caract\'eristiques pour les Attaques par Canaux Auxiliaires\par}\vspace{0.4cm} % Thesis title
+
+
+\textsc{\Large Par }\href{}{\large Eleonora Cagli}\\
+\textsc{Th\`ese de Doctorat en Informatique}
+
+\vspace*{.04\textheight}
+\textsc{Dirig\'ee par }Emmanuel \textsc{PROUFF}\\
+\textsc{Encadr\'ee par} C\'ecile \textsc{DUMAS}
+% 
+
+\end{center}
+%\begin{minipage}[t]{0.4\textwidth}
+%\begin{flushleft} \large
+%\textsc{Par}
+%\href{}{\authorname}\\ % Author name - remove the \href bracket to remove the link
+%\textsc{Th\`ese de Doctorat de Informatique???}
+%\end{flushleft}
+%\end{minipage}
+%\begin{minipage}[t]{0.4\textwidth}
+%\begin{flushright} \large
+%\emph{Dirig\'ee par}
+%\href{}{\supname}\\% Supervisor name - remove the \href bracket to remove the link  
+%\emph{Encadr\'ee par} C\'ecile \textsc{DUMAS}
+%\end{flushright}
+%\end{minipage}\\[3cm]
+%
+%\vspace*{.04\textheight}
+%\emph{Pr\'esent\'ee et soutenue publiquement le JJ/MM/AAAA}
+%\end{center}
+%
+%
+%\begin{minipage}[t]{\textwidth}
+%\emph{Devant un jury compos\'e de:}\\
+%Pr\'esident du Jury \hfill \textsc{Aaa BBB, } \textit{CCC}\\
+%%Rapporteur \hfill \textsc{Aaa BBB, } \textit{CCC}\\
+%%Rapporteur \hfill \textsc{Ddd EEE, } \textit{FFF}\\
+%Examinateur \hfill \textsc{Ggg HHH, } \textit{III}\\
+%%Examinateur \hfill \textsc{Lll Mmm, } \textit{Nnn}\\
+%Directeur de th\`ese \hfill \textsc{Emmanuel PROUFF,} \textit{ANSSI}\\
+%Encadrante \hfill \textsc{C\'ecile DUMAS,} \textit{CEA Grenoble}
+%
+%\end{minipage}
+%\large \textit{A thesis submitted in fulfillment of the requirements\\ for the degree of \degreename}\\[0.3cm] % University requirement text
+%\textit{in the}\\[0.4cm]
+%\groupname\\\deptname\\[2cm] % Research group name and department name
+% 
+%\vfill
+%
+%{\large \today}\\[4cm] % Date
+%%\includegraphics{Logo} % University/department logo - uncomment to place it
+% 
+%\vfill
 
 
 \normalsize

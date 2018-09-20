@@ -2,22 +2,20 @@
 
 \subsection{Notations}
 Dans la th\`{e}se, le symbole $X$ d\'{e}signe une variable al\'{e}atoire ($\vec{X}$ pour un vecteur colonne al\'{e}atoire) sur un ensemble $\mathcal{X}$, et $x$ (respectivement $\vec{x}$) d\'{e}signe une r\'{e}alisation de $X$ (respectivement $\vec{X}$). 
-La $i$-\`{e}me coordonn\'{e}e d'un vecteur $\vec{x}$ est représent\'{e}e par $\vec{x}[i]$, et la transpos\'{e}e d'un vecteur $\vec{x}$ par $\vec{x}^\intercal$. Les matrices sont not\'{e}es en gras majuscules, $\textbf{A}$ ou $\covmat$. Les traces acquises des canaux auxiliaires sont interprêt\'{e}es comme r\'{e}alisations $\vLeakVec_1, \dots , \vLeakVec_N$ d'un vecteur al\'{e}atoire r\'{e}el $\vaLeakVec\in\mathbb{R}^\traceLength$, o\`{u} $\traceLength$ est la longueur du signal. Quand une m\'{e}thode de r\'{e}duction de dimension est utilis\'{e}e comme pr\'{e}-traitement, celle-ci am\`{e}ne \`{a} la d\'{e}finition d'une fonction appel\'{e}e \emph{extracteur} et not\'{e}e $\extract \colon \mathbb{R}^\traceLength \rightarrow \mathbb{R}^\newTraceLength$. La variable sensible manipul\'{e}e pendant l'acquisition des traces est not\'{e}e $\sensRandVar$. Celle-ci peut avoir diff\'{e}rentes formes, mais souvent dans cette th\`{e}se elle est d\'{e}finie comme $\sensRandVar = \sensFunction(\keyRandVar,\publicParRandVar)$, o\`{u} $\publicParRandVar$ d\'{e}signe une variable publique, par exemple une partie de message en clair, et $\keyRandVar$ une partie d'une cl\'{e} secr\`{e}te que l'attaquant souhaite retrouver. Les valeurs acquises par la variable sensible sont vues comme r\'{e}alisations de la variable al\'{e}atoire $\sensRandVar$ en $\sensVarSet = \{\sensVarValue{1}, \dots, \sensVarValue{\nbClasses}\}$. Les \'{e}l\'{e}ments de $\sensRandVar$ sont parfois encod\'{e}s via le \emph{one-hot-encoding}: \`{a} chaque \'{e}l\'{e}ment $\sensVarValue{j}$ on associe un vecteur $\sensVarOneHot{j}$ de dimension $\numClasses$, avec toutes les entr\'{e}es nulles, sauf la $j$-\`{e}me qui est \'{e}gale \`{a}  $1$: $\sensVarValue{j}
+La $i$-\`{e}me coordonn\'{e}e d'un vecteur $\vec{x}$ est représent\'{e}e par $\vec{x}[i]$, et la transpos\'{e}e d'un vecteur $\vec{x}$ par $\vec{x}^\intercal$. Les matrices sont not\'{e}es en gras majuscules (par exemple $\textbf{A}$). Les traces acquises des canaux auxiliaires sont interprêt\'{e}es comme r\'{e}alisations $\vLeakVec_1, \dots , \vLeakVec_N$ d'un vecteur al\'{e}atoire r\'{e}el $\vaLeakVec\in\mathbb{R}^\traceLength$, o\`{u} $\traceLength$ est la longueur du signal. Quand une m\'{e}thode de r\'{e}duction de dimension est utilis\'{e}e comme pr\'{e}-traitement, celle-ci am\`{e}ne \`{a} la d\'{e}finition d'une fonction appel\'{e}e \emph{extracteur} et not\'{e}e $\extract \colon \mathbb{R}^\traceLength \rightarrow \mathbb{R}^\newTraceLength$. La variable sensible manipul\'{e}e pendant l'acquisition des traces est not\'{e}e $\sensRandVar$. Celle-ci peut avoir diff\'{e}rentes formes, mais souvent dans cette th\`{e}se elle est d\'{e}finie comme $\sensRandVar = \sensFunction(\keyRandVar,\publicParRandVar)$, o\`{u} $\publicParRandVar$ d\'{e}signe une variable publique, par exemple une partie de message en clair, et $\keyRandVar$ une partie d'une cl\'{e} secr\`{e}te que l'attaquant souhaite retrouver. Les valeurs acquises par la variable sensible sont vues comme r\'{e}alisations de la variable al\'{e}atoire $\sensRandVar$ en $\sensVarSet = \{\sensVarValue{1}, \dots, \sensVarValue{\nbClasses}\}$. Les \'{e}l\'{e}ments de $\sensRandVar$ sont parfois encod\'{e}s via le \emph{one-hot-encoding}: \`{a} chaque \'{e}l\'{e}ment $\sensVarValue{j}$ on associe un vecteur $\sensVarOneHot{j}$ de dimension $\numClasses$, avec toutes les entr\'{e}es nulles, sauf la $j$-\`{e}me qui est \'{e}gale \`{a}  $1$: $\sensVarValue{j}
 \rightarrow \sensVarOneHot{j} = (0,\ldots , 0,\underbrace{1}_{j},0,\dots,0)$. Un \'{e}l\'{e}ment g\'{e}n\'{e}rique de $\sensVarSet$ sera not\'{e} $\sensVarGenValue$, si son indice  $i$ n'est pas n\'{e}cessaire.
 
-\subsection{Techniques Lin\'{e}aires de R\'{e}duction de Dimension}\label{sec:lin}
+\subsection{Techniques lin\'{e}aires de r\'{e}duction de dimension}\label{sec:lin}
 Dans cette section sont d\'{e}crites les \'{e}tudes men\'{e}es autour des m\'{e}thodes lin\'{e}aires d'extraction de caract\'{e}ristiques, en particulier de l'Analyse aux Composantes Principales (PCA) et de l'Analyse Discriminante Lin\'{e}aire (LDA). 
 
-\subsubsection{Analyse aux Composantes Principales, l'outil classique et le profil\'{e}e}
-L'extracteur lin\'{e}aire $\extract^{\mathrm{PCA}}(\vLeakVec) = \textbf{A}\vLeakVec$ se d\'{e}duit des certains vecteurs propres $\AAlpha_1, \dots, \AAlpha_\newTraceLength$, appel\'{e}s \emph{Composantes Principales} (PCs), dont les transpos\'{e}s sont arrang\'{e}es en tant que lignes dans la matrice de projection $\textbf{A}$. Classiquement la PCA intervient sur des donn\'{e}es non étiquet\'{e}es $\vLeakVec_1, \dots , \vLeakVec_N$, sont la moyenne est suppos\'{e}e nulle et rang\'{e}es en colonnes dans une matrice $\measuresMatrix$ de dimension $\traceLength \times \nbTraces$, de telle sorte que la matrice de covariance des donn\'{e}es soit la suivante :
+\subsubsection{Analyse aux composantes principales, l'outil classique et le profil\'{e}e}
+L'extracteur lin\'{e}aire $\extract^{\mathrm{PCA}}(\vLeakVec) = \textbf{A}\vLeakVec$ se d\'{e}duit des certains vecteurs propres $\AAlpha_1, \dots, \AAlpha_\newTraceLength$, appel\'{e}s \emph{Composantes Principales} (PCs), dont les transpos\'{e}s sont arrang\'{e}es en tant que lignes dans la matrice de projection $\textbf{A}$. Classiquement la PCA intervient sur des donn\'{e}es non étiquet\'{e}es $\vLeakVec_1, \dots , \vLeakVec_N$, dont la moyenne est suppos\'{e}e nulle et rang\'{e}es en colonnes dans une matrice $\measuresMatrix$ de dimension $\traceLength \times \nbTraces$, de telle sorte que la matrice de covariance des donn\'{e}es soit la suivante :
 \begin{equation}\label{eq:covmat}
 \covmat = \frac{1}{\nbTraces}\measuresMatrix\measuresMatrix^\intercal \mbox{ .}
 \end{equation}
 
 Dans ce cas, les vecteur propres $\AAlpha_1, \dots, \AAlpha_\newTraceLength$ correspondent aux vecteurs propres de la matrice $\covmat$ et leurs valeurs propres associ\'{e}es sont not\'{e}es $\lambda_1, \dots, \lambda_r$. La PCA est la projection qui maximise la variance globale des caract\'{e}ristiques extraites. La variance \'{e}tant li\'{e}e \`{a} la quantit\'{e} d'information des donn\'{e}es, cette transformation est cens\'{e}e r\'{e}duire la dimension des traces tout en renforçant l'information contenue. Une propri\'{e}t\'{e} remarquable de la PCA est que chaque $\lambda_i$ correspond \`{a} la variance empirique des donn\'{e}es projet\'{e}es sur la PC correspondante $\AAlpha_i$.\\
 
-% sugg CD
-% definir donnée étiquetée avant
 
 Dans un sc\'{e}nario d'attaque par profilage, cet outil classique est toutefois largement sous-optimal : il n'exploite aucune phase de caract\'{e}risation où l'attaquant est en possession d'un ensemble de donn\'{e}es étiquetées  $(\vLeakVec_i, \sensVar_i)_{i=1..\nbProfilingTraces}$. Dans la litt\'{e}rature SCA \cite{TAprincipal,choudaryefficient,choudary2014efficient,disassembler,Standaert2008} une version \emph{profil\'{e}e} de la PCA a \'{e}t\'{e} introduite. En utilisant les moyennes empiriques par classe :
 \begin{equation}\label{eq:mmmXclass}
@@ -43,14 +41,7 @@ Par définition, la somme de toutes les EGV est égale à  $1$. Le choix des compos
 \mbox{EGV}(\AAlpha_1) +\mbox{EGV}(\AAlpha_2) + \dots +\mbox{EGV}(\AAlpha_\newTraceLength) \geq \beta \mbox{  .}
 \end{equation}
 Si l'attaquant a une contrainte de dimension finale $\newTraceLength$, le choix par EGV consiste simplement à garder les $\newTraceLength$ premières composantes, dans l'ordre naturel des valeurs propres associées. Dans le contexte des SCA, ce type de choix ne semble pas être systématiquement le meilleur: des articles déclarent que les plus fortes composantes contiennent la plus grande quantité d'information, alors que d'autres suggèrent d'écarter ces premières composantes \cite{Batina2012,specht}. 
-% An example of this behaviour is provided in Fig.~\ref{fig:DPAcontest}. It may be noticed that the first component (plotted on the left) has high coefficients spread over the whole trace, while the sixth one  (on the right) has high coefficients localised in a small time interval, very likely to signalize the instants in which the target sensitive variable leaks.
-%
-%\begin{figure}
-%\includegraphics[width=.45\textwidth]{figures/DPAcontestPC1_new.pdf} 
-%\includegraphics[width=.45\textwidth]{figures/DPAcontestPC6_new.pdf} 
-%\caption{First and sixth PCs in DPA contest v4 trace set (between time samples 198001 and 199000)}\label{fig:DPAcontest}
-%\end{figure}
-%
+
 Dans le contexte des implémentations sécurisées, le but des développeurs est de minimiser les fuites, autrement dit, de réduire le nombre de points de fuite, d'où l'assomption suivante qui peut être raisonnablement faite: 
 
 \begin{assumption}\label{assum:local}
@@ -67,28 +58,26 @@ Les auteurs de \cite{SCAclassProbl} suggèrent de sélectionner les PCs en ordre i
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{figures/cumulativeELVallRectangle.pdf} 
 \includegraphics[width=0.5\textwidth]{figures/cumulativeELVzoomedRectangle.pdf} 
-\caption{Cumulative ELV trend of principal components. On the right a zoom of the plot on the left. Acquisition campaign on an 8-bit AVR Atmega328P.}\label{fig:ELVcumulative}
+\caption{Tendance cumulative de l' ELV des composantes principales. A droite un zoom de l'image de gauche. Campagne d'acquisition sur 8-bit AVR Atmega328P.}\label{fig:ELVcumulative}
 \end{figure}
 %
 Les méthodes de sélection par EGV et IPR sont d'une certaine façon complémentaires : la première se base uniquement sur les valeurs propres associées aux PC et ne considère pas la forme des PC elles-mêmes; la seconde ne considère pas l'information donnée pas les valeurs propres, mais seulement la distribution des coefficients des PCs. Dans ce panorama nous avons proposé une nouvelle méthode de sélection qui fait un pont entre l'EGV et l'IPR : nous avons introduit la \emph{variance expliquée locale} (ELV) d'une PC $\AAlpha_i$ en un point $j$, définie par :
 \begin{equation}
 \mathrm{ELV}(\AAlpha_i,j) = \frac{\lambda_i \AAlpha_i[j]^2}{\sum_{k=1}^r\lambda_k} = \mathrm{EGV}(\AAlpha_i) \AAlpha_i[j]^2  \mbox{ .}
 \end{equation}
-Soit $\mathcal{J}=\{j^i_1, j^i_2, \dots, j^i_{\traceLength}\}\subset\{1,2,\dots,\traceLength\}$  un ensemble  d'indices ordonnés de telle sorte que $\mathrm{ELV}(\AAlpha_i,j^i_1)\geq \mathrm{ELV}(\AAlpha_i,j^i_2)\geq \dots \geq \mathrm{ELV}(\AAlpha_i,j^i_\traceLength)$. On observe que la somme sur tous les $\mathrm{ELV}(\AAlpha_i,j)$, pour tout $j\in[1,\dots,\traceLength],$  est égale à  $\mathrm{EGV}(\AAlpha_i)$. Si on cumule cette somme en suivant l'ordre donné par l'ensemble ordonné $\mathcal{J}$, on obtient une description complète de la tendance suivie par la composante $\AAlpha_i$ pour atteindre son EGV. Comme montré sur la figure~\ref{fig:ELVcumulative}, où ces ELV cumulatives sont représentées, les trois premières composantes atteignent leur EGV finale très lentement, alors que la $4$^{ème}, $5$^{ème} et $6$^{ème} atteignent une large partie de leur EGV très rapidement, c'est-à-dire en sommant les contributions ELV de peu de points. La sélection par ELV, par analogie avec l'EGV, demande de fixer la dimension réduite du signal $\newTraceLength$, ou un seuil $\beta$ pour la ELV cumulative. Dans le premier cas, les valeurs maximales d'ELV de chaque PC sont comparées, et les $\newTraceLength$ valeurs les plus élevées sont sélectionnées. Dans le second cas, tous les couples (PC, point temporel) sont ordonnés par ordre décroissant de leur ELV, et sommés jusqu'à  atteindre le seuil $\beta$. Les PC qui contribuent à  la somme sont sélectionnées.\\
+Soit $\mathcal{J}=\{j^i_1, j^i_2, \dots, j^i_{\traceLength}\}\subset\{1,2,\dots,\traceLength\}$  un ensemble  d'indices ordonnés de telle sorte que $\mathrm{ELV}(\AAlpha_i,j^i_1)\geq \mathrm{ELV}(\AAlpha_i,j^i_2)\geq \dots \geq \mathrm{ELV}(\AAlpha_i,j^i_\traceLength)$. On observe que la somme sur tous les $\mathrm{ELV}(\AAlpha_i,j)$, pour tout $j\in[1,\dots,\traceLength],$  est égale à  $\mathrm{EGV}(\AAlpha_i)$. Si on cumule cette somme en suivant l'ordre donné par l'ensemble ordonné $\mathcal{J}$, on obtient une description complète de la tendance suivie par la composante $\AAlpha_i$ pour atteindre son EGV. Comme montré sur la figure~\ref{fig:ELVcumulative}, où ces ELV cumulatives sont représentées, les trois premières composantes atteignent leur EGV finale très lentement, alors que la $4^\text{ème}$, $5^\text{ème}$ et $6^\text{ème}$ atteignent une large partie de leur EGV très rapidement, c'est-à-dire en sommant les contributions ELV de peu de points. La sélection par ELV, par analogie avec l'EGV, demande de fixer la dimension réduite du signal $\newTraceLength$, ou un seuil $\beta$ pour la ELV cumulative. Dans le premier cas, les valeurs maximales d'ELV de chaque PC sont comparées, et les $\newTraceLength$ valeurs les plus élevées sont sélectionnées. Dans le second cas, tous les couples (PC, point temporel) sont ordonnés par ordre décroissant de leur ELV, et sommés jusqu'à  atteindre le seuil $\beta$. Les PC qui contribuent à  la somme sont sélectionnées.\\
 
 
 
 
-\subsubsection{LDA et le probl\`{e}me du petit échantillonnage}
+\subsubsection{LDA et le probl\`{e}me de l'échantillon de petite taille}
 L'extracteur $\extract^{\mathrm{LDA}}$ est une réduction de dimension optimale, sous certaines conditions, pour résoudre un problème de classification, c'est-à-dire un problème d'apprentissage où l'on vise à assigner à une donnée (une trace dans notre cas) une étiquette (donnée ici par la valeur de la variable $\sensRandVar$ manipulée lors de l'acquisition). Il a pour but non seulement d'éloigner les centro\"ides par classe, mais aussi de reprocher au mieux les données appartenant à une même classe. La forte analogie entre les SCA et la tâche de classification en apprentissage automatique rend la LDA beaucoup plus adaptée à notre contexte que la PCA, mais elle est plus coûteuse. Comme la PCA, la LDA construit une matrice de projection $\textbf{A}$ en juxtaposant des vecteurs propres, appelés composantes linéaires discriminantes (LDC), qui sont ceux de la matrice $\SW^{-1} \SB$, où $\SB$ est définie en \eqref{eq:SB} et $\SW$ est la matrice des \emph{écarts intra-classe}:
 
 \begin{equation}
-\SW = \sum_{\sensVarGenValue\in\sensVarSet}\sum_{i=1\colon \sensVar_i=\sensVarGenValue}(\vLeakVec_i-\mmmXclass)(\vLeakVec_i-\mmmXclass)^\intercal \mbox{.}
+\SW = \sum_{\sensVarGenValue\in\sensVarSet}\sum_{i\colon \sensVar_i=\sensVarGenValue}(\vLeakVec_i-\mmmXclass)(\vLeakVec_i-\mmmXclass)^\intercal \mbox{.}
 \end{equation}
 
-% sugg CD
-% je ne sais pas si petit échantillonnage est bien, j'avais suggérré dans objectif.tex sous-échantillonnage
-Le désavantage principal de la LDA est appelé le \emph{problème du petit échantillonnage} et apparaît quand le nombre des traces $\nbTraces$ est inférieur ou égal à leur taille $\traceLength$. Ceci implique que la matrice $\SW$ n'est pas inversible. Si la LDA a été introduite relativement tard dans la littérature SCA, la communauté en reconnaissance de formes et apprentissage automatique cherche une solution à ce problème depuis le début des années quatre-vingt-dix. Nous avons exploré les solutions proposées, et les avons testées sur des signaux compromettants. 
+Le désavantage principal de la LDA est appelé le \emph{problème de l'échantillon de petite taille} et apparaît quand le nombre des traces $\nbTraces$ est inférieur ou égal à leur taille $\traceLength$. Ceci implique que la matrice $\SW$ n'est pas inversible. Si la LDA a été introduite relativement tard dans la littérature SCA, la communauté en reconnaissance de formes et apprentissage automatique cherche une solution à ce problème depuis le début des années quatre-vingt-dix. Nous avons exploré les solutions proposées, et les avons testées sur des signaux compromettants. 
 
 %
 \subsubsection{Résultats et conclusions}
@@ -105,18 +94,17 @@ Le désavantage principal de la LDA est appelé le \emph{problème du petit échanti
 \includegraphics[width=0.5\textwidth]{figures/SSS.pdf}}
 \subfigure[]{\label{fig:notSSS}
 \includegraphics[width=0.5\textwidth]{figures/Criterion2notSSS.pdf}}
-\caption{Guessing Entropy en fonction du nombre de traces de profilage. Figure \subref{fig:direct_PCA}: la meilleure extension de LDA et la PCA par profilage en présence du problème du petit échantillonnage; Figure \subref{fig:notSSS}: une comparaison en absence de problème du petit échantillonnage.}\label{fig:scenario2}
+\caption{Guessing Entropy en fonction du nombre de traces de profilage. Figure \subref{fig:direct_PCA}: la meilleure extension de LDA et la PCA profilée en présence du problème de l'échantillon de petite taille; Figure \subref{fig:notSSS}: une comparaison en absence de problème de l'échantillon de petite taille.}\label{fig:scenario2}
 \end{figure}
 
-Nous avons mené diverses analyses expérimentales pour évaluer la méthode de sélection de composantes par ELV et les techniques d'extension de la LDA en présence de petit échantillonnage. Dans cette section nous reportons les plus significatifs, en les extrayant du chapitre 4 de la thèse. Nous considérons ici deux scénarios: dans le premier (Scenario 1) l'attaquant a acquis un grand nombre de traces de profilage ($\nbProfilingTraces$) et veut minimiser le nombre de traces d'attaque ($nbAttackTraces$) pour obtenir une attaque réussie. En observant la figure~\ref{fig:scenario1} nous pouvons tirer trois conclusions : 
+Nous avons mené diverses analyses expérimentales pour évaluer la méthode de sélection de composantes par ELV et les techniques d'extension de la LDA en présence d'échantillon de petite taille. Dans cette section nous reportons les plus significatifs, en les extrayant du chapitre 4 de la thèse. Nous considérons ici deux scénarios: dans le premier (Scenario 1) l'attaquant a acquis un grand nombre de traces de profilage ($\nbProfilingTraces$) et veut minimiser le nombre de traces d'attaque ($\nbAttackTraces$) pour obtenir une attaque réussie. En observant la figure~\ref{fig:scenario1} nous pouvons tirer trois conclusions : 
 \begin{itemize}
-%sugg CD
-% par profilage profilée, je supposais qu'on pouvait définir PCS profilée (voir ci-dessus)
-\item nous confirmons que la PCA standard est bien sous-optimale par rapport à la PCA par profilée
+
+\item nous confirmons que la PCA standard est bien sous-optimale par rapport à la PCA profilée
 \item nous confirmons que la LDA est plus adaptée que la PCA pour pré-traiter les traces par canaux auxiliaires
 \item la PCA profilée, munie de la méthode de sélection par ELV (au lieu de la classique EGV), donne des performances de l'attaque significativement meilleures qui se rapprochent de celles obtenues à travers la LDA.
 \end{itemize}
-Dans le Scenario 2, l'attaquant veut au contraire minimiser le nombre de traces de profilage nécessaires pour obtenir une bonne méthode de pré-traitement et de profilage. Dans ce scenario, on observe le problème du petit échantillonnage. En observant la figure~\ref{fig:scenario2} nous concluons, encore une fois, en présence ou non de petit échantillonnage, que la PCA munie de la sélection par ELV a des performances proches de celles de la LDA ou de sa meilleure alternative en présence de petit échantillonnage.
+Dans le Scenario 2, l'attaquant veut au contraire minimiser le nombre de traces de profilage nécessaires pour obtenir une bonne méthode de pré-traitement et de profilage. Dans ce scenario, on observe le problème de l'échantillon de petite taille. En observant la figure~\ref{fig:scenario2} nous concluons, encore une fois, en présence ou non d'échantillon de petite taille, que la PCA munie de la sélection par ELV a des performances proches de celles de la LDA ou de sa meilleure alternative en présence d'échantillon de petite taille.
 
 
 \subsection{Analyse discriminante par noyau}\label{sec:kda}
@@ -129,11 +117,7 @@ K(\vLeakVec,\yyy) = \Phi(\vLeakVec)\cdot \Phi(\yyy) \mbox{ ,}
 \end{equation}
 pour toutes données $\vLeakVec$ et $\yyy$, où $\cdot$ est le produit scalaire.
 
-Toute fonction $\Phi$ a une fonction noyau associée, donnée par \eqref{eq:kernelProperty}, pour un ensemble de données. 
-%sugg CD
-% j'enlèverai cela
-%L'inverse n'est pas vrai : seules les fonctions $K\colon\mathbb{R}^D\times \mathbb{R}^D \rightarrow \mathbb{R}$ qui satisfont une condition de convergence connue comme la {\em condition de Mercer} sont associées à une certaine fonction $\Phi:\mathbb{R}^D \rightarrow \mathbb{R}^F$, pour un certain $F$. 
-Les fonctions noyau éligibles comme astuce du noyau sont celles qui sont calculables directement à partir des données brutes $\vLeakVec_i$, sans évaluer la fonction $\Phi$. \\
+Toute fonction $\Phi$ a une fonction noyau associée, donnée par \eqref{eq:kernelProperty}, pour un ensemble de données. Les fonctions noyau éligibles comme astuce du noyau sont celles qui sont calculables directement à partir des données brutes $\vLeakVec_i$, sans évaluer la fonction $\Phi$. \\
 %
 %The notion of kernel function is illustrated in the following example.
 %
@@ -256,10 +240,8 @@ Le deuxième aspect sur lequel nous nous sommes concentrés est le rôle de la form
 Dans cette dernière partie, nous adoptons une stratégie d'attaque basée sur le paradigme de l'apprentissage profond: à l'aide de réseaux neuronaux à plusieurs couches nous évitons les deux étapes de l'apprentissage, pré-traitement puis caractérisation, mais nous intégrons les pré-traitement de façon implicite dans l'apprentissage. Les réseaux neuronaux, grâce à leurs architectures facilement parallélisables, sont les outils privilégiés aujourd'hui pour résoudre le problème de la classification sur des données de grande dimension, comme les signaux compromettants. Nous nous intéressons en particulier aux réseaux neuronaux convolutifs (\emph{Convolutional Neural Networks}, en anglais, CNN): étant conçus pour être robustes aux déformations géométriques des données, typiques dans le contexte de la reconnaissance de l'image, ils nous ouvrent une nouvelle stratégie pour faire face aux contremesures basées sur la désynchronisation dans les acquisitions. Nous nous plaçons donc dans ce contexte, en menant des expériences d'attaque contre ce type de contremesures, en utilisant un réseau CNN, avec des stratégies d'augmentation de données (\emph{Data Augmentation}, DA) bien adaptées au contexte de signaux désynchronisés. Après une brève introduction de ces outils, nous reportons les résultats des expériences en section~\ref{sec:cnn_res}.
 
 \subsubsection{Architecture et apprentissage}
-%sugg CD
-Les CNNs appartiennent aux réseaux neuronaux, dont la famille la plus répoandue est celle des \emph{Multi-Layer Perceptrons} (MLP).
-%Les CNNs appartiennent à la famille plus répandue de réseaux neuronales est celle des \emph{Multi-Layer Perceptrons} (MLP).
-On peut exprimer un MLP destiné à la classification sous la forme :
+
+Les CNNs appartiennent aux réseaux neuronaux, dont la famille la plus répandue est celle des \emph{Multi-Layer Perceptrons} (MLP). On peut exprimer un MLP destiné à la classification sous la forme :
 \begin{equation}\label{eq:MLP}
 \MLmodel(\vLeakVec) = \softmax\circ\lambda_n\circ\sigma_{n-1}\circ\lambda_{n-1}\circ\dots\circ \lambda_1(\vLeakVec)=\yyy \mbox{ ,}
 \end{equation}
@@ -325,9 +307,7 @@ Pour toutes nos expériences nous avons réglé et fixé une fois pour toutes l'arch
 \end{equation}
 
 \paragraph*{Attaque par réseau neuronal}\label{sec:attackNN}
-%s sugg CD
-La stratégie que nous adoptons pour effectuer une attaque par canaux auxiliaires à l'aide d'un réseau neuronal est la même que pour l'attaque \emph{template}, décrite dans le chapitre 2 de la thèse. 
-%La stratégie que nous adoptons pour effectuer une attaque par canaux auxiliaires à l'aide d'un réseau neuronal est la même que celle utilisée pour mener une attaque \emph{template}, qui est utilisée aussi dans les cas d'études précédentes et décrite dans le chapitre 2 de la thèse. 
+La stratégie que nous adoptons pour effectuer une attaque par canaux auxiliaires à l'aide d'un réseau neuronal est la même que pour l'attaque \emph{template}. 
 La différence réside dans le fait que, dans l'attaque template, l'attaquant effectue éventuellement un pré-traitement puis approche les distributions des données à l'aide de modèles génératifs gaussiens, alors que les réseaux neuronaux sont utilisés ici pour construire un modèle discriminatoire, c'est-à-dire qu'ils approchent directement les distributions \eqref{eq:a-posteriori} $\MLmodel(\vLeakVec) \approx \pdf_{\given{\sensRandVar}{\vaLeakVec=\vLeakVec}}$. Une fois cette approximation faite, l'attaque suit la même stratégie dans les deux approches, propre aux attaques \emph{avancées} de la littérature: l'attaquant acquiert de nouvelles traces d'attaque, à clé inconnue et entrées connues $\publicParRandVar$ ; il obtient donc des couples  $(\vLeakVec_i, \publicParVar_i)_{i=1, \dots , \nbAttackTraces}$. Ensuite il effectue des hypothèses de clé $\keyVar \in \keyVarSet$ et associe à chaque hypothèse un score $d_\keyVar$ donné par un calcul de probabilité conjointe:
 
 \begin{equation}\label{eq:NN_SCA}
