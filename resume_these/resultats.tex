@@ -247,7 +247,7 @@ Les CNNs appartiennent aux réseaux neuronaux, dont la famille la plus répandue e
 \end{equation}
 où :
 \begin{itemize}
-\item Les fonctions $\lambda_i$ sont appelées couches denses (\emph{Fully-Connected},FC) et s'expriment comme fonctions affines $\textbf{A}\vLeakVec + \vec{b}$, avec $\textbf{A}\in\mathbb{R}^{D\times C}$ une matrice de poids et $\vec{b}\in\mathbb{R}^C$ un vecteur de biais, à optimiser à travers l'apprentissage. Ces couches extraient linéairement de l'information des données, de la même manière que les techniques PCA ou LDA.
+\item Les fonctions $\lambda_i$ sont appelées couches entièrement connectées (\emph{Fully-Connected},FC) et s'expriment comme fonctions affines $\textbf{A}\vLeakVec + \vec{b}$, avec $\textbf{A}\in\mathbb{R}^{D\times C}$ une matrice de poids et $\vec{b}\in\mathbb{R}^C$ un vecteur de biais, à optimiser à travers l'apprentissage. Ces couches extraient linéairement de l'information des données, de la même manière que les techniques PCA ou LDA.
 
 \item  Les fonctions $\sigma_i$ sont appelées couches d'\emph{activation} (ACT): elles sont généralement non-linéaires, s'appliquent souvent indépendamment à chaque coordonnée de l'entrée, et ne dépendent pas de paramètres entrainables. 
  

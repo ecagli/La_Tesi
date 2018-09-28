@@ -1,27 +1,570 @@
 % This file was created with JabRef 2.10.
 % Encoding: Cp1252
 
+@misc{moreno,
+    author = {Moreno, Roland},
+    title = {Methods of data storage and data storage systems},
+    howpublished = {US3971916A},
+    year = {1974}
+}
 
-@InProceedings{DBLP:conf/eurocrypt/BartheBDFGS15,
-  Title                    = {Verified Proofs of Higher-Order Masking},
-  Author                   = {Gilles Barthe and
- Sonia Bela{\"{\i}}d and
- Fran{\c{c}}ois Dupressoir and
+@book{feller2008introduction,
+  title={An introduction to probability theory and its applications},
+  author={Feller, Willliam},
+  volume={2},
+  year={2008},
+  publisher={John Wiley \& Sons}
+}
+
+@inproceedings{joye2002montgomery,
+  title={The Montgomery powering ladder},
+  author={Joye, Marc and Yen, Sung-Ming},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={291--302},
+  year={2002},
+  organization={Springer}
+}
+
+@article{kocher2011introduction,
+  title={Introduction to differential power analysis},
+  author={Kocher, Paul and Jaffe, Joshua and Jun, Benjamin and Rohatgi, Pankaj},
+  journal={Journal of Cryptographic Engineering},
+  volume={1},
+  number={1},
+  pages={5--27},
+  year={2011},
+  publisher={Springer}
+}
+
+@misc{keras,
+  title={Keras},
+  author={Chollet, Fran\c{c}ois and others},
+  year={2015},
+  publisher={GitHub},
+  howpublished={\url{https://github.com/fchollet/keras}},
+}
+
+@book{GBC16,
+  author    = {Ian J. Goodfellow and
+               Yoshua Bengio and
+               Aaron C. Courville},
+  title     = {Deep Learning},
+  series    = {Adaptive computation and machine learning},
+  publisher = {{MIT} Press},
+  year      = {2016},
+  url       = {http://www.deeplearningbook.org/},
+  isbn      = {978-0-262-03561-3},
+  timestamp = {Sat, 25 Mar 2017 20:16:59 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/books/daglib/0040158},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{heuser2014good,
+  title={Good is not good enough},
+  author={Heuser, Annelie and Rioul, Olivier and Guilley, Sylvain},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={55--74},
+  year={2014},
+  organization={Springer}
+}
+
+@inproceedings{Oren:2013,
+  title={Practical template-algebraic side channel attacks with extremely low data complexity},
+  author={Oren, Yossef and Weisse, Ofir and Wool, Avishai},
+  booktitle={Proceedings of the 2nd International Workshop on Hardware and Architectural Support for Security and Privacy},
+  pages={7},
+  year={2013},
+  organization={ACM}
+}
+
+@InProceedings{BelaidCFGKP15,
+  Title                    = {Improved Side-Channel Analysis of Finite-Field Multiplication},
+  Author                   = {Sonia Bela{\"{\i}}d and
+ Jean{-}S{\'{e}}bastien Coron and
  Pierre{-}Alain Fouque and
- Benjamin Gr{\'{e}}goire and
- Pierre{-}Yves Strub},
-  Booktitle                = {Advances in Cryptology - {EUROCRYPT} 2015 - 34th Annual International
- Conference on the Theory and Applications of Cryptographic Techniques,
- Sofia, Bulgaria, April 26-30, 2015, Proceedings, Part {I}},
+ Beno{\^{\i}}t G{\'{e}}rard and
+ Jean{-}Gabriel Kammerer and
+ Emmanuel Prouff},
+  Booktitle                = {Cryptographic Hardware and Embedded Systems - {CHES} 2015 - 17th International
+ Workshop, Saint-Malo, France, September 13-16, 2015, Proceedings},
   Year                     = {2015},
-  Pages                    = {457--485},
+  Pages                    = {395--415},
 
-  Bibsource                = {dblp computer science bibliography, https://dblp.org},
-  Biburl                   = {https://dblp.org/rec/bib/conf/eurocrypt/BartheBDFGS15},
-  Crossref                 = {DBLP:conf/eurocrypt/2015-1},
-  Doi                      = {10.1007/978-3-662-46800-5\_18},
-  Timestamp                = {Fri, 02 Jun 2017 20:52:11 +0200},
-  Url                      = {https://doi.org/10.1007/978-3-662-46800-5\_18}
+  Bibsource                = {dblp computer science bibliography, http://dblp.org},
+  Biburl                   = {http://dblp.uni-trier.de/rec/bib/conf/ches/BelaidCFGKP15},
+  Doi                      = {10.1007/978-3-662-48324-4_20},
+  Timestamp                = {Wed, 02 Sep 2015 14:13:31 +0200}
+}
+
+
+@InBook{Prechelt2012,
+  Title                    = {Early Stopping --- But When?},
+  Author                   = {Prechelt, Lutz},
+  Editor                   = {Montavon, Gr{\'e}goire
+and Orr, Genevi{\`e}ve B.
+and M{\"u}ller, Klaus-Robert},
+  Pages                    = {53--67},
+  Publisher                = {Springer Berlin Heidelberg},
+  Year                     = {2012},
+
+  Address                  = {Berlin, Heidelberg},
+
+  Booktitle                = {Neural Networks: Tricks of the Trade: Second Edition},
+  Doi                      = {10.1007/978-3-642-35289-8_5},
+  ISBN                     = {978-3-642-35289-8},
+  Url                      = {http://dx.doi.org/10.1007/978-3-642-35289-8_5}
+}
+
+
+@inproceedings{LCH05,
+  author    = {Yann LeCun and
+               Fu Jie Huang},
+  title     = {Loss Functions for Discriminative Training of Energy-Based Models},
+  booktitle = {Proceedings of the Tenth International Workshop on Artificial Intelligence
+               and Statistics, {AISTATS} 2005, Bridgetown, Barbados, January 6-8,
+               2005},
+  year      = {2005},
+  crossref  = {AISTATS05},
+  url       = {http://www.gatsby.ucl.ac.uk/aistats/fullpapers/207.pdf},
+  timestamp = {Wed, 06 May 2015 20:37:32 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/aistats/LeCunH05},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{breiman1996heuristics,
+  title={Heuristics of instability and stabilization in model selection},
+  author={Breiman, Leo and others},
+  journal={The annals of statistics},
+  volume={24},
+  number={6},
+  pages={2350--2383},
+  year={1996},
+  publisher={Institute of Mathematical Statistics}
+}
+
+
+@book{friedman2001elements,
+  title={The elements of statistical learning},
+  author={Friedman, Jerome and Hastie, Trevor and Tibshirani, Robert},
+  volume={1},
+  year={2001},
+  publisher={Springer series in statistics New York}
+}
+
+@incollection{bengio2005bias,
+  title={Bias in estimating the variance of K-fold cross-validation},
+  author={Bengio, Yoshua and Grandvalet, Yves},
+  booktitle={Statistical modeling and analysis for complex data problems},
+  pages={75--95},
+  year={2005},
+  publisher={Springer}
+}
+
+@inproceedings{clavier2014simple,
+  title={Simple power analysis on AES key expansion revisited},
+  author={Clavier, Christophe and Marion, Damien and Wurcker, Antoine},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={279--297},
+  year={2014},
+  organization={Springer}
+}
+
+@misc{ABI,
+  title = {8.8 Billion Smart Cards Shipped in 2014 Driven by Growth in the Banking and SIM Card Markets},
+  howpublished = {\url{https://www.abiresearch.com/press/88-billion-smart-cards-shipped-in-2014-driven-by-g/}},
+  note = {Accessed: 2018-07-02}
+}
+
+@misc{ugon,
+    author = {Ugon, Michel},
+    title = {Portable data carrier including a microprocessor},
+    howpublished = {US4211919A},
+    year = {1977}
+}
+@inproceedings{zhou2017novel,
+  title={A Novel Use of Kernel Discriminant Analysis as a Higher-Order Side-Channel Distinguisher},
+  author={Zhou, Xinping and Whitnall, Carolyn and Oswald, Elisabeth and Sun, Degang and Wang, Zhu},
+  booktitle={International Conference on Smart Card Research and Advanced Applications},
+  pages={70--87},
+  year={2017},
+  organization={Springer}
+}
+
+@inproceedings{popp2005masked,
+  title={Masked dual-rail pre-charge logic: DPA-resistance without routing constraints},
+  author={Popp, Thomas and Mangard, Stefan},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={172--186},
+  year={2005},
+  organization={Springer}
+}
+
+@article{wolpert1997no,
+  title={No free lunch theorems for optimization},
+  author={Wolpert, David H and Macready, William G},
+  journal={IEEE transactions on evolutionary computation},
+  volume={1},
+  number={1},
+  pages={67--82},
+  year={1997},
+  publisher={IEEE}
+}
+
+@inproceedings{prouff2013masking,
+  title={Masking against side-channel attacks: A formal security proof},
+  author={Prouff, Emmanuel and Rivain, Matthieu},
+  booktitle={Annual International Conference on the Theory and Applications of Cryptographic Techniques},
+  pages={142--159},
+  year={2013},
+  organization={Springer}
+}
+
+@inproceedings{coron2013higher,
+  title={Higher-order side channel security and mask refreshing},
+  author={Coron, Jean-S{\'e}bastien and Prouff, Emmanuel and Rivain, Matthieu and Roche, Thomas},
+  booktitle={International Workshop on Fast Software Encryption},
+  pages={410--424},
+  year={2013},
+  organization={Springer}
+}
+
+@inproceedings{goudarzi2017fast,
+  title={How Fast Can Higher-Order Masking Be in Software?},
+  author={Goudarzi, Dahmun and Rivain, Matthieu},
+  booktitle={Annual International Conference on the Theory and Applications of Cryptographic Techniques},
+  pages={567--597},
+  year={2017},
+  organization={Springer}
+}
+
+@inproceedings{journault2017very,
+  title={Very high order masking: Efficient implementation and security evaluation},
+  author={Journault, Anthony and Standaert, Fran{\c{c}}ois-Xavier},
+  booktitle={International Conference on Cryptographic Hardware and Embedded Systems},
+  pages={623--643},
+  year={2017},
+  organization={Springer}
+}
+
+@article{mangard2011one,
+  title={One for all--all for one: unifying standard differential power analysis attacks},
+  author={Mangard, Stefan and Oswald, Elisabeth and Standaert, F-X},
+  journal={IET Information Security},
+  volume={5},
+  number={2},
+  pages={100--110},
+  year={2011},
+  publisher={IET}
+}
+
+@inproceedings{moradi2011pushing,
+  title={Pushing the limits: a very compact and a threshold implementation of AES},
+  author={Moradi, Amir and Poschmann, Axel and Ling, San and Paar, Christof and Wang, Huaxiong},
+  booktitle={Annual International Conference on the Theory and Applications of Cryptographic Techniques},
+  pages={69--88},
+  year={2011},
+  organization={Springer}
+}
+
+@inproceedings{bilgin2014more,
+  title={A more efficient AES threshold implementation},
+  author={Bilgin, Beg{\"u}l and Gierlichs, Benedikt and Nikova, Svetla and Nikov, Ventzislav and Rijmen, Vincent},
+  booktitle={International Conference on Cryptology in Africa},
+  pages={267--284},
+  year={2014},
+  organization={Springer}
+}
+
+@inproceedings{de2015higher,
+  title={Higher-order threshold implementation of the AES S-box},
+  author={De Cnudde, Thomas and Bilgin, Beg{\"u}l and Reparaz, Oscar and Nikov, Ventzislav and Nikova, Svetla},
+  booktitle={International Conference on Smart Card Research and Advanced Applications},
+  pages={259--272},
+  year={2015},
+  organization={Springer}
+}
+
+@inproceedings{schramm2003new,
+  title={A new class of collision attacks and its application to DES},
+  author={Schramm, Kai and Wollinger, Thomas and Paar, Christof},
+  booktitle={International Workshop on Fast Software Encryption},
+  pages={206--222},
+  year={2003},
+  organization={Springer}
+}
+@inproceedings{fouque2003doubling,
+  title={The doubling attack--why upwards is better than downwards},
+  author={Fouque, Pierre-Alain and Valette, Fr{\'e}d{\'e}ric},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={269--280},
+  year={2003},
+  organization={Springer}
+}
+
+@inproceedings{schramm2004collision,
+  title={A collision-attack on AES},
+  author={Schramm, Kai and Leander, Gregor and Felke, Patrick and Paar, Christof},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={163--175},
+  year={2004},
+  organization={Springer}
+}
+
+@inproceedings{ledig2004enhancing,
+  title={Enhancing collision attacks},
+  author={Ledig, Herv{\'e} and Muller, Fr{\'e}d{\'e}ric and Valette, Fr{\'e}d{\'e}ric},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={176--190},
+  year={2004},
+  organization={Springer}
+}
+
+@inproceedings{bogdanov2007improved,
+  title={Improved side-channel collision attacks on AES},
+  author={Bogdanov, Andrey},
+  booktitle={International Workshop on Selected Areas in Cryptography},
+  pages={84--95},
+  year={2007},
+  organization={Springer}
+}
+
+@inproceedings{bogdanov2008multiple,
+  title={Multiple-differential side-channel collision attacks on AES},
+  author={Bogdanov, Andrey},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={30--44},
+  year={2008},
+  organization={Springer}
+}
+
+@inproceedings{schramm2006higher,
+  title={Higher order masking of the AES},
+  author={Schramm, Kai and Paar, Christof},
+  booktitle={Cryptographers? Track at the RSA Conference},
+  pages={208--225},
+  year={2006},
+  organization={Springer}
+}
+
+@article{choudary2018efficient,
+  title={Efficient, Portable Template Attacks},
+  author={Choudary, Marios O and Kuhn, Markus G},
+  journal={IEEE Transactions on Information Forensics and Security},
+  volume={13},
+  number={2},
+  pages={490--501},
+  year={2018},
+  publisher={IEEE}
+}
+
+
+@misc{manifold,
+    author = {Changhai Ou and Degang Sun and Zhu Wang and Xinping Zhou and Wei Cheng},
+    title = {Manifold Learning Towards Masking Implementations: A First Study},
+    howpublished = {Cryptology ePrint Archive, Report 2017/1112},
+    year = {2017},
+    note = {\url{https://eprint.iacr.org/2017/1112}},
+}
+
+@article{koc1994high,
+  title={High-Speed RSA Implementation Version 2.0},
+  author={Koc, Cetin Kaya},
+  journal={RSA Security},
+  year={1994}
+}
+
+@article{diffie1976new,
+  title={New directions in cryptography},
+  author={Diffie, Whitfield and Hellman, Martin},
+  journal={IEEE transactions on Information Theory},
+  volume={22},
+  number={6},
+  pages={644--654},
+  year={1976},
+  publisher={IEEE}
+}
+
+@inproceedings{choudary2014template,
+  title={Template attacks on different devices},
+  author={Choudary, Omar and Kuhn, Markus G},
+  booktitle={International Workshop on Constructive Side-Channel Analysis and Secure Design},
+  pages={179--198},
+  year={2014},
+  organization={Springer}
+}
+
+@inproceedings{rivest1991cryptography,
+  title={Cryptography and machine learning},
+  author={Rivest, Ronald L},
+  booktitle={International Conference on the Theory and Application of Cryptology},
+  pages={427--439},
+  year={1991},
+  organization={Springer}
+}
+
+@article{rivest1978method,
+  title={A method for obtaining digital signatures and public-key cryptosystems},
+  author={Rivest, Ronald L and Shamir, Adi and Adleman, Leonard},
+  journal={Communications of the ACM},
+  volume={21},
+  number={2},
+  pages={120--126},
+  year={1978},
+  publisher={ACM}
+} 
+
+@inproceedings{goubin1999and,
+  title={DES and differential power analysis the ?Duplication? method},
+  author={Goubin, Louis and Patarin, Jacques},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={158--172},
+  year={1999},
+  organization={Springer}
+}
+@inproceedings{akkar2001implementation,
+  title={An implementation of DES and AES, secure against some attacks},
+  author={Akkar, Mehdi-Laurent and Giraud, Christophe},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={309--318},
+  year={2001},
+  organization={Springer}
+}
+
+@inproceedings{blomer2004provably,
+  title={Provably secure masking of AES},
+  author={Bl{\"o}mer, Johannes and Guajardo, Jorge and Krummel, Volker},
+  booktitle={International Workshop on Selected Areas in Cryptography},
+  pages={69--83},
+  year={2004},
+  organization={Springer}
+}
+
+@inproceedings{rivain2010provably,
+  title={Provably secure higher-order masking of AES},
+  author={Rivain, Matthieu and Prouff, Emmanuel},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={413--427},
+  year={2010},
+  organization={Springer}
+}
+
+
+@inproceedings{mangard2002simple,
+  title={A simple power-analysis (SPA) attack on implementations of the AES key expansion},
+  author={Mangard, Stefan},
+  booktitle={International Conference on Information Security and Cryptology},
+  pages={343--358},
+  year={2002},
+  organization={Springer}
+}
+
+
+@inproceedings{battistello2016horizontal,
+  title={Horizontal side-channel attacks and countermeasures on the ISW masking scheme},
+  author={Battistello, Alberto and Coron, Jean-S{\'e}bastien and Prouff, Emmanuel and Zeitoun, Rina},
+  booktitle={International Conference on Cryptographic Hardware and Embedded Systems},
+  pages={23--39},
+  year={2016},
+  organization={Springer}
+}
+
+@article{piret2008security,
+  title={Security analysis of higher-order Boolean masking schemes for block ciphers (with conditions of perfect masking)},
+  author={Piret, Gilles and Standaert, F-X},
+  journal={IET Information Security},
+  volume={2},
+  number={1},
+  pages={1--11},
+  year={2008},
+  publisher={IET}
+}
+
+@inproceedings{gierlichs2008mutual,
+  title={Mutual information analysis},
+  author={Gierlichs, Benedikt and Batina, Lejla and Tuyls, Pim and Preneel, Bart},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={426--442},
+  year={2008},
+  organization={Springer}
+}
+
+@article{batina2011mutual,
+  title={Mutual information analysis: a comprehensive study},
+  author={Batina, Lejla and Gierlichs, Benedikt and Prouff, Emmanuel and Rivain, Matthieu and Standaert, Fran{\c{c}}ois-Xavier and Veyrat-Charvillon, Nicolas},
+  journal={Journal of Cryptology},
+  volume={24},
+  number={2},
+  pages={269--291},
+  year={2011},
+  publisher={Springer}
+}
+
+@incollection{veyrat2009mutual,
+  title={Mutual information analysis: how, when and why?},
+  author={Veyrat-Charvillon, Nicolas and Standaert, Fran{\c{c}}ois-Xavier},
+  booktitle={Cryptographic Hardware and Embedded Systems-CHES 2009},
+  pages={429--443},
+  year={2009},
+  publisher={Springer}
+}
+
+@inproceedings{brier2004correlation,
+  title={Correlation power analysis with a leakage model},
+  author={Brier, Eric and Clavier, Christophe and Olivier, Francis},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={16--29},
+  year={2004},
+  organization={Springer}
+}
+
+@article{picek2017template,
+  title={Template attack versus Bayes classifier},
+  author={Picek, Stjepan and Heuser, Annelie and Guilley, Sylvain},
+  journal={Journal of Cryptographic Engineering},
+  volume={7},
+  number={4},
+  pages={343--351},
+  year={2017},
+  publisher={Springer}
+}
+
+@inproceedings{bauer2013horizontal,
+  title={Horizontal and Vertical Side-Channel Attacks against Secure RSA Implementations.},
+  author={Bauer, Aur{\'e}lie and Jaulmes, Eliane and Prouff, Emmanuel and Wild, Justine},
+  booktitle={CT-RSA},
+  pages={1--17},
+  year={2013},
+  organization={Springer}
+}
+
+@article{friedman1974projection,
+  title={A projection pursuit algorithm for exploratory data analysis},
+  author={Friedman, Jerome H and Tukey, John W},
+  journal={IEEE Transactions on computers},
+  volume={100},
+  number={9},
+  pages={881--890},
+  year={1974},
+  publisher={IEEE}
+}
+
+@article{cunningham2015linear,
+  title={Linear dimensionality reduction: survey, insights, and generalizations.},
+  author={Cunningham, John P and Ghahramani, Zoubin},
+  journal={Journal of Machine Learning Research},
+  volume={16},
+  number={1},
+  pages={2859--2900},
+  year={2015}
+}
+
+@inproceedings{pu2017trace,
+  title={Trace Augmentation: What Can Be Done Even Before Preprocessing in a Profiled SCA?},
+  author={Pu, Sihang and Yu, Yu and Wang, Weijia and Guo, Zheng and Liu, Junrong and Gu, Dawu and Wang, Lingyun and Gan, Jie},
+  booktitle={International Conference on Smart Card Research and Advanced Applications},
+  pages={232--247},
+  year={2017},
+  organization={Springer}
 }
 
 @InProceedings{DBLP:conf/ches/CagliDP17,
@@ -41,50 +584,6 @@
   Doi                      = {10.1007/978-3-319-66787-4_3},
   Timestamp                = {Mon, 18 Sep 2017 13:25:39 +0200},
   Url                      = {https://doi.org/10.1007/978-3-319-66787-4_3}
-}
-
-@InProceedings{LCH05,
-  Title                    = {Loss Functions for Discriminative Training of Energy-Based Models},
-  Author                   = {Yann LeCun and
- Fu Jie Huang},
-  Booktitle                = {Proceedings of the Tenth International Workshop on Artificial Intelligence
- and Statistics, {AISTATS} 2005, Bridgetown, Barbados, January 6-8,
- 2005},
-  Year                     = {2005},
-
-  Bibsource                = {dblp computer science bibliography, http://dblp.org},
-  Biburl                   = {http://dblp.uni-trier.de/rec/bib/conf/aistats/LeCunH05},
-  Crossref                 = {AISTATS05},
-  Timestamp                = {Wed, 06 May 2015 20:37:32 +0200},
-  Url                      = {http://www.gatsby.ucl.ac.uk/aistats/fullpapers/207.pdf}
-}
-
-@InProceedings{MHK10,
-  Title                    = {Direct Loss Minimization for Structured Prediction},
-  Author                   = {David A. McAllester and
- Tamir Hazan and
- Joseph Keshet},
-  Booktitle                = {Advances in Neural Information Processing Systems 23: 24th Annual
- Conference on Neural Information Processing Systems 2010. Proceedings
- of a meeting held 6-9 December 2010, Vancouver, British Columbia,
- Canada.},
-  Year                     = {2010},
-  Pages                    = {1594--1602},
-
-  Bibsource                = {dblp computer science bibliography, http://dblp.org},
-  Biburl                   = {http://dblp.uni-trier.de/rec/bib/conf/nips/McAllesterHK10},
-  Crossref                 = {NIPS10},
-  Timestamp                = {Thu, 11 Dec 2014 17:34:08 +0100},
-  Url                      = {http://papers.nips.cc/paper/4069-direct-loss-minimization-for-structured-prediction}
-}
-
-@InProceedings{akkar2001implementation,
-  Title                    = {An implementation of DES and AES, secure against some attacks},
-  Author                   = {Akkar, Mehdi-Laurent and Giraud, Christophe},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2001},
-  Organization             = {Springer},
-  Pages                    = {309--318}
 }
 
 @InCollection{TAprincipal,
@@ -138,6 +637,24 @@
   File                     = {:H\:\\Articles\\single_trace_attack.pdf:PDF}
 }
 
+@article{cortes1995support,
+  title={Support-vector networks},
+  author={Cortes, Corinna and Vapnik, Vladimir},
+  journal={Machine learning},
+  volume={20},
+  number={3},
+  pages={273--297},
+  year={1995},
+  publisher={Springer}
+}
+
+@techreport{weston1998multi,
+  title={Multi-class support vector machines},
+  author={Weston, Jason and Watkins, Chris},
+  year={1998},
+  institution={Citeseer}
+}
+
 @InCollection{effTA_SVM,
   Title                    = {Efficient Template Attacks Based on Probabilistic Multi-class Support Vector Machines},
   Author                   = {Bartkewitz, Timo and Lemke-Rust, Kerstin},
@@ -159,18 +676,6 @@
   Url                      = {http://dx.doi.org/10.1007/978-3-642-37288-9_18}
 }
 
-@Article{batina2011mutual,
-  Title                    = {Mutual information analysis: a comprehensive study},
-  Author                   = {Batina, Lejla and Gierlichs, Benedikt and Prouff, Emmanuel and Rivain, Matthieu and Standaert, Fran{\c{c}}ois-Xavier and Veyrat-Charvillon, Nicolas},
-  Journal                  = {Journal of Cryptology},
-  Year                     = {2011},
-  Number                   = {2},
-  Pages                    = {269--291},
-  Volume                   = {24},
-
-  Publisher                = {Springer}
-}
-
 @InCollection{Batina2012,
   Title                    = {Getting More from PCA: First Results of Using Principal Component Analysis for Extensive Power Analysis},
   Author                   = {Batina, Lejla and Hogenboom, Jip and van Woudenberg, Jasper G.J.},
@@ -190,55 +695,6 @@
   Owner                    = {EC243758},
   Timestamp                = {2014.12.16},
   Url                      = {http://dx.doi.org/10.1007/978-3-642-27954-6_24}
-}
-
-@InProceedings{battistello2016horizontal,
-  Title                    = {Horizontal side-channel attacks and countermeasures on the ISW masking scheme},
-  Author                   = {Battistello, Alberto and Coron, Jean-S{\'e}bastien and Prouff, Emmanuel and Zeitoun, Rina},
-  Booktitle                = {International Conference on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2016},
-  Organization             = {Springer},
-  Pages                    = {23--39}
-}
-
-@Article{baudat2000generalized,
-  Title                    = {Generalized discriminant analysis using a kernel approach},
-  Author                   = {Baudat, Gaston and Anouar, Fatiha},
-  Journal                  = {Neural computation},
-  Year                     = {2000},
-  Number                   = {10},
-  Pages                    = {2385--2404},
-  Volume                   = {12},
-
-  Publisher                = {MIT Press}
-}
-
-@InProceedings{bauer2013horizontal,
-  Title                    = {Horizontal and Vertical Side-Channel Attacks against Secure RSA Implementations.},
-  Author                   = {Bauer, Aur{\'e}lie and Jaulmes, Eliane and Prouff, Emmanuel and Wild, Justine},
-  Booktitle                = {CT-RSA},
-  Year                     = {2013},
-  Organization             = {Springer},
-  Pages                    = {1--17}
-}
-
-@InProceedings{BelaidCFGKP15,
-  Title                    = {Improved Side-Channel Analysis of Finite-Field Multiplication},
-  Author                   = {Sonia Bela{\"{\i}}d and
- Jean{-}S{\'{e}}bastien Coron and
- Pierre{-}Alain Fouque and
- Beno{\^{\i}}t G{\'{e}}rard and
- Jean{-}Gabriel Kammerer and
- Emmanuel Prouff},
-  Booktitle                = {Cryptographic Hardware and Embedded Systems - {CHES} 2015 - 17th International
- Workshop, Saint-Malo, France, September 13-16, 2015, Proceedings},
-  Year                     = {2015},
-  Pages                    = {395--415},
-
-  Bibsource                = {dblp computer science bibliography, http://dblp.org},
-  Biburl                   = {http://dblp.uni-trier.de/rec/bib/conf/ches/BelaidCFGKP15},
-  Doi                      = {10.1007/978-3-662-48324-4_20},
-  Timestamp                = {Wed, 02 Sep 2015 14:13:31 +0200}
 }
 
 @Misc{cryptoeprint:2013:305,
@@ -284,32 +740,6 @@
   File                     = {:H\:\\Articles\\fisherface.pdf:PDF}
 }
 
-@Book{bellman2015adaptive,
-  Title                    = {Adaptive control processes: a guided tour},
-  Author                   = {Bellman, Richard E},
-  Publisher                = {Princeton university press},
-  Year                     = {2015},
-  Volume                   = {2045}
-}
-
-@InCollection{bengio2005bias,
-  Title                    = {Bias in estimating the variance of K-fold cross-validation},
-  Author                   = {Bengio, Yoshua and Grandvalet, Yves},
-  Booktitle                = {Statistical modeling and analysis for complex data problems},
-  Publisher                = {Springer},
-  Year                     = {2005},
-  Pages                    = {75--95}
-}
-
-@InProceedings{bevan2002ways,
-  Title                    = {Ways to enhance differential power analysis},
-  Author                   = {Bevan, R{\'e}gis and Knudsen, Erik},
-  Booktitle                = {International Conference on Information Security and Cryptology},
-  Year                     = {2002},
-  Organization             = {Springer},
-  Pages                    = {327--342}
-}
-
 @InProceedings{bhasin2014side,
   Title                    = {Side-channel leakage and trace compression using normalized inter-class variance},
   Author                   = {Bhasin, Shivam and Danger, Jean-Luc and Guilley, Sylvain and Najm, Zakaria},
@@ -319,15 +749,6 @@
   Pages                    = {7},
 
   File                     = {:H\:\\Articles\\NICV.pdf:PDF}
-}
-
-@InProceedings{bilgin2014more,
-  Title                    = {A more efficient AES threshold implementation},
-  Author                   = {Bilgin, Beg{\"u}l and Gierlichs, Benedikt and Nikova, Svetla and Nikov, Ventzislav and Rijmen, Vincent},
-  Booktitle                = {International Conference on Cryptology in Africa},
-  Year                     = {2014},
-  Organization             = {Springer},
-  Pages                    = {267--284}
 }
 
 @InCollection{blockCiphersEquations,
@@ -358,32 +779,13 @@
   Year                     = {2006}
 }
 
-@InProceedings{blomer2004provably,
-  Title                    = {Provably secure masking of AES},
-  Author                   = {Bl{\"o}mer, Johannes and Guajardo, Jorge and Krummel, Volker},
-  Booktitle                = {International Workshop on Selected Areas in Cryptography},
-  Year                     = {2004},
-  Organization             = {Springer},
-  Pages                    = {69--83}
+@Book{Mitchell1997,
+  Title                    = {Machine Learning},
+  Author                   = {T. M., Mitchell},
+  Publisher                = {McGraw-Hill, New York},
+  Year                     = {1997}
 }
 
-@InProceedings{bogdanov2008multiple,
-  Title                    = {Multiple-differential side-channel collision attacks on AES},
-  Author                   = {Bogdanov, Andrey},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2008},
-  Organization             = {Springer},
-  Pages                    = {30--44}
-}
-
-@InProceedings{bogdanov2007improved,
-  Title                    = {Improved side-channel collision attacks on AES},
-  Author                   = {Bogdanov, Andrey},
-  Booktitle                = {International Workshop on Selected Areas in Cryptography},
-  Year                     = {2007},
-  Organization             = {Springer},
-  Pages                    = {84--95}
-}
 
 @InProceedings{bohy2003principal,
   Title                    = {Principal and independent component analysis for crypto-systems with hardware unmasked units},
@@ -392,36 +794,6 @@
   Year                     = {2003},
 
   File                     = {:H\:\\Articles\\PCAfirstPaperInSCA.pdf:PDF}
-}
-
-@InProceedings{bouffard2011combined,
-  Title                    = {Combined software and hardware attacks on the java card control flow},
-  Author                   = {Bouffard, Guillaume and Iguchi-Cartigny, Julien and Lanet, Jean-Louis},
-  Booktitle                = {International Conference on Smart Card Research and Advanced Applications},
-  Year                     = {2011},
-  Organization             = {Springer},
-  Pages                    = {283--296}
-}
-
-@Article{breiman1996heuristics,
-  Title                    = {Heuristics of instability and stabilization in model selection},
-  Author                   = {Breiman, Leo and others},
-  Journal                  = {The annals of statistics},
-  Year                     = {1996},
-  Number                   = {6},
-  Pages                    = {2350--2383},
-  Volume                   = {24},
-
-  Publisher                = {Institute of Mathematical Statistics}
-}
-
-@InProceedings{brier2004correlation,
-  Title                    = {Correlation power analysis with a leakage model},
-  Author                   = {Brier, Eric and Clavier, Christophe and Olivier, Francis},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2004},
-  Organization             = {Springer},
-  Pages                    = {16--29}
 }
 
 @InProceedings{bromley1994signature,
@@ -476,13 +848,23 @@
   Url                      = {http://dx.doi.org/10.1007/978-3-319-12060-7_13}
 }
 
-@InProceedings{lessIsMore,
-  Title                    = {Less is more},
-  Author                   = {Bruneau, Nicolas and Guilley, Sylvain and Heuser, Annelie and Marion, Damien and Rioul, Olivier},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2015},
-  Organization             = {Springer},
-  Pages                    = {22--41}
+
+@inproceedings{lessIsMore,
+  title={Less is more},
+  author={Bruneau, Nicolas and Guilley, Sylvain and Heuser, Annelie and Marion, Damien and Rioul, Olivier},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={22--41},
+  year={2015},
+  organization={Springer}
+}
+
+@inproceedings{Cagli2016,
+  title={Enhancing dimensionality reduction methods for side-channel attacks},
+  author={Cagli, Eleonora and Dumas, C{\'e}cile and Prouff, Emmanuel},
+  booktitle={International Conference on Smart Card Research and Advanced Applications},
+  pages={15--33},
+  year={2015},
+  organization={Springer}
 }
 
 @InProceedings{cagli2016kernel,
@@ -494,13 +876,13 @@
   Pages                    = {1--22}
 }
 
-@InProceedings{Cagli2016,
-  Title                    = {Enhancing dimensionality reduction methods for side-channel attacks},
-  Author                   = {Cagli, Eleonora and Dumas, C{\'e}cile and Prouff, Emmanuel},
-  Booktitle                = {International Conference on Smart Card Research and Advanced Applications},
-  Year                     = {2015},
-  Organization             = {Springer},
-  Pages                    = {15--33}
+@inproceedings{gierlichs2010revisiting,
+  title={Revisiting higher-order DPA attacks},
+  author={Gierlichs, Benedikt and Batina, Lejla and Preneel, Bart and Verbauwhede, Ingrid},
+  booktitle={Cryptographers? Track at the RSA Conference},
+  pages={221--234},
+  year={2010},
+  organization={Springer}
 }
 
 @Article{carlet2014achieving,
@@ -574,16 +956,6 @@
   Url                      = {http://www.sciencedirect.com/science/article/pii/S0031320399001399}
 }
 
-@Misc{keras,
-  Title                    = {Keras},
-
-  Author                   = {Chollet, Fran\c{c}ois and others},
-  HowPublished             = {\url{https://github.com/fchollet/keras}},
-  Year                     = {2015},
-
-  Publisher                = {GitHub}
-}
-
 @InProceedings{5992162,
   Title                    = {A Statistical Test for Information Leaks Using Continuous Mutual Information},
   Author                   = {Chothia, T. and Guha, A.},
@@ -615,18 +987,6 @@
   Timestamp                = {2015.01.14}
 }
 
-@Article{choudary2018efficient,
-  Title                    = {Efficient, Portable Template Attacks},
-  Author                   = {Choudary, Marios O and Kuhn, Markus G},
-  Journal                  = {IEEE Transactions on Information Forensics and Security},
-  Year                     = {2018},
-  Number                   = {2},
-  Pages                    = {490--501},
-  Volume                   = {13},
-
-  Publisher                = {IEEE}
-}
-
 @InCollection{choudary2014efficient,
   Title                    = {Efficient template attacks},
   Author                   = {Choudary, Omar and Kuhn, Markus G},
@@ -638,15 +998,6 @@
   File                     = {:H\:\\Articles\\Choudary2014efficient.pdf:PDF}
 }
 
-@InProceedings{choudary2014template,
-  Title                    = {Template attacks on different devices},
-  Author                   = {Choudary, Omar and Kuhn, Markus G},
-  Booktitle                = {International Workshop on Constructive Side-Channel Analysis and Secure Design},
-  Year                     = {2014},
-  Organization             = {Springer},
-  Pages                    = {179--198}
-}
-
 @Article{choudaryefficient,
   Title                    = {Efficient Stochastic Methods: Profiled Attacks Beyond 8 Bits},
   Author                   = {Choudary, Omar and Kuhn, Markus G},
@@ -655,6 +1006,22 @@
 
   File                     = {:H\:\\Articles\\EffStochMeth_8bit_pca_lda.pdf:PDF},
   Url                      = {http://eprint.iacr.org/2014/885.pdf}
+}
+
+@misc{eprintASCADpaper,
+    author = {Emmanuel Prouff and Remi Strullu and Ryad Benadjila and Eleonora Cagli and Cecile Dumas},
+    title = {Study of Deep Learning Techniques for Side-Channel  Analysis and Introduction to ASCAD Database},
+    howpublished = {Cryptology ePrint Archive, Report 2018/053},
+    year = {2018},
+    note = {\url{https://eprint.iacr.org/2018/053}},
+}
+
+
+@article{gal2016uncertainty,
+  title={Uncertainty in deep learning},
+  author={Gal, Yarin},
+  journal={University of Cambridge},
+  year={2016}
 }
 
 @InProceedings{exponent2012rosetta,
@@ -670,13 +1037,13 @@
   File                     = {:H\:\\Articles\\Indocrypt_2012.pdf:PDF}
 }
 
-@InProceedings{Clavier2010,
-  Title                    = {Horizontal correlation analysis on exponentiation},
-  Author                   = {Clavier, Christophe and Feix, Benoit and Gagnerot, Georges and Roussellet, Myl{\`e}ne and Verneuil, Vincent},
-  Booktitle                = {International Conference on Information and Communications Security},
-  Year                     = {2010},
-  Organization             = {Springer},
-  Pages                    = {46--61}
+@inproceedings{clavier2010horizontal,
+  title={Horizontal correlation analysis on exponentiation},
+  author={Clavier, Christophe and Feix, Benoit and Gagnerot, Georges and Roussellet, Myl{\`e}ne and Verneuil, Vincent},
+  booktitle={International Conference on Information and Communications Security},
+  pages={46--61},
+  year={2010},
+  organization={Springer}
 }
 
 @InProceedings{clavier2010horizontal,
@@ -689,15 +1056,6 @@
   Volume                   = {6476},
 
   File                     = {:H\:\\Articles\\ICISC_2010.pdf:PDF}
-}
-
-@InProceedings{clavier2014simple,
-  Title                    = {Simple power analysis on AES key expansion revisited},
-  Author                   = {Clavier, Christophe and Marion, Damien and Wurcker, Antoine},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2014},
-  Organization             = {Springer},
-  Pages                    = {279--297}
 }
 
 @InCollection{coron2007,
@@ -732,6 +1090,14 @@
   File                     = {:H\:\\Articles\\RDI_ches2010.pdf:PDF}
 }
 
+@book{bellman2015adaptive,
+  title={Adaptive control processes: a guided tour},
+  author={Bellman, Richard E},
+  volume={2045},
+  year={2015},
+  publisher={Princeton university press}
+}
+
 @InCollection{coron2009efficient,
   Title                    = {An efficient method for random delay generation in embedded software},
   Author                   = {Coron, Jean-S{\'e}bastien and Kizhvatov, Ilya},
@@ -741,58 +1107,6 @@
   Pages                    = {156--170},
 
   File                     = {:H\:\\Articles\\RDI_ches2009.pdf:PDF}
-}
-
-@InProceedings{coron2013higher,
-  Title                    = {Higher-order side channel security and mask refreshing},
-  Author                   = {Coron, Jean-S{\'e}bastien and Prouff, Emmanuel and Rivain, Matthieu and Roche, Thomas},
-  Booktitle                = {International Workshop on Fast Software Encryption},
-  Year                     = {2013},
-  Organization             = {Springer},
-  Pages                    = {410--424}
-}
-
-@Article{cortes1995support,
-  Title                    = {Support-vector networks},
-  Author                   = {Cortes, Corinna and Vapnik, Vladimir},
-  Journal                  = {Machine learning},
-  Year                     = {1995},
-  Number                   = {3},
-  Pages                    = {273--297},
-  Volume                   = {20},
-
-  Publisher                = {Springer}
-}
-
-@Article{cunningham2015linear,
-  Title                    = {Linear dimensionality reduction: survey, insights, and generalizations.},
-  Author                   = {Cunningham, John P and Ghahramani, Zoubin},
-  Journal                  = {Journal of Machine Learning Research},
-  Year                     = {2015},
-  Number                   = {1},
-  Pages                    = {2859--2900},
-  Volume                   = {16}
-}
-
-@InProceedings{de2015higher,
-  Title                    = {Higher-order threshold implementation of the AES S-box},
-  Author                   = {De Cnudde, Thomas and Bilgin, Beg{\"u}l and Reparaz, Oscar and Nikov, Ventzislav and Nikova, Svetla},
-  Booktitle                = {International Conference on Smart Card Research and Advanced Applications},
-  Year                     = {2015},
-  Organization             = {Springer},
-  Pages                    = {259--272}
-}
-
-@Article{diffie1976new,
-  Title                    = {New directions in cryptography},
-  Author                   = {Diffie, Whitfield and Hellman, Martin},
-  Journal                  = {IEEE transactions on Information Theory},
-  Year                     = {1976},
-  Number                   = {6},
-  Pages                    = {644--654},
-  Volume                   = {22},
-
-  Publisher                = {IEEE}
 }
 
 @Article{doget2011univariate,
@@ -808,13 +1122,76 @@
   Publisher                = {Springer}
 }
 
-@InProceedings{duc2014unifying,
-  Title                    = {Unifying Leakage Models: From Probing Attacks to Noisy Leakage.},
-  Author                   = {Duc, Alexandre and Dziembowski, Stefan and Faust, Sebastian},
-  Booktitle                = {Annual International Conference on the Theory and Applications of Cryptographic Techniques},
-  Year                     = {2014},
-  Organization             = {Springer},
-  Pages                    = {423--440}
+@phdthesis{le2007analyses,
+  title={Analyses et mesures avanc{\'e}es du rayonnement {\'e}lectromagn{\'e}tique d'un circuit int{\'e}gr{\'e}},
+  author={Le, Thanh-Ha},
+  year={2007},
+  school={Grenoble INPG}
+}
+
+@inproceedings{bevan2002ways,
+  title={Ways to enhance differential power analysis},
+  author={Bevan, R{\'e}gis and Knudsen, Erik},
+  booktitle={International Conference on Information Security and Cryptology},
+  pages={327--342},
+  year={2002},
+  organization={Springer}
+}
+
+@article{messerges2002examining,
+  title={Examining smart-card security under the threat of power analysis attacks},
+  author={Messerges, Thomas S and Dabbish, Ezzat A and Sloan, Robert H},
+  journal={IEEE transactions on computers},
+  volume={51},
+  number={5},
+  pages={541--552},
+  year={2002},
+  publisher={IEEE}
+}
+
+@article{pautot2008some,
+  title={Some Formal Solutions in Side-channel Cryptanalysis-An Introduction.},
+  author={Pautot, Fabrice JPR},
+  journal={IACR Cryptology ePrint Archive},
+  volume={2008},
+  pages={508},
+  year={2008}
+}
+
+@inproceedings{le2007efficient,
+  title={Efficient solution for misalignment of signal in side channel analysis},
+  author={Le, Thanh-Ha and Cl{\'e}di{\`e}re, Jessy and Servi{\`e}re, Christine and Lacoume, Jean-Louis},
+  booktitle={Acoustics, Speech and Signal Processing, 2007. ICASSP 2007. IEEE International Conference on},
+  volume={2},
+  pages={II--257},
+  year={2007},
+  organization={IEEE}
+}
+
+
+@phdthesis{harpes1996cryptanalysis,
+  title={Cryptanalysis of iterated block ciphers},
+  author={Harpes, Carlo},
+  year={1996},
+  school={ETH Zurich}
+}
+
+@inproceedings{rivain2008exact,
+  title={On the exact success rate of side channel analysis in the gaussian model},
+  author={Rivain, Matthieu},
+  booktitle={International Workshop on Selected Areas in Cryptography},
+  pages={165--183},
+  year={2008},
+  organization={Springer}
+}
+
+@inproceedings{bouffard2011combined,
+  title={Combined software and hardware attacks on the java card control flow},
+  author={Bouffard, Guillaume and Iguchi-Cartigny, Julien and Lanet, Jean-Louis},
+  booktitle={International Conference on Smart Card Research and Advanced Applications},
+  pages={283--296},
+  year={2011},
+  organization={Springer}
 }
 
 @InProceedings{durvaux2012efficient,
@@ -826,6 +1203,24 @@
   Pages                    = {123--140},
 
   File                     = {:H\:\\Articles\\RemovalRDI.pdf:PDF}
+}
+
+@inproceedings{fei2012statistical,
+  title={A statistical model for DPA with novel algorithmic confusion analysis},
+  author={Fei, Yunsi and Luo, Qiasi and Ding, A Adam},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={233--250},
+  year={2012},
+  organization={Springer}
+}
+
+@inproceedings{lomne2014estimate,
+  title={How to estimate the success rate of higher-order side-channel attacks},
+  author={Lomn{\'e}, Victor and Prouff, Emmanuel and Rivain, Matthieu and Roche, Thomas and Thillard, Adrian},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={35--54},
+  year={2014},
+  organization={Springer}
 }
 
 @Article{durvauximproved,
@@ -885,23 +1280,6 @@ Attacks More Effectively?},
   Url                      = {https://eprint.iacr.org/2014/864.pdf}
 }
 
-@InProceedings{fei2012statistical,
-  Title                    = {A statistical model for DPA with novel algorithmic confusion analysis},
-  Author                   = {Fei, Yunsi and Luo, Qiasi and Ding, A Adam},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2012},
-  Organization             = {Springer},
-  Pages                    = {233--250}
-}
-
-@Book{feller2008introduction,
-  Title                    = {An introduction to probability theory and its applications},
-  Author                   = {Feller, Willliam},
-  Publisher                = {John Wiley \& Sons},
-  Year                     = {2008},
-  Volume                   = {2}
-}
-
 @Article{fisher1938statistical,
   Title                    = {The statistical utilization of multiple measurements},
   Author                   = {Fisher, Ronald A},
@@ -931,35 +1309,6 @@ Attacks More Effectively?},
   Url                      = {http://www.sciencedirect.com/science/article/pii/S0166218X00002766}
 }
 
-@InProceedings{fouque2003doubling,
-  Title                    = {The doubling attack--why upwards is better than downwards},
-  Author                   = {Fouque, Pierre-Alain and Valette, Fr{\'e}d{\'e}ric},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2003},
-  Organization             = {Springer},
-  Pages                    = {269--280}
-}
-
-@Book{friedman2001elements,
-  Title                    = {The elements of statistical learning},
-  Author                   = {Friedman, Jerome and Hastie, Trevor and Tibshirani, Robert},
-  Publisher                = {Springer series in statistics New York},
-  Year                     = {2001},
-  Volume                   = {1}
-}
-
-@Article{friedman1974projection,
-  Title                    = {A projection pursuit algorithm for exploratory data analysis},
-  Author                   = {Friedman, Jerome H and Tukey, John W},
-  Journal                  = {IEEE Transactions on computers},
-  Year                     = {1974},
-  Number                   = {9},
-  Pages                    = {881--890},
-  Volume                   = {100},
-
-  Publisher                = {IEEE}
-}
-
 @Book{Fukunaga,
   Title                    = {Introduction to Statistical Pattern Recognition (2Nd Ed.)},
   Author                   = {Fukunaga, Keinosuke},
@@ -969,13 +1318,6 @@ Attacks More Effectively?},
   Address                  = {San Diego, CA, USA},
 
   ISBN                     = {0-12-269851-7}
-}
-
-@Article{gal2016uncertainty,
-  Title                    = {Uncertainty in deep learning},
-  Author                   = {Gal, Yarin},
-  Journal                  = {University of Cambridge},
-  Year                     = {2016}
 }
 
 @InProceedings{gandolfi2001electromagnetic,
@@ -1052,24 +1394,6 @@ Attacks More Effectively?},
   Timestamp                = {2017.09.13}
 }
 
-@InProceedings{gierlichs2010revisiting,
-  Title                    = {Revisiting higher-order DPA attacks},
-  Author                   = {Gierlichs, Benedikt and Batina, Lejla and Preneel, Bart and Verbauwhede, Ingrid},
-  Booktitle                = {Cryptographers? Track at the RSA Conference},
-  Year                     = {2010},
-  Organization             = {Springer},
-  Pages                    = {221--234}
-}
-
-@InProceedings{gierlichs2008mutual,
-  Title                    = {Mutual information analysis},
-  Author                   = {Gierlichs, Benedikt and Batina, Lejla and Tuyls, Pim and Preneel, Bart},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2008},
-  Organization             = {Springer},
-  Pages                    = {426--442}
-}
-
 @InProceedings{gierlichs2006templates,
   Title                    = {Templates vs. stochastic methods},
   Author                   = {Gierlichs, Benedikt and Lemke-Rust, Kerstin and Paar, Christof},
@@ -1079,46 +1403,45 @@ Attacks More Effectively?},
   Pages                    = {15--29}
 }
 
+@inproceedings{MHK10,
+  author    = {David A. McAllester and
+               Tamir Hazan and
+               Joseph Keshet},
+  title     = {Direct Loss Minimization for Structured Prediction},
+  booktitle = {Advances in Neural Information Processing Systems 23: 24th Annual
+               Conference on Neural Information Processing Systems 2010. Proceedings
+               of a meeting held 6-9 December 2010, Vancouver, British Columbia,
+               Canada.},
+  pages     = {1594--1602},
+  year      = {2010},
+  crossref  = {NIPS10},
+  url       = {http://papers.nips.cc/paper/4069-direct-loss-minimization-for-structured-prediction},
+  timestamp = {Thu, 11 Dec 2014 17:34:08 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/nips/McAllesterHK10},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{SSZU15,
+  author    = {Yang Song and
+               Alexander G. Schwing and
+               Richard S. Zemel and
+               Raquel Urtasun},
+  title     = {Direct Loss Minimization for Training Deep Neural Nets},
+  journal   = {CoRR},
+  volume    = {abs/1511.06411},
+  year      = {2015},
+  url       = {http://arxiv.org/abs/1511.06411},
+  timestamp = {Wed, 07 Jun 2017 14:41:20 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/SongSZU15},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
 @Book{Goodfellow-et-al-2016,
   Title                    = {Deep Learning},
   Author                   = {Ian Goodfellow and Yoshua Bengio and Aaron Courville},
   Publisher                = {MIT Press},
   Year                     = {2016},
   Note                     = {\url{http://www.deeplearningbook.org}}
-}
-
-@Book{GBC16,
-  Title                    = {Deep Learning},
-  Author                   = {Ian J. Goodfellow and
- Yoshua Bengio and
- Aaron C. Courville},
-  Publisher                = {{MIT} Press},
-  Year                     = {2016},
-  Series                   = {Adaptive computation and machine learning},
-
-  Bibsource                = {dblp computer science bibliography, http://dblp.org},
-  Biburl                   = {http://dblp.uni-trier.de/rec/bib/books/daglib/0040158},
-  ISBN                     = {978-0-262-03561-3},
-  Timestamp                = {Sat, 25 Mar 2017 20:16:59 +0100},
-  Url                      = {http://www.deeplearningbook.org/}
-}
-
-@InProceedings{goubin1999and,
-  Title                    = {DES and differential power analysis the ?Duplication? method},
-  Author                   = {Goubin, Louis and Patarin, Jacques},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {1999},
-  Organization             = {Springer},
-  Pages                    = {158--172}
-}
-
-@InProceedings{goudarzi2017fast,
-  Title                    = {How Fast Can Higher-Order Masking Be in Software?},
-  Author                   = {Goudarzi, Dahmun and Rivain, Matthieu},
-  Booktitle                = {Annual International Conference on the Theory and Applications of Cryptographic Techniques},
-  Year                     = {2017},
-  Organization             = {Springer},
-  Pages                    = {567--597}
 }
 
 @InProceedings{GMH13,
@@ -1130,18 +1453,6 @@ Attacks More Effectively?},
  {ICASSP} 2013, Vancouver, BC, Canada, May 26-31, 2013},
   Year                     = {2013},
   Pages                    = {6645--6649}
-}
-
-@Article{guhr1998random,
-  Title                    = {Random-matrix theories in quantum physics: common concepts},
-  Author                   = {Guhr, T. and M{\"u}ller--Groeling, A. and Weidenm{\"u}ller, H. A.},
-  Journal                  = {Physics Reports},
-  Year                     = {1998},
-  Number                   = {4},
-  Pages                    = {189--425},
-  Volume                   = {299},
-
-  Publisher                = {Elsevier}
 }
 
 @InProceedings{hadsell2006dimensionality,
@@ -1176,28 +1487,12 @@ Attacks More Effectively?},
   File                     = {:H\:\\Articles\\collisions.pdf:PDF}
 }
 
-@PhdThesis{harpes1996cryptanalysis,
-  Title                    = {Cryptanalysis of iterated block ciphers},
-  Author                   = {Harpes, Carlo},
-  School                   = {ETH Zurich},
-  Year                     = {1996}
-}
-
 @Article{he2012side,
   Title                    = {Side Channel Cryptanalysis Using Machine Learning},
   Author                   = {He, Hera and Jaffe, Josh and Zou, Long},
   Year                     = {2012},
 
   File                     = {:H\:\\Articles\\HeJaffeZou-SideChannelCryptanalysisUsingMachineLearning.pdf:PDF}
-}
-
-@InProceedings{heuser2014good,
-  Title                    = {Good is not good enough},
-  Author                   = {Heuser, Annelie and Rioul, Olivier and Guilley, Sylvain},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2014},
-  Organization             = {Springer},
-  Pages                    = {55--74}
 }
 
 @InCollection{intelligentMachineOmicide,
@@ -1329,13 +1624,31 @@ Attacks More Effectively?},
   Url                      = {http://arxiv.org/abs/1502.03167}
 }
 
-@InProceedings{irwin2002instruction,
-  Title                    = {Instruction stream mutation for non-deterministic processors},
-  Author                   = {Irwin, James and Page, Dan and Smart, Nigel P},
-  Booktitle                = {Application-Specific Systems, Architectures and Processors, 2002. Proceedings. The IEEE International Conference on},
-  Year                     = {2002},
-  Organization             = {IEEE},
-  Pages                    = {286--295}
+@inproceedings{oswald2005side,
+  title={A side-channel analysis resistant description of the AES S-box},
+  author={Oswald, Elisabeth and Mangard, Stefan and Pramstaller, Norbert and Rijmen, Vincent},
+  booktitle={International Workshop on Fast Software Encryption},
+  pages={413--423},
+  year={2005},
+  organization={Springer}
+}
+
+@inproceedings{messerges2000securing,
+  title={Securing the AES finalists against power analysis attacks},
+  author={Messerges, Thomas S},
+  booktitle={International Workshop on Fast Software Encryption},
+  pages={150--164},
+  year={2000},
+  organization={Springer}
+}
+
+@inproceedings{messerges2000using,
+  title={Using second-order power analysis to attack DPA resistant software},
+  author={Messerges, Thomas S},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={238--251},
+  year={2000},
+  organization={Springer}
 }
 
 @InProceedings{ishai2003private,
@@ -1349,31 +1662,34 @@ Attacks More Effectively?},
   File                     = {:H\:\\Articles\\ISW.pdf:PDF}
 }
 
-@InProceedings{journault2017very,
-  Title                    = {Very high order masking: Efficient implementation and security evaluation},
-  Author                   = {Journault, Anthony and Standaert, Fran{\c{c}}ois-Xavier},
-  Booktitle                = {International Conference on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2017},
-  Organization             = {Springer},
-  Pages                    = {623--643}
+@inproceedings{duc2014unifying,
+  title={Unifying Leakage Models: From Probing Attacks to Noisy Leakage.},
+  author={Duc, Alexandre and Dziembowski, Stefan and Faust, Sebastian},
+  booktitle={Annual International Conference on the Theory and Applications of Cryptographic Techniques},
+  pages={423--440},
+  year={2014},
+  organization={Springer}
 }
 
-@InProceedings{joye2005second,
-  Title                    = {On second-order differential power analysis},
-  Author                   = {Joye, Marc and Paillier, Pascal and Schoenmakers, Berry},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2005},
-  Organization             = {Springer},
-  Pages                    = {293--308}
-}
-
-@InProceedings{joye2002montgomery,
-  Title                    = {The Montgomery powering ladder},
-  Author                   = {Joye, Marc and Yen, Sung-Ming},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2002},
-  Organization             = {Springer},
-  Pages                    = {291--302}
+@inproceedings{DBLP:conf/eurocrypt/BartheBDFGS15,
+  author    = {Gilles Barthe and
+               Sonia Bela{\"{\i}}d and
+               Fran{\c{c}}ois Dupressoir and
+               Pierre{-}Alain Fouque and
+               Benjamin Gr{\'{e}}goire and
+               Pierre{-}Yves Strub},
+  title     = {Verified Proofs of Higher-Order Masking},
+  booktitle = {Advances in Cryptology - {EUROCRYPT} 2015 - 34th Annual International
+               Conference on the Theory and Applications of Cryptographic Techniques,
+               Sofia, Bulgaria, April 26-30, 2015, Proceedings, Part {I}},
+  pages     = {457--485},
+  year      = {2015},
+  crossref  = {DBLP:conf/eurocrypt/2015-1},
+  url       = {https://doi.org/10.1007/978-3-662-46800-5\_18},
+  doi       = {10.1007/978-3-662-46800-5\_18},
+  timestamp = {Fri, 02 Jun 2017 20:52:11 +0200},
+  biburl    = {https://dblp.org/rec/bib/conf/eurocrypt/BartheBDFGS15},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
 }
 
 @Misc{kopf,
@@ -1426,13 +1742,6 @@ Attacks More Effectively?},
   Timestamp                = {2014.11.14}
 }
 
-@Article{koc1994high,
-  Title                    = {High-Speed RSA Implementation Version 2.0},
-  Author                   = {Koc, Cetin Kaya},
-  Journal                  = {RSA Security},
-  Year                     = {1994}
-}
-
 @InProceedings{kocher1999differential,
   Title                    = {Differential power analysis},
   Author                   = {Kocher, Paul and Jaffe, Joshua and Jun, Benjamin},
@@ -1442,18 +1751,6 @@ Attacks More Effectively?},
   Pages                    = {388--397}
 }
 
-@Article{kocher2011introduction,
-  Title                    = {Introduction to differential power analysis},
-  Author                   = {Kocher, Paul and Jaffe, Joshua and Jun, Benjamin and Rohatgi, Pankaj},
-  Journal                  = {Journal of Cryptographic Engineering},
-  Year                     = {2011},
-  Number                   = {1},
-  Pages                    = {5--27},
-  Volume                   = {1},
-
-  Publisher                = {Springer}
-}
-
 @InProceedings{kocher1996timing,
   Title                    = {Timing attacks on implementations of Diffie-Hellman, RSA, DSS, and other systems},
   Author                   = {Kocher, Paul C},
@@ -1461,6 +1758,17 @@ Attacks More Effectively?},
   Year                     = {1996},
   Organization             = {Springer},
   Pages                    = {104--113}
+}
+
+@article{lang1990time,
+  title={A time-delay neural network architecture for isolated word recognition},
+  author={Lang, Kevin J and Waibel, Alex H and Hinton, Geoffrey E},
+  journal={Neural networks},
+  volume={3},
+  number={1},
+  pages={23--43},
+  year={1990},
+  publisher={Elsevier}
 }
 
 @InProceedings{KSH12,
@@ -1473,35 +1781,6 @@ Attacks More Effectively?},
  of a meeting held December 3-6, 2012, Lake Tahoe, Nevada, United States.},
   Year                     = {2012},
   Pages                    = {1106--1114}
-}
-
-@Article{lang1990time,
-  Title                    = {A time-delay neural network architecture for isolated word recognition},
-  Author                   = {Lang, Kevin J and Waibel, Alex H and Hinton, Geoffrey E},
-  Journal                  = {Neural networks},
-  Year                     = {1990},
-  Number                   = {1},
-  Pages                    = {23--43},
-  Volume                   = {3},
-
-  Publisher                = {Elsevier}
-}
-
-@PhdThesis{le2007analyses,
-  Title                    = {Analyses et mesures avanc{\'e}es du rayonnement {\'e}lectromagn{\'e}tique d'un circuit int{\'e}gr{\'e}},
-  Author                   = {Le, Thanh-Ha},
-  School                   = {Grenoble INPG},
-  Year                     = {2007}
-}
-
-@InProceedings{le2007efficient,
-  Title                    = {Efficient solution for misalignment of signal in side channel analysis},
-  Author                   = {Le, Thanh-Ha and Cl{\'e}di{\`e}re, Jessy and Servi{\`e}re, Christine and Lacoume, Jean-Louis},
-  Booktitle                = {Acoustics, Speech and Signal Processing, 2007. ICASSP 2007. IEEE International Conference on},
-  Year                     = {2007},
-  Organization             = {IEEE},
-  Pages                    = {II--257},
-  Volume                   = {2}
 }
 
 @InBook{LeCun2012,
@@ -1538,15 +1817,6 @@ and M{\"u}ller, Klaus-Robert},
   Volume                   = {3361},
 
   File                     = {:H\:\\Articles\\lecun-bengio-95a.pdf:PDF}
-}
-
-@InProceedings{ledig2004enhancing,
-  Title                    = {Enhancing collision attacks},
-  Author                   = {Ledig, Herv{\'e} and Muller, Fr{\'e}d{\'e}ric and Valette, Fr{\'e}d{\'e}ric},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2004},
-  Organization             = {Springer},
-  Pages                    = {176--190}
 }
 
 @Book{lemke2007gaussian,
@@ -1586,28 +1856,26 @@ and M{\"u}ller, Klaus-Robert},
   File                     = {:H\:\\Articles\\SCAapproachMachineLearning.pdf:PDF}
 }
 
-@Article{lerman2015machine,
-  Title                    = {A machine learning approach against a masked AES},
-  Author                   = {Lerman, Liran and Bontempi, Gianluca and Markowitch, Olivier},
-  Journal                  = {Journal of Cryptographic Engineering},
-  Year                     = {2015},
-  Number                   = {2},
-  Pages                    = {123--139},
-  Volume                   = {5},
-
-  Publisher                = {Springer}
+@article{lerman2015machine,
+  title={A machine learning approach against a masked AES},
+  author={Lerman, Liran and Bontempi, Gianluca and Markowitch, Olivier},
+  journal={Journal of Cryptographic Engineering},
+  volume={5},
+  number={2},
+  pages={123--139},
+  year={2015},
+  publisher={Springer}
 }
 
-@Article{lerman2014power,
-  Title                    = {Power analysis attack: an approach based on machine learning},
-  Author                   = {Lerman, Liran and Bontempi, Gianluca and Markowitch, Olivier},
-  Journal                  = {International Journal of Applied Cryptography},
-  Year                     = {2014},
-  Number                   = {2},
-  Pages                    = {97--115},
-  Volume                   = {3},
-
-  Publisher                = {Inderscience Publishers Ltd}
+@article{lerman2014power,
+  title={Power analysis attack: an approach based on machine learning},
+  author={Lerman, Liran and Bontempi, Gianluca and Markowitch, Olivier},
+  journal={International Journal of Applied Cryptography},
+  volume={3},
+  number={2},
+  pages={97--115},
+  year={2014},
+  publisher={Inderscience Publishers Ltd}
 }
 
 @InProceedings{lerman2015template,
@@ -1620,6 +1888,14 @@ and M{\"u}ller, Klaus-Robert},
 
   File                     = {:H\:\\Articles\\template_vs_machine_learning.pdf:PDF}
 }
+@book{lior2014data,
+  title={Data mining with decision trees: theory and applications},
+  author={Lior, Rokach and others},
+  volume={81},
+  year={2014},
+  publisher={World scientific}
+}
+
 
 @Article{multiclassLDA,
   Title                    = {Using discriminant analysis for multi-class classification: an experimental investigation},
@@ -1669,14 +1945,6 @@ and Ogihara, Mitsunori},
   File                     = {:H\:\\Articles\\why_deep_learning_works.pdf:PDF}
 }
 
-@Book{lior2014data,
-  Title                    = {Data mining with decision trees: theory and applications},
-  Author                   = {Lior, Rokach and others},
-  Publisher                = {World scientific},
-  Year                     = {2014},
-  Volume                   = {81}
-}
-
 @Article{liu1992generalized,
   Title                    = {A generalized optimal set of discriminant vectors},
   Author                   = {Liu, Ke and Cheng, Yong-Qing and Yang, Jing-Yu},
@@ -1687,15 +1955,6 @@ and Ogihara, Mitsunori},
   Volume                   = {25},
 
   Publisher                = {Elsevier}
-}
-
-@InProceedings{lomne2014estimate,
-  Title                    = {How to estimate the success rate of higher-order side-channel attacks},
-  Author                   = {Lomn{\'e}, Victor and Prouff, Emmanuel and Rivain, Matthieu and Roche, Thomas and Thillard, Adrian},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2014},
-  Organization             = {Springer},
-  Pages                    = {35--54}
 }
 
 @InProceedings{lomne2013behind,
@@ -1739,6 +1998,7 @@ and Ogihara, Mitsunori},
   Publisher                = {IEEE}
 }
 
+
 @InProceedings{maghrebi2016breaking,
   Title                    = {Breaking Cryptographic Implementations Using Deep Learning Techniques},
   Author                   = {Maghrebi, Houssem and Portigliatti, Thibault and Prouff, Emmanuel},
@@ -1749,6 +2009,56 @@ and Ogihara, Mitsunori},
 
   File                     = {:H\:\\Articles\\breaking_deep_learning.pdf:PDF}
 }
+
+@inproceedings{irwin2002instruction,
+  title={Instruction stream mutation for non-deterministic processors},
+  author={Irwin, James and Page, Dan and Smart, Nigel P},
+  booktitle={Application-Specific Systems, Architectures and Processors, 2002. Proceedings. The IEEE International Conference on},
+  pages={286--295},
+  year={2002},
+  organization={IEEE}
+}
+
+@inproceedings{may2001non,
+  title={Non-deterministic processors},
+  author={May, David and Muller, Henk L and Smart, Nigel P},
+  booktitle={Australasian Conference on Information Security and Privacy},
+  pages={115--129},
+  year={2001},
+  organization={Springer}
+}
+
+@inproceedings{moore2002improving,
+  title={Improving smart card security using self-timed circuits},
+  author={Moore, Simon and Anderson, Ross and Cunningham, Paul and Mullins, Robert and Taylor, George},
+  booktitle={Asynchronous Circuits and Systems, 2002. Proceedings. Eighth International Symposium on},
+  pages={211--218},
+  year={2002},
+  organization={IEEE}
+}
+
+@article{moore2003balanced,
+  title={Balanced self-checking asynchronous logic for smart card applications},
+  author={Moore, Simon and Anderson, Ross and Mullins, Robert and Taylor, George and Fournier, Jacques JA},
+  journal={Microprocessors and Microsystems},
+  volume={27},
+  number={9},
+  pages={421--430},
+  year={2003},
+  publisher={Elsevier}
+}
+
+@article{guhr1998random,
+  title={Random-matrix theories in quantum physics: common concepts},
+  author={Guhr, T. and M{\"u}ller--Groeling, A. and Weidenm{\"u}ller, H. A.},
+  journal={Physics Reports},
+  volume={299},
+  number={4},
+  pages={189--425},
+  year={1998},
+  publisher={Elsevier}
+}
+
 
 @InCollection{mangard2004hardware,
   Title                    = {Hardware countermeasures against DPA--a statistical analysis of their effectiveness},
@@ -1761,42 +2071,12 @@ and Ogihara, Mitsunori},
   File                     = {:H\:\\Articles\\SNR_mangard.pdf:PDF}
 }
 
-@InProceedings{mangard2002simple,
-  Title                    = {A simple power-analysis (SPA) attack on implementations of the AES key expansion},
-  Author                   = {Mangard, Stefan},
-  Booktitle                = {International Conference on Information Security and Cryptology},
-  Year                     = {2002},
-  Organization             = {Springer},
-  Pages                    = {343--358}
-}
-
 @Book{mangard2008power,
   Title                    = {Power analysis attacks: Revealing the secrets of smart cards},
   Author                   = {Mangard, Stefan and Oswald, Elisabeth and Popp, Thomas},
   Publisher                = {Springer Science \& Business Media},
   Year                     = {2008},
   Volume                   = {31}
-}
-
-@Article{mangard2011one,
-  Title                    = {One for all--all for one: unifying standard differential power analysis attacks},
-  Author                   = {Mangard, Stefan and Oswald, Elisabeth and Standaert, F-X},
-  Journal                  = {IET Information Security},
-  Year                     = {2011},
-  Number                   = {2},
-  Pages                    = {100--110},
-  Volume                   = {5},
-
-  Publisher                = {IET}
-}
-
-@InProceedings{martinasek2016profiling,
-  Title                    = {Profiling power analysis attack based on MLP in DPA contest V4. 2},
-  Author                   = {Martinasek, Zdenek and Dzurenda, Petr and Malina, Lukas},
-  Booktitle                = {Telecommunications and Signal Processing (TSP), 2016 39th International Conference on},
-  Year                     = {2016},
-  Organization             = {IEEE},
-  Pages                    = {223--226}
 }
 
 @InProceedings{martinasek2013optimization,
@@ -1810,13 +2090,22 @@ and Ogihara, Mitsunori},
   File                     = {:H\:\\Articles\\CARDIS2013_optimizationNN.pdf:PDF}
 }
 
-@InCollection{martinasek2015profiling,
-  Title                    = {Profiling power analysis attack based on multi-layer perceptron network},
-  Author                   = {Martinasek, Zdenek and Malina, Lukas and Trasy, Krisztina},
-  Booktitle                = {Computational Problems in Science and Engineering},
-  Publisher                = {Springer},
-  Year                     = {2015},
-  Pages                    = {317--339}
+@incollection{martinasek2015profiling,
+  title={Profiling power analysis attack based on multi-layer perceptron network},
+  author={Martinasek, Zdenek and Malina, Lukas and Trasy, Krisztina},
+  booktitle={Computational Problems in Science and Engineering},
+  pages={317--339},
+  year={2015},
+  publisher={Springer}
+}
+
+@inproceedings{martinasek2016profiling,
+  title={Profiling power analysis attack based on MLP in DPA contest V4. 2},
+  author={Martinasek, Zdenek and Dzurenda, Petr and Malina, Lukas},
+  booktitle={Telecommunications and Signal Processing (TSP), 2016 39th International Conference on},
+  pages={223--226},
+  year={2016},
+  organization={IEEE}
 }
 
 @Article{martinasek2013innovative,
@@ -1879,66 +2168,6 @@ and Ogihara, Mitsunori},
   Url                      = {http://dx.doi.org/10.1007/978-3-642-33460-3_22}
 }
 
-@InProceedings{may2001non,
-  Title                    = {Non-deterministic processors},
-  Author                   = {May, David and Muller, Henk L and Smart, Nigel P},
-  Booktitle                = {Australasian Conference on Information Security and Privacy},
-  Year                     = {2001},
-  Organization             = {Springer},
-  Pages                    = {115--129}
-}
-
-@InProceedings{messerges2000securing,
-  Title                    = {Securing the AES finalists against power analysis attacks},
-  Author                   = {Messerges, Thomas S},
-  Booktitle                = {International Workshop on Fast Software Encryption},
-  Year                     = {2000},
-  Organization             = {Springer},
-  Pages                    = {150--164}
-}
-
-@InProceedings{messerges2000using,
-  Title                    = {Using second-order power analysis to attack DPA resistant software},
-  Author                   = {Messerges, Thomas S},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2000},
-  Organization             = {Springer},
-  Pages                    = {238--251}
-}
-
-@Article{messerges2002examining,
-  Title                    = {Examining smart-card security under the threat of power analysis attacks},
-  Author                   = {Messerges, Thomas S and Dabbish, Ezzat A and Sloan, Robert H},
-  Journal                  = {IEEE transactions on computers},
-  Year                     = {2002},
-  Number                   = {5},
-  Pages                    = {541--552},
-  Volume                   = {51},
-
-  Publisher                = {IEEE}
-}
-
-@InProceedings{moore2002improving,
-  Title                    = {Improving smart card security using self-timed circuits},
-  Author                   = {Moore, Simon and Anderson, Ross and Cunningham, Paul and Mullins, Robert and Taylor, George},
-  Booktitle                = {Asynchronous Circuits and Systems, 2002. Proceedings. Eighth International Symposium on},
-  Year                     = {2002},
-  Organization             = {IEEE},
-  Pages                    = {211--218}
-}
-
-@Article{moore2003balanced,
-  Title                    = {Balanced self-checking asynchronous logic for smart card applications},
-  Author                   = {Moore, Simon and Anderson, Ross and Mullins, Robert and Taylor, George and Fournier, Jacques JA},
-  Journal                  = {Microprocessors and Microsystems},
-  Year                     = {2003},
-  Number                   = {9},
-  Pages                    = {421--430},
-  Volume                   = {27},
-
-  Publisher                = {Elsevier}
-}
-
 @InCollection{MoradiCollision,
   Title                    = {Statistical Tools Flavor Side-Channel Collision Attacks},
   Author                   = {Moradi, Amir},
@@ -1957,23 +2186,6 @@ and Ogihara, Mitsunori},
   Owner                    = {EC243758},
   Timestamp                = {2014.11.04},
   Url                      = {http://dx.doi.org/10.1007/978-3-642-29011-4_26}
-}
-
-@InProceedings{moradi2011pushing,
-  Title                    = {Pushing the limits: a very compact and a threshold implementation of AES},
-  Author                   = {Moradi, Amir and Poschmann, Axel and Ling, San and Paar, Christof and Wang, Huaxiong},
-  Booktitle                = {Annual International Conference on the Theory and Applications of Cryptographic Techniques},
-  Year                     = {2011},
-  Organization             = {Springer},
-  Pages                    = {69--88}
-}
-
-@Misc{moreno,
-  Title                    = {Methods of data storage and data storage systems},
-
-  Author                   = {Moreno, Roland},
-  HowPublished             = {US3971916A},
-  Year                     = {1974}
 }
 
 @InProceedings{nagashima2007dpa,
@@ -2081,20 +2293,6 @@ and Ogihara, Mitsunori},
   Url                      = {http://dx.doi.org/10.1007/978-3-662-44709-3_2}
 }
 
-@InProceedings{Oren2013,
-  Title                    = {Practical Template-algebraic Side Channel Attacks with Extremely Low Data Complexity},
-  Author                   = {Oren, Yossef and Weisse, Ofir and Wool, Avishai},
-  Booktitle                = {Proceedings of the 2nd International Workshop on Hardware and Architectural Support for Security and Privacy}
-}
-
-@InProceedings{Oren:2013,
-  Title                    = {Practical template-algebraic side channel attacks with extremely low data complexity},
-  Author                   = {Oren, Yossef and Weisse, Ofir and Wool, Avishai},
-  Booktitle                = {Proceedings of the 2nd International Workshop on Hardware and Architectural Support for Security and Privacy},
-  Year                     = {2013},
-  Organization             = {ACM},
-  Pages                    = {7}
-}
 
 @InCollection{TAonMasking,
   Title                    = {Template Attacks on Masking - Resistance Is Futile},
@@ -2114,6 +2312,13 @@ and Ogihara, Mitsunori},
   Timestamp                = {2015.07.28},
   Url                      = {http://dx.doi.org/10.1007/11967668_16}
 }
+
+@InProceedings{Oren2013,
+  Title                    = {Practical Template-algebraic Side Channel Attacks with Extremely Low Data Complexity},
+  Author                   = {Oren, Yossef and Weisse, Ofir and Wool, Avishai},
+  Booktitle                = {Proceedings of the 2nd International Workshop on Hardware and Architectural Support for Security and Privacy},
+}
+
 
 @InCollection{Oswald2006,
   Title                    = {Practical Second-Order DPA Attacks for Masked Smart Card Implementations of Block Ciphers},
@@ -2135,117 +2340,12 @@ and Ogihara, Mitsunori},
   Url                      = {http://dx.doi.org/10.1007/11605805_13}
 }
 
-@InProceedings{oswald2006practical,
-  Title                    = {Practical second-order DPA attacks for masked smart card implementations of block ciphers},
-  Author                   = {Oswald, Elisabeth and Mangard, Stefan and Herbst, Christoph and Tillich, Stefan},
-  Booktitle                = {Cryptographers? Track at the RSA Conference},
-  Year                     = {2006},
-  Organization             = {Springer},
-  Pages                    = {192--207}
-}
-
-@InProceedings{oswald2005side,
-  Title                    = {A side-channel analysis resistant description of the AES S-box},
-  Author                   = {Oswald, Elisabeth and Mangard, Stefan and Pramstaller, Norbert and Rijmen, Vincent},
-  Booktitle                = {International Workshop on Fast Software Encryption},
-  Year                     = {2005},
-  Organization             = {Springer},
-  Pages                    = {413--423}
-}
-
-@Misc{manifold,
-  Title                    = {Manifold Learning Towards Masking Implementations: A First Study},
-
-  Author                   = {Changhai Ou and Degang Sun and Zhu Wang and Xinping Zhou and Wei Cheng},
-  HowPublished             = {Cryptology ePrint Archive, Report 2017/1112},
-  Note                     = {\url{https://eprint.iacr.org/2017/1112}},
-  Year                     = {2017}
-}
-
 @Article{DPAcontest,
   Title                    = {DPA Contest 4},
   Author                   = {TELECOM ParisTech},
   Note                     = {http://www.DPAcontest.org/v4/},
 
   Url                      = {http://www.DPAcontest.org/v4/}
-}
-
-@Article{pautot2008some,
-  Title                    = {Some Formal Solutions in Side-channel Cryptanalysis-An Introduction.},
-  Author                   = {Pautot, Fabrice JPR},
-  Journal                  = {IACR Cryptology ePrint Archive},
-  Year                     = {2008},
-  Pages                    = {508},
-  Volume                   = {2008}
-}
-
-@InProceedings{peeters2005improved,
-  Title                    = {Improved higher-order side-channel attacks with FPGA experiments},
-  Author                   = {Peeters, Eric and Standaert, Fran{\c{c}}ois-Xavier and Donckers, Nicolas and Quisquater, Jean-Jacques},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2005},
-  Organization             = {Springer},
-  Pages                    = {309--323}
-}
-
-@Article{picek2017template,
-  Title                    = {Template attack versus Bayes classifier},
-  Author                   = {Picek, Stjepan and Heuser, Annelie and Guilley, Sylvain},
-  Journal                  = {Journal of Cryptographic Engineering},
-  Year                     = {2017},
-  Number                   = {4},
-  Pages                    = {343--351},
-  Volume                   = {7},
-
-  Publisher                = {Springer}
-}
-
-@Article{piret2008security,
-  Title                    = {Security analysis of higher-order Boolean masking schemes for block ciphers (with conditions of perfect masking)},
-  Author                   = {Piret, Gilles and Standaert, F-X},
-  Journal                  = {IET Information Security},
-  Year                     = {2008},
-  Number                   = {1},
-  Pages                    = {1--11},
-  Volume                   = {2},
-
-  Publisher                = {IET}
-}
-
-@InProceedings{popp2005masked,
-  Title                    = {Masked dual-rail pre-charge logic: DPA-resistance without routing constraints},
-  Author                   = {Popp, Thomas and Mangard, Stefan},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2005},
-  Organization             = {Springer},
-  Pages                    = {172--186}
-}
-
-@InBook{Prechelt2012,
-  Title                    = {Early Stopping --- But When?},
-  Author                   = {Prechelt, Lutz},
-  Editor                   = {Montavon, Gr{\'e}goire
-and Orr, Genevi{\`e}ve B.
-and M{\"u}ller, Klaus-Robert},
-  Pages                    = {53--67},
-  Publisher                = {Springer Berlin Heidelberg},
-  Year                     = {2012},
-
-  Address                  = {Berlin, Heidelberg},
-
-  Booktitle                = {Neural Networks: Tricks of the Trade: Second Edition},
-  Doi                      = {10.1007/978-3-642-35289-8_5},
-  ISBN                     = {978-3-642-35289-8},
-  Url                      = {http://dx.doi.org/10.1007/978-3-642-35289-8_5}
-}
-
-@InProceedings{prouff2013masking,
-  Title                    = {Masking against side-channel attacks: A formal security proof},
-  Author                   = {Prouff, Emmanuel and Rivain, Matthieu},
-  Booktitle                = {Annual International Conference on the Theory and Applications of Cryptographic Techniques},
-  Year                     = {2013},
-  Organization             = {Springer},
-  Pages                    = {142--159}
 }
 
 @Article{DBLP:journals/tc/ProuffRB09,
@@ -2267,24 +2367,6 @@ and M{\"u}ller, Klaus-Robert},
   Owner                    = {EC243758},
   Timestamp                = {Tue, 21 Oct 2014 10:48:03 +0200},
   Url                      = {http://doi.ieeecomputersociety.org/10.1109/TC.2009.15}
-}
-
-@Misc{eprintASCADpaper,
-  Title                    = {Study of Deep Learning Techniques for Side-Channel Analysis and Introduction to ASCAD Database},
-
-  Author                   = {Emmanuel Prouff and Remi Strullu and Ryad Benadjila and Eleonora Cagli and Cecile Dumas},
-  HowPublished             = {Cryptology ePrint Archive, Report 2018/053},
-  Note                     = {\url{https://eprint.iacr.org/2018/053}},
-  Year                     = {2018}
-}
-
-@InProceedings{pu2017trace,
-  Title                    = {Trace Augmentation: What Can Be Done Even Before Preprocessing in a Profiled SCA?},
-  Author                   = {Pu, Sihang and Yu, Yu and Wang, Weijia and Guo, Zheng and Liu, Junrong and Gu, Dawu and Wang, Lingyun and Gan, Jie},
-  Booktitle                = {International Conference on Smart Card Research and Advanced Applications},
-  Year                     = {2017},
-  Organization             = {Springer},
-  Pages                    = {232--247}
 }
 
 @Article{quisquater2001electromagnetic,
@@ -2318,25 +2400,24 @@ and M{\"u}ller, Klaus-Robert},
   Url                      = {http://dx.doi.org/10.1007/978-3-540-31815-6_35}
 }
 
-@Article{ASCA,
-  Title                    = {Algebraic Side-Channel Attacks.},
-  Author                   = {Renauld, Mathieu and Standaert, Fran{\c{c}}ois-Xavier},
-  Journal                  = {Inscrypt},
-  Year                     = {2009},
-  Pages                    = {393--410},
-  Volume                   = {6151},
-
-  Publisher                = {Springer}
+@article{ASCA,
+  title={Algebraic Side-Channel Attacks.},
+  author={Renauld, Mathieu and Standaert, Fran{\c{c}}ois-Xavier},
+  journal={Inscrypt},
+  volume={6151},
+  pages={393--410},
+  year={2009},
+  publisher={Springer}
 }
 
-@InProceedings{renauld2009algebraic,
-  Title                    = {Algebraic Side-Channel Attacks on the AES: Why Time also Matters in DPA.},
-  Author                   = {Renauld, Mathieu and Standaert, Fran{\c{c}}ois-Xavier and Veyrat-Charvillon, Nicolas},
-  Booktitle                = {CHES},
-  Year                     = {2009},
-  Organization             = {Springer},
-  Pages                    = {97--111},
-  Volume                   = {5747}
+@inproceedings{renauld2009algebraic,
+  title={Algebraic Side-Channel Attacks on the AES: Why Time also Matters in DPA.},
+  author={Renauld, Mathieu and Standaert, Fran{\c{c}}ois-Xavier and Veyrat-Charvillon, Nicolas},
+  booktitle={CHES},
+  volume={5747},
+  pages={97--111},
+  year={2009},
+  organization={Springer}
 }
 
 @InCollection{Reparaz2012,
@@ -2360,24 +2441,6 @@ and M{\"u}ller, Klaus-Robert},
   Url                      = {http://dx.doi.org/10.1007/978-3-642-33027-8_10}
 }
 
-@InProceedings{rivain2008exact,
-  Title                    = {On the exact success rate of side channel analysis in the gaussian model},
-  Author                   = {Rivain, Matthieu},
-  Booktitle                = {International Workshop on Selected Areas in Cryptography},
-  Year                     = {2008},
-  Organization             = {Springer},
-  Pages                    = {165--183}
-}
-
-@InProceedings{rivain2010provably,
-  Title                    = {Provably secure higher-order masking of AES},
-  Author                   = {Rivain, Matthieu and Prouff, Emmanuel},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2010},
-  Organization             = {Springer},
-  Pages                    = {413--427}
-}
-
 @InCollection{HOmaskingShuffling,
   Title                    = {Higher-Order Masking and Shuffling for Software Implementations of Block Ciphers},
   Author                   = {Rivain, Matthieu and Prouff, Emmanuel and Doget, Julien},
@@ -2396,27 +2459,6 @@ and M{\"u}ller, Klaus-Robert},
   Owner                    = {EC243758},
   Timestamp                = {2015.10.21},
   Url                      = {http://dx.doi.org/10.1007/978-3-642-04138-9_13}
-}
-
-@InProceedings{rivest1991cryptography,
-  Title                    = {Cryptography and machine learning},
-  Author                   = {Rivest, Ronald L},
-  Booktitle                = {International Conference on the Theory and Application of Cryptology},
-  Year                     = {1991},
-  Organization             = {Springer},
-  Pages                    = {427--439}
-}
-
-@Article{rivest1978method,
-  Title                    = {A method for obtaining digital signatures and public-key cryptosystems},
-  Author                   = {Rivest, Ronald L and Shamir, Adi and Adleman, Leonard},
-  Journal                  = {Communications of the ACM},
-  Year                     = {1978},
-  Number                   = {2},
-  Pages                    = {120--126},
-  Volume                   = {21},
-
-  Publisher                = {ACM}
 }
 
 @Article{scholkopf1999fisher,
@@ -2443,6 +2485,17 @@ and M{\"u}ller, Klaus-Robert},
 
   File                     = {:H\:\\Articles\\KernelPCA_la_bibbia.pdf:PDF},
   Publisher                = {MIT Press}
+}
+
+@article{baudat2000generalized,
+  title={Generalized discriminant analysis using a kernel approach},
+  author={Baudat, Gaston and Anouar, Fatiha},
+  journal={Neural computation},
+  volume={12},
+  number={10},
+  pages={2385--2404},
+  year={2000},
+  publisher={MIT Press}
 }
 
 @InProceedings{schindler2005stochastic,
@@ -2506,33 +2559,6 @@ and Handschuh, Helena},
   Url                      = {http://dx.doi.org/10.1007/978-3-662-48324-4_25}
 }
 
-@InProceedings{schramm2004collision,
-  Title                    = {A collision-attack on AES},
-  Author                   = {Schramm, Kai and Leander, Gregor and Felke, Patrick and Paar, Christof},
-  Booktitle                = {International Workshop on Cryptographic Hardware and Embedded Systems},
-  Year                     = {2004},
-  Organization             = {Springer},
-  Pages                    = {163--175}
-}
-
-@InProceedings{schramm2006higher,
-  Title                    = {Higher order masking of the AES},
-  Author                   = {Schramm, Kai and Paar, Christof},
-  Booktitle                = {Cryptographers? Track at the RSA Conference},
-  Year                     = {2006},
-  Organization             = {Springer},
-  Pages                    = {208--225}
-}
-
-@InProceedings{schramm2003new,
-  Title                    = {A new class of collision attacks and its application to DES},
-  Author                   = {Schramm, Kai and Wollinger, Thomas and Paar, Christof},
-  Booktitle                = {International Workshop on Fast Software Encryption},
-  Year                     = {2003},
-  Organization             = {Springer},
-  Pages                    = {206--222}
-}
-
 @InProceedings{SKP15,
   Title                    = {FaceNet: {A} unified embedding for face recognition and clustering},
   Author                   = {F. Schroff and
@@ -2566,22 +2592,6 @@ and Handschuh, Helena},
   Comment                  = {octobre2014},
   File                     = {:Articles\\AlgebraicBEE.pdf:PDF},
   Url                      = {https://eprint.iacr.org/2014/683.pdf}
-}
-
-@Article{SSZU15,
-  Title                    = {Direct Loss Minimization for Training Deep Neural Nets},
-  Author                   = {Yang Song and
- Alexander G. Schwing and
- Richard S. Zemel and
- Raquel Urtasun},
-  Journal                  = {CoRR},
-  Year                     = {2015},
-  Volume                   = {abs/1511.06411},
-
-  Bibsource                = {dblp computer science bibliography, http://dblp.org},
-  Biburl                   = {http://dblp.uni-trier.de/rec/bib/journals/corr/SongSZU15},
-  Timestamp                = {Wed, 07 Jun 2017 14:41:20 +0200},
-  Url                      = {http://arxiv.org/abs/1511.06411}
 }
 
 @InCollection{pcadistinguisher,
@@ -2653,16 +2663,6 @@ High-Resolution {EM} Measurements
   Url                      = {http://dx.doi.org/10.1007/978-3-642-01001-9_26}
 }
 
-@InProceedings{standaert2005masking,
-  Title                    = {On the masking countermeasure and higher-order power analysis attacks},
-  Author                   = {Standaert, F-X and Peeters, Eric and Quisquater, J-J},
-  Booktitle                = {Information Technology: Coding and Computing, 2005. ITCC 2005. International Conference on},
-  Year                     = {2005},
-  Organization             = {IEEE},
-  Pages                    = {562--567},
-  Volume                   = {1}
-}
-
 @Article{synnaeve2014weakly,
   Title                    = {Weakly supervised multi-embeddings learning of acoustic models},
   Author                   = {Synnaeve, Gabriel and Dupoux, Emmanuel},
@@ -2681,13 +2681,6 @@ High-Resolution {EM} Measurements
   Pages                    = {106--111},
 
   File                     = {:H\:\\Articles\\Synnaeve_SD_2014_ABnet_embedding.IEEESLT.pdf:PDF}
-}
-
-@Book{Mitchell1997,
-  Title                    = {Machine Learning},
-  Author                   = {T. M., Mitchell},
-  Publisher                = {McGraw-Hill, New York},
-  Year                     = {1997}
 }
 
 @InProceedings{taigman2014deepface,
@@ -2709,14 +2702,6 @@ High-Resolution {EM} Measurements
   Pages                    = {27--38},
 
   File                     = {:H\:\\Articles\\efficient_RDI.pdf:PDF}
-}
-
-@Misc{ugon,
-  Title                    = {Portable data carrier including a microprocessor},
-
-  Author                   = {Ugon, Michel},
-  HowPublished             = {US4211919A},
-  Year                     = {1977}
 }
 
 @Article{soft,
@@ -2762,13 +2747,41 @@ High-Resolution {EM} Measurements
   Url                      = {http://dx.doi.org/10.1007/978-3-642-13708-2_12}
 }
 
-@InCollection{veyrat2009mutual,
-  Title                    = {Mutual information analysis: how, when and why?},
-  Author                   = {Veyrat-Charvillon, Nicolas and Standaert, Fran{\c{c}}ois-Xavier},
-  Booktitle                = {Cryptographic Hardware and Embedded Systems-CHES 2009},
-  Publisher                = {Springer},
-  Year                     = {2009},
-  Pages                    = {429--443}
+@inproceedings{peeters2005improved,
+  title={Improved higher-order side-channel attacks with FPGA experiments},
+  author={Peeters, Eric and Standaert, Fran{\c{c}}ois-Xavier and Donckers, Nicolas and Quisquater, Jean-Jacques},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={309--323},
+  year={2005},
+  organization={Springer}
+}
+
+@inproceedings{standaert2005masking,
+  title={On the masking countermeasure and higher-order power analysis attacks},
+  author={Standaert, F-X and Peeters, Eric and Quisquater, J-J},
+  booktitle={Information Technology: Coding and Computing, 2005. ITCC 2005. International Conference on},
+  volume={1},
+  pages={562--567},
+  year={2005},
+  organization={IEEE}
+}
+
+@inproceedings{joye2005second,
+  title={On second-order differential power analysis},
+  author={Joye, Marc and Paillier, Pascal and Schoenmakers, Berry},
+  booktitle={International Workshop on Cryptographic Hardware and Embedded Systems},
+  pages={293--308},
+  year={2005},
+  organization={Springer}
+}
+
+@inproceedings{oswald2006practical,
+  title={Practical second-order DPA attacks for masked smart card implementations of block ciphers},
+  author={Oswald, Elisabeth and Mangard, Stefan and Herbst, Christoph and Tillich, Stefan},
+  booktitle={Cryptographers? Track at the RSA Conference},
+  pages={192--207},
+  year={2006},
+  organization={Springer}
 }
 
 @InCollection{Waddle2004,
@@ -2800,25 +2813,6 @@ High-Resolution {EM} Measurements
   Pages                    = {286--299},
 
   File                     = {:H\:\\Articles\\CHES2001.pdf:PDF}
-}
-
-@TechReport{weston1998multi,
-  Title                    = {Multi-class support vector machines},
-  Author                   = {Weston, Jason and Watkins, Chris},
-  Institution              = {Citeseer},
-  Year                     = {1998}
-}
-
-@Article{wolpert1997no,
-  Title                    = {No free lunch theorems for optimization},
-  Author                   = {Wolpert, David H and Macready, William G},
-  Journal                  = {IEEE transactions on evolutionary computation},
-  Year                     = {1997},
-  Number                   = {1},
-  Pages                    = {67--82},
-  Volume                   = {1},
-
-  Publisher                = {IEEE}
 }
 
 @InProceedings{wong2016understanding,
@@ -2865,15 +2859,6 @@ High-Resolution {EM} Measurements
   File                     = {:H\:\\Articles\\directLDA.pdf:PDF}
 }
 
-@InProceedings{zhou2017novel,
-  Title                    = {A Novel Use of Kernel Discriminant Analysis as a Higher-Order Side-Channel Distinguisher},
-  Author                   = {Zhou, Xinping and Whitnall, Carolyn and Oswald, Elisabeth and Sun, Degang and Wang, Zhu},
-  Booktitle                = {International Conference on Smart Card Research and Advanced Applications},
-  Year                     = {2017},
-  Organization             = {Springer},
-  Pages                    = {70--87}
-}
-
 @Proceedings{DBLP:conf/ches/2017,
   Title                    = {Cryptographic Hardware and Embedded Systems - {CHES} 2017 - 19th International
  Conference, Taipei, Taiwan, September 25-28, 2017, Proceedings},
@@ -2890,11 +2875,5 @@ High-Resolution {EM} Measurements
   ISBN                     = {978-3-319-66786-7},
   Timestamp                = {Mon, 18 Sep 2017 13:22:01 +0200},
   Url                      = {https://doi.org/10.1007/978-3-319-66787-4}
-}
-
-@Misc{ABI,
-  Title                    = {8.8 Billion Smart Cards Shipped in 2014 Driven by Growth in the Banking and SIM Card Markets},
-  HowPublished             = {\url{https://www.abiresearch.com/press/88-billion-smart-cards-shipped-in-2014-driven-by-g/}},
-  Note                     = {Accessed: 2018-07-02}
 }
 
