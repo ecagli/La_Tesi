@@ -40,7 +40,7 @@ headsepline, % Uncomment to get a line under the header
 
 \usepackage[applemac]{inputenc} % Required for inputting international characters
 \usepackage[T1]{fontenc} % Output font encoding for international characters
-
+\usepackage{xhfill}
 \usepackage{palatino} % Use the Palatino font by default
 
 \usepackage[hyperref, backend=bibtex,style=alphabetic,natbib=true,backref,backrefstyle=none]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
@@ -98,13 +98,13 @@ headsepline, % Uncomment to get a line under the header
 \usetikzlibrary{shapes.callouts}
 \usetikzlibrary{decorations.text}
 
-\usetikzlibrary{tikzmark}
-\usetikzlibrary{decorations.pathreplacing}
-\usetikzlibrary{fadings}
-\pgfkeys{/tikz/.cd,
-  dec_j/.store in=\dec_j,
-  dec_j=0   %% initial value, set to anything so that even if you don't specify a value later, it compiles
-   }
+%\usetikzlibrary{tikzmark}
+%\usetikzlibrary{decorations.pathreplacing}
+%\usetikzlibrary{fadings}
+%\pgfkeys{/tikz/.cd,
+%  dec_j/.store in=\dec_j,
+%  dec_j=0   %% initial value, set to anything so that even if you don't specify a value later, it compiles
+%   }
 
 
 \theoremstyle{remark}
@@ -313,24 +313,29 @@ headsepline, % Uncomment to get a line under the header
 \includegraphics[height = 20mm]{LOGO_LIP6}
 \begin{center}
 
-\vspace*{.04\textheight}
-{\scshape\huge Sorbonne Universit\'e\par}\vspace{1.0cm} % University name
+\vspace*{.02\textheight}
+{\scshape\huge Sorbonne Universit\'e\par}\vspace{0.3cm} % University name
 \textsc{\Large Ecole Doctorale n$^\circ$ 130 }\\
 \textsc{\large Informatique, T\'el\'ecommunications, \'Electronique de Paris}\\[0.3cm]
-\textsc{\large Laboratoire d'Informatique de Paris 6 }\\[0.5cm]
-\textsc{\large CEA Grenoble - CESTI}\\
-\small{Centre d'\'Evaluation de la S\'ecurit\'e des Syst\`emes d'Information}\\[0.5cm]
-
-\HRule \\[0.3cm] % Horizontal line
+\end{center}
+\vspace*{.02\textheight}
+\hfill \textsc{\large Laboratoire d'Informatique de Paris 6 }\\
+\vspace*{.02\textheight}
+\textsc{\large CEA Grenoble - CESTI} \hfill\\
+%\small{Centre d'\'Evaluation de la S\'ecurit\'e des Syst\`emes d'Information} \hfill\\
+\begin{center}
+\noindent
+\xrfill[0.7ex]{1pt}{\textsc{\Large Th\`ese de Doctorat}}\xrfill[0.7ex]{1pt} \\[0.3cm] % Horizontal line
 {\scshape\huge \bfseries \ttitle\par}\vspace{0.4cm} % Thesis title
-\HRule \\[1.0cm] % Horizontal line
+\noindent
+\xrfill[0.7ex]{1pt}{\textsc{Sp\'ecialit\'e : Informatique}}\xrfill[0.7ex]{1pt} \\[1.0cm] % Horizontal line
 
-\textsc{\Large Par }\href{}{\large \authorname}\\
-\textsc{Th\`ese de Doctorat en Informatique}
 
-\vspace*{.04\textheight}
-\textsc{Dirig\'ee par }\href{}{\supname}\\
-\textsc{Encadr\'ee par} C\'ecile \textsc{DUMAS}
+
+
+%\vspace*{.04\textheight}
+%\textsc{Dirig\'ee par }\href{}{\supname}\\
+%\textsc{Encadr\'ee par} C\'ecile \textsc{DUMAS}
 % 
 %\begin{minipage}[t]{0.4\textwidth}
 %\begin{flushleft} \large
@@ -348,19 +353,26 @@ headsepline, % Uncomment to get a line under the header
 %\end{minipage}\\[3cm]
 
 \vspace*{.04\textheight}
-\emph{Pr\'esent\'ee et soutenue publiquement le JJ/MM/AAAA}
+\large{Pr\'esent\'ee et soutenue publiquement par \textsc{Eleonora CAGLI}}\\
+\large{le 05 d\'ecembre 2018}
+
 \end{center}
 
+\vspace*{.04\textheight}
 
 \begin{minipage}[t]{\textwidth}
-\emph{Devant un jury compos\'e de:}\\
-Pr\'esident du Jury \hfill \textsc{Aaa BBB, } \textit{CCC}\\
-%Rapporteur \hfill \textsc{Aaa BBB, } \textit{CCC}\\
-%Rapporteur \hfill \textsc{Ddd EEE, } \textit{FFF}\\
-Examinateur \hfill \textsc{Ggg HHH, } \textit{III}\\
-%Examinateur \hfill \textsc{Lll Mmm, } \textit{Nnn}\\
-Directeur de th\`ese \hfill \textsc{Emmanuel PROUFF,} \textit{ANSSI}\\
-Encadrante \hfill \textsc{C\'ecile DUMAS,} \textit{CEA Grenoble}
+\vspace*{0.3cm}
+\large{Devant un jury compos\'e de :}\\
+
+\textsc{Emmanuel PROUFF, } \textit{ANSSI} \hfill Directeur de th\`ese \\
+  \textsc{Louis GOUBIN, } \normalsize{\textit{Universit\'e de 
+Versailles$-$St$-$Quentin$-$en$-$Yvelines}} \hfill \large{Rapporteur\\
+\textsc{Fran\c{c}ois-Xavier STANDAERT, } \textit{UCL, Belgique} \hfill Rapporteur\\
+  \textsc{Olivier RIOUL, } \textit{T\'el\'ecom ParisTech} \hfill Examinateur \\
+ \textsc{Annelie HEUSER, } \textit{CNRS} \hfill Examinateur\\
+\textsc{Marios CHOUDARY, } \textit{University Politehnica of Bucharest} \hfill Examinateur\\
+ \textsc{Yannick TEGLIA, } \textit{Gemalto} \hfill Examinateur\\
+ \textsc{C\'ecile DUMAS, } \textit{CEA Grenoble} \hfill Encadrante et membre invit\'e }
 
 \end{minipage}
 %\large \textit{A thesis submitted in fulfillment of the requirements\\ for the degree of \degreename}\\[0.3cm] % University requirement text
