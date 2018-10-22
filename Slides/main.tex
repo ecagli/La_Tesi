@@ -279,6 +279,11 @@ basicstyle=\footnotesize, style=customc,
     subsectionstyle=show/show/shaded, subsubsectionstyle=show/show/show/shaded]
   }
 }
+
+\def\etal{\textit{et al.} }
+\newcommand {\ie}{{\em i.e.} }
+\def\eg{\textit{e.g.} }
+\def\via{\textit{via} }
  
 %define colors by uses
 \definecolor{standardcolor}{rgb}{1.0,1.0,1.0}
@@ -316,6 +321,8 @@ chiplayout/.style={rectangle, draw, fill=chipcolor, rounded corners}
 \end{tikzpicture}
 }
 
+\tikzstyle{block} = [rectangle, draw, text width=6em, text centered, rounded corners, minimum height=4em]
+
 \tikzset{middlearrow/.style={
         decoration={markings,
             mark= at position 0.5 with {\arrow{#1}} ,
@@ -337,15 +344,13 @@ minimum height=2em]
 
 
 
-\title[]{Dimensionality Reduction of Side-Channel Traces}
+\title[]{Feature Extraction for Side-Channel Attacks}
 %\subtitle{\emph{Analysis and Research of Points of Interest in the Context of Side-Channel Attacks on Smart Card}}
 
 \author{Eleonora Cagli}
 
-\institute{CEA, LETI, MINATEC Campus, F-38054 Grenoble, France\\ 
-UPMC Universit\'e Paris 06, \'Equipe POLSYS, LIP6, F-75005, Paris, France}
 
-\date{14/10/2016, CESTI CEA-Leti, Grenoble}
+\date{05/12/2018, Paris}
 
 \colorlet{codecolor}{standardcolor}
 \colorlet{objcolor}{standardcolor}
@@ -401,6 +406,7 @@ canvas}{\includegraphics[width=\paperwidth,height=\paperheight]{img-templates/fo
 
 
 \include{context}
+\include{objectives}
 %\include{firstO}
 %\include{HO}
 %\include{DL}
