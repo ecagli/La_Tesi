@@ -1,0 +1,506 @@
+
+%\begin{frame}\frametitle{Setup and Implementation}
+%Target device and acquisitions: 
+%
+%\begin{itemize}
+%\item 8-bit AVR microprocessor Atmega328P
+%\item power-consumption acquired via the ChipWhisperer \cite{o2014chipwhisperer} platform
+%\end{itemize}
+%
+%
+%
+%Implementation: 
+%
+%\begin{itemize}
+%\item Begin of an AES-128
+%\end{itemize}
+%
+%
+%
+%Attack: 
+%
+%
+%\begin{itemize}
+%\item Target sensitive variable: $Z = \mathrm{Sbox}(P_0 \oplus K_0)$
+%\item Acquisition of $N_p\times 256$ profiling traces, under key knowledge
+%\item Estimation of $C$-dimensional Gaussian templates via the projection of the profiling traces over the $C$ projecting components
+%\item Template attack with $N$ attack traces
+%\end{itemize}
+%
+%\end{frame}
+%
+%
+%\begin{frame} \frametitle{The Problem of Selecting PCA Components - EGV}
+%
+%% state of the art
+%% first and sixth PC DPA contest
+%\begin{columns}
+%\begin{column}{0.1\textwidth}
+%\includegraphics[width = \textwidth]{figures/questionmark.jpg} 
+%\end{column}
+%\begin{column}{0.7\textwidth}
+%\begin{block}{}
+%{\em How many} PCs and {\em which ones} are sufficient/necessary to reduce the traces size without losing important discriminant information?
+%\end{block}
+%\end{column}
+%\end{columns}
+%\pause
+%\begin{block}{Explained Global Variance (EGV)}
+%$\EGV{\AAlpha_i} = \frac{\lambda_i}{\sum_{k=1}^r \lambda_k}$\\
+%\cite{choudaryefficient} : 
+%\begin{itemize}
+%\item fix a threshold $\beta$
+%\item choose the first $C$ components, where $C$ is the minimum integer such that
+%\begin{equation*}
+%\EGV{\AAlpha_1}+ \EGV{\AAlpha_2}+\dots + \EGV{\AAlpha_C} \geq \beta
+%\end{equation*}
+%\end{itemize}
+%\end{block}
+%
+%
+%
+%\end{frame}
+%
+%
+%\begin{frame} \frametitle{The Problem of Selecting PCA Components - Experimental Observation}
+%\begin{block}{Experimental Observation}
+%\cite{Batina2012,specht}: the first components sometimes contain more noise than information; it is worth discarding them.
+%\end{block}
+%\begin{figure}
+%\includegraphics[width=.45\textwidth]{figures/DPAcontestPC1_new.pdf} 
+%\includegraphics[width=.45\textwidth]{figures/DPAcontestPC6_new.pdf} 
+%\caption{First and sixth PCs in DPA contest v4  \cite{DPAcontest} trace set}\label{fig:DPAcontest}
+%\end{figure}
+%\end{frame}
+%
+%\begin{frame} \frametitle{The Problem of Selecting PCA Components - IPR}
+%\begin{block}{Assumption}
+%Dealing with secured devices, the leaking side-channel information is localised in few points of the acquired trace.
+%\end{block}
+%\pause
+%\begin{block}{Inverse Participation Ratio (IPR)}
+%\cite{SCAclassProbl}: under the same assumption, use the IPR to choose informative components
+%\begin{equation*}
+%\mathrm{IPR}(\AAlpha_i) = \sum_{j=1}^\traceLength \AAlpha_i[j]^4 \mbox{ \em (localization score)}
+%\end{equation*}
+%\end{block}
+%\end{frame}
+%
+%\begin{frame} \frametitle{The Explained Local Variance (ELV) Selection (1)}
+%
+%What minds to perform the choice of the PCs to keep:
+%\begin{table}
+%\begin{tabular}{|c|c|c|c|}
+%\hline
+%& EGV & IPR & \uncover<2->{\textbf{ELV}} \\
+%\hline
+%associated eigenvalue ($\lambda_i$) &\includegraphics[scale=0.01]{figures/yes.png}  & \includegraphics[scale=0.01]{figures/no.png} &\uncover<2->{\includegraphics[scale=0.015]{figures/yes.png}}\\
+%\hline
+%component form (localization of $\AAlpha_i$) &\includegraphics[scale=0.01]{figures/no.png}  & \includegraphics[scale=0.01]{figures/yes.png}&\uncover<2->{\includegraphics[scale=0.015]{figures/yes.png}} \\
+%\hline
+%\end{tabular}
+%\end{table}
+%
+%\uncover<3->{
+%\begin{block}{Inspection of $\lambda_i$}
+%\begin{scriptsize}
+%
+%\begin{align*}
+%\lambda_i =& \textcolor{gray}{\hat{\mathrm{var}}(\sum_{j=1}^D \XXX^\intercal[j]\AAlpha_i[j]) = \sum_{j=1}^D\sum_{k=1}^D \hat{\mathrm{cov}}(\XXX^\intercal[j]\AAlpha_i[j], \XXX^\intercal[k]\AAlpha_i[k])=}\\
+%\textcolor{gray}{=}& \textcolor{gray}{\sum_{j=1}^D \AAlpha_i[j]\sum_{k=1}^D\AAlpha_i[k]\hat{\mathrm{cov}}(\XXX^\intercal[j], \XXX^\intercal[k])= \sum_{j=1}^D \AAlpha_i[j] (\covmat_{j}^\intercal \cdot \AAlpha_i)= } \\
+%\textcolor{gray}{=}& \textcolor{gray}{\sum_{j=1}^D \AAlpha_i[j] \lambda_i\AAlpha_i[j] }= \sum_{j=1}^D  \lambda_i \AAlpha_i[j]^2 
+%\end{align*}
+%\end{scriptsize}
+%
+%The $j$-th time sample contribution to $\lambda_i$ is given by $\lambda_i \AAlpha_i[j]^2$
+%\end{block}
+%}
+%
+%
+%\end{frame}
+%
+%\begin{frame} \frametitle{The ELV Selection (2)}
+%\vspace*{-0.5cm}
+%\uncover<1->{
+%\begin{block}{Definition}
+%$\mathrm{ELV}(\AAlpha_i,j) = \frac{\lambda_i \AAlpha_i[j]^2}{\sum_{k=1}^r\lambda_k} = \mathrm{EGV}(\AAlpha_i) \AAlpha_i[j]^2$  \\
+%\uncover<2->{Observe that $\sum_{j=1}^D \mathrm{ELV}(\AAlpha_i,j) = \EGV{\AAlpha_i}$}
+%\end{block}
+%}
+%\uncover<3->{
+%Perform this sum in a cumulative way, sorting the ELV contributions of the time samples in decreasing order, {\em i. e.} $\mathrm{ELV}(\AAlpha_i,j^i_1)\geq \mathrm{ELV}(\AAlpha_i,j^i_2)\geq \dots \geq \mathrm{ELV}(\AAlpha_i,j^i_\traceLength)$
+%
+%
+%\vspace*{-0.4cm}
+%\begin{columns}
+%\begin{column}{.5\textwidth}
+%\vspace*{10pt}
+%\begin{figure}
+%\includegraphics[width=\textwidth]{figures/PC1_points.pdf} 
+%\end{figure}
+%\end{column}
+%\begin{column}{.5\textwidth}
+%\begin{figure}
+%
+%\begin{tikzpicture}[remember picture,
+%    scale=1,
+%    % Define styles here
+%    every node/.style={transform shape}
+%    block/.style={
+%        rectangle,
+%        draw,
+%        text centered,
+%        rounded corners
+%        },
+%    data/.style={
+%        trapezium,
+%        trapezium left angle=60,
+%        trapezium right angle=120,
+%        draw
+%        },
+%    component/.style={
+%        circle,
+%        draw
+%        },
+%    output/.style={
+%        tape,
+%        tape bend top=none,
+%        draw
+%        },
+%    edge/.style={
+%        ->,
+%        >=stealth,
+%        thick
+%        }
+%    ]
+%
+%    \node (only1elv) at (0,0)
+%    {\includegraphics[width=\textwidth]{figures/cumulativeELV_only1.pdf} };
+%    \node [component, thick, xshift=2.1cm, yshift=0.8cm] (cerchio) {};
+%    \node[below left=1cm of cerchio](caption){$\mathrm{EGV}(\AAlpha_1)$};
+%    \draw[->] (caption) to (cerchio.south west);
+%\end{tikzpicture}
+%\end{figure}
+%\end{column}
+%\end{columns}
+%
+%
+%}
+%
+%\end{frame}
+%
+%
+%
+%\begin{frame}
+%\frametitle{The ELV Selection (3)}
+%\begin{columns}
+%\begin{column}{0.5\textwidth}
+%\uncover<1->{
+%\only<1>{
+%\vspace*{-0.4cm}
+%\begin{center}
+%\includegraphics[width = \textwidth]{figures/cumulativeELV.pdf}
+%\end{center}
+%}
+%\only<2>{
+%\vspace*{-0.4cm}
+%\begin{center}
+%\includegraphics[width = \textwidth]{figures/cumulativeELVallRectangle.pdf} 
+%\end{center}
+%}
+%
+%\only<3->{
+%\vspace*{-0.4cm}
+%\begin{center}
+%\includegraphics[width = \textwidth]{figures/cumulativeELVzoomed.pdf}
+%\end{center}
+%}
+%}
+%\uncover<4->{
+%\only<1-4>{
+%
+%\begin{block}{To select $C$ components\hspace{\textwidth}\textcolor{white}{ }}
+%Sort in decreasing order the maximal ELV provided by each component $\{\max_{j=1,\dots,D}\ELV(\AAlpha_i,j)\}_{i}$ and select the $C$ first components.
+%\end{block}
+%}
+%\only<5>{
+%
+%\begin{block}{Fixing a cumulative explained variance threshold $\beta$}
+%Select \textbf{couples} $(\AAlpha_i, j)$ in decreasing order wrt to $\ELV(\AAlpha_i, j)$ until $\ELV(\AAlpha_{i_1}, j_1)+ \ELV(\AAlpha_{i_2}, j_2)+\dots +\ELV(\AAlpha_{i_M}, j_M)\geq \beta$.\\
+%%\uncover<5>{{\em Components denoising}}
+%\end{block}
+%}
+%}
+%
+%\end{column}
+%
+%\begin{column}{0.5\textwidth}
+%\only<1-3>{
+%\begin{figure}
+%\includegraphics[width=0.5\textwidth]{figures/PC1.pdf} 
+%\includegraphics[width=0.5\textwidth]{figures/PC4.pdf} \\
+%\includegraphics[width=0.5\textwidth]{figures/PC2.pdf} 
+%\includegraphics[width=0.5\textwidth]{figures/PC5.pdf} \\
+%\includegraphics[width=0.5\textwidth]{figures/PC3.pdf} 
+%\includegraphics[width=0.5\textwidth]{figures/PC6.pdf} 
+%\caption{\begin{footnotesize}
+%The first 6 PCs: 
+%$\lambda_1 \approx 3.8 ,\lambda_2 \approx 3.1 , \lambda_3 \approx2.6 ,\lambda_4 \approx 1.0 ,\lambda_5 \approx 0.8 ,\lambda_6 \approx 0.6 $
+%\end{footnotesize}}
+%
+%\end{figure}
+%}
+%
+%
+%\only<4-5>{
+%\begin{figure}
+%\onslide<5->{\includegraphics[width=0.5\textwidth]{figures/PC5_denoised.pdf}}\only<4>{\includegraphics[width=0.5\textwidth]{figures/PC5_cerchio.pdf}}\only<5>{\includegraphics[width=0.5\textwidth]{figures/PC5_cerchio_transp.pdf}} \\
+%\onslide<5->{\includegraphics[width=0.5\textwidth]{figures/PC4_denoised.pdf}}\only<4>{\includegraphics[width=0.5\textwidth]{figures/PC4_cerchio.pdf}}\only<5>{\includegraphics[width=0.5\textwidth]{figures/PC4_cerchio_transp.pdf}} \\
+%\onslide<5->{\includegraphics[width=0.5\textwidth]{figures/PC6_denoised.pdf}}\only<4>{\includegraphics[width=0.5\textwidth]{figures/PC6_cerchio.pdf}}\only<5>{\includegraphics[width=0.5\textwidth]{figures/PC6_cerchio_transp.pdf}} 
+%\only<4>{\caption{The 3 components chosen by ELV selection method - $C$ fixed}}
+%\only<5>{\caption{Components and time samples chosen by ELV selection method - $\beta$ fixed}}
+%\end{figure}
+%}
+%
+%
+%%\only<5>{
+%%\includegraphics[width=0.31\textwidth]{ figures/PC5_cerchio_transp.pdf} 
+%%\includegraphics[width=0.31\textwidth]{ figures/PC4_cerchio_transp.pdf} 
+%%\includegraphics[width=0.31\textwidth]{ figures/PC6_cerchio_transp.pdf} \\
+%%}
+%%\uncover<5>{
+%%
+%%
+%%
+%%\only<3-4>{\caption{Selected components for $C = 3$; \hspace{\textwidth} $\ELV(\AAlpha_5, 2362)\approx 0.41$, $\ELV(\AAlpha_4, 1110)\approx 0.38$, $\ELV(\AAlpha_6, 1118)\approx 0.24$}}
+%%\only<5>{\caption{Selected and denoised components for $\beta = 0.08$\hspace{\textwidth}\textcolor{white}{$\ELV(\AAlpha_5, 2362)\approx 0.41$, $\ELV(\AAlpha_4, 1110)\approx 0.38$, $\ELV(\AAlpha_6, 1118)\approx 0.24$}}}
+%
+%\end{column}
+%
+%\end{columns}
+%
+%
+%\end{frame}
+%
+%%\begin{frame} \frametitle{The Component Selection Issue}
+%%
+%%\begin{columns}
+%%\begin{column}{0.1\textwidth}
+%%\includegraphics[width = \textwidth]{figures/questionmark.jpg} 
+%%\end{column}
+%%\begin{column}{0.7\textwidth}
+%%\begin{block}{}
+%%{\em How many} PCs and {\em which ones} are sufficient/necessary to reduce the traces size without losing important discriminant information? 
+%%\end{block}
+%%\end{column}
+%%\end{columns}
+%% \only<1>{
+%% \begin{block}{Theoretically}
+%%Higher eigenvalues $\longrightarrow$ higher information.
+%%\end{block}
+%%\begin{block}{Experimental Observation}
+%%\cite{Batina2012,specht}: the first components sometimes contain no sensitive information; it is worth discarding them.
+%%\end{block}
+%%
+%%\begin{figure}
+%%\includegraphics[width=.25\textwidth]{figures/DPAcontestPC1_new.pdf} 
+%%\includegraphics[width=.25\textwidth]{figures/DPAcontestPC6_new.pdf} 
+%%\vspace{-10pt}
+%%\caption{First and sixth PCs in DPA contest v4  \cite{DPAcontest} trace set}\label{fig:DPAcontest}
+%%\end{figure}
+%%}
+%%\only<2>{
+%%\vspace{40pt}
+%%\begin{small}
+%%\begin{table}
+%%\begin{tabular}{|c|c|c|c|}
+%%\hline
+%%& EGV \cite{choudaryefficient} & IPR \cite{SCAclassProbl}& \uncover<2->{\textbf{ELV} \cite{Cagli2016}} \\
+%%\hline
+%%eigenvalue $\lambda_i$ &\includegraphics[scale=0.01]{figures/yes.png}  & \includegraphics[scale=0.01]{figures/no.png} &\uncover<2->{\includegraphics[scale=0.015]{figures/yes.png}}\\
+%%\hline
+%%form of $\AAlpha_i$ &\includegraphics[scale=0.01]{figures/no.png}  & \includegraphics[scale=0.01]{figures/yes.png}&\uncover<2->{\includegraphics[scale=0.015]{figures/yes.png}} \\
+%%\hline
+%%\end{tabular}
+%%\end{table}
+%%\end{small}
+%%
+%%\includegraphics[scale=0.3]{figures/citazione1.jpg} 
+%%}
+%%\uncover<2->{
+%%\begin{block}{Explained Local Variance}
+%%$\mathrm{ELV}(\AAlpha_i,j) = \frac{\lambda_i \AAlpha_i[j]^2}{\sum_{k=1}^r\lambda_k} = \mathrm{EGV}(\AAlpha_i) \AAlpha_i[j]^2$  \\
+%%%($\sum_{j=1}^D \mathrm{ELV}(\AAlpha_i,j) = \EGV{\AAlpha_i}$)
+%%\end{block}
+%%}
+%%\uncover<3->{\begin{block}{Use of the ELV}
+%%\begin{itemize}
+%%\item Sort in decreasing order the maximal ELV provided by each component $\{\max_{j=1,\dots,D}\ELV(\AAlpha_i,j)\}_{i}$ and select the $C$ first components.
+%%\item Select \textbf{couples} $(\AAlpha_i, j)$ in decreasing order wrt to $\ELV(\AAlpha_i, j)$ until $\ELV(\AAlpha_{i_1}, j_1)+ \ELV(\AAlpha_{i_2}, j_2)+\dots +\ELV(\AAlpha_{i_M}, j_M)\geq \beta$
+%%\end{itemize}
+%%\end{block}}
+%%\end{frame}
+%%
+%%\begin{frame} \frametitle{The ELV Selection (2)}
+%%\vspace*{-0.5cm}
+%%\uncover<1->{
+%%\begin{block}{Definition}
+%%$\mathrm{ELV}(\AAlpha_i,j) = \frac{\lambda_i \AAlpha_i[j]^2}{\sum_{k=1}^r\lambda_k} = \mathrm{EGV}(\AAlpha_i) \AAlpha_i[j]^2$  \\
+%%\uncover<2->{Observe that $\sum_{j=1}^D \mathrm{ELV}(\AAlpha_i,j) = \EGV{\AAlpha_i}$}
+%%\end{block}
+%%}
+%%\uncover<3->{
+%%Perform this sum in a cumulative way, sorting the ELV contributions of the time samples in decreasing order, {\em i. e.} $\mathrm{ELV}(\AAlpha_i,j^i_1)\geq \mathrm{ELV}(\AAlpha_i,j^i_2)\geq \dots \geq \mathrm{ELV}(\AAlpha_i,j^i_\traceLength)$
+%%
+%%
+%%\vspace*{-0.4cm}
+%%\begin{columns}
+%%\begin{column}{.5\textwidth}
+%%\vspace*{10pt}
+%%\begin{figure}
+%%\includegraphics[width=\textwidth]{figures/PC1_points.pdf} 
+%%\end{figure}
+%%\end{column}
+%%\begin{column}{.5\textwidth}
+%%\begin{figure}
+%%
+%%\begin{tikzpicture}[remember picture,
+%%    scale=1,
+%%    % Define styles here
+%%    every node/.style={transform shape}
+%%    block/.style={
+%%        rectangle,
+%%        draw,
+%%        text centered,
+%%        rounded corners
+%%        },
+%%    data/.style={
+%%        trapezium,
+%%        trapezium left angle=60,
+%%        trapezium right angle=120,
+%%        draw
+%%        },
+%%    component/.style={
+%%        circle,
+%%        draw
+%%        },
+%%    output/.style={
+%%        tape,
+%%        tape bend top=none,
+%%        draw
+%%        },
+%%    edge/.style={
+%%        ->,
+%%        >=stealth,
+%%        thick
+%%        }
+%%    ]
+%%
+%%    \node (only1elv) at (0,0)
+%%    {\includegraphics[width=\textwidth]{figures/cumulativeELV_only1.pdf} };
+%%    \node [component, thick, xshift=2.1cm, yshift=0.8cm] (cerchio) {};
+%%    \node[below left=1cm of cerchio](caption){$\mathrm{EGV}(\AAlpha_1)$};
+%%    \draw[->] (caption) to (cerchio.south west);
+%%\end{tikzpicture}
+%%\end{figure}
+%%\end{column}
+%%\end{columns}
+%%
+%%
+%%}
+%%
+%%\end{frame}
+%%
+%%
+%%
+%%%\begin{frame}
+%%\frametitle{The ELV Selection (2)}
+%%\begin{columns}
+%%\begin{column}{0.5\textwidth}
+%%\uncover<1->{
+%%\only<1>{
+%%\vspace*{-0.4cm}
+%%\begin{center}
+%%\includegraphics[width = \textwidth]{figures/cumulativeELV.pdf}
+%%\end{center}
+%%}
+%%\only<2>{
+%%\vspace*{-0.4cm}
+%%\begin{center}
+%%\includegraphics[width = \textwidth]{figures/cumulativeELVallRectangle.pdf} 
+%%\end{center}
+%%}
+%%
+%%\only<3->{
+%%\vspace*{-0.4cm}
+%%\begin{center}
+%%\includegraphics[width = \textwidth]{figures/cumulativeELVzoomed.pdf}
+%%\end{center}
+%%}
+%%}
+%%\uncover<4->{
+%%\only<1-4>{
+%%
+%%\begin{block}{To select $C$ components\hspace{\textwidth}\textcolor{white}{ }}
+%%Sort in decreasing order the maximal ELV provided by each component $\{\max_{j=1,\dots,D}\ELV(\AAlpha_i,j)\}_{i}$ and select the $C$ first components.
+%%\end{block}
+%%}
+%%\only<5>{
+%%
+%%\begin{block}{Fixing a cumulative explained variance threshold $\beta$}
+%%Select \textbf{couples} $(\AAlpha_i, j)$ in decreasing order wrt to $\ELV(\AAlpha_i, j)$ until $\ELV(\AAlpha_{i_1}, j_1)+ \ELV(\AAlpha_{i_2}, j_2)+\dots +\ELV(\AAlpha_{i_M}, j_M)\geq \beta$.\\
+%%%\uncover<5>{{\em Components denoising}}
+%%\end{block}
+%%}
+%%}
+%%
+%%\end{column}
+%%
+%%\begin{column}{0.5\textwidth}
+%%\only<1-3>{
+%%\begin{figure}
+%%\includegraphics[width=0.5\textwidth]{figures/PC1.pdf} 
+%%\includegraphics[width=0.5\textwidth]{figures/PC4.pdf} \\
+%%\includegraphics[width=0.5\textwidth]{figures/PC2.pdf} 
+%%\includegraphics[width=0.5\textwidth]{figures/PC5.pdf} \\
+%%\includegraphics[width=0.5\textwidth]{figures/PC3.pdf} 
+%%\includegraphics[width=0.5\textwidth]{figures/PC6.pdf} 
+%%\caption{\begin{footnotesize}
+%%The first 6 PCs: 
+%%$\lambda_1 \approx 3.8 ,\lambda_2 \approx 3.1 , \lambda_3 \approx2.6 ,\lambda_4 \approx 1.0 ,\lambda_5 \approx 0.8 ,\lambda_6 \approx 0.6 $
+%%\end{footnotesize}}
+%%
+%%\end{figure}
+%%}
+%%
+%%
+%%\only<4-5>{
+%%\begin{figure}
+%%\onslide<5->{\includegraphics[width=0.5\textwidth]{figures/PC5_denoised.pdf}}\only<4>{\includegraphics[width=0.5\textwidth]{figures/PC5_cerchio.pdf}}\only<5>{\includegraphics[width=0.5\textwidth]{figures/PC5_cerchio_transp.pdf}} \\
+%%\onslide<5->{\includegraphics[width=0.5\textwidth]{figures/PC4_denoised.pdf}}\only<4>{\includegraphics[width=0.5\textwidth]{figures/PC4_cerchio.pdf}}\only<5>{\includegraphics[width=0.5\textwidth]{figures/PC4_cerchio_transp.pdf}} \\
+%%\onslide<5->{\includegraphics[width=0.5\textwidth]{figures/PC6_denoised.pdf}}\only<4>{\includegraphics[width=0.5\textwidth]{figures/PC6_cerchio.pdf}}\only<5>{\includegraphics[width=0.5\textwidth]{figures/PC6_cerchio_transp.pdf}} 
+%%\only<4>{\caption{The 3 components chosen by ELV selection method - $C$ fixed}}
+%%\only<5>{\caption{Components and time samples chosen by ELV selection method - $\beta$ fixed}}
+%%\end{figure}
+%%}
+%%
+%%
+%%\only<5>{
+%%\includegraphics[width=0.31\textwidth]{figures/PC5_cerchio_transp.pdf} 
+%%\includegraphics[width=0.31\textwidth]{figures/PC4_cerchio_transp.pdf} 
+%%\includegraphics[width=0.31\textwidth]{figures/PC6_cerchio_transp.pdf} \\
+%%}
+%%\uncover<5>{
+%%
+%%
+%%
+%%\only<3-4>{\caption{Selected components for $C = 3$; \hspace{\textwidth} $\ELV(\AAlpha_5, 2362)\approx 0.41$, $\ELV(\AAlpha_4, 1110)\approx 0.38$, $\ELV(\AAlpha_6, 1118)\approx 0.24$}}
+%%\only<5>{\caption{Selected and denoised components for $\beta = 0.08$\hspace{\textwidth}\textcolor{white}{$\ELV(\AAlpha_5, 2362)\approx 0.41$, $\ELV(\AAlpha_4, 1110)\approx 0.38$, $\ELV(\AAlpha_6, 1118)\approx 0.24$}}}
+%%
+%%\end{column}
+%%
+%%\end{columns}
+%%
+%%
+%%\end{frame}
+%%

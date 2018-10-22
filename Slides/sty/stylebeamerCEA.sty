@@ -1,0 +1,187 @@
+% Beamer Presentation Template
+%
+% Yoann Roth
+\usepackage [utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{geometry}
+% package de math
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{caption}
+% package permettant le code source et les couleurs
+\usepackage{verbatim} 
+%\usepackage{listings}
+\usepackage{color} 
+% Pour virer l'indentation des paragraphes
+\setlength{\parindent}{0pt}
+% Nom de l'auteur
+
+% Couleurs
+\RequirePackage{sty/ceacolors}
+
+% Def tikz arrow
+\usepackage{tikz}
+\usetikzlibrary{fadings,shapes.arrows,shadows}   
+
+\tikzfading[name=arrowfading, top color=transparent!0, bottom color=transparent!95]
+\tikzset{arrowfill/.style={top color=ceadarkred, bottom color=ceared, general shadow={fill=black, shadow yshift=-0.2ex, path fading=arrowfading}}}
+\tikzset{arrowstyle/.style={draw=ceadarkred,arrowfill, single arrow,minimum height=#1, single arrow,
+single arrow head extend=.12cm,}}
+
+\newcommand{\tikzbigarrow}[2][0.8cm]{\tikz[baseline=-0.75ex]\node [arrowstyle=#1] {#2};}
+\newcommand{\tikzarrow}[2][0.8cm]{\tikz[baseline=-0.65ex]\node [scale =0.5,arrowstyle=#1] {#2};}
+
+
+\ProcessOptionsBeamer
+
+\mode<presentation>
+
+\def\largTool{3.3ex}
+\def\largTooli{1ex}
+
+
+\setbeamertemplate{navigation symbols}{}%remove navigation symbols
+% Sommaire qui s'affiche entre les sections
+\AtBeginSection[]{
+\setbeamertemplate{background
+canvas}{\includegraphics[width=\paperwidth,height=\paperheight]{img-templates/fondceatech}}
+\begin{frame}[plain]
+
+\begin{columns}
+
+\begin{column}{.38\textwidth}
+\hspace{0.5cm}
+\end{column}
+
+\begin{column}{.62\textwidth}
+\textcolor{ceadarkred}{Sommaire}
+\small
+  \tableofcontents[currentsection,hideothersubsections]
+\end{column}
+
+\end{columns}
+
+\end{frame}
+\setbeamertemplate{background canvas}{}
+}
+
+
+
+% Creation de la headbar
+\defbeamertemplate*{headline}{}
+{
+\begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=north west, inner sep=0pt] at ($(current page.north
+    west)$) {
+        \includegraphics[width=\paperwidth]{img-templates/bandeau}
+    };
+    \node[anchor=north west, inner sep=0pt, text width=0.65\paperwidth, text
+    badly centered] at ($(current page.north
+    west)+(0.2\paperwidth, -1.2em)$) {
+\color{white}\normalsize\inserttitle
+    };
+    \end{tikzpicture}
+\vspace{1cm}
+
+% Si headbar avec des infos...
+%\hspace{-0.85em}
+%  \hbox{
+%  % Box de la numératotation
+%  \begin{beamercolorbox}[wd=0.16\paperwidth,ht=\largTool,dp=\largTooli,center]{rien}%
+%  \hspace*{-0.1cm}
+%  \end{beamercolorbox}%
+%
+%  % Box du nom de ma présentation
+%  \begin{beamercolorbox}[wd=0.34\paperwidth,ht=\largTool,dp=\largTooli,left]{titresection}%
+%  \bf{\insertsection} \hspace*{2ex}
+%  \end{beamercolorbox}%
+%
+%  \begin{beamercolorbox}[wd=.25\paperwidth,ht=\largTool,dp=\largTooli,center]{titresousection}%
+%  \bf{\insertsubsection}
+%  \end{beamercolorbox}%
+%
+%  \begin{beamercolorbox}[wd=.28\paperwidth,ht=\largTool,dp=\largTooli,right]{nomauteur}%
+%  \bf{\auteur} \hspace*{2em}  
+%  \end{beamercolorbox}
+%  
+%  }%
+
+}
+
+% Création de la footbar
+\defbeamertemplate*{footline}{}
+{
+\hspace{-0.85em}
+\hfill
+  \hbox{
+      \insertdate $\mid$ \insertshortauthor $\mid$ \insertframenumber{}/\inserttotalframenumber
+  }
+  
+  \includegraphics[width=\paperwidth, height=2pt]{img-templates/footertitre}
+
+}
+
+
+
+% Parametres de couleurs
+
+% Paramètre de la table des matières
+\setbeamercolor{subsection in toc}{fg=black}
+\setbeamercolor{section in toc}{fg=black}
+
+% Définition des blocks
+\setbeamercolor{block title alerted}{fg=ceared,bg=white}
+\setbeamercolor{block title}{fg=white,bg=cealightdarkred}
+\setbeamercolor{block title example}{fg=black,bg=white}
+\setbeamercolor{block body alerted}{fg=white,bg=red}
+\setbeamertemplate{blocks}[rounded]%
+[shadow=true]
+
+% Paramètre de la sidebar
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{subsection in toc}[subsections numbered]
+
+% Paramètre de la footline
+\setbeamercolor{pages}{fg=white,bg=ceared}
+\setbeamercolor{nomPresentation}{fg=white,bg=ceared}
+\setbeamercolor{nomauter}{fg=white,bg=ceared}
+\setbeamercolor{footdate}{fg=white,bg=ceared}
+
+% couleur headlines
+\setbeamercolor{rien}{fg=white,bg=ceared}
+\setbeamercolor{titresection}{fg=white,bg=ceared}
+\setbeamercolor{titresousection}{fg=white,bg=ceared}
+\setbeamercolor{nomauteur}{fg=white,bg=ceared}
+
+% Paramètre du frametitle
+\setbeamertemplate{frametitle}[default][left]
+\setbeamercolor{frametitle}{fg=ceared,bg=white}
+%\setbeamerfont{frametitle}{series=\bfseries}
+
+% couleurs itemize
+\setbeamercolor{itemize item}{fg=ceadarkred}
+\setbeamercolor{itemize subitem}{fg=ceared}
+
+% Biblio
+\setbeamertemplate{bibliography item}[text] % online, book, article, triangle, text
+\setbeamertemplate{bibliography entry title}{}
+\setbeamertemplate{bibliography entry location}{}
+\setbeamertemplate{bibliography entry note}{}
+\setbeamercolor{bibliography item}{fg=ceadarkred}
+\setbeamercolor{bibliography entry author}{fg=black}
+\setbeamercolor{bibliography entry title}{fg=black}
+
+% Bouton
+\setbeamercolor{button}{bg=ceadarkred,fg=white}
+\setbeamercolor{title}{fg=ceadarkgray}
+
+% couleur de légendes
+\setbeamercolor{caption}{fg=black}
+\captionsetup{figurename=\color{ceadarkred}Figure}
+\captionsetup{tablename=\color{ceadarkred}Table}
+%\captionsetup{lstlistingname=\color{ceadarkred}Listing}
+\renewcommand{\lstlistingname}{\color{ceadarkred}Listing}
+
+\mode
+<all>

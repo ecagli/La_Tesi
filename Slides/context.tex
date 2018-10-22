@@ -1,0 +1,120 @@
+\section{Context and State of the Art}
+
+\begin{frame}
+\vspace{-15pt}
+\frametitle{Context}
+\begin{block}{Side-Channel Attacks (SCAs)}
+\begin{itemize}
+\item Target: a physical implementations of cryptographic primitives 
+\item Means: observable physical variations (timing information, power consumption, electromagnetic irradiation, etc.)
+\item Goal: retrieve secret data (ex: cryptographic key)
+\end{itemize}
+\end{block}
+
+\begin{block}{Notations}
+\begin{itemize}
+\item Side-channel traces: realizations of a random variable $\XXX \in \mathbb{R}^D$  (column vector)
+\item Target: a \emph{sensitive} variable $Z = f(P,K)\in\sensVarSet$ 
+\end{itemize}
+\end{block}
+\vspace{-5pt}
+\begin{block}{Profiling attack scenario}
+Exploits labelled traces $(\sss[z_i]{i})_{i=1}^N$ to characterize the signals in function of $z_i$.\\
+\emph{"a trace $\sss[z]{}$ belongs to the class $z$"}
+\end{block}
+%\begin{small}
+%\emph{Example: Gaussian Template Attack} 
+%\begin{itemize}
+%\item Profiling phase: estimate the parameters $\{(\mumumu_z,\Sigma_z)\}_{z\in\sensVarSet}$ of multivariate Gaussian distributions
+%\item Attack phase: rank key hypothesis through maximum likelihood
+%\end{itemize}
+%\end{small}
+
+
+
+\end{frame}
+
+
+
+
+%\begin{frame}
+%\vspace{-5pt}
+%\frametitle{Points of Interest}
+%\vspace{-10pt}
+%
+%\begin{block}{Problem}
+%Highly multi-dimensional side-channel traces (algorithm, instruments sampling rate, etc.)\\
+%$\longrightarrow$ affects attack complexity
+%\end{block}
+%
+%\includegraphics[width = 0.4\textwidth]{figures/power_trace.pdf}
+%\only<2>{
+%\includegraphics[width = 0.4\textwidth]{figures/SNR_trace.pdf}
+%}
+%
+%\begin{block}{Which part characterize?}
+%Only (relatively) few points depend on the target: the \emph{Points of Interest (PoIs)}
+%\end{block}
+%
+%\pause
+%\begin{block}{How to find them?}
+%A first answer: statistical tests.\\
+%For example estimating the SNR:
+%\begin{equation}
+%\SNR = \frac{\var(\esper[\XXX\vline Z])}{\esper[\var(\XXX\vline Z)]}
+%\end{equation}
+%\end{block}
+%
+%
+%\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Dimensionality Reduction}
+
+\begin{block}{Problem}
+Highly multi-dimensional side-channel traces (algorithm, sampling rate, etc.)\\
+$\longrightarrow$ affect attack complexity
+\end{block}
+
+\begin{block}{Goal}
+Perform a preprocessing via an opportune \emph{extractor} $\extract:\mathbb{R}^D\rightarrow \mathbb{R}^C$ in order to:
+\begin{itemize}
+\item Reduce memory and time complexity (ameliorate the attacks efficiency in terms of required samples)
+\item Enhance contribution of the Points of Interest (PoI, those that depend on the target) to concentrate information over few points (ameliorate the attacks efficiency in terms of required traces)
+\end{itemize}
+\end{block}
+
+%\begin{block}{Extractor}
+%\begin{equation}
+%\extract:\mathbb{R}^D\rightarrow \mathbb{R}^C
+%\end{equation}
+%\end{block}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Literature}
+Two typologies of extractors in literature
+\begin{block}{Selecting Extractors}
+$\extract$ performs a sub-sampling
+\begin{itemize}
+\item Sum of Differences (SOD) \cite{Chari2003}
+\item Signal-to-Noise Ratio (SNR) \cite{mangard2008power}
+\item Sum of Squared $t$-differences (SOST), $t$-test, $F$-test,... \cite{gierlichs2006templates,bar2010improved,choudary2014efficient}
+\end{itemize}
+\end{block}
+
+\begin{block}{Projecting Extractors}
+$\extract(\sss[]{}) = A\sss[]{} \mbox{ with } A \in M_{\mathbb{R}}(\newTraceLength, \traceLength)$
+\begin{itemize}
+\item Principal Component Analysis (PCA) \cite{TAprincipal,Batina2012}
+\item Linear Discriminant Analysis (LDA) \cite{Standaert2008,lessIsMore}
+\end{itemize}
+\end{block}
+
+\end{frame}
+
