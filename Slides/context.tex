@@ -35,11 +35,16 @@
 
 \begin{frame}
 \frametitle{Side-Channel Attacks on Embedded Cryptography}
-\begin{tikzpicture}
-\draw [->] (0, 0) -- (4, 0) node [pos = .5, above] {Plaintext};
-\node [block] (AES) at (1, 0) {AES};
-\draw [->] (0, 0) -- (4, 0) node [pos = .5, above] {Ciphertext};
+\begin{center}
+\begin{tikzpicture}[node distance=3.5cm]
+\node [data] (plaintext){plaintext};
+\node [cipher, right of=plaintext] (AES) {\only<1>{AES}\uncover<2->{\includegraphics[width = \textwidth]{figures/Computer_Chip-512.png}}};
+\node [data, right of=AES] (ciphertext){ciphertext};
+\node [text width = 3.5cm, above of=ciphertext] (Conso) {Power Consumption}
+\draw [arrow] (plaintext) -- (AES);
+\draw [arrow] (AES) -- (ciphertext);
 \end{tikzpicture}
+
 
 \begin{columns}
 \begin{column}{.5\textwidth}
@@ -59,6 +64,7 @@
 \end{itemize}
 \end{column}
 \end{columns}
+\end{center}
 % con i 5 punti della tesi per definire un attacco
 \end{frame}
 
