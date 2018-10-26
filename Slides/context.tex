@@ -34,17 +34,28 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Side-Channel Attacks on Embedded Cryptography}
-\begin{center}
-\begin{tikzpicture}[node distance=3.5cm]
+\frametitle{Side-Channel Vulnerability of Embedded Cryptography}
+\centering
+\scalebox{0.6}{
+\begin{tikzpicture}[ ->, node distance = 3cm,
+					decoration = {snake,   % <-- added
+                    pre length=3pt,post length=7pt,% <-- for better looking of arrow,
+                    }]
 \node [data] (plaintext){plaintext};
-\node [cipher, right of=plaintext] (AES) {\only<1>{AES}\uncover<2->{\includegraphics[width = \textwidth]{figures/Computer_Chip-512.png}}};
+\node [cipher, right of=plaintext] (AES) {\only<1>{AES}\only<2->{\includegraphics[width = \textwidth]{figures/Computer_Chip-512.png}\\Intermediate Computations}};
 \node [data, right of=AES] (ciphertext){ciphertext};
-\node [text width = 3.5cm, above of=ciphertext] (Conso) {Power Consumption}
+\node [ above right of=AES] (Conso) {Power Consumption};
+\node [ below right of=AES] (EM) {Electromagnetic Irradiation};
+\node [ above left of=AES] (Time) {Time Duration};
+\node [ below left of=AES] (Sound) {Sound Emanation};
+\path[draw=blue, very thick, decorate] (AES) -> (Sound);
+\path[draw=blue, very thick, decorate] (AES) -> (Time);
+\path[draw=blue, very thick, decorate] (AES) -> (Conso);
+\path[draw=blue, very thick, decorate] (AES) -> (EM);
 \draw [arrow] (plaintext) -- (AES);
 \draw [arrow] (AES) -- (ciphertext);
 \end{tikzpicture}
-
+}
 
 \begin{columns}
 \begin{column}{.5\textwidth}
@@ -59,18 +70,31 @@
 \textbf{Side-Channel Cryptanalysis}
 \begin{itemize}
 \item White box (input, output, side-channel observations of intermediate computations)
-\item Attacker with a certain equipment, expertise, knowledge of the embedded device, ...
+\item Attacker with a certain equipment, expertise, knowledge of the embedded device, available time...
 \item In Common Criteria: the cotation table of the attack
 \end{itemize}
 \end{column}
 \end{columns}
-\end{center}
+
 % con i 5 punti della tesi per definire un attacco
 \end{frame}
 
 \begin{frame}
-\frametitle{Machine Learning}
-
+\frametitle{Side-Channel Attacks}
+\begin{itemize}
+\item \textbf{the physical nature of the exploited signals}: \only<1>{power consumption, electromagnetic irradiation}\only<2>{\textcolor{red}{power consumption, electromagnetic irradiation}}, time, sound, temperature, \dots
+\item \textbf{the chosen sensitive variable/s} $Z$:
+\begin{itemize}
+\item $Z = K$ a secret key chunk
+\item \only<1>{$Z = f(K,E)$}\only<2>{\textcolor{red}{$Z = f(K,E)$}} a variable depending on a secret key chunk and on a piece of public information
+\item an operation (\eg $Z \in \{ square, multiply, \dots\}$)
+\item a register 
+\item \only<1>{$Z^\prime = \varphi(Z)$}\only<2>{\textcolor{red}{$Z^\prime = \varphi(Z)$}} a non-injective function of any sensitive variable (\eg $f = \mathrm{HW}$ Hamming Weight)
+\end{itemize}
+\item \textbf{the strategy family}: simple attacks, collision attacks, \only<1>{differential/advanced attacks}\only<2>{\textcolor{red}{differential/advanced attacks}}
+\item \textbf{the shape of the attack}: horizontal attacks, vertical attacks
+\item \textbf{the attacker knowledge}: \only<1>{profiling}\only<2>{\textcolor{red}{profiling}}, non-profiling attacks
+\end{itemize}
 \end{frame}
 
 

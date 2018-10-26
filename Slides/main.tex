@@ -81,7 +81,7 @@
 \usetikzlibrary{shapes.symbols}
 \usetikzlibrary{decorations.pathreplacing}
 \usetikzlibrary{decorations.markings}
-\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.geometric, arrows}
 \usetikzlibrary{patterns}
 \usetikzlibrary{calc}
 \usetikzlibrary{positioning}
@@ -301,27 +301,12 @@ basicstyle=\footnotesize, style=customc,
 \definecolor{buscolor}{cmyk}{0.555,0,0.486,0.427} % couleur du bus de données
 \definecolor{circolor}{cmyk}{0,0,0,0.4} % couleur du fond de circuit
 
-\newsavebox\chip
-\sbox{\chip}{
-\begin{tikzpicture}[remember picture,
-scale=0.07,
-% define styles here
-chiplayout/.style={rectangle, draw, fill=chipcolor, rounded corners}
-]
-\draw[chiplayout] (0, 0) rectangle (9,8);
-\draw (3, 0) -- (3, 8);
-\draw (3, 2) -- (0, 2);
-\draw (3, 4) -- (0, 4);
-\draw (3, 6) -- (0, 6);
 
-\draw (6, 0) -- (6, 6);
-\draw (6, 2) -- (9, 2);
-\draw (6, 4) -- (9, 4);
-\draw (6, 6) -- (9, 6);
-\end{tikzpicture}
-}
 
-\tikzstyle{block} = [rectangle, draw, text width=6em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{cipher} = [rectangle, draw, text width=6em, text centered, rounded corners, minimum height=8em]
+\tikzstyle{data} = [rectangle, draw, text width=6em, text centered, minimum height=3em, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
 
 \tikzset{middlearrow/.style={
         decoration={markings,
