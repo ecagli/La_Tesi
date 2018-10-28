@@ -12,6 +12,38 @@
 % dimensionality reduction : feature selection, feature extraction, masking : masques connus vs unconnus
 % misalignment : re-alignement
 
+\begin{tikzpicture}[ ->, node distance = 3cm,
+					decoration = {snake,   % <-- added
+                    pre length=3pt,post length=7pt,% <-- for better looking of arrow,
+                    }]
+
+\node [data] (db_profiling){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Profiling traces};
+\node [data, right of = db_profiling] (db_profiling_realigned){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Realigned profiling traces};
+\draw[arrow] (db_profiling) -- node[above]{$\rho$} (db_profiling_realigned) ;
+\node[function, above of = db_profiling, yshift=-1cm](realignment){$\rho$};
+\draw[arrow,dashed](db_profiling) -- (realignment);
+\node[function, above of= db_profiling_realigned, yshift=-1cm](extractor){$\varepsilon$};
+\node [data, right of = db_profiling_realigned] (extracted){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Profiling traces' features};
+\draw[arrow] (db_profiling_realigned) -- node[above]{$\varepsilon$} (extracted) ;
+\draw[arrow,dashed](db_profiling_realigned) -- (extractor);
+\node[data, right of = extracted](distributions){\small{$\mathrm{Pr}(\vaLeakVec \mid Z)$}};
+\draw[arrow,dashed](extracted) -- node[above]{characterisation} (distributions);
+
+\node[methods, below of= db_profiling, yshift=1cm](realignments){tecniques de realignement};
+\node[methods, below of= db_profiling_realigned, yshift=1cm](extraction_methods){tecniques poi et d'extraction};
+\node[methods, below of= extracted, yshift=1cm](charac_methods){templates, varianti, discriminative};
+
+\node [data, below of=realignments, yshift=1cm ] (db_attack){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Attack traces};
+\node [data, right of = db_attack] (db_attack_realigned){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Realigned attack traces};
+\draw[arrow] (db_attack) -- node[above]{$\rho$} (db_attack_realigned) ;
+\node [data, right of = db_attack_realigned] (extracted_attack){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Attack traces' features};
+\draw[arrow] (db_attack_realigned) -- node[above]{$\varepsilon$} (extracted_attack) ;
+\node[data, right of = extracted_attack](keys){\footnotesize{$\mathrm{Pr}(K \mid \{ \vaLeakVec_i, P_i \}_{i=1,\dots,N})$}};
+\draw[arrow,dashed](extracted_attack) -- node[above]{inference} (keys);
+
+
+
+\end{tikzpicture}
 \end{frame}
 
 \begin{frame}
