@@ -18,7 +18,7 @@
                     }]
 
 \node [data] (db_profiling){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Profiling traces};
-\node [data, right of = db_profiling] (db_profiling_realigned){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Realigned profiling traces};
+\node [data, right of = db_profiling] (db_profiling_realigned){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ \footnotesize{Realigned profiling traces}};
 \draw[arrow] (db_profiling) -- node[above]{$\rho$} (db_profiling_realigned) ;
 \node[function, above of = db_profiling, yshift=-1cm](realignment){$\rho$};
 \draw[arrow,dashed](db_profiling) -- (realignment);
@@ -26,13 +26,18 @@
 \node [data, right of = db_profiling_realigned] (extracted){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Profiling traces' features};
 \draw[arrow] (db_profiling_realigned) -- node[above]{$\varepsilon$} (extracted) ;
 \draw[arrow,dashed](db_profiling_realigned) -- (extractor);
-\node[data, right of = extracted](distributions){\small{$\mathrm{Pr}(\vaLeakVec \mid Z)$}};
+\node[data, right of = extracted, xshift=0.8cm](distributions){\small{$\mathrm{Pr}(\vaLeakVec \mid Z)$}\\
+\small{$\mathrm{Pr}(Z \mid \vaLeakVec)$}};
 \draw[arrow,dashed](extracted) -- node[above]{characterisation} (distributions);
 
 \node[methods, below of= db_profiling, yshift=1cm](realignments){tecniques de realignement};
 \node[methods, below of= db_profiling_realigned, yshift=1cm](extraction_methods){tecniques poi et d'extraction};
-\node[methods, below of= extracted, yshift=1cm](charac_methods){templates, varianti, discriminative};
-
+\node[methods, below of= extracted, yshift=1cm, align=left](charac_methods){\tiny{
+Template Attack \cite{Chari2003} (generative model, Gaussian hypothesis)\\
+\emph{Pooled} variant \cite{choudary2014efficient}\\
+Stochastic variant \cite{schindler2005stochastic}\\
+Discriminative model
+}};
 \node [data, below of=realignments, yshift=1cm ] (db_attack){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Attack traces};
 \node [data, right of = db_attack] (db_attack_realigned){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Realigned attack traces};
 \draw[arrow] (db_attack) -- node[above]{$\rho$} (db_attack_realigned) ;
