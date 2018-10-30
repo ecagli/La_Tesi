@@ -108,109 +108,159 @@
 comparison is successful}
 \only<2>{\colorbox{attackcolor}{ATTACK:}}}
 
-% my new commands
-
-%
-\newcommand{\sensVar}{z}
-\newcommand{\sensRandVar}{Z}
-\newcommand{\sensVarSet}{\mathcal{Z}}
-\newcommand{\plaintext}{p}
-\newcommand{\randPlaintext}{P}
-\newcommand{\plaintextSet}{\mathcal{P}}
-\newcommand{\targetFunction}{e}
 
 
-\newcommand{\key}{k}
-\newcommand{\randKey}{K}
-\newcommand{\keyTest}{k^{\star}}
-\newcommand{\keySet}{\mathcal{K}}
-\newcommand{\esper}{\mathbb{E}}
-\newcommand{\var}{\mathrm{Var}}
-\newcommand{\SNR}{\mathrm{SNR}}
+\newcommand{\important}[1]{\textcolor{magenta}{\bf #1}}
+%----------------------------------------------------------------------------------------
+%	MY NOTATIONS
+%----------------------------------------------------------------------------------------
+\newcommand*{\vLeak}{x}
+\newcommand*{\vLeakVec}{\vec{x}}
+\newcommand*{\vaLeak}{X}
+\newcommand*{\setLeak}{\vec{\mathcal{X}}}
+\newcommand*{\vaLeakVec}{\vec{X}}
+\newcommand{\setLeakTrain}{\setLeak_{\text{train}}}
+\newcommand{\setLeakTest}{\setLeak_{\text{test}}}
+\newcommand{\setLeakValidation}{\setLeak_{\text{validation}}}
+\newcommand{\setLeakProfiling}{\setLeak_{\text{profiling}}}
+\newcommand{\setTargetTrain}{\setTarget_{\text{train}}}
+\newcommand{\setTargetTest}{\setTarget_{\text{test}}}
+\newcommand{\setTargetValidation}{\setTarget_{\text{validation}}}
+\newcommand{\setTargetProfiling}{\setTarget_{\text{profiling}}}
 
-\newcommand{\numTraces}[1][z]{N_{#1}}
-\newcommand{\numTracesAttack}{N_a}
-\newcommand{\sss}[2][z]{\textbf{x}^{#1}_{#2}} % $\sss{i}$ or $\sss[k]{i}$
-\newcommand{\sssTest}[2][z]{\textbf{y}^{#1}_{#2}} % $\sssTest{i}$ or $\sssTest[k]{i}$
-\newcommand{\SSS}[1][z]{\textbf{X}^{#1}}
-\newcommand{\sssSet}{\mathcal{X}}
-\newcommand{\SSSTest}[1][z]{\textbf{Y}_{#1}}
+\newcommand*{\vNNOutput}{\ensuremath {\vec{y}}}
+
+\newcommand*{\setData}{\mathcal{D}}
+\newcommand*{\sizeSetData}{\lvert\setData\rvert}
+\newcommand*{\setDataTrain}{\mathcal{D}_{\text{train}}}
+\newcommand*{\setDataTest}{\mathcal{D}_{\text{test}}}
+\newcommand*{\setDataValidation}{\mathcal{D}_{\text{validation}}}
+\newcommand*{\setDataProfiling}{\mathcal{D}_{\text{profiling}}}
+\newcommand*{\setDataAttack}{\mathcal{D}_{\text{attack}}}
+\newcommand*{\setTarget}{\mathcal{Y}}
+%\newcommand*{\setDataKDA}{\mathcal{D}_{\text{KDA}}}
+%\newcommand{\setLeakKDA}{\setLeak_{\text{KDA}}}
+%\newcommand{\setTargetKDA}{\setTarget_{\text{KDA}}}
+
+
+\newcommand*{\sPOI}{\tau} %signal strength
+
+
+\newcommand*{\publicParRandVar}{E}
+\newcommand*{\publicParVar}{e}
+\newcommand*{\keyRandVar}{K}
+\newcommand*{\keyVar}{k}
+\newcommand*{\keyStar}{k^\star}
+\newcommand*{\keyVarSet}{\mathcal{K}}
+\newcommand*{\sensVar}{z}
+\newcommand*{\sensRandVar}{Z}
+\newcommand*{\sensVarValue}[1]{s_{#1}}
+\newcommand*{\sensVarGenValue}{s}
+\newcommand*{\sensVarOneHot}[1]{\vec{s_{#1}}}
+\newcommand*{\sensVarSet}{\mathcal{Z}}
+\newcommand*{\numClasses}{\lvert\sensVarSet\rvert}
+\newcommand*{\nbClasses}{\lvert\sensVarSet\rvert}
+\newcommand*{\sensFunction}{f}
 \newcommand{\featureSpace}{\mathcal{F}}
+\newcommand*{\distinguisher}{\Delta}
 
-\newcommand{\extractor}[2][]{\varepsilon_{#1}(#2)}
-\newcommand{\extract}{\varepsilon}
-\newcommand{\bestExtractor}{\varepsilon^\star}
 
-\newcommand{\AAlpha}{\boldsymbol\alpha}
-\newcommand{\BBeta}{\boldsymbol\beta}
-\newcommand{\mumumu}{\boldsymbol\mu}
-\newcommand{\mmm}{\textbf{m}}
-\newcommand{\mmmX}{\overline{\textbf{x}}}
-\newcommand{\mmmXclass}[1][z]{\overline{\textbf{x}}^{#1}}
-\newcommand{\mmmY}{\overline{\textbf{y}}}
-%\newcommand{\mmmX}[1][z]{{\bf \meanEst{{\textnormal{$(#1)$}}}}}
-%\newcommand{\mmmY}[1][z]{{\bf \meanEst{{\textnormal{$(#1)$}}}}}
+\newcommand*{\yyy}{\vec{y}}
+\newcommand*{\YYY}{\vec{Y}}
+\newcommand*{\www}{\vec{w}}
+%\newcommand*{\WWW}{\textbf{W}}
+\newcommand*{\vvv}{\vec{v}}
+%\newcommand*{\VVV}{\textbf{V}}
+
+\newcommand*{\nbTraces}{N}
+\newcommand*{\nbTrainingTraces}{N_t}
+\newcommand*{\nbProfilingTraces}{N_p}
+\newcommand*{\nbProfilingTracesPerClass}{N_{p,\sensVarGenValue}}
+\newcommand*{\nbAttackTraces}{N_a}
+\newcommand*{\nbTracesPerClass}[1][\sensVarGenValue]{N_{#1}}
+\newcommand*{\guessingEntropy}{\mathrm{GE}}
+\newcommand*{\SR}{\mathrm{SR}}
+\newcommand*{\newTraceLength}{C}
+\newcommand*{\traceLength}{D}
+\newcommand*{\AAlpha}{\vec{\alpha}}
+\newcommand*{\BBeta}{\vec{\zeta}}
+\newcommand*{\covmat}{\textbf{S}}
+\newcommand*{\numPoI}{\sharp\mathrm{PoI}}
+\newcommand*{\leakFunction}{\phi}
+\newcommand*{\LeakFunction}{\boldsymbol{\phi}}
+\newcommand*{\noise}{B}
+\newcommand*{\Noise}{\vec{B}}
+\newcommand*{\extract}{\epsilon}
+\newcommand*{\orderRate}{o}
+\newcommand*{\guessingVector}{\vec{g}}
+
+\newcommand*{\entropy}{\mathbb{H}}
+\newcommand*{\MLmodel}{F}
+\newcommand*{\featureSpaceSize}{S}
+
+
+\newcommand*{\leakageModel}{L}
+\newcommand*{\HD}{\mathrm{HD}}
+\newcommand*{\HW}{\mathrm{HW}}
+
+\newcommand*{\prob}{\mathrm{Pr}}
+\newcommand*{\pdf}{p}
+\newcommand*{\mumumu}{\vec{\mu}}
+
+\newcommand*{\measuresMatrix}{\textbf{M}}
+\newcommand*{\projectingMatrix}{\textbf{A}}
+\newcommand*{\SW}{\textbf{S}_{\textbf{W}}}
+\newcommand*{\SB}{\textbf{S}_{\textbf{B}}}
+\newcommand*{\ST}{\textbf{S}_{\textbf{T}}}
+\newcommand*{\var}{\mathrm{Var}}
+\newcommand*{\cov}{\mathrm{Cov}}
+\newcommand*{\esperEst}{\hat{\mathbb{E}}}
+\newcommand*{\varEst}{\hat{\mathrm{Var}}}
+\newcommand*{\esper}{\mathbb{E}}
+\newcommand*{\mmm}{\vec{m}}
+\newcommand*{\mmmX}{\overline{\vec{x}}}
+\newcommand*{\mmmXclass}[1][\sensVarGenValue]{\vec{\mu}_{#1}}
+\newcommand*{\mmmY}{\overline{\vec{y}}}
+\newcommand*{\varXclass}[1][\sensVarGenValue]{\vec{\varrho}_{#1}}
 
 \newcommand{\MMM}{\textbf{M}}
-\newcommand{\MMMclass}[1][z]{\textbf{M}_{#1}}
-\newcommand{\MMMT}{\textbf{M}_{\textbf{T}}}
+\newcommand{\MMMclass}[1][\sensVarGenValue]{\vec{M}_{#1}}
+\newcommand{\MMMT}{\vec{M}_{T}}
 \newcommand{\NNN}{\textbf{N}}
 \newcommand{\III}{\textbf{I}}
-
-\newcommand{\mmmXtot}{{\overline{\bf \meanEst{}}}}
-
-\newcommand{\meanNoise}{{\bf \mu}}
-\newcommand{\meanEst}[1]{\mathrm{\bf m}_1 #1 }
-\newcommand{\varEst}[1]{\mathrm{m}_2(#1)}
-\newcommand{\mean}[2][]{\Bbb{E}_{#1}\left(#2\right)}
+\newcommand{\numEigenvectors}{Q}
+\newcommand{\kernelMatrix}{\textbf{K}}
+\newcommand{\nununu}{\vec{\nu}}
+\newcommand{\mmmXPhi}{\overline{\Phi(\vec{x}})}
+\newcommand{\mmmXclassPhi}[1][\sensVarGenValue]{\overline{\Phi(\vec{x})}^{#1}}
 
 
-\newcommand{\xxx}{\textbf{x}}
-\newcommand{\XXX}{\textbf{X}}
-\newcommand{\yyy}{\textbf{y}}
-\newcommand{\YYY}{\textbf{Y}}
-\newcommand{\measuresMatrix}{\textbf{M}}
-\newcommand{\projectingMatrix}{\textbf{A}}
-\newcommand{\info}[1][z]{\boldsymbol{\varphi}({#1})}
-\newcommand{\BBB}{\textbf{B}}
-\newcommand{\zero}{\mathbf{0}}
-\newcommand{\traceLength}{D}
-\newcommand{\newTraceLength}{C}
+\newcommand*{\aaa}{\textbf{a}}
 
-\newcommand{\numPoI}{\# PoI}
+\newcommand*{\Sbox}{\mathrm{Sbox}}
+\newcommand*{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand*{\softmax}{s}
 
-\newcommand{\covmat}{\textbf{S}}
+%----------------------------------------------------------------------------------------
+% EDITORIAL DEFINITIONS
+%----------------------------------------------------------------------------------------
+%\newcommand\given[1][\Big]{\:#1\vert\:}
 
+\makeatletter
+\newcommand{\@givenstar}[2]{#1\;\middle|\;#2}
+\newcommand{\@givennostar}[3][]{#1#2\;#1|\;#3#1}
+\newcommand{\given}{\@ifstar\@givenstar\@givennostar}
+\makeatother
 
-\newcommand{\succRate}{\mathrm{SR}}
-\newcommand{\memComplexity}{m}
-\newcommand{\guessingVector}{\mathrm{\textbf{g}}}
-\newcommand{\adversary}{\mathcal{A}}
-\newcommand{\attackAlgorithm}{\mathrm{A}}
-\newcommand{\guessingEntropy}{\mathrm{GE}}
-\newcommand{\threshold}{\beta}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
 
-
-\newcommand{\vectorContribution}[1][k]{\mathrm{\textbf{ELV}}(#1)}
-\newcommand{\varianceInPoints}[2][n]{\mathrm{H}_{#1}(#2)}
-\newcommand{\coupleSet}{\mathbb{J}}
-
-\newcommand{\prob}{\mathrm{Pr}}
-
-\newcommand{\SW}{\textbf{S}_{\textbf{W}}}
-\newcommand{\SB}{\textbf{S}_{\textbf{B}}}
-\newcommand{\ST}{\textbf{S}_{\textbf{T}}}
-
-\newcommand{\vvv}{\textbf{v}}
-
-\newcommand{\EGV}[1]{\mathrm{EGV(#1)}}
-\newcommand{\ELV}{\mathrm{ELV}}
-
-\newcommand{\nununu}{\boldsymbol{\nu}}
-\newcommand{\NPoI}{N}
-
-\newcommand*{\vaLeakVec}{\vec{X}}
-
+\def\etal{\textit{et al.} }
+\newcommand {\ie}{{\em i.e.} }
+\def\eg{\textit{e.g.} }
+\def\via{\textit{via} }
+\def\resp{{\em resp.} }
+\def\th{$^\text{th}$}
 
 
 %%%%%
@@ -283,7 +333,6 @@ basicstyle=\footnotesize, style=customc,
 }
 
 \def\etal{\textit{et al.} }
-\newcommand {\ie}{{\em i.e.} }
 \def\eg{\textit{e.g.} }
 \def\via{\textit{via} }
  

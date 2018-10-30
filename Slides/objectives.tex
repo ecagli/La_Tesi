@@ -5,51 +5,146 @@
 
 \end{frame}
 
+%\begin{frame}
+%\frametitle{Template Attack} 
+%% aprendo des volets per ogni passaggio con riferimenti allo stato dell'arte:
+%% templates : likelihood vs MAP ,  cov mats vs pooled , linear regression or not
+%% dimensionality reduction : feature selection, feature extraction, masking : masques connus vs unconnus
+%% misalignment : re-alignement
+%
+%\begin{tikzpicture}[ ->, node distance = 3cm,
+%					decoration = {snake,   % <-- added
+%                    pre length=3pt,post length=7pt,% <-- for better looking of arrow,
+%                    }]
+%
+%\node [data] (db_profiling){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Profiling traces};
+%\node [data, right of = db_profiling] (db_profiling_realigned){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ \footnotesize{Realigned profiling traces}};
+%\draw[arrow] (db_profiling) -- node[above]{$\rho$} (db_profiling_realigned) ;
+%\node[function, above of = db_profiling, yshift=-1cm](realignment){$\rho$};
+%\draw[arrow,dashed](db_profiling) -- (realignment);
+%\node[function, above of= db_profiling_realigned, yshift=-1cm](extractor){$\varepsilon$};
+%\node [data, right of = db_profiling_realigned] (extracted){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Profiling traces' features};
+%\draw[arrow] (db_profiling_realigned) -- node[above]{$\varepsilon$} (extracted) ;
+%\draw[arrow,dashed](db_profiling_realigned) -- (extractor);
+%\node[data, right of = extracted, xshift=0.8cm](distributions){\small{$\mathrm{Pr}(\vaLeakVec \mid Z)$}\\
+%\small{$\mathrm{Pr}(Z \mid \vaLeakVec)$}};
+%\draw[arrow,dashed](extracted) -- node[above]{characterisation} (distributions);
+%
+%\node[methods, below of= db_profiling, yshift=1cm](realignments){Realignment \cite{nagashima2007dpa,van2011improving,durvaux2012efficient}};
+%\node[methods, below of= db_profiling_realigned, yshift=1cm](extraction_methods){Dimensionality reduction};
+%\node[methods, below of= extracted, yshift=1cm, align=left](charac_methods){\tiny{
+%Template Attack \cite{Chari2003} (generative model, Gaussian hypothesis)\\
+%\emph{Pooled} variant \cite{choudary2014efficient}\\
+%Stochastic variant \cite{schindler2005stochastic}\\
+%Discriminative model
+%}};
+%\node [data, below of=realignments, yshift=1cm ] (db_attack){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Attack traces};
+%\node [data, right of = db_attack] (db_attack_realigned){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Realigned attack traces};
+%\draw[arrow] (db_attack) -- node[above]{$\rho$} (db_attack_realigned) ;
+%\node [data, right of = db_attack_realigned] (extracted_attack){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Attack traces' features};
+%\draw[arrow] (db_attack_realigned) -- node[above]{$\varepsilon$} (extracted_attack) ;
+%\node[data, right of = extracted_attack](keys){\footnotesize{$\mathrm{Pr}(K \mid \{ \vaLeakVec_i, P_i \}_{i=1,\dots,N})$}};
+%\draw[arrow,dashed](extracted_attack) -- node[above]{inference} (keys);
+%
+%
+%
+%\end{tikzpicture}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{Template Attack} 
+%%% aprendo des volets per ogni passaggio con riferimenti allo stato dell'arte:
+%%% templates : likelihood vs MAP ,  cov mats vs pooled , linear regression or not
+%%% dimensionality reduction : feature selection, feature extraction, masking : masques connus vs unconnus
+%%% misalignment : re-alignement
+%%
+%\begin{tikzpicture}[ ->, node distance = 2.5cm,
+%				decoration = {snake,   % <-- added
+%                   pre length=3pt,post length=7pt,% <-- for better looking of arrow,
+%                   }]
+%\uncover<4->{
+%\node [data] (db_profiling){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Profiling traces};
+%\node [data, right of = db_profiling] (db_profiling_realigned){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ \footnotesize{Realigned profiling traces}};
+%\draw[arrow] (db_profiling) -- node[above]{$\rho$} (db_profiling_realigned) ;
+%\node[function, above of = db_profiling, yshift=-1cm](realignment){$\rho$};
+%\draw[arrow,dashed](db_profiling) -- (realignment);
+%\node[function, above of= db_profiling_realigned, yshift=-1cm](extractor){$\varepsilon$};
+%\draw[arrow] (db_profiling_realigned) -- node[above]{$\varepsilon$} (extracted) ;
+%\draw[arrow,dashed](db_profiling_realigned) -- (extractor);
+%}
+%
+%\node [data, right of = db_profiling_realigned] (extracted){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ \only<1>{Profiling traces} \only<3->{Profiling traces's features}};
+%\node[data, right of = extracted, xshift=0.8cm](distributions){\small{$\mathrm{Pr}(\vaLeakVec \mid Z)$}};
+%\draw[arrow,dashed](extracted) -- node[above]{characterisation} (distributions);
+%
+%\node[methods, below of= db_profiling, yshift=1cm](realignments){Realignment \cite{nagashima2007dpa,van2011improving,durvaux2012efficient}};
+%\node[methods, below of= db_profiling_realigned, yshift=1cm](extraction_methods){Dimensionality reduction};
+%\node[methods, below of= extracted, yshift=1cm, align=left](charac_methods){\tiny{
+%Template Attack \cite{Chari2003} (generative model)\\
+%\uncover<3->{\emph{Pooled} variant \cite{choudary2014efficient}\\
+%Stochastic variant \cite{schindler2005stochastic}}
+%}};
+%
+%\only<4->{
+%\node [data, below of=realignments, yshift=1cm ] (db_attack){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Attack traces};
+%\node [data, right of = db_attack] (db_attack_realigned){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Realigned attack traces};
+%\draw[arrow] (db_attack) -- node[above]{$\rho$} (db_attack_realigned) ;
+%}
+%\node [data, right of = db_attack_realigned] (extracted_attack){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ \only<1-2>{Attack traces} \only<3->{Attack traces' features}};
+%\draw[arrow] (db_attack_realigned) -- node[above]{$\varepsilon$} (extracted_attack) ;
+%\node[data, right of = extracted_attack](keys){Maximum Likelihood or Maximum A Posteriori};
+%\draw[arrow,dashed](extracted_attack) -- node[above]{inference} (keys);
+%
+%
+%
+%\end{tikzpicture}
+%\end{frame}
+%
+
+
 \begin{frame}
-\frametitle{Template Attack} 
-% aprendo des volets per ogni passaggio con riferimenti allo stato dell'arte:
-% templates : likelihood vs MAP ,  cov mats vs pooled , linear regression or not
-% dimensionality reduction : feature selection, feature extraction, masking : masques connus vs unconnus
-% misalignment : re-alignement
-
-\begin{tikzpicture}[ ->, node distance = 3cm,
-					decoration = {snake,   % <-- added
-                    pre length=3pt,post length=7pt,% <-- for better looking of arrow,
-                    }]
-
-\node [data] (db_profiling){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Profiling traces};
-\node [data, right of = db_profiling] (db_profiling_realigned){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ \footnotesize{Realigned profiling traces}};
-\draw[arrow] (db_profiling) -- node[above]{$\rho$} (db_profiling_realigned) ;
-\node[function, above of = db_profiling, yshift=-1cm](realignment){$\rho$};
-\draw[arrow,dashed](db_profiling) -- (realignment);
-\node[function, above of= db_profiling_realigned, yshift=-1cm](extractor){$\varepsilon$};
-\node [data, right of = db_profiling_realigned] (extracted){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Profiling traces' features};
-\draw[arrow] (db_profiling_realigned) -- node[above]{$\varepsilon$} (extracted) ;
-\draw[arrow,dashed](db_profiling_realigned) -- (extractor);
-\node[data, right of = extracted, xshift=0.8cm](distributions){\small{$\mathrm{Pr}(\vaLeakVec \mid Z)$}\\
-\small{$\mathrm{Pr}(Z \mid \vaLeakVec)$}};
-\draw[arrow,dashed](extracted) -- node[above]{characterisation} (distributions);
-
-\node[methods, below of= db_profiling, yshift=1cm](realignments){tecniques de realignement};
-\node[methods, below of= db_profiling_realigned, yshift=1cm](extraction_methods){tecniques poi et d'extraction};
-\node[methods, below of= extracted, yshift=1cm, align=left](charac_methods){\tiny{
-Template Attack \cite{Chari2003} (generative model, Gaussian hypothesis)\\
-\emph{Pooled} variant \cite{choudary2014efficient}\\
-Stochastic variant \cite{schindler2005stochastic}\\
-Discriminative model
-}};
-\node [data, below of=realignments, yshift=1cm ] (db_attack){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Attack traces};
-\node [data, right of = db_attack] (db_attack_realigned){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Realigned attack traces};
-\draw[arrow] (db_attack) -- node[above]{$\rho$} (db_attack_realigned) ;
-\node [data, right of = db_attack_realigned] (extracted_attack){\includegraphics[width = 0.3\textwidth]{figures/database.jpg}\\ Attack traces' features};
-\draw[arrow] (db_attack_realigned) -- node[above]{$\varepsilon$} (extracted_attack) ;
-\node[data, right of = extracted_attack](keys){\footnotesize{$\mathrm{Pr}(K \mid \{ \vaLeakVec_i, P_i \}_{i=1,\dots,N})$}};
-\draw[arrow,dashed](extracted_attack) -- node[above]{inference} (keys);
+\frametitle{Template Attack}
 
 
+\begin{itemize}
+\item Profiling phase (using profiling traces under known $\sensRandVar$)
+\begin{itemize}
+\item \uncover<7->{manage de-synchronization problem}
+\item \uncover<6->{mandatory dimensionality reduction}
+\item \uncover<4->{estimate \only<4>{$\prob[\vaLeakVec|\sensRandVar=\sensVar]$ by simple distributions} \only<5-6>{\textcolor{blue}{$\prob[\vaLeakVec|\sensRandVar=\sensVar]$}} \only<7->{\textcolor{blue}{$\prob[\important{\varepsilon(\vaLeakVec)}|\sensRandVar=\sensVar]$}} for each value of $\sensVar$}
+\end{itemize}
+\item Attack phase ($N$ attack traces $\vLeakVec_i$, e.g. with known plaintexts $p_i$)
 
-\end{tikzpicture}
+\only<1-4>{ \begin{itemize}
+\item[] \textcolor{white}{Log-likelihood score for each key hypothesis $k$
+\begin{equation*}
+d_k = \sum_{i=1}^{N}\log \prob[\vaLeakVec=\vLeakVec_i | Z=f(p_i,k)]
+\end{equation*}
+}
+\end{itemize}
+}
+\only<5-6>{\begin{itemize}
+\item Log-likelihood score for each key hypothesis $k$
+\begin{equation*}
+d_k = \sum_{i=1}^{N}\log \textcolor{blue}{\prob[\vaLeakVec=\vLeakVec_i | Z=f(p_i,k)]}
+\end{equation*}
+\end{itemize}
+}
+\only<7->{\begin{itemize}
+\item Log-likelihood score for each key hypothesis $k$
+\begin{equation*}
+d_k = \sum_{i=1}^{N}\log \textcolor{blue}{\prob[\important{\varepsilon(
+\vaLeakVec)}=\important{\varepsilon(
+\vLeakVec_i)} | Z=f(p_i,k)]}
+\end{equation*}
+\end{itemize}
+}
+
+\end{itemize}
+
+
 \end{frame}
+
 
 \begin{frame}
 \frametitle{Contributions}
