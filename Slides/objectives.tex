@@ -1,9 +1,185 @@
 \section{State of the Art, Objectives, Contributions}
 
 \begin{frame}
-\frametitle{Notations}
+\frametitle{Advanced Attacks}
+\begin{itemize}
+\item choose a sensitive variable $\sensRandVar = \sensFunction(\keyRandVar,\publicParRandVar)$, 
+\item acquire side-channel traces $(\vLeakVec_i)_{i=1,\dots , \nbTraces}$ making entries $(\publicParVar_i)_{i=1,\dots,\nbTraces}$ vary,
+\item define a \emph{leakage model} $\vaLeakVec \approx \leakageModel(\sensRandVar)$ (\eg \emph{mono-bit}, \emph{Hamming weight}, \emph{Hamming distance}, \emph{linear bit-combination}, \emph{identity}\uncover<3->{\important{, learned templates}}),
+\item for every key chunk hypothesis $\keyVar \in \keyVarSet$ predict the side-channel leakage 
+\begin{equation}\label{eq:predictions}
+\leakageModel_{\keyVar,i} = \leakageModel(\sensFunction(\keyVar,\publicParVar_i)) \mbox{ ,}
+\end{equation}
+\item statistically compare the hypothetical predictions to the observed side-channel acquisitions, by means of a  \emph{distinguisher} $\distinguisher$ (\eg DoM \cite{kocher1999differential}, Multi-bit DoM \cite{bevan2002ways,messerges2002examining}, CPA \cite{brier2004correlation}, MIA \cite{gierlichs2008mutual,batina2011mutual}, ..., \uncover<4->{\important{, Maximum Likelihood (ML) or Maximum-a-Posteriori (MAP) $\rightarrow$ Template Attack}}):
+\begin{equation}
+\distinguisher_{\keyVar} = \distinguisher((\vLeakVec_i)_{i=1,\dots , \nbTraces}, (\leakageModel_{\keyVar,i} )_{i=1,\dots , \nbTraces}) \mbox{ ,}
+\end{equation}
+\item deduce the key chunk candidate from scores $\distinguisher_{\keyVar}$, in general coinciding with the key hypothesis that maximises (or minimises) the scores.
+\end{itemize}
+
+\uncover<2->{\textbf{If profiling is available...}
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Template Attack}
+ \begin{textblock}{5}(10,2)
+ \important{$\vaLeakVec\in \mathbb{R}^D$\\
+  Curse of dimensionality!}
+ \end{textblock}
+\begin{itemize}
+\item Profiling phase (using profiling traces under known $\sensRandVar$)
+\begin{itemize}
+\item \uncover<7->{manage de-synchronization problem}
+\item \uncover<6->{mandatory dimensionality reduction}
+\item \uncover<6->{Gaussian hypothesis \cite{Chari2003}}
+\item \uncover<6->{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}
+\item \uncover<2->{estimate \only<2-4>{$\prob[\vaLeakVec|\sensRandVar=\sensVar]$ (generative model)} \only<5-6>{\textcolor{blue}{$\prob[\vaLeakVec|\sensRandVar=\sensVar]$}} \only<7->{\textcolor{blue}{$\prob[\important{\varepsilon(\vaLeakVec)}|\sensRandVar=\sensVar]$}}for each value of $\sensVar$}
+\end{itemize}
+\item Attack phase ($N$ attack traces $\vLeakVec_i$, e.g. with known plaintexts $p_i$)
+
+\only<1-4>{ \begin{itemize}
+\item[] \textcolor{white}{Log-likelihood score for each key hypothesis $k$
+\begin{equation*}
+d_k = \sum_{i=1}^{N}\log \prob[\vaLeakVec=\vLeakVec_i | Z=f(p_i,k)]
+\end{equation*}
+}
+
+\item\textcolor{white}{A-posteriori probability score for each key hypothesis $k$
+\begin{align*}
+\pdf_{\given{\sensRandVar}{  \vaLeakVec = \vLeakVec}}(\sensVar) &= \frac{\pdf_{\given{\vaLeakVec}{\sensRandVar = \sensVar}}(\vLeakVec)\pdf_{\sensRandVar}(\sensVar)} {\pdf_{\vaLeakVec}(\vLeakVec)}\text{Bayes' theorem}\\
+d_{\keyVar} &= \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec_i}}(\sensFunction(\keyVar,\publicParVar_i) ) \mbox{ ,}
+\end{align*}
+}
+\end{itemize}
+}
+\only<5-6>{\begin{itemize}
+\item Log-likelihood score for each key hypothesis $k$
+\begin{equation*}
+d_k = \sum_{i=1}^{N}\log \textcolor{blue}{\prob[\vaLeakVec=\vLeakVec_i | Z=f(p_i,k)]}
+\end{equation*}
+
+\item A-posteriori probability score for each key hypothesis $k$
+\begin{align*}
+\pdf_{\given{\sensRandVar}{  \vaLeakVec = \vLeakVec}}(\sensVar) &= \frac{\pdf_{\given{\vaLeakVec}{\sensRandVar = \sensVar}}(\vLeakVec)\pdf_{\sensRandVar}(\sensVar)} {\pdf_{\vaLeakVec}(\vLeakVec)} \text{Bayes' theorem}\\
+d_{\keyVar} &= \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec_i}}(\sensFunction(\keyVar,\publicParVar_i) ) \mbox{ ,}
+\end{align*}
+\end{itemize}
+}
+\only<7->{\begin{itemize}
+\item Log-likelihood score for each key hypothesis $k$
+\begin{equation*}
+d_k = \sum_{i=1}^{N}\log \textcolor{blue}{\prob[\important{\varepsilon(
+\vaLeakVec)}=\important{\varepsilon(
+\vLeakVec_i)} | Z=f(p_i,k)]}
+\end{equation*}
+
+
+\item A-posteriori probability score for each key hypothesis $k$
+\begin{align*}
+\pdf_{\given{\sensRandVar}{  \vaLeakVec = \vLeakVec}}(\sensVar) &= \frac{\pdf_{\given{\vaLeakVec}{\sensRandVar = \sensVar}}(\vLeakVec)\pdf_{\sensRandVar}(\sensVar)} {\pdf_{\vaLeakVec}(\vLeakVec)} \text{Bayes' theorem}\\
+d_{\keyVar} &= \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec_i}}(\sensFunction(\keyVar,\publicParVar_i) ) \mbox{ ,}
+\end{align*}
+\end{itemize}
+}
+
+\end{itemize}
+
 
 \end{frame}
+
+
+\begin{frame}
+\frametitle{Objectives}
+
+Profiling phase (using profiling traces under known $\sensRandVar$)
+\begin{itemize}
+\item {manage de-synchronization problem}\only<3>{\important{$\longleftarrow$}}
+\item {mandatory dimensionality reduction} \only<1-2>{\important{$\longleftarrow$}}
+\item {Gaussian hypothesis \cite{Chari2003}}
+\item \textcolor{grey}{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}
+\item estimate{$\prob[\important{\varepsilon(\vaLeakVec)}|\sensRandVar=\sensVar]$ (generative model)} for each value of $\sensVar$
+\end{itemize}
+
+\begin{block}{Objectives}
+\uncover<2->{
+\begin{itemize}
+\item Ameliorate the template attack routine by proposing efficient dimensionality reduction techniques
+\item \uncover<3->{More generally, optimise the profiling attack strategy}
+\item Consider the presence of most-commonly-implemented SCA countermeasures (masking, hiding)
+\end{itemize}
+}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{State of the Art and Contributions}
+\only<1>{
+\begin{block}{\textit{Before}}
+\begin{itemize}
+\item Feature (Points of Interest - PoI) selection methods:  ...
+\item Linear Feature Extraction: PCA, LCA, PP...
+\item Machine Learning routines for Side-Channel Attacks: ...
+\end{itemize}
+\end{block}
+}
+\only<2->{
+\begin{block}{\textit{This thesis}}
+\begin{itemize}
+\item \textbf{Linear Dimensionality Reduction}: 
+\begin{itemize}
+\item PCA, choise of components ELV
+\item LDA in case of undersampling
+\end{itemize}
+\only<2>{
+\item \textbf{Kernel Discriminant Analysis}: application of an appropriate kernel trick to LDA, in order to manage masking countermeasure
+\item \textbf{Convolutional Neural Networks}: 
+\begin{itemize}
+\item discriminative model by means of neural network classifiers
+\item convolutional layers to manage desyncrhonisation (a form of hiding)
+\item Data Augmentation techniques to reduce overfitting
+\end{itemize}}
+\only<3->{\important{
+\item \textbf{Kernel Discriminant Analysis}: application of an appropriate kernel trick to LDA, in order to manage masking countermeasure
+\item \textbf{Convolutional Neural Networks}: 
+\begin{itemize}
+\item discriminative model by means of neural network classifiers
+\item convolutional layers to manage desyncrhonisation (a form of hiding)
+\item Data Augmentation techniques to reduce overfitting
+\end{itemize}
+}
+}
+\end{itemize}
+\end{block}
+}
+\only<4>{
+\begin{block}{\textit{Today}}
+\begin{itemize}
+\item suites de la KDA
+\item ASCAD plus toutes les contributions CNN sorties dernieremets
+\end{itemize}
+\end{block}
+}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Contents}
+\begin{itemize}
+\item Introduction to LDA: as a classifier, and as a feature extractor
+\item Introduction to masking countermeasure and Kernel Discriminant Analysis as a feature extractor
+\item Motivations to apply deep learning techniques
+\item Convolutional Neural Networks and Data Augmentation to attack jitter-based countermeasure
+\end{itemize}
+\end{frame}
+
+
+
+
+
 
 %\begin{frame}
 %\frametitle{Template Attack} 
@@ -100,56 +276,3 @@
 %\end{tikzpicture}
 %\end{frame}
 %
-
-
-\begin{frame}
-\frametitle{Template Attack}
-
-
-\begin{itemize}
-\item Profiling phase (using profiling traces under known $\sensRandVar$)
-\begin{itemize}
-\item \uncover<7->{manage de-synchronization problem}
-\item \uncover<6->{mandatory dimensionality reduction}
-\item \uncover<4->{estimate \only<4>{$\prob[\vaLeakVec|\sensRandVar=\sensVar]$ by simple distributions} \only<5-6>{\textcolor{blue}{$\prob[\vaLeakVec|\sensRandVar=\sensVar]$}} \only<7->{\textcolor{blue}{$\prob[\important{\varepsilon(\vaLeakVec)}|\sensRandVar=\sensVar]$}} for each value of $\sensVar$}
-\end{itemize}
-\item Attack phase ($N$ attack traces $\vLeakVec_i$, e.g. with known plaintexts $p_i$)
-
-\only<1-4>{ \begin{itemize}
-\item[] \textcolor{white}{Log-likelihood score for each key hypothesis $k$
-\begin{equation*}
-d_k = \sum_{i=1}^{N}\log \prob[\vaLeakVec=\vLeakVec_i | Z=f(p_i,k)]
-\end{equation*}
-}
-\end{itemize}
-}
-\only<5-6>{\begin{itemize}
-\item Log-likelihood score for each key hypothesis $k$
-\begin{equation*}
-d_k = \sum_{i=1}^{N}\log \textcolor{blue}{\prob[\vaLeakVec=\vLeakVec_i | Z=f(p_i,k)]}
-\end{equation*}
-\end{itemize}
-}
-\only<7->{\begin{itemize}
-\item Log-likelihood score for each key hypothesis $k$
-\begin{equation*}
-d_k = \sum_{i=1}^{N}\log \textcolor{blue}{\prob[\important{\varepsilon(
-\vaLeakVec)}=\important{\varepsilon(
-\vLeakVec_i)} | Z=f(p_i,k)]}
-\end{equation*}
-\end{itemize}
-}
-
-\end{itemize}
-
-
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Contributions}
-\begin{block}{Objective}
-
-\end{block}
-% le même dessin que template attack avec le point où on en est du processus et la téchnique étudiée
-\end{frame}

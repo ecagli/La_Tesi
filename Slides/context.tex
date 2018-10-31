@@ -7,7 +7,7 @@
 \textbf{It usually embeds cryptography to provide security services (authentication, signature, secure messaging with terminals...)}
 \begin{columns}
 \begin{column}{0.5\textwidth}
-\uncover<2->{\includegraphics[width = \textwidth]{figures/smartcards.pdf}}
+\includegraphics[width = \textwidth]{figures/smartcards.pdf}
 \end{column}
 \begin{column}{0.5\textwidth}
 \begin{itemize}
@@ -18,7 +18,7 @@
 \end{itemize}
 \end{column}
 \end{columns}
-\uncover<3->{$\Rightarrow$ Requires protection against very high-level attacker}
+$\Rightarrow$ Requires protection against very high-level attacker
 \end{frame}
 
 \begin{frame}
@@ -82,6 +82,15 @@
 \begin{frame}
 \frametitle{Side-Channel Attacks}
 \begin{itemize}
+\item TODO: example de trace (square and multiply sans contremesure) $\rightarrow$ attack simple
+\item TODO: Schéma avec la puce qui tourne, l'oscillo, les signaux, les hp de clé, le modèle de fuite, le distingueur statistique $r\rightarrow$ attack avancée
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Side-Channel Attacks Parameters}
+\begin{itemize}
 \item \textbf{the physical nature of the exploited signals}: \only<1>{power consumption, electromagnetic irradiation}\only<2>{\textcolor{red}{power consumption, electromagnetic irradiation}}, time, sound, temperature, \dots
 \item \textbf{the chosen sensitive variable/s} $Z$:
 \begin{itemize}
@@ -98,6 +107,17 @@
 \end{frame}
 
 
+
+
+\begin{frame}
+\frametitle{Profiling Attacks...Supervised Learning}
+\begin{itemize}
+\item TODO Figure device under attack and clone device 
+\item machine learning \emph{definition}
+\item analogy with supervised learning
+\end{itemize}
+
+\end{frame}
 
 
 

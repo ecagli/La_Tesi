@@ -25,6 +25,7 @@
 \usepackage{graphicx}
 \usepackage{array}
 \usepackage{subfigure}
+\usepackage[absolute,overlay]{textpos}
 %\usepackage{pgfgantt}
 \usepackage[normalem]{ulem}
 \usepackage[rightcaption]{sidecap}
@@ -354,7 +355,7 @@ basicstyle=\footnotesize, style=customc,
 
 
 
-\tikzstyle{cipher} = [rectangle, draw, text width=4em, text centered, rounded corners, minimum height=8em]
+\tikzstyle{cipher} = [rectangle, draw, text width=5em, text centered, rounded corners, minimum height=5em]
 \tikzstyle{data} = [rectangle, draw, text width=4em, text centered, fill=green!30]
 \tikzstyle{function} = [ellipse, draw, text width=4em, text centered, minimum height=1.5em, fill=violet!30]
 \tikzstyle{methods} = [rectangle, rounded corners, draw, text width=7em, text centered, minimum width=7em, fill=blue!30]
@@ -446,9 +447,9 @@ canvas}{\includegraphics[width=\paperwidth,height=\paperheight]{img-templates/fo
 
 \include{context}
 \include{objectives}
-%\include{firstO}
-%\include{HO}
-%\include{DL}
+\include{firstO}
+\include{HO}
+\include{DL}
 \include{conclusions}
 
 
