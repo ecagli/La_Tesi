@@ -29,8 +29,8 @@ column sep=3em, text height=1.5ex, text depth=0.25ex]
 \begin{block}{LDA}
 \begin{itemize}
 \item $\AAlpha_i$ eigenvectors of $\SW^{-1}\SB$
-\item $\SB$ and $\SW$ depend on data $(\sss[z_i]{i})$ [$D\times D$]
-\item $\extract^{LDA}_{\ell}(\xxx) = \sum_{i=1}^D \AAlpha_{\ell}[i]\xxx[i] $
+\item $\SB$ and $\SW$ depend on data $(\vLeakVec[z_i]{i})$ [$D\times D$]
+\item $\extract^{LDA}_{\ell}(\vaLeakVec) = \sum_{i=1}^D \AAlpha_{\ell}[i]\vaLeakVec[i] $
 \end{itemize}
 \end{block}
 \end{column}
@@ -39,8 +39,8 @@ column sep=3em, text height=1.5ex, text depth=0.25ex]
 \begin{block}{KDA}
 \begin{itemize}
 \item $\nununu_i$ eigenvectors of $(\SW^K)^{-1}\SB^K$
-\item $\SB^K$ and $\SW^K$ depend on kernel function images $K(\sss[z_i]{i}, \sss[z_j]{j})$ [$N\times N$]
-\item $\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) = \sum_{i=1}^{\NPoI}\nununu_\ell[i]K(\sss[z_i]{i}, \sss[]{}) $
+\item $\SB^K$ and $\SW^K$ depend on kernel function images $K(\vLeakVec[z_i]{i}, \vLeakVec[z_j]{j})$ [$N\times N$]
+\item $\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) = \sum_{i=1}^{\numPoI}\nununu_\ell[i]K(\vLeakVec[z_i]{i}, \vLeakVec[]{}) $
 \end{itemize}
 \end{block}
 \end{column}

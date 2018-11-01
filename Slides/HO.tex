@@ -1,13 +1,33 @@
 \section{Kernel Discriminant Analysis against Masking}
+\subsection{Linear Discriminant Analysis}
 
 \begin{frame}
 \frametitle{Contents}
 \begin{itemize}
-\item \textcolor{grey}{Introduction to LDA: as a classifier, and as a feature extractor}
-\item \important{Introduction to masking countermeasure and Kernel Discriminant Analysis as a feature extractor}
+\item \important{Introduction to LDA: as a classifier, and as a feature extractor}
+\item Introduction to masking countermeasure and Kernel Discriminant Analysis as a feature extractor
+\item Motivations to apply deep learning techniques
 \item Convolutional Neural Networks and Data Augmentation to attack jitter-based countermeasure
 \end{itemize}
 \end{frame}
+
+
+\begin{frame}
+\frametitle{Model-based SNR and Fisher's Criterion}
+Fisher's criterion for dimensionality reduction is maximize the extracted features SNR
+\end{frame}
+
+\begin{frame}
+\frametitle{LDA: an optimal linear classifier}
+linear separability and
+derivation de LDA des modeles generatives (avec hypothese gaussienne et homoscedaticite)
+\end{frame}
+
+\begin{frame}
+\frametitle{LDA and Fisher's Discriminant}
+equivalence under conditions, but conditions not required to apply fisher's discriminant (SCA literature's application of LDA)
+\end{frame}
+
 
 \begin{frame}
 \frametitle{Dimensionality reduction in presence of sharing}
@@ -22,13 +42,13 @@
 \begin{block}{$(d-1)$th-order Sharing (or Masking)}
 $Z$ split into shares  $Z = M_1 \star \dots \star M_d$ \\
 with $M_1, \dots , M_{d-1}$ random shares (or masks) and $M_d = Z \star M_1^{-1}\star \dots \star M_{d-1}^{-1}$ \\
-Shares are handled at different time samples $t_1,\dots, t_d$ so that each time sample is independent from $Z$: $f(Z) = \esper[\XXX\lvert Z]$ is constant.
+Shares are handled at different time samples $t_1,\dots, t_d$ so that each time sample is independent from $Z$: $f(Z) = \esper[\vaLeakVec\lvert Z]$ is constant.
 \end{block}
 \pause
 \begin{block}{Higher-Order SCAs}
-Exploit $f(Z) = \esper[\XXX[t_1]\XXX[t_2]\dots\XXX[t_d]\lvert Z]$ non-constant.\\
+Exploit $f(Z) = \esper[\vaLeakVec[t_1]\vaLeakVec[t_2]\dots\vaLeakVec[t_d]\lvert Z]$ non-constant.\\
  
-The statistic extracted from measurements, viewed as a multivariate polynomial in the time samples coordinates, must contain the $d$th-degree monomial $\XXX[t_1]\XXX[t_2]\dots\XXX[t_d]$.
+The statistic extracted from measurements, viewed as a multivariate polynomial in the time samples coordinates, must contain the $d$th-degree monomial $\vaLeakVec[t_1]\vaLeakVec[t_2]\dots\vaLeakVec[t_d]$.
 \end{block}
 
 \end{frame}
@@ -86,20 +106,20 @@ $\mathcal{F}$ contains all $d$-th degree monomials \small{(dimension increases c
 \pause
 
 \begin{block}{Kernel function}
- \begin{centering}$K\colon\mathbb{R}^D\times \mathbb{R}^D \rightarrow \mathbb{R} \qquad K(\sss[]{i},\sss[]{j}) = \Phi(\sss[]{i})\cdot \Phi(\sss[]{j})
+ \begin{centering}$K\colon\mathbb{R}^D\times \mathbb{R}^D \rightarrow \mathbb{R} \qquad K(\vLeakVec[]{i},\vLeakVec[]{j}) = \Phi(\vLeakVec[]{i})\cdot \Phi(\vLeakVec[]{j})
 $\end{centering}
 \end{block}
 \pause
 \vspace{-5pt}
 \begin{block}{Polynomial kernel function}
-dth-degree polynomial kernel: $K\colon(\sss[]{i},\sss[]{j}) \mapsto ( \sss[]{i}\cdot \sss[]{j})^d \leftrightarrow$  all $d$-th degree monomials ($\mathcal{F}$).
+dth-degree polynomial kernel: $K\colon(\vLeakVec[]{i},\vLeakVec[]{j}) \mapsto ( \vLeakVec[]{i}\cdot \vLeakVec[]{j})^d \leftrightarrow$  all $d$-th degree monomials ($\mathcal{F}$).
 \pause
 
 Example: 
-$d=2, D=2$; $\sss[]{i} = [a,b]$ , $\sss[]{j} = [c,d]$ $\longrightarrow$
+$d=2, D=2$; $\vLeakVec[]{i} = [a,b]$ , $\vLeakVec[]{j} = [c,d]$ $\longrightarrow$
 \vspace{-10pt}
 \begin{equation*}
-\textcolor{olive}{K(\sss[]{i},\sss[]{j})} = (ac + bd)^2 = a^2c^2 + 2abcd + b^2d^2 \mbox{ ,}
+\textcolor{olive}{K(\vLeakVec[]{i},\vLeakVec[]{j})} = (ac + bd)^2 = a^2c^2 + 2abcd + b^2d^2 \mbox{ ,}
 \end{equation*}
 
 %\begin{align}
@@ -111,7 +131,7 @@ $d=2, D=2$; $\sss[]{i} = [a,b]$ , $\sss[]{j} = [c,d]$ $\longrightarrow$
 \begin{equation*}
 K \longleftrightarrow \Phi\colon \Bbb{R}^2\rightarrow\Bbb{R}^3 \qquad \Phi(u,v) =  [u^2, \sqrt{2}uv, v^2]
 \end{equation*}
-$\textcolor{olive}{\Phi(\sss[]{i})\cdot \Phi(\sss[]{j})} = a^2c^2 + 2abcd + b^2d^2 = K(\sss[]{i},\sss[]{j})$
+$\textcolor{olive}{\Phi(\vLeakVec[]{i})\cdot \Phi(\vLeakVec[]{j})} = a^2c^2 + 2abcd + b^2d^2 = K(\vLeakVec[]{i},\vLeakVec[]{j})$
 
 \end{block}
 \end{frame}
@@ -149,8 +169,8 @@ column sep=3em, text height=1.5ex, text depth=0.25ex]
 \begin{block}{LDA}
 \begin{itemize}
 \item $\AAlpha_i$ eigenvectors of $\SW^{-1}\SB$
-\item $\SB$ and $\SW$ depend on data $(\sss[z_i]{i})$ [$D\times D$]
-\item $\extract^{LDA}_{\ell}(\xxx) = \sum_{i=1}^D \AAlpha_{\ell}[i]\xxx[i] $
+\item $\SB$ and $\SW$ depend on data $(\vLeakVec[z_i]{i})$ [$D\times D$]
+\item $\extract^{LDA}_{\ell}(\vaLeakVec) = \sum_{i=1}^D \AAlpha_{\ell}[i]\vaLeakVec[i] $
 \end{itemize}
 \end{block}
 \end{column}
@@ -159,8 +179,8 @@ column sep=3em, text height=1.5ex, text depth=0.25ex]
 \begin{block}{KDA}
 \begin{itemize}
 \item $\nununu_i$ eigenvectors of $(\SW^K)^{-1}\SB^K$
-\item $\SB^K$ and $\SW^K$ depend on kernel function images $K(\sss[z_i]{i}, \sss[z_j]{j})$ [$N\times N$]
-\item $\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) = \sum_{i=1}^{\NPoI}\nununu_\ell[i]K(\sss[z_i]{i}, \sss[]{}) $
+\item $\SB^K$ and $\SW^K$ depend on kernel function images $K(\vLeakVec[z_i]{i}, \vLeakVec[z_j]{j})$ [$N\times N$]
+\item $\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) = \sum_{i=1}^{\numPoI}\nununu_\ell[i]K(\vLeakVec[z_i]{i}, \vLeakVec[]{}) $
 \end{itemize}
 \end{block}
 \end{column}
@@ -189,13 +209,13 @@ column sep=3em, text height=1.5ex, text depth=0.25ex]
 \end{itemize}
 \begin{figure}[t]
 
-\includegraphics[width=.4\textwidth]{figures/2order_classes_TA.pdf}
-\includegraphics[width=.4\textwidth]{figures/3order_new.pdf}
+\includegraphics[width=.4\textwidth]{../Figures/CARDIS2016/2order_classes_TA.pdf}
+\includegraphics[width=.4\textwidth]{../Figures/CARDIS2016/3order_new.pdf}
 \end{figure}
 \vspace{-10pt}
 \begin{figure}[t]
 
-\includegraphics[width=.4\textwidth]{figures/3order_2_9.pdf}
-\includegraphics[width=.4\textwidth]{figures/4order_2_9.pdf}
+\includegraphics[width=.4\textwidth]{../Figures/CARDIS2016/3order_2_9.pdf}
+\includegraphics[width=.4\textwidth]{../Figures/CARDIS2016/4order_2_9.pdf}
 \end{figure}
 \end{frame}
