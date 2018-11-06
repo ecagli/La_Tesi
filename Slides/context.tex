@@ -26,7 +26,7 @@ $\Rightarrow$ Requires protection against very high-level attacker
 \centering
 \includegraphics[width = .9\textwidth]{figures/ITSEF_nobody.pdf}
 \begin{itemize}
-\item Standardized Evaluation (\eg ISO/IEC 15408 - Common Criteria)
+\item Standardised Evaluation (\eg ISO/IEC 15408 - Common Criteria)
 \item Assigns an Evaluation Assurance Level (EAL)
 \item The evaluator checks the Security Assurance Requirements (SAR), \eg ADV, ALC, AVA, ...
 \item AVA: vulnerability assessment (penetration testing $\rightarrow$ attack potential rating)
@@ -35,48 +35,62 @@ $\Rightarrow$ Requires protection against very high-level attacker
 
 \begin{frame}
 \frametitle{Side-Channel Vulnerability of Embedded Cryptography}
-\centering
 \scalebox{0.7}{
-\begin{tikzpicture}[ ->, node distance = 3cm,
+\begin{tikzpicture}[ ->, node distance = 2.5cm,
 					decoration = {snake,   % <-- added
                     pre length=3pt,post length=7pt,% <-- for better looking of arrow,
                     }]
 \node [data] (plaintext){plaintext};
 \node [cipher, right of=plaintext] (AES) {\only<1>{AES}\only<2->{\includegraphics[width = \textwidth]{figures/Computer_Chip-512.png}\\Intermediate Computations}};
 \node [data, right of=AES] (ciphertext){ciphertext};
-\node [ above right of=AES] (Conso) {Power Consumption};
+\uncover<2->{\node [ above right of=AES] (Conso) {Power Consumption};
 \node [ below right of=AES] (EM) {Electromagnetic Irradiation};
 \node [ above left of=AES] (Time) {Time Duration};
 \node [ below left of=AES] (Sound) {Sound Emanation};
 \path[draw=blue, very thick, decorate] (AES) -> (Sound);
 \path[draw=blue, very thick, decorate] (AES) -> (Time);
 \path[draw=blue, very thick, decorate] (AES) -> (Conso);
-\path[draw=blue, very thick, decorate] (AES) -> (EM);
+\path[draw=blue, very thick, decorate] (AES) -> (EM);}
 \draw [arrow] (plaintext) -- (AES);
 \draw [arrow] (AES) -- (ciphertext);
 \end{tikzpicture}
 }
+\hfill
+\only<1>{\includegraphics[width=.25\textwidth]{figures/cassaforte_sola.pdf}}
+\only<2->{\includegraphics[width=.25\textwidth]{figures/cassaforte_completa.pdf}}
 
-\begin{columns}
-\begin{column}{.5\textwidth}
-\textbf{Classical Cryptanalysis}
-\begin{itemize}
-\item Black box (input, output)
-\item Formal attacker model (oracle, knowledge, ...)
-\item Computational complexity to perform the attack (\eg $2^{126.1}$ operations to break AES-128 \cite{bogdanov})
-\end{itemize}
-\end{column}
-\begin{column}{.5\textwidth}
-\textbf{Side-Channel Cryptanalysis}
-\begin{itemize}
-\item White box (input, output, side-channel observations of intermediate computations)
-\item Attacker with a certain equipment, expertise, knowledge of the embedded device, available time...
-\item In Common Criteria: the cotation table of the attack
-\end{itemize}
-\end{column}
-\end{columns}
+%\begin{columns}
+%\begin{column}{.5\textwidth}
+%\textbf{Classical Cryptanalysis}
+%\begin{itemize}
+%\item Black box (input, output)
+%\item Formal attacker model (oracle, knowledge, ...)
+%\item Computational complexity to perform the attack (\eg $2^{126.1}$ operations to break AES-128 \cite{bogdanov})
+%\end{itemize}
+%\end{column}
+%\begin{column}{.5\textwidth}
+%\textbf{Side-Channel Cryptanalysis}
+%\begin{itemize}
+%\item White box (input, output, side-channel observations of intermediate computations)
+%\item Attacker with a certain equipment, expertise, knowledge of the embedded device, available time...
+%\item In Common Criteria: the cotation table of the attack
+%\end{itemize}
+%\end{column}
+%\end{columns}
 
-% con i 5 punti della tesi per definire un attacco
+%\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}m{#1}}  %% right aligned
+\begin{table}[]
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{ >{\raggedleft\arraybackslash}m{0.4\textwidth} m{0.4\textwidth}}
+\toprule
+\textbf{Classical Cryptanalysis}                                                                                                             & \textbf{Side-Channel Cryptanalysis}                                                                      \\
+\midrule
+Black Box                                                                                                                                    & Grey Box                                                                                                 \\
+\uncover<3->{Formal attacker model (oracle, queries, knowledge, ...)                                                                                      & Attacker with a certain equipment, expertise, knowledge of the implementation details, available time...} \\
+\uncover<4>{Computational complexity to perform the attack (\eg $2^{126.1}$ operations to break AES-128 \cite{bogdanov}) & Cotation table of an attack (in Common Criteria)          }                                              
+\end{tabular}
+\end{table}
+
 \end{frame}
 
 \begin{frame}
