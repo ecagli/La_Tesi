@@ -1,25 +1,72 @@
 \section{State of the Art, Objectives, Contributions}
 
-\begin{frame}
-\frametitle{Advanced Attacks}
-\begin{itemize}
-\item choose a sensitive variable $\sensRandVar = \sensFunction(\keyRandVar,\publicParRandVar)$, 
-\item acquire side-channel traces $(\vLeakVec_i)_{i=1,\dots , \nbTraces}$ making entries $(\publicParVar_i)_{i=1,\dots,\nbTraces}$ vary,
-\item define a \emph{leakage model} $\vaLeakVec \approx \leakageModel(\sensRandVar)$ (\eg \emph{mono-bit}, \emph{Hamming weight}, \emph{Hamming distance}, \emph{linear bit-combination}, \emph{identity}\uncover<3->{\important{, learned templates}}),
-\item for every key chunk hypothesis $\keyVar \in \keyVarSet$ predict the side-channel leakage 
-\begin{equation}\label{eq:predictions}
-\leakageModel_{\keyVar,i} = \leakageModel(\sensFunction(\keyVar,\publicParVar_i)) \mbox{ ,}
-\end{equation}
-\item statistically compare the hypothetical predictions to the observed side-channel acquisitions, by means of a  \emph{distinguisher} $\distinguisher$ (\eg DoM \cite{kocher1999differential}, Multi-bit DoM \cite{bevan2002ways,messerges2002examining}, CPA \cite{brier2004correlation}, MIA \cite{gierlichs2008mutual,batina2011mutual}, ..., \uncover<4->{\important{, Maximum Likelihood (ML) or Maximum-a-Posteriori (MAP) $\rightarrow$ Template Attack}}):
-\begin{equation}
-\distinguisher_{\keyVar} = \distinguisher((\vLeakVec_i)_{i=1,\dots , \nbTraces}, (\leakageModel_{\keyVar,i} )_{i=1,\dots , \nbTraces}) \mbox{ ,}
-\end{equation}
-\item deduce the key chunk candidate from scores $\distinguisher_{\keyVar}$, in general coinciding with the key hypothesis that maximises (or minimises) the scores.
-\end{itemize}
+%\begin{frame}
+%\frametitle{Template Attack}
+% \begin{textblock}{5}(10,2)
+% \important{$\vaLeakVec\in \mathbb{R}^D$\\
+%  Curse of dimensionality!}
+% \end{textblock}
+%\begin{itemize}
+%\item Profiling phase (using profiling traces under known $\sensRandVar$)
+%\begin{itemize}
+%\item \uncover<7->{manage de-synchronization problem}
+%\item \uncover<6->{mandatory dimensionality reduction}
+%\item \uncover<6->{Gaussian hypothesis \cite{Chari2003}}
+%\item \uncover<6->{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}
+%\item \uncover<2->{estimate \only<2-4>{$\prob[\vaLeakVec|\sensRandVar=\sensVar]$ (generative model)} \only<5-6>{\textcolor{blue}{$\prob[\vaLeakVec|\sensRandVar=\sensVar]$}} \only<7->{\textcolor{blue}{$\prob[\important{\varepsilon(\vaLeakVec)}|\sensRandVar=\sensVar]$}}for each value of $\sensVar$}
+%\end{itemize}
+%\item Attack phase ($N$ attack traces $\vLeakVec_i$, e.g. with known plaintexts $p_i$)
+%
+%\only<1-4>{ \begin{itemize}
+%\item[] \textcolor{white}{Log-likelihood score for each key hypothesis $k$
+%\begin{equation*}
+%d_k = \sum_{i=1}^{N}\log \prob[\vaLeakVec=\vLeakVec_i | Z=f(p_i,k)]
+%\end{equation*}
+%}
+%
+%\item\textcolor{white}{A-posteriori probability score for each key hypothesis $k$
+%\begin{align*}
+%\pdf_{\given{\sensRandVar}{  \vaLeakVec = \vLeakVec}}(\sensVar) &= \frac{\pdf_{\given{\vaLeakVec}{\sensRandVar = \sensVar}}(\vLeakVec)\pdf_{\sensRandVar}(\sensVar)} {\pdf_{\vaLeakVec}(\vLeakVec)}\text{Bayes' theorem}\\
+%d_{\keyVar} &= \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec_i}}(\sensFunction(\keyVar,\publicParVar_i) ) \mbox{ ,}
+%\end{align*}
+%}
+%\end{itemize}
+%}
+%\only<5-6>{\begin{itemize}
+%\item Log-likelihood score for each key hypothesis $k$
+%\begin{equation*}
+%d_k = \sum_{i=1}^{N}\log \textcolor{blue}{\prob[\vaLeakVec=\vLeakVec_i | Z=f(p_i,k)]}
+%\end{equation*}
+%
+%\item A-posteriori probability score for each key hypothesis $k$
+%\begin{align*}
+%\pdf_{\given{\sensRandVar}{  \vaLeakVec = \vLeakVec}}(\sensVar) &= \frac{\pdf_{\given{\vaLeakVec}{\sensRandVar = \sensVar}}(\vLeakVec)\pdf_{\sensRandVar}(\sensVar)} {\pdf_{\vaLeakVec}(\vLeakVec)} \text{Bayes' theorem}\\
+%d_{\keyVar} &= \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec_i}}(\sensFunction(\keyVar,\publicParVar_i) ) \mbox{ ,}
+%\end{align*}
+%\end{itemize}
+%}
+%\only<7->{\begin{itemize}
+%\item Log-likelihood score for each key hypothesis $k$
+%\begin{equation*}
+%d_k = \sum_{i=1}^{N}\log \textcolor{blue}{\prob[\important{\varepsilon(
+%\vaLeakVec)}=\important{\varepsilon(
+%\vLeakVec_i)} | Z=f(p_i,k)]}
+%\end{equation*}
+%
+%
+%\item A-posteriori probability score for each key hypothesis $k$
+%\begin{align*}
+%\pdf_{\given{\sensRandVar}{  \vaLeakVec = \vLeakVec}}(\sensVar) &= \frac{\pdf_{\given{\vaLeakVec}{\sensRandVar = \sensVar}}(\vLeakVec)\pdf_{\sensRandVar}(\sensVar)} {\pdf_{\vaLeakVec}(\vLeakVec)} \text{Bayes' theorem}\\
+%d_{\keyVar} &= \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec_i}}(\sensFunction(\keyVar,\publicParVar_i) ) \mbox{ ,}
+%\end{align*}
+%\end{itemize}
+%}
+%
+%\end{itemize}
+%
+%
+%\end{frame}
 
-\uncover<2->{\textbf{If profiling is available...}
-}
-\end{frame}
 
 \begin{frame}
 \frametitle{Template Attack}
@@ -30,50 +77,20 @@
 \begin{itemize}
 \item Profiling phase (using profiling traces under known $\sensRandVar$)
 \begin{itemize}
-\item \uncover<7->{manage de-synchronization problem}
-\item \uncover<6->{mandatory dimensionality reduction}
-\item \uncover<6->{Gaussian hypothesis \cite{Chari2003}}
-\item \uncover<6->{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}
-\item \uncover<2->{estimate \only<2-4>{$\prob[\vaLeakVec|\sensRandVar=\sensVar]$ (generative model)} \only<5-6>{\textcolor{blue}{$\prob[\vaLeakVec|\sensRandVar=\sensVar]$}} \only<7->{\textcolor{blue}{$\prob[\important{\varepsilon(\vaLeakVec)}|\sensRandVar=\sensVar]$}}for each value of $\sensVar$}
+\item manage de-synchronization problem
+\item mandatory dimensionality reduction
+\item Gaussian hypothesis \cite{Chari2003}
+\item Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}
+\item estimate \only<1>{\textcolor{blue}{$\prob[\vaLeakVec|\sensRandVar=\sensVar]$} (generative model)} 
 \end{itemize}
 \item Attack phase ($N$ attack traces $\vLeakVec_i$, e.g. with known plaintexts $p_i$)
 
-\only<1-4>{ \begin{itemize}
-\item[] \textcolor{white}{Log-likelihood score for each key hypothesis $k$
-\begin{equation*}
-d_k = \sum_{i=1}^{N}\log \prob[\vaLeakVec=\vLeakVec_i | Z=f(p_i,k)]
-\end{equation*}
-}
-
-\item\textcolor{white}{A-posteriori probability score for each key hypothesis $k$
-\begin{align*}
-\pdf_{\given{\sensRandVar}{  \vaLeakVec = \vLeakVec}}(\sensVar) &= \frac{\pdf_{\given{\vaLeakVec}{\sensRandVar = \sensVar}}(\vLeakVec)\pdf_{\sensRandVar}(\sensVar)} {\pdf_{\vaLeakVec}(\vLeakVec)}\text{Bayes' theorem}\\
-d_{\keyVar} &= \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec_i}}(\sensFunction(\keyVar,\publicParVar_i) ) \mbox{ ,}
-\end{align*}
-}
-\end{itemize}
-}
-\only<5-6>{\begin{itemize}
+\begin{itemize}
 \item Log-likelihood score for each key hypothesis $k$
 \begin{equation*}
 d_k = \sum_{i=1}^{N}\log \textcolor{blue}{\prob[\vaLeakVec=\vLeakVec_i | Z=f(p_i,k)]}
 \end{equation*}
 
-\item A-posteriori probability score for each key hypothesis $k$
-\begin{align*}
-\pdf_{\given{\sensRandVar}{  \vaLeakVec = \vLeakVec}}(\sensVar) &= \frac{\pdf_{\given{\vaLeakVec}{\sensRandVar = \sensVar}}(\vLeakVec)\pdf_{\sensRandVar}(\sensVar)} {\pdf_{\vaLeakVec}(\vLeakVec)} \text{Bayes' theorem}\\
-d_{\keyVar} &= \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec_i}}(\sensFunction(\keyVar,\publicParVar_i) ) \mbox{ ,}
-\end{align*}
-\end{itemize}
-}
-\only<7->{\begin{itemize}
-\item Log-likelihood score for each key hypothesis $k$
-\begin{equation*}
-d_k = \sum_{i=1}^{N}\log \textcolor{blue}{\prob[\important{\varepsilon(
-\vaLeakVec)}=\important{\varepsilon(
-\vLeakVec_i)} | Z=f(p_i,k)]}
-\end{equation*}
-
 
 \item A-posteriori probability score for each key hypothesis $k$
 \begin{align*}
@@ -81,12 +98,10 @@ d_k = \sum_{i=1}^{N}\log \textcolor{blue}{\prob[\important{\varepsilon(
 d_{\keyVar} &= \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec_i}}(\sensFunction(\keyVar,\publicParVar_i) ) \mbox{ ,}
 \end{align*}
 \end{itemize}
-}
 
 \end{itemize}
-
-
 \end{frame}
+
 
 
 \begin{frame}
@@ -105,7 +120,7 @@ Profiling phase (using profiling traces under known $\sensRandVar$)
 \uncover<2->{
 \begin{itemize}
 \item Ameliorate the template attack routine by proposing efficient dimensionality reduction techniques
-\item \uncover<3->{More generally, optimise the profiling attack strategy}
+\item \uncover<3->{More generally, optimise the profiling attack strategy - consider discriminative model}
 \item Consider the presence of most-commonly-implemented SCA countermeasures (masking, hiding)
 \end{itemize}
 }

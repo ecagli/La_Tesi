@@ -1,33 +1,209 @@
 \section{Kernel Discriminant Analysis against Masking}
 \subsection{Linear Discriminant Analysis}
 
-\begin{frame}
-\frametitle{Contents}
-\begin{itemize}
-\item \important{Introduction to LDA: as a classifier, and as a feature extractor}
-\item Introduction to masking countermeasure and Kernel Discriminant Analysis as a feature extractor
-\item Motivations to apply deep learning techniques
-\item Convolutional Neural Networks and Data Augmentation to attack jitter-based countermeasure
-\end{itemize}
-\end{frame}
+%\begin{frame}
+%\frametitle{Contents}
+%\begin{itemize}
+%\item \important{Introduction to LDA: as a classifier, and as a feature extractor}
+%\item Introduction to masking countermeasure and Kernel Discriminant Analysis as a feature extractor
+%\item Motivations to apply deep learning techniques
+%\item Convolutional Neural Networks and Data Augmentation to attack jitter-based countermeasure
+%\end{itemize}
+%\end{frame}
 
+\begin{frame}{Linear Dimensionality Reduction}
+\begin{figure}
+\centering{
+\resizebox{11cm}{!}
+{
+\begin{tikzpicture}[remember picture,
+    scale=0.50,
+    % Define styles here
+    every node/.style={transform shape}
+    block/.style={
+        rectangle,
+        draw,
+        text centered,
+        rounded corners
+        },
+    data/.style={
+        trapezium,
+        trapezium left angle=60,
+        trapezium right angle=120,
+        draw
+        },
+    component/.style={
+        circle,
+        draw
+        },
+    output/.style={
+        tape,
+        tape bend top=none,
+        draw
+        },
+    edge/.style={
+        ->,
+        >=stealth,
+        thick
+        }
+    ]
+
+    % Place nodes
+    \node[inner sep=0pt] (genericTrace) at (0,-0)
+    {\includegraphics[width=0.8\textwidth]{figures/genericTrace.pdf} };
+    \node [above=0.1cm of genericTrace] {Rough Trace};
+    \node [block, below left=0.8cm of genericTrace] (PCA) {\begin{Large}PCA\end{Large}};
+    \node [block, below right=0.8cm of genericTrace] (LDA) {\begin{Large}LDA\end{Large}};
+    \node [below=1.5cm of genericTrace](puntini) {\begin{Large}$\dots$\end{Large}};
+    \node [component, left=0.5cm of puntini](PC2) {\begin{Large}$\AAlpha_2$\end{Large}};
+    \node [component, left=0.5cm of PC2](PC1) {\begin{Large}$\AAlpha_1$\end{Large}};
+    \node [component, right=0.25cm of puntini](PCC) {\begin{Large}$\AAlpha_C$\end{Large}};
+   \node [right=0.25cm of PCC](puntini2) {\begin{Large}$\dots$\end{Large}};
+    \node [component, right=0.15cm of puntini2](PCr) {\begin{Large}$\AAlpha_r$\end{Large}};
+    %\draw[thick, black,decorate,decoration={brace,amplitude=10pt}](PC1.north) -- (PCr.north);
+    \draw(PC1.north)  to [bend left=15] (PCr.north);
+    
+    
+    \draw[->, shorten >=20pt] (PCA.north) node[above=0.4cm] {Principal Components (PCs)} to [bend left] (PC2.north) ;
+     \draw[->,shorten >=25pt] (LDA.north)  node[above=0.35cm] {Discriminant Components (DCs)} to [bend right] (puntini2.north);
+     
+    \only<2>{ 
+    \node [data, below=1cm of puntini](formula1) {\begin{Large}$\sum_{j=1}^D\AAlpha_1[j]\textbf{x}[j]$\end{Large}};
+    \node [left=0.5cm of formula1] {Linear Combination / Projection};
+    \node [below=0.5cm of formula1] (compressed1)
+    	{\includegraphics[width=0.5\textwidth]{figures/compressed1.pdf} }; 
+    	\node[right=0.1cm of compressed1]{Reduced Trace}; 
+	\draw[-, red, thick, shorten >=6pt, shorten <=-6pt](genericTrace.south) to (PC1.north);
+	\draw[-, red, thick, shorten >=6pt, shorten <= 6pt](PC1.south) to (formula1.north);
+	\draw[-, red, thick, shorten <= 2pt, shorten >=-5pt](formula1.south) to (compressed1.north);
+}
+    
+        \only<3>{ 
+        \node [data, below=1cm of puntini](formula2) {\begin{Large}$\sum_{j=1}^D\AAlpha_2[j]\textbf{x}				[j]$\end{Large}};
+    \node [left=0.5cm of formula2] {Linear Combination / Projection};
+    \node [below=0.5cm of formula2] (compressed2)
+    	{\includegraphics[width=0.5\textwidth]{figures/compressed2.pdf} };  
+    	\node[right=0.1cm of compressed2]{Reduced Trace};
+	\draw[-, red, thick, shorten >=6pt, shorten <=-6pt](genericTrace.south) to (PC2.north);
+	\draw[-, red, thick, shorten >=6pt, shorten <= 6pt](PC2.south) to (formula1.north);
+	\draw[-, red, thick, shorten <= 2pt, shorten >=-5pt](formula2.south) to (compressed2.north);
+}
+
+ \uncover<4>{ 
+        \node [data, below=1cm of puntini](formulaC) {\begin{Large}$\sum_{j=1}^D\AAlpha_C[j]\textbf{x}				[j]$\end{Large}};
+    \node [left=0.5cm of formulaC] {Linear Combination / Projection};
+    \node [below=0.5cm of formulaC] (compressedC)
+    	{\includegraphics[width=0.5\textwidth]{figures/compressedAll.pdf} }; 
+    \node[right=0.1cm of compressedC]{Reduced Trace};
+	\draw[-, red, thick, shorten >=6pt, shorten <=-6pt](genericTrace.south) to (PCC.north);
+	\draw[-, red, thick, shorten >=6pt, shorten <= 6pt](PCC.south) to (formulaC.north);
+	\draw[-, red, thick, shorten <= 2pt, shorten >=-5pt](formulaC.south) to (compressedC.north);
+}
+    
+     
+     
+
+\end{tikzpicture}
+}
+}
+
+\end{figure}
+\end{frame}
 
 \begin{frame}
 \frametitle{Model-based SNR and Fisher's Criterion}
-Fisher's criterion for dimensionality reduction is maximize the extracted features SNR
+\begin{block}{Signal-to-Noise Ratio (SNR)}
+\begin{itemize}
+\item Independent Noise Assumption: $\vaLeakVec = \varphi(\sensRandVar)+\vec{B}$
+
+\item $\mmmXclass= \esperEst[\given{\vaLeakVec}{\sensRandVar = \sensVarGenValue}] = \frac{1}{\nbTracesPerClass}\sum_{i\colon \sensVar_i=\sensVarGenValue} \vLeakVec_i $ sample mean per class ($\approx \varphi(\sensRandVar)$)
+\item $\varXclass = \varEst(\given{\vaLeakVec}{\sensRandVar = \sensVarGenValue}) = \frac{1}{\nbTracesPerClass-1}\sum_{i\colon \sensVar_i=\sensVarGenValue} (\vLeakVec_i - \mmmXclass)^2 $ sample variance per class ($\approx \mathrm{var}(\vec{B})$) 
+\item \begin{equation*}\mathrm{SNR}(t) = \frac{\varEst(\mmmXclass[Z](t))}{\esperEst[\varXclass[Z](t)]} \qquad \textcolor{grey}{\frac{\text{\emph{variance inter-class}}}{\text{\emph{variance intra-class}}}} \end{equation*}
+\end{itemize}
+\end{block}
+
+\begin{block}{Fisher's Criterion for Linear Dimensionality Reduction}
+
+\begin{itemize}
+\item $\SB = \sum_{\sensVarGenValue\in\sensVarSet}\nbTracesPerClass(\mmmXclass-\mmmX)(\mmmXclass-\mmmX)^\intercal $ (inter-class scatter matrix)
+\item $\SW = \sum_{\sensVarGenValue\in\sensVarSet}\sum_{i=1\colon \sensVar_i=\sensVarGenValue}(\vLeakVec_i-\mmmXclass)(\vLeakVec_i-\mmmXclass)^\intercal$ (intra-class scatter matrix)
+\item Fisher's criterion
+ \begin{equation}\label{eq:LDA}
+\hat{ \AAlpha}=\mathrm{argmax}_{\AAlpha} \frac{\AAlpha^\intercal \SB \AAlpha}{\AAlpha^\intercal \SW \AAlpha} \mbox{ ,}
+ \end{equation}
+\end{itemize}
+
+\end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{LDA: an optimal linear classifier}
-linear separability and
-derivation de LDA des modeles generatives (avec hypothese gaussienne et homoscedaticite)
+\frametitle{LDA: an optimal binary linear classifier}
+\begin{columns}
+\begin{column}{.5\linewidth}
+\includegraphics[width=\textwidth]{figures/dataNoProjection.pdf} 
+\end{column}
+\begin{column}{.6\linewidth}
+\begin{itemize}
+\item Classify data $\vLeakVec$ into 2 classes $\sensVarSet = \{\sensVarValue{1}, \sensVarValue{2}\}$
+\item Generative model: $\pdf_{\given{\vaLeakVec}{\sensRandVar = \sensVarValue{j}}}(\vLeakVec)$, $\pdf_{\sensRandVar}(\sensVarValue{j})$ and $\pdf_{\vaLeakVec}(\vLeakVec)$
+\item Posterior probabilities (via Bayes' theorem), then classify through the \emph{log-likelihood ratio}: $a = \log\left[\frac{\prob(\given{\sensVarValue{1}}{\vLeakVec})}{\prob(\given{\sensVarValue{2}}{\vLeakVec})}\right]]$ (boundary surface $a=0$)
+\end{itemize}
+\end{column}
+\end{columns}
+
+\begin{itemize}
+\item Two assumptions about class-conditional densities: 
+\begin{itemize}
+\item Gaussian distributions with parameters $\mu_j, \Sigma_j$
+\item Homoscedasticity: $\Sigma_j=\Sigma$ for all $j$
+\end{itemize}
+\item $\Rightarrow a = \vec{w}^\intercal \vLeakVec + w_0$ (linear decision boundary, $\vec{w}$ and $w_0$ functions of $\Sigma, \mu_j$)
+\end{itemize}
+
 \end{frame}
 
 \begin{frame}
 \frametitle{LDA and Fisher's Discriminant}
-equivalence under conditions, but conditions not required to apply fisher's discriminant (SCA literature's application of LDA)
+\begin{columns}
+\begin{column}{.5\linewidth}
+\includegraphics[width=\textwidth]{figures/LDAprojection.pdf} 
+\end{column}
+\begin{column}{.6\linewidth}
+\begin{itemize}
+\item LDA: linear decision boundary $a = \vec{w}^\intercal \vLeakVec + w_0$
+\item Equivalently, project data onto $\vec{w}^\intercal \vLeakVec$ (orthogonally to the decision boudary), than classify by a real threshold (optimally $w_0$). \\
+\end{itemize}
+\end{column}
+\end{columns}
+
+\begin{itemize}
+\item Two assumptions about class-conditional densities: 
+\begin{itemize}
+\item Gaussian distributions with parameters $\mu_j, \Sigma_j$
+\item Homoscedasticity: $\Sigma_j=\Sigma$ for all $j$
+\end{itemize}
+\end{itemize}
+
+\begin{block}{Fact, abuse and preference for the dimensionality reduction formulation}
+\begin{itemize}
+\item When LDA assumptions are met, the solution of the Fisher's criterion coincides with $\vec{w}$. 
+\item assumption not required
+\item naturally multi-class
+\end{itemize}
+\end{block}
+
 \end{frame}
 
+\begin{frame}
+\frametitle{Linear separability}
+LDA: linear decision boundary $a = \vec{w}^\intercal \vLeakVec + w_0$ ($\vec{w} = \Sigma^{-1}(\mu_1-\mu_2)$)
+%
+\begin{block}{}
+\begin{huge}
+If $\mu_1 = \mu_2$? 
+\end{huge}
+\end{block}
+\end{frame}
 
 \begin{frame}
 \frametitle{Dimensionality reduction in presence of sharing}
@@ -38,6 +214,7 @@ equivalence under conditions, but conditions not required to apply fisher's disc
 %\item Sharing  $\textcolor{red}{\longleftarrow}$ \textcolor{red}{makes selecting and projecting techniques ineffective}
 %\end{itemize}
 %\end{block}
+
 
 \begin{block}{$(d-1)$th-order Sharing (or Masking)}
 $Z$ split into shares  $Z = M_1 \star \dots \star M_d$ \\

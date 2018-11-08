@@ -98,6 +98,7 @@ Black Box                                                                       
 \begin{itemize}
 \item TODO: example de trace (square and multiply sans contremesure) $\rightarrow$ attack simple
 \item TODO: Schéma avec la puce qui tourne, l'oscillo, les signaux, les hp de clé, le modèle de fuite, le distingueur statistique $r\rightarrow$ attack avancée
+\item \emph{divide-and-conquer}
 
 \end{itemize}
 \end{frame}
@@ -121,16 +122,98 @@ Black Box                                                                       
 \end{frame}
 
 
+\begin{frame}
+\frametitle{Advanced Attacks}
+\begin{itemize}
+\item choose a sensitive variable $\sensRandVar = \sensFunction(\keyRandVar,\publicParRandVar)$, 
+\item acquire side-channel traces $(\vLeakVec_i)_{i=1,\dots , \nbTraces}$ making entries $(\publicParVar_i)_{i=1,\dots,\nbTraces}$ vary,
+\item define a \emph{leakage model} $\vaLeakVec \approx \leakageModel(\sensRandVar)$ (\eg \emph{mono-bit}, \emph{Hamming weight}, \emph{Hamming distance}, \emph{linear bit-combination}, \emph{identity}\uncover<3->{\important{, learned templates}}),
+\item for every key chunk hypothesis $\keyVar \in \keyVarSet$ predict the side-channel leakage 
+\begin{equation}\label{eq:predictions}
+\leakageModel_{\keyVar,i} = \leakageModel(\sensFunction(\keyVar,\publicParVar_i)) \mbox{ ,}
+\end{equation}
+\item statistically compare the hypothetical predictions to the observed side-channel acquisitions, by means of a  \emph{distinguisher} $\distinguisher$ (\eg DoM \cite{kocher1999differential}, Multi-bit DoM \cite{bevan2002ways,messerges2002examining}, CPA \cite{brier2004correlation}, MIA \cite{gierlichs2008mutual,batina2011mutual}, ..., \uncover<4->{\important{, Maximum Likelihood (ML) or Maximum-a-Posteriori (MAP) $\rightarrow$ Template Attack}}):
+\begin{equation}
+\distinguisher_{\keyVar} = \distinguisher((\vLeakVec_i)_{i=1,\dots , \nbTraces}, (\leakageModel_{\keyVar,i} )_{i=1,\dots , \nbTraces}) \mbox{ ,}
+\end{equation}
+\item deduce the key chunk candidate from scores $\distinguisher_{\keyVar}$, in general coinciding with the key hypothesis that maximises (or minimises) the scores.
+\end{itemize}
+
+\uncover<2->{\textbf{If profiling is available...}
+}
+\end{frame}
 
 
 \begin{frame}
 \frametitle{Profiling Attacks...Supervised Learning}
-\begin{itemize}
-\item TODO Figure device under attack and clone device 
-\item machine learning \emph{definition}
-\item analogy with supervised learning
-\end{itemize}
+\begin{center}
+\scalebox{0.7}{
+\begin{tikzpicture}[ ->, node distance = 2.5cm,
+					decoration = {snake,   % <-- added
+                    pre length=3pt,post length=7pt,% <-- for better looking of arrow,
+                    }]
+\node [rectangle, draw, text width=4em, text centered, fill=blue!30] (DOT){\includegraphics[width = \textwidth]{figures/Computer_Chip-512.png}\\ Target device};
+\node [rectangle, draw, text width=4em, text centered, fill=green!30, right of = DOT] (CLONE){\includegraphics[width = \textwidth]{figures/Computer_Chip-512.png}\\ Clone device};
+\end{tikzpicture}
+}
+\end{center}
 
+\begin{block}{Machine Learning}
+\textquotedbl A computer program is said to learn from experience E with respect to some task T and performance measure P, if its performance on T, as measured by P, improves with experience E. \textquotedbl \cite{Mitchell1997}
+\end{block}
+
+\begin{block}{Supervised Learning}
+\begin{columns}
+    \begin{column}{.6\linewidth}
+    The \emph{supervised} learning algorithms access to a dataset of examples, each associated in general to a \emph{target} or \emph{label}. 
+    \end{column}
+    \begin{column}{.3\linewidth}
+\includegraphics[width=\textwidth]{figures/teacher.jpg}
+    \end{column}
+\end{columns}
+
+%\begin{columns}
+%\begin{column}{width = 0.7\textwidth}
+%cao
+%%
+%\end{column}
+%\begin{column}{width = 0.3\textwidth}
+%ciao
+%%
+%\end{column}
+%\end{columns}
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Classification}
+\begin{block}{Classification problem}
+Assign to a datum $\vaLeakVec$ (e.g. an image) a label $\sensRandVar$ among a set of possible labels $\mathcal{Z}=\{\mathrm{Cat}, \mathrm{Dog}, \mathrm{Horse}\}$
+\only<1>{
+\includegraphics[width=\textwidth]{Figures/cane_wo_results.pdf}}
+\only<2->{\includegraphics[width=\textwidth]{Figures/cane_classifier.pdf}}
+
+%\uncover<3->{\hfill{\textcolor{red}{$\prob[\ZZZ|\XXX]$}}}
+
+\end{block}
+\uncover<3->{
+\only<3>{
+\begin{block}{Simple Attack as a Classification Problem}
+\includegraphics[width=\textwidth]{Figures/trace_classifier.pdf} 
+\end{block}
+}
+\only<4>{
+\begin{block}{Advanced Attack as a Classification Problem}
+\includegraphics[width=\textwidth]{Figures/trace_classifier.pdf} 
+\end{block}
+}
+\only<5>{
+\begin{block}{Advanced Attack as Multiple Classification Problems}
+\includegraphics[width=\textwidth]{Figures/trace_classifier.pdf} 
+\end{block}
+}
+}
 \end{frame}
 
 
