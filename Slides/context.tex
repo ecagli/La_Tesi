@@ -32,116 +32,145 @@ $\Rightarrow$ Requires protection against very high-level attacker
 \item AVA: vulnerability assessment (penetration testing $\rightarrow$ attack potential rating)
 \end{itemize}
 \end{frame}
+%
+%\begin{frame}
+%\frametitle{Side-Channel Vulnerability of Embedded Cryptography}
+%\scalebox{0.7}{
+%\begin{tikzpicture}[ ->, node distance = 2.5cm,
+%					decoration = {snake,   % <-- added
+%                    pre length=3pt,post length=7pt,% <-- for better looking of arrow,
+%                    }]
+%\node [data] (plaintext){plaintext};
+%\node [cipher, right of=plaintext] (AES) {\only<1>{Encryption\\ \includegraphics[width = 0.9\textwidth]{figures/cle.jpg} (Key)}\only<2->{\includegraphics[width = \textwidth]{figures/Computer_Chip-512.png}\\Intermediate Computations}};
+%\node [data, right of=AES] (ciphertext){ciphertext};
+%\uncover<2->{\node [ above right of=AES] (Conso) {Power Consumption};
+%\node [ below right of=AES] (EM) {Electromagnetic Irradiation};
+%\node [ above left of=AES] (Time) {Time Duration};
+%\node [ below left of=AES] (Sound) {Sound Emanation};
+%\path[draw=blue, very thick, decorate] (AES) -> (Sound);
+%\path[draw=blue, very thick, decorate] (AES) -> (Time);
+%\path[draw=blue, very thick, decorate] (AES) -> (Conso);
+%\path[draw=blue, very thick, decorate] (AES) -> (EM);}
+%\draw [arrow] (plaintext) -- (AES);
+%\draw [arrow] (AES) -- (ciphertext);
+%\end{tikzpicture}
+%}
+%\hfill
+%\only<1>{\includegraphics[width=.25\textwidth]{figures/cassaforte_sola.pdf}}
+%\only<2->{\includegraphics[width=.25\textwidth]{figures/cassaforte_completa.pdf}}
+%
+%%\begin{columns}
+%%\begin{column}{.5\textwidth}
+%%\textbf{Classical Cryptanalysis}
+%%\begin{itemize}
+%%\item Black box (input, output)
+%%\item Formal attacker model (oracle, knowledge, ...)
+%%\item Computational complexity to perform the attack (\eg $2^{126.1}$ operations to break AES-128 \cite{bogdanov})
+%%\end{itemize}
+%%\end{column}
+%%\begin{column}{.5\textwidth}
+%%\textbf{Side-Channel Cryptanalysis}
+%%\begin{itemize}
+%%\item White box (input, output, side-channel observations of intermediate computations)
+%%\item Attacker with a certain equipment, expertise, knowledge of the embedded device, available time...
+%%\item In Common Criteria: the cotation table of the attack
+%%\end{itemize}
+%%\end{column}
+%%\end{columns}
+%\vspace{1em}
+%%\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}m{#1}}  %% right aligned
+%\begin{table}[]
+%\renewcommand{\arraystretch}{1.2}
+%\begin{tabular}{ >{\raggedleft\arraybackslash}m{0.4\textwidth} m{0.4\textwidth}}
+%\toprule
+%\textbf{Classical Cryptanalysis}                                                                                                             & \textbf{Side-Channel Cryptanalysis}                                                                      \\
+%\midrule
+%Black Box                                                                                                                                    & \uncover<2->{Grey Box}                                                                                                \\
+%\uncover<3->{Formal attacker model (oracle, queries, knowledge, ...)                                                                                      & Attacker with a certain equipment, expertise, knowledge of the implementation details, available time...} \\
+%\uncover<4>{Computational complexity to perform the attack (\eg $2^{126.1}$ operations to break AES-128 \cite{bogdanov}) & Cotation table of an attack (in Common Criteria)          }                                              
+%\end{tabular}
+%\end{table}
+%
+%\end{frame}
+%
 
 \begin{frame}
 \frametitle{Side-Channel Vulnerability of Embedded Cryptography}
-\scalebox{0.7}{
-\begin{tikzpicture}[ ->, node distance = 2.5cm,
-					decoration = {snake,   % <-- added
-                    pre length=3pt,post length=7pt,% <-- for better looking of arrow,
-                    }]
-\node [data] (plaintext){plaintext};
-\node [cipher, right of=plaintext] (AES) {\only<1>{AES}\only<2->{\includegraphics[width = \textwidth]{figures/Computer_Chip-512.png}\\Intermediate Computations}};
-\node [data, right of=AES] (ciphertext){ciphertext};
-\uncover<2->{\node [ above right of=AES] (Conso) {Power Consumption};
-\node [ below right of=AES] (EM) {Electromagnetic Irradiation};
-\node [ above left of=AES] (Time) {Time Duration};
-\node [ below left of=AES] (Sound) {Sound Emanation};
-\path[draw=blue, very thick, decorate] (AES) -> (Sound);
-\path[draw=blue, very thick, decorate] (AES) -> (Time);
-\path[draw=blue, very thick, decorate] (AES) -> (Conso);
-\path[draw=blue, very thick, decorate] (AES) -> (EM);}
-\draw [arrow] (plaintext) -- (AES);
-\draw [arrow] (AES) -- (ciphertext);
-\end{tikzpicture}
-}
-\hfill
-\only<1>{\includegraphics[width=.25\textwidth]{figures/cassaforte_sola.pdf}}
-\only<2->{\includegraphics[width=.25\textwidth]{figures/cassaforte_completa.pdf}}
 
-%\begin{columns}
-%\begin{column}{.5\textwidth}
-%\textbf{Classical Cryptanalysis}
-%\begin{itemize}
-%\item Black box (input, output)
-%\item Formal attacker model (oracle, knowledge, ...)
-%\item Computational complexity to perform the attack (\eg $2^{126.1}$ operations to break AES-128 \cite{bogdanov})
-%\end{itemize}
-%\end{column}
-%\begin{column}{.5\textwidth}
-%\textbf{Side-Channel Cryptanalysis}
-%\begin{itemize}
-%\item White box (input, output, side-channel observations of intermediate computations)
-%\item Attacker with a certain equipment, expertise, knowledge of the embedded device, available time...
-%\item In Common Criteria: the cotation table of the attack
-%\end{itemize}
-%\end{column}
-%\end{columns}
+\only<1>{\includegraphics[width=.9\textwidth]{figures/simple_attack/Diapositive3.PNG} }
+\only<2>{\includegraphics[width=.9\textwidth]{figures/simple_attack/Diapositive2.PNG} }
+\only<3->{\includegraphics[width=.9\textwidth]{figures/simple_attack/Diapositive1.PNG} }
 
-%\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}m{#1}}  %% right aligned
+
+\begin{small}
 \begin{table}[]
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{ >{\raggedleft\arraybackslash}m{0.4\textwidth} m{0.4\textwidth}}
 \toprule
 \textbf{Classical Cryptanalysis}                                                                                                             & \textbf{Side-Channel Cryptanalysis}                                                                      \\
 \midrule
-Black Box                                                                                                                                    & Grey Box                                                                                                 \\
-\uncover<3->{Formal attacker model (oracle, queries, knowledge, ...)                                                                                      & Attacker with a certain equipment, expertise, knowledge of the implementation details, available time...} \\
-\uncover<4>{Computational complexity to perform the attack (\eg $2^{126.1}$ operations to break AES-128 \cite{bogdanov}) & Cotation table of an attack (in Common Criteria)          }                                              
+Mathematical vulnerability &
+\uncover<2-> {Physical vulnerability}\\
+Black Box                                                                                                                                    & \uncover<2->{Grey Box / Divide-and-conquer}                                                                                                \\
+\uncover<4->{Formal attacker model & Attacker model?} \\
+\uncover<5>{Computational complexity & Cotation table     }                                              
 \end{tabular}
 \end{table}
-
+\end{small}
 \end{frame}
 
 \begin{frame}
-\frametitle{Side-Channel Attacks}
-\begin{itemize}
-\item TODO: example de trace (square and multiply sans contremesure) $\rightarrow$ attack simple
-\item TODO: Schéma avec la puce qui tourne, l'oscillo, les signaux, les hp de clé, le modèle de fuite, le distingueur statistique $r\rightarrow$ attack avancée
-\item \emph{divide-and-conquer}
+\frametitle{Advanced Side-Channel Attacks}
+\only<1>{\includegraphics[width=\textwidth]{figures/advanced_attack/Diapositive1.PNG} }
+\only<2>{\includegraphics[width=\textwidth]{figures/advanced_attack/Diapositive2.PNG} }
+\only<3>{\includegraphics[width=\textwidth]{figures/advanced_attack/Diapositive3.PNG} }
+\only<4>{\includegraphics[width=\textwidth]{figures/advanced_attack/Diapositive4.PNG} }
+\only<5>{\includegraphics[width=\textwidth]{figures/advanced_attack/Diapositive5.PNG} }
+\only<6>{\includegraphics[width=\textwidth]{figures/advanced_attack/Diapositive6.PNG} }
+\only<7>{\includegraphics[width=\textwidth]{figures/advanced_attack/Diapositive7.PNG} }
 
-\end{itemize}
+
 \end{frame}
-
-\begin{frame}
-\frametitle{Side-Channel Attacks Parameters}
-\begin{itemize}
-\item \textbf{the physical nature of the exploited signals}: \only<1>{power consumption, electromagnetic irradiation}\only<2>{\textcolor{red}{power consumption, electromagnetic irradiation}}, time, sound, temperature, \dots
-\item \textbf{the chosen sensitive variable/s} $Z$:
-\begin{itemize}
-\item $Z = K$ a secret key chunk
-\item \only<1>{$Z = f(K,E)$}\only<2>{\textcolor{red}{$Z = f(K,E)$}} a variable depending on a secret key chunk and on a piece of public information
-\item an operation (\eg $Z \in \{ square, multiply, \dots\}$)
-\item a register 
-\item \only<1>{$Z^\prime = \varphi(Z)$}\only<2>{\textcolor{red}{$Z^\prime = \varphi(Z)$}} a non-injective function of any sensitive variable (\eg $f = \mathrm{HW}$ Hamming Weight)
-\end{itemize}
-\item \textbf{the strategy family}: simple attacks, collision attacks, \only<1>{differential/advanced attacks}\only<2>{\textcolor{red}{differential/advanced attacks}}
-\item \textbf{the shape of the attack}: horizontal attacks, vertical attacks
-\item \textbf{the attacker knowledge}: \only<1>{profiling}\only<2>{\textcolor{red}{profiling}}, non-profiling attacks
-\end{itemize}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Advanced Attacks}
-\begin{itemize}
-\item choose a sensitive variable $\sensRandVar = \sensFunction(\keyRandVar,\publicParRandVar)$, 
-\item acquire side-channel traces $(\vLeakVec_i)_{i=1,\dots , \nbTraces}$ making entries $(\publicParVar_i)_{i=1,\dots,\nbTraces}$ vary,
-\item define a \emph{leakage model} $\vaLeakVec \approx \leakageModel(\sensRandVar)$ (\eg \emph{mono-bit}, \emph{Hamming weight}, \emph{Hamming distance}, \emph{linear bit-combination}, \emph{identity}\uncover<3->{\important{, learned templates}}),
-\item for every key chunk hypothesis $\keyVar \in \keyVarSet$ predict the side-channel leakage 
-\begin{equation}\label{eq:predictions}
-\leakageModel_{\keyVar,i} = \leakageModel(\sensFunction(\keyVar,\publicParVar_i)) \mbox{ ,}
-\end{equation}
-\item statistically compare the hypothetical predictions to the observed side-channel acquisitions, by means of a  \emph{distinguisher} $\distinguisher$ (\eg DoM \cite{kocher1999differential}, Multi-bit DoM \cite{bevan2002ways,messerges2002examining}, CPA \cite{brier2004correlation}, MIA \cite{gierlichs2008mutual,batina2011mutual}, ..., \uncover<4->{\important{, Maximum Likelihood (ML) or Maximum-a-Posteriori (MAP) $\rightarrow$ Template Attack}}):
-\begin{equation}
-\distinguisher_{\keyVar} = \distinguisher((\vLeakVec_i)_{i=1,\dots , \nbTraces}, (\leakageModel_{\keyVar,i} )_{i=1,\dots , \nbTraces}) \mbox{ ,}
-\end{equation}
-\item deduce the key chunk candidate from scores $\distinguisher_{\keyVar}$, in general coinciding with the key hypothesis that maximises (or minimises) the scores.
-\end{itemize}
-
-\uncover<2->{\textbf{If profiling is available...}
-}
-\end{frame}
+%
+%\begin{frame}
+%\frametitle{Side-Channel Attacks Parameters}
+%\begin{itemize}
+%\item \textbf{the physical nature of the exploited signals}: \only<1>{power consumption, electromagnetic irradiation}\only<2>{\textcolor{red}{power consumption, electromagnetic irradiation}}, time, sound, temperature, \dots
+%\item \textbf{the chosen sensitive variable/s} $Z$:
+%\begin{itemize}
+%\item $Z = K$ a secret key chunk
+%\item \only<1>{$Z = f(K,E)$}\only<2>{\textcolor{red}{$Z = f(K,E)$}} a variable depending on a secret key chunk and on a piece of public information
+%\item an operation (\eg $Z \in \{ square, multiply, \dots\}$)
+%\item a register 
+%\item \only<1>{$Z^\prime = \varphi(Z)$}\only<2>{\textcolor{red}{$Z^\prime = \varphi(Z)$}} a non-injective function of any sensitive variable (\eg $f = \mathrm{HW}$ Hamming Weight)
+%\end{itemize}
+%\item \textbf{the strategy family}: simple attacks, collision attacks, \only<1>{differential/advanced attacks}\only<2>{\textcolor{red}{differential/advanced attacks}}
+%\item \textbf{the shape of the attack}: horizontal attacks, vertical attacks
+%\item \textbf{the attacker knowledge}: \only<1>{profiling}\only<2>{\textcolor{red}{profiling}}, non-profiling attacks
+%\end{itemize}
+%\end{frame}
+%
+%
+%\begin{frame}
+%\frametitle{Advanced Attacks}
+%\begin{itemize}
+%\item choose a sensitive variable $\sensRandVar = \sensFunction(\keyRandVar,\publicParRandVar)$, 
+%\item acquire side-channel traces $(\vLeakVec_i)_{i=1,\dots , \nbTraces}$ making entries $(\publicParVar_i)_{i=1,\dots,\nbTraces}$ vary,
+%\item define a \emph{leakage model} $\vaLeakVec \approx \leakageModel(\sensRandVar)$ (\eg \emph{mono-bit}, \emph{Hamming weight}, \emph{Hamming distance}, \emph{linear bit-combination}, \emph{identity}\uncover<3->{\important{, learned templates}}),
+%\item for every key chunk hypothesis $\keyVar \in \keyVarSet$ predict the side-channel leakage 
+%\begin{equation}\label{eq:predictions}
+%\leakageModel_{\keyVar,i} = \leakageModel(\sensFunction(\keyVar,\publicParVar_i)) \mbox{ ,}
+%\end{equation}
+%\item statistically compare the hypothetical predictions to the observed side-channel acquisitions, by means of a  \emph{distinguisher} $\distinguisher$ (\eg DoM \cite{kocher1999differential}, Multi-bit DoM \cite{bevan2002ways,messerges2002examining}, CPA \cite{brier2004correlation}, MIA \cite{gierlichs2008mutual,batina2011mutual}, ..., \uncover<4->{\important{, Maximum Likelihood (ML) or Maximum-a-Posteriori (MAP) $\rightarrow$ Template Attack}}):
+%\begin{equation}
+%\distinguisher_{\keyVar} = \distinguisher((\vLeakVec_i)_{i=1,\dots , \nbTraces}, (\leakageModel_{\keyVar,i} )_{i=1,\dots , \nbTraces}) \mbox{ ,}
+%\end{equation}
+%\item deduce the key chunk candidate from scores $\distinguisher_{\keyVar}$, in general coinciding with the key hypothesis that maximises (or minimises) the scores.
+%\end{itemize}
+%
+%\uncover<2->{\textbf{If profiling is available...}
+%}
+%\end{frame}
 
 
 \begin{frame}
@@ -157,13 +186,13 @@ Black Box                                                                       
 \end{tikzpicture}
 }
 \end{center}
-
+\uncover<2->{
 \begin{block}{Machine Learning}
-\textquotedbl A computer program is said to learn from experience E with respect to some task T and performance measure P, if its performance on T, as measured by P, improves with experience E. \textquotedbl \cite{Mitchell1997}
+\uncover<3->{\textquotedbl A computer program is said to learn from experience E with respect to some task T and performance measure P, if its performance on T, as measured by P, improves with experience E. \textquotedbl \cite{Mitchell1997} }
 \end{block}
-
+\pause
 \begin{block}{Supervised Learning}
-\begin{columns}
+\uncover<4->{\begin{columns}
     \begin{column}{.6\linewidth}
     The \emph{supervised} learning algorithms access to a dataset of examples, each associated in general to a \emph{target} or \emph{label}. 
     \end{column}
@@ -171,6 +200,7 @@ Black Box                                                                       
 \includegraphics[width=\textwidth]{figures/teacher.jpg}
     \end{column}
 \end{columns}
+}
 
 %\begin{columns}
 %\begin{column}{width = 0.7\textwidth}
@@ -183,7 +213,7 @@ Black Box                                                                       
 %\end{column}
 %\end{columns}
 \end{block}
-
+}
 \end{frame}
 
 \begin{frame}
