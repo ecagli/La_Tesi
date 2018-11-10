@@ -1,4 +1,6 @@
 \section{Kernel Discriminant Analysis against Masking}
+
+
 \subsection{Linear Discriminant Analysis}
 
 %\begin{frame}
@@ -11,104 +13,7 @@
 %\end{itemize}
 %\end{frame}
 
-\begin{frame}{Linear Dimensionality Reduction}
-\begin{figure}
-\centering{
-\resizebox{11cm}{!}
-{
-\begin{tikzpicture}[remember picture,
-    scale=0.50,
-    % Define styles here
-    every node/.style={transform shape}
-    block/.style={
-        rectangle,
-        draw,
-        text centered,
-        rounded corners
-        },
-    data/.style={
-        trapezium,
-        trapezium left angle=60,
-        trapezium right angle=120,
-        draw
-        },
-    component/.style={
-        circle,
-        draw
-        },
-    output/.style={
-        tape,
-        tape bend top=none,
-        draw
-        },
-    edge/.style={
-        ->,
-        >=stealth,
-        thick
-        }
-    ]
 
-    % Place nodes
-    \node[inner sep=0pt] (genericTrace) at (0,-0)
-    {\includegraphics[width=0.8\textwidth]{figures/genericTrace.pdf} };
-    \node [above=0.1cm of genericTrace] {Rough Trace};
-    \node [block, below left=0.8cm of genericTrace] (PCA) {\begin{Large}PCA\end{Large}};
-    \node [block, below right=0.8cm of genericTrace] (LDA) {\begin{Large}LDA\end{Large}};
-    \node [below=1.5cm of genericTrace](puntini) {\begin{Large}$\dots$\end{Large}};
-    \node [component, left=0.5cm of puntini](PC2) {\begin{Large}$\AAlpha_2$\end{Large}};
-    \node [component, left=0.5cm of PC2](PC1) {\begin{Large}$\AAlpha_1$\end{Large}};
-    \node [component, right=0.25cm of puntini](PCC) {\begin{Large}$\AAlpha_C$\end{Large}};
-   \node [right=0.25cm of PCC](puntini2) {\begin{Large}$\dots$\end{Large}};
-    \node [component, right=0.15cm of puntini2](PCr) {\begin{Large}$\AAlpha_r$\end{Large}};
-    %\draw[thick, black,decorate,decoration={brace,amplitude=10pt}](PC1.north) -- (PCr.north);
-    \draw(PC1.north)  to [bend left=15] (PCr.north);
-    
-    
-    \draw[->, shorten >=20pt] (PCA.north) node[above=0.4cm] {Principal Components (PCs)} to [bend left] (PC2.north) ;
-     \draw[->,shorten >=25pt] (LDA.north)  node[above=0.35cm] {Discriminant Components (DCs)} to [bend right] (puntini2.north);
-     
-    \only<2>{ 
-    \node [data, below=1cm of puntini](formula1) {\begin{Large}$\sum_{j=1}^D\AAlpha_1[j]\textbf{x}[j]$\end{Large}};
-    \node [left=0.5cm of formula1] {Linear Combination / Projection};
-    \node [below=0.5cm of formula1] (compressed1)
-    	{\includegraphics[width=0.5\textwidth]{figures/compressed1.pdf} }; 
-    	\node[right=0.1cm of compressed1]{Reduced Trace}; 
-	\draw[-, red, thick, shorten >=6pt, shorten <=-6pt](genericTrace.south) to (PC1.north);
-	\draw[-, red, thick, shorten >=6pt, shorten <= 6pt](PC1.south) to (formula1.north);
-	\draw[-, red, thick, shorten <= 2pt, shorten >=-5pt](formula1.south) to (compressed1.north);
-}
-    
-        \only<3>{ 
-        \node [data, below=1cm of puntini](formula2) {\begin{Large}$\sum_{j=1}^D\AAlpha_2[j]\textbf{x}				[j]$\end{Large}};
-    \node [left=0.5cm of formula2] {Linear Combination / Projection};
-    \node [below=0.5cm of formula2] (compressed2)
-    	{\includegraphics[width=0.5\textwidth]{figures/compressed2.pdf} };  
-    	\node[right=0.1cm of compressed2]{Reduced Trace};
-	\draw[-, red, thick, shorten >=6pt, shorten <=-6pt](genericTrace.south) to (PC2.north);
-	\draw[-, red, thick, shorten >=6pt, shorten <= 6pt](PC2.south) to (formula1.north);
-	\draw[-, red, thick, shorten <= 2pt, shorten >=-5pt](formula2.south) to (compressed2.north);
-}
-
- \uncover<4>{ 
-        \node [data, below=1cm of puntini](formulaC) {\begin{Large}$\sum_{j=1}^D\AAlpha_C[j]\textbf{x}				[j]$\end{Large}};
-    \node [left=0.5cm of formulaC] {Linear Combination / Projection};
-    \node [below=0.5cm of formulaC] (compressedC)
-    	{\includegraphics[width=0.5\textwidth]{figures/compressedAll.pdf} }; 
-    \node[right=0.1cm of compressedC]{Reduced Trace};
-	\draw[-, red, thick, shorten >=6pt, shorten <=-6pt](genericTrace.south) to (PCC.north);
-	\draw[-, red, thick, shorten >=6pt, shorten <= 6pt](PCC.south) to (formulaC.north);
-	\draw[-, red, thick, shorten <= 2pt, shorten >=-5pt](formulaC.south) to (compressedC.north);
-}
-    
-     
-     
-
-\end{tikzpicture}
-}
-}
-
-\end{figure}
-\end{frame}
 
 \begin{frame}
 \frametitle{Model-based SNR and Fisher's Criterion}
@@ -205,31 +110,24 @@ If $\mu_1 = \mu_2$?
 \end{block}
 \end{frame}
 
+
 \begin{frame}
-\frametitle{Dimensionality reduction in presence of sharing}
-%\begin{block}{Countermeasures}
-%Techniques to thwart side-channel attacks. 
-%\begin{itemize}
-%\item Hiding (\emph{ex:} random delay, shuffling, ...)
-%\item Sharing  $\textcolor{red}{\longleftarrow}$ \textcolor{red}{makes selecting and projecting techniques ineffective}
-%\end{itemize}
-%\end{block}
-
-
-\begin{block}{$(d-1)$th-order Sharing (or Masking)}
-$Z$ split into shares  $Z = M_1 \star \dots \star M_d$ \\
-with $M_1, \dots , M_{d-1}$ random shares (or masks) and $M_d = Z \star M_1^{-1}\star \dots \star M_{d-1}^{-1}$ \\
-Shares are handled at different time samples $t_1,\dots, t_d$ so that each time sample is independent from $Z$: $f(Z) = \esper[\vaLeakVec\lvert Z]$ is constant.
+\frametitle{Dimensionality reduction in presence of masking}
+\begin{block}{$(d-1)$th-order Sharing (or Masking)} 
+Split each sensitive $Z$ into shares  $Z = M_1 \star \dots \star M_d$ \\
+with \only<1>{\textcolor{black}{$M_1, \dots , M_{d-1}$}}\only<2->{\textcolor{red}{$M_1, \dots , M_{d-1}$}} random shares (or masks) \only<2->{\textcolor{red}{UNKNOWN}} \\ and $M_d = Z \star M_1^{-1}\star \dots \star M_{d-1}^{-1}$ \\
+Software implementations: shares are handled at different time samples $$t_1,\dots, t_d \qquad \only<1>{\mbox{\textcolor{white}{UNKNOWN}}} \only<2->{\mbox{\textcolor{red}{UNKNOWN}}} $$\\
+$\Rightarrow$ each time sample is independent from $Z$.\\
 \end{block}
 \pause
-\begin{block}{Higher-Order SCAs}
-Exploit $f(Z) = \esper[\vaLeakVec[t_1]\vaLeakVec[t_2]\dots\vaLeakVec[t_d]\lvert Z]$ non-constant.\\
- 
-The statistic extracted from measurements, viewed as a multivariate polynomial in the time samples coordinates, must contain the $d$th-degree monomial $\vaLeakVec[t_1]\vaLeakVec[t_2]\dots\vaLeakVec[t_d]$.
-\end{block}
+\vspace{3pt}
+$f(z) = \esper[\vaLeakVec\lvert Z=z]$ is constant $\Rightarrow$ SNR, SOD, t-statistic are null!
+\includegraphics[width = 0.9\textwidth]{figures/SNR_2order_new.png} 
+\pause
+\vspace{-8pt}
+$\esper[A\vaLeakVec\lvert Z=z]$ is constant as well $\Rightarrow$ Projecting extractors can't help! 
 
 \end{frame}
-
 \begin{frame}
 \frametitle{PoIs Research}
 How to detect the $d$-tuple $t_1,\dots, t_d$? 
@@ -253,7 +151,7 @@ How to detect the $d$-tuple $t_1,\dots, t_d$?
 \subsection{Kernel Discriminant Analysis}
 \begin{frame}
 [fragile]
-\frametitle{Kernel Discriminant Analysis (KDA) [to appear at CARDIS '16]}
+\frametitle{Kernel Discriminant Analysis (KDA)}
 \vspace{-10pt}
 \begin{figure}
 \centering

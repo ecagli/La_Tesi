@@ -67,6 +67,30 @@
 %
 %\end{frame}
 
+\begin{frame}
+\frametitle{Notations}
+\begin{block}{Notations and generalities}
+\begin{itemize}
+\item Side-channel traces: realizations of a random vector $\vaLeakVec \in \mathbb{R}^D$  
+\item Target: a \emph{sensitive} variable $Z = f(\mathrm{plaintext,key})$ 
+\end{itemize}
+\end{block}
+\vspace{-5pt}
+\begin{block}{Profiling attack scenario}
+Exploits labelled traces $(\vLeakVec{i}, z_i)_{i=1}^N$, acquired under known $Z$, to characterize the signals.\\
+\end{block}
+\pause
+\begin{block}{Points of Interest}
+Time samples that statistically depend on $Z$.
+\end{block}
+\pause
+\begin{block}{Exhaustive search for $d$ time samples}
+Complexity combinatorial in $d$.\\
+\emph{Example:} $D=200, d=4 \longrightarrow \sim 70.000.000$ possibilities. 
+\end{block}
+\end{frame}
+
+
 
 \begin{frame}
 \frametitle{Template Attack}
@@ -130,18 +154,62 @@ Profiling phase (using profiling traces under known $\sensRandVar$)
 
 
 \begin{frame}
-\frametitle{State of the Art and Contributions}
-\only<1>{
-\begin{block}{\textit{Before}}
+\frametitle{State of the Art}
+\begin{block}{Dimensionality Reduction}
+\begin{columns}
+\begin{column} {.6\textwidth}
+Optimally exploit Points of Interest to 
 \begin{itemize}
-\item Feature (Points of Interest - PoI) selection methods:  ...
-\item Linear Feature Extraction: PCA, LCA, PP...
-\item Machine Learning routines for Side-Channel Attacks: ...
+\item reduce attack complexity 
+\item raise attack efficiency
+\end{itemize}
+\end{column}
+\begin{column}{.3\textwidth}
+\centering extractor  \begin{align*}
+\extract \colon & \mathbb{R}^D\rightarrow \mathbb{R}^C\\
+& \vLeakVec \mapsto \extract(\vLeakVec)
+\end{align*}
+%$\extract \colon \mathbb{R}^D\rightarrow \mathbb{R}^C$  
+
+\end{column}
+\end{columns}
+\end{block}
+\begin{columns}
+
+\begin{column}{.4\textwidth}
+\begin{block}{Selecting Extractors}
+$\extract$ performs a sub-sampling
+\begin{itemize}
+\item SOD \cite{Chari2003}
+\item SOST \cite{bar2010improved}
+\item SNR \cite{mangard2008power}/ NICV \cite{bhasin2014side}
+\item $t$-test, $F$-test,... \cite{gierlichs2006templates,choudary2014efficient}
 \end{itemize}
 \end{block}
+\end{column}
+
+\begin{column}{.6\textwidth}
+\only<1>{
+
+\includegraphics[width = \textwidth]{figures/SNR_1order_new.jpg} 
 }
-\only<2->{
-\begin{block}{\textit{This thesis}}
+\only<2>{
+\begin{block}{Projecting Extractors}
+$\extract(\vLeakVec) = \vLeakVec \mbox{ with } A \in M_{\mathbb{R}}(\newTraceLength, \traceLength)$
+\begin{itemize}
+\item Principal Component Analysis (PCA) \cite{TAprincipal,Batina2012}
+\item Linear Discriminant Analysis (LDA) \cite{Standaert2008,lessIsMore}
+\item Projection Pursuits (PP) \cite{PP}
+\end{itemize}
+\end{block}}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Contributions}
+
+
 \begin{itemize}
 \item \textbf{Linear Dimensionality Reduction}: 
 \begin{itemize}
@@ -167,16 +235,8 @@ Profiling phase (using profiling traces under known $\sensRandVar$)
 }
 }
 \end{itemize}
-\end{block}
-}
-\only<4>{
-\begin{block}{\textit{Today}}
-\begin{itemize}
-\item suites de la KDA
-\item ASCAD plus toutes les contributions CNN sorties dernieremets
-\end{itemize}
-\end{block}
-}
+
+
 \end{frame}
 
 

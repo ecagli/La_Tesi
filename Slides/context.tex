@@ -101,6 +101,10 @@ $\Rightarrow$ Requires protection against very high-level attacker
 \only<2>{\includegraphics[width=.9\textwidth]{figures/simple_attack/Diapositive2.PNG} }
 \only<3->{\includegraphics[width=.9\textwidth]{figures/simple_attack/Diapositive1.PNG} }
 
+\only<6>{ \begin{textblock}{5}(10,7)
+\emph{Simple} attack: only one plaintext
+ \end{textblock}
+ }
 
 \begin{small}
 \begin{table}[]
@@ -113,7 +117,7 @@ Mathematical vulnerability &
 \uncover<2-> {Physical vulnerability}\\
 Black Box                                                                                                                                    & \uncover<2->{Grey Box / Divide-and-conquer}                                                                                                \\
 \uncover<4->{Formal attacker model & Attacker model?} \\
-\uncover<5>{Computational complexity & Cotation table     }                                              
+\uncover<5->{Computational complexity & Cotation table     }                                              
 \end{tabular}
 \end{table}
 \end{small}
@@ -121,6 +125,7 @@ Black Box                                                                       
 
 \begin{frame}
 \frametitle{Advanced Side-Channel Attacks}
+
 \only<1>{\includegraphics[width=\textwidth]{figures/advanced_attack/Diapositive1.PNG} }
 \only<2>{\includegraphics[width=\textwidth]{figures/advanced_attack/Diapositive2.PNG} }
 \only<3>{\includegraphics[width=\textwidth]{figures/advanced_attack/Diapositive3.PNG} }
@@ -128,8 +133,12 @@ Black Box                                                                       
 \only<5>{\includegraphics[width=\textwidth]{figures/advanced_attack/Diapositive5.PNG} }
 \only<6>{\includegraphics[width=\textwidth]{figures/advanced_attack/Diapositive6.PNG} }
 \only<7>{\includegraphics[width=\textwidth]{figures/advanced_attack/Diapositive7.PNG} }
+\only<8>{\includegraphics[width=\textwidth]{figures/advanced_attack/Diapositive8.PNG} }
 
-
+\only<8>{\begin{textblock}{5}(10,3)
+\huge{Don't panic!}
+ \end{textblock}
+ }
 \end{frame}
 %
 %\begin{frame}
@@ -202,6 +211,7 @@ Black Box                                                                       
 \end{columns}
 }
 
+
 %\begin{columns}
 %\begin{column}{width = 0.7\textwidth}
 %cao
@@ -213,6 +223,26 @@ Black Box                                                                       
 %\end{column}
 %\end{columns}
 \end{block}
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Classroom Side-Channel Attacks}
+\only<1>{\includegraphics[width=\textwidth]{figures/learning_teacher/Slide1.PNG} }
+\only<2>{\includegraphics[width=\textwidth]{figures/learning_teacher/Slide2.PNG} }
+\only<1>{
+\begin{tikzpicture}[remember picture,overlay]
+%    \node[xshift=-2cm,yshift=-2cm] at (current page.north east){%
+%    \includegraphics[width=2cm]{photo.png}};
+    \node [rectangle, draw, text width=4em, text centered, fill=green!30,yshift=-3cm, xshift=-3cm] at (current page.north east) {\includegraphics[width = \textwidth]{figures/Computer_Chip-512.png}\\ Clone device};
+\end{tikzpicture}
+}
+\only<2>{
+\begin{tikzpicture}[remember picture,overlay]
+%    \node[xshift=-2cm,yshift=-2cm] at (current page.north east){%
+%    \includegraphics[width=2cm]{photo.png}};
+    \node [rectangle, draw, text width=4em, text centered, fill=blue!30,yshift=-3cm, xshift=3cm] at (current page.north west) {\includegraphics[width = \textwidth]{figures/Computer_Chip-512.png}\\ Target device};
+\end{tikzpicture}
 }
 \end{frame}
 
@@ -235,12 +265,12 @@ Assign to a datum $\vaLeakVec$ (e.g. an image) a label $\sensRandVar$ among a se
 }
 \only<4>{
 \begin{block}{Advanced Attack as a Classification Problem}
-\includegraphics[width=\textwidth]{Figures/trace_classifier.pdf} 
+\includegraphics[width=\textwidth]{Figures/trace_classifier/Slide2.png} 
 \end{block}
 }
 \only<5>{
 \begin{block}{Advanced Attack as Multiple Classification Problems}
-\includegraphics[width=\textwidth]{Figures/trace_classifier.pdf} 
+\includegraphics[width=\textwidth]{Figures/trace_classifier/Slide3.png} 
 \end{block}
 }
 }
