@@ -72,61 +72,126 @@
 \begin{block}{Notations and generalities}
 \begin{itemize}
 \item Side-channel traces: realizations of a random vector $\vaLeakVec \in \mathbb{R}^D$  
+\item $D$ is the number of time samples
 \item Target: a \emph{sensitive} variable $Z = f(\mathrm{plaintext,key})$ 
 \end{itemize}
 \end{block}
 \vspace{-5pt}
 \begin{block}{Profiling attack scenario}
-Exploits labelled traces $(\vLeakVec{i}, z_i)_{i=1}^N$, acquired under known $Z$, to characterize the signals.\\
+\begin{itemize}
+\item labelled traces $\setDataTrain = (\vLeakVec_i, z_i)_{i=1}^N$, acquired under known $Z$, to characterise the signals
+\item attack traces $\setDataAttack = (\vLeakVec_i, p_i)_{i=1}^{N_a}$ acquired under known plaintext
+\end{itemize}
 \end{block}
 \pause
 \begin{block}{Points of Interest}
 Time samples that statistically depend on $Z$.
 \end{block}
-\pause
-\begin{block}{Exhaustive search for $d$ time samples}
-Complexity combinatorial in $d$.\\
-\emph{Example:} $D=200, d=4 \longrightarrow \sim 70.000.000$ possibilities. 
-\end{block}
 \end{frame}
+
 
 
 
 \begin{frame}
 \frametitle{Template Attack}
+\only<4->{
  \begin{textblock}{5}(10,2)
  \important{$\vaLeakVec\in \mathbb{R}^D$\\
   Curse of dimensionality!}
  \end{textblock}
+}
+
+\textbf{Profiling phase}
 \begin{itemize}
-\item Profiling phase (using profiling traces under known $\sensRandVar$)
+\uncover<7->{\item manage de-synchronization problem [$\setDataTrain \longrightarrow \rho\colon \mathbb{R}^D\rightarrow\mathbb{R}^D$]}
+\uncover<6->{\item mandatory dimensionality reduction [$\setDataTrain \longrightarrow \extract\colon\mathbb{R}^D\rightarrow \mathbb{R}^C$]}
+\item estimate
 \begin{itemize}
-\item manage de-synchronization problem
-\item mandatory dimensionality reduction
+\item $\pdf_{\given{\only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\extract{(\rho(\vaLeakVec)})}}{\sensRandVar = \sensVar}}$\uncover<2->{, $\pdf_{\only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\extract{(\rho(\vaLeakVec)})}}$, $\pdf_{\sensRandVar}$} \uncover<3->{(generative model)}
+\uncover<5->{
+\begin{itemize}
 \item Gaussian hypothesis \cite{Chari2003}
 \item Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}
-\item estimate \only<1>{\textcolor{blue}{$\prob[\vaLeakVec|\sensRandVar=\sensVar]$} (generative model)} 
 \end{itemize}
-\item Attack phase ($N$ attack traces $\vLeakVec_i$, e.g. with known plaintexts $p_i$)
+}
+
+\item \uncover<3->{$\pdf_{\given{\sensRandVar}{  \only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\rho(\extract{\vaLeakVec)})} = \only<1-5>{\vLeakVec}\only<6>{\extract{(\vLeakVec)}}\only<7>{\extract{(\rho(\vLeakVec)})}
+}}$ (discriminative model)
+}
+\end{itemize}
+\end{itemize}
+\textbf{Attack phase}
 
 \begin{itemize}
 \item Log-likelihood score for each key hypothesis $k$
 \begin{equation*}
-d_k = \sum_{i=1}^{N}\log \textcolor{blue}{\prob[\vaLeakVec=\vLeakVec_i | Z=f(p_i,k)]}
+d_k = \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\extract{(\rho(\vaLeakVec)})}}{\sensRandVar = f(p_i,k)}}(\only<1-5>{\vLeakVec_i}\only<6>{\extract{(\vLeakVec_i)}}\only<7>{\extract{(\rho(\vLeakVec_i)})}
+)
+%%d_k = \sum_{i=1}^{N}\log \prob[\vaLeakVec=\vLeakVec_i | Z=f(p_i,k)]
 \end{equation*}
-
-
+%
+\uncover<2->{
 \item A-posteriori probability score for each key hypothesis $k$
 \begin{align*}
-\pdf_{\given{\sensRandVar}{  \vaLeakVec = \vLeakVec}}(\sensVar) &= \frac{\pdf_{\given{\vaLeakVec}{\sensRandVar = \sensVar}}(\vLeakVec)\pdf_{\sensRandVar}(\sensVar)} {\pdf_{\vaLeakVec}(\vLeakVec)} \text{Bayes' theorem}\\
-d_{\keyVar} &= \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec_i}}(\sensFunction(\keyVar,\publicParVar_i) ) \mbox{ ,}
+\pdf_{\given{\sensRandVar}{  \only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\rho(\extract{\vaLeakVec)})} = \only<1-5>{\vLeakVec}\only<6>{\extract{(\vLeakVec)}}\only<7>{\extract{(\rho(\vLeakVec)})}
+}}(\sensVar) &= \frac{\pdf_{\given{\only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\extract{(\rho(\vaLeakVec)})}}{\sensRandVar = \sensVar}}(\only<1-5>{\vLeakVec}\only<6>{\extract{(\vLeakVec)}}\only<7>{\extract{(\rho(\vLeakVec)})}
+)\pdf_{\sensRandVar}(\sensVar)} {\pdf_{\only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\extract{(\rho(\vaLeakVec)})}}(\only<1-5>{\vLeakVec}\only<6>{\extract{(\vLeakVec)}}\only<7>{\extract{(\rho(\vLeakVec)})}
+)} \text{Bayes' theorem}\\
+d_{\keyVar} &= \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\extract{(\rho(\vaLeakVec)})} = \only<1-5>{\vLeakVec_i}\only<6>{\extract{(\vLeakVec_i)}}\only<7>{\extract{(\rho(\vLeakVec_i)})}
+}}(\sensFunction(\keyVar,\publicParVar_i) ) \mbox{ ,}
 \end{align*}
+}
 \end{itemize}
 
-\end{itemize}
 \end{frame}
 
 
+
+\begin{frame}
+\frametitle{Objectives}
+\only<5->{
+ \begin{textblock}{5}(5,5)
+ \important{DEEP LEARNING}
+ \end{textblock}
+}
+\textbf{Profiling phase}
+\begin{itemize}
+\item \textcolor{grey}{manage de-synchronization problem [$\setDataTrain \longrightarrow \rho\colon \mathbb{R}^D\rightarrow\mathbb{R}^D$]}
+\item \only<1-4>{\textcolor{red}{mandatory dimensionality reduction [$\setDataTrain \longrightarrow \extract\colon\mathbb{R}^D\rightarrow \mathbb{R}^C$]}}\only<4->{\textcolor{grey}{\item mandatory dimensionality reduction [$\setDataTrain \longrightarrow \extract\colon\mathbb{R}^D\rightarrow \mathbb{R}^C$]}}
+\item estimate
+\begin{itemize}
+%\item \only<1-4>{$\pdf_{\given{\extract(\vaLeakVec)}{\sensRandVar = \sensVar}}$, $\pdf_{\extract(\vaLeakVec)}$, $\pdf_{\sensRandVar}$ (generative model)}
+%\item \only<5->{\textcolor{grey}{$\pdf_{\given{\extract(\vaLeakVec)}{\sensRandVar = \sensVar}}$, $\pdf_{\extract(\vaLeakVec)}$, $\pdf_{\sensRandVar}$ (generative model)}}
+\begin{itemize}
+%
+%\item \only<1-4>{Gaussian hypothesis \cite{Chari2003}}
+%\item \only<1-4>{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}
+%
+%
+%\item \only<1-4>{
+%\textcolor{grey}{Gaussian hypothesis \cite{Chari2003}}}
+%\item \only<1-4>{
+%\textcolor{grey}{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}}
+
+\end{itemize}
+%
+%
+%\item \only<1-4>{\textcolor{grey}{$\given{\sensRandVar}{\extract(\vaLeakVec) = \extract(\vLeakVec)}$ (discriminative model)}\only<5->{\textcolor{red}{$\given{\sensRandVar}{\vaLeakVec = \vLeakVec}$ (discriminative model)}
+%}
+%\end{itemize}
+\end{itemize}
+
+\begin{block}{Objectives}
+\uncover<2->{
+\begin{itemize}
+\item Ameliorate the template attack routine by proposing efficient dimensionality reduction techniques
+\item \uncover<4->{More generally, ameliorate the profiling attack strategy}
+\item \uncover<3->{Consider the presence of most-commonly-implemented SCA countermeasures (masking, hiding)}
+\end{itemize}
+}
+\end{block}
+
+\end{frame}
 
 \begin{frame}
 \frametitle{Objectives}
