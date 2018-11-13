@@ -156,31 +156,26 @@ d_{\keyVar} &= \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\only<1-
 }
 \textbf{Profiling phase}
 \begin{itemize}
-\item \textcolor{grey}{manage de-synchronization problem [$\setDataTrain \longrightarrow \rho\colon \mathbb{R}^D\rightarrow\mathbb{R}^D$]}
-\item \only<1-4>{\textcolor{red}{mandatory dimensionality reduction [$\setDataTrain \longrightarrow \extract\colon\mathbb{R}^D\rightarrow \mathbb{R}^C$]}}\only<4->{\textcolor{grey}{\item mandatory dimensionality reduction [$\setDataTrain \longrightarrow \extract\colon\mathbb{R}^D\rightarrow \mathbb{R}^C$]}}
+\item \only<1-3>{\textcolor{grey}{manage de-synchronization problem [$\setDataTrain \longrightarrow \rho\colon \mathbb{R}^D\rightarrow\mathbb{R}^D$]}}\only<4>{\textcolor{red}{manage de-synchronization problem [$\setDataTrain \longrightarrow \rho\colon \mathbb{R}^D\rightarrow\mathbb{R}^D$]}}\only<5->{\textcolor{grey}{manage de-synchronization problem [$\setDataTrain \longrightarrow \rho\colon \mathbb{R}^D\rightarrow\mathbb{R}^D$]}}
+\item \only<1-4>{\textcolor{red}{mandatory dimensionality reduction [$\setDataTrain \longrightarrow \extract\colon\mathbb{R}^D\rightarrow \mathbb{R}^C$]}}\only<5->{\textcolor{grey}{mandatory dimensionality reduction [$\setDataTrain \longrightarrow \extract\colon\mathbb{R}^D\rightarrow \mathbb{R}^C$]}}
 \item estimate
 \begin{itemize}
-%\item \only<1-4>{$\pdf_{\given{\extract(\vaLeakVec)}{\sensRandVar = \sensVar}}$, $\pdf_{\extract(\vaLeakVec)}$, $\pdf_{\sensRandVar}$ (generative model)}
-%\item \only<5->{\textcolor{grey}{$\pdf_{\given{\extract(\vaLeakVec)}{\sensRandVar = \sensVar}}$, $\pdf_{\extract(\vaLeakVec)}$, $\pdf_{\sensRandVar}$ (generative model)}}
+\item \only<1-4>{$\pdf_{\given{\extract(\vaLeakVec)}{\sensRandVar = \sensVar}}$, $\pdf_{\extract(\vaLeakVec)}$, $\pdf_{\sensRandVar}$ (generative model)}\only<5->{\textcolor{grey}{$\pdf_{\given{\extract(\vaLeakVec)}{\sensRandVar = \sensVar}}$, $\pdf_{\extract(\vaLeakVec)}$, $\pdf_{\sensRandVar}$ (generative model)}}
+
 \begin{itemize}
-%
-%\item \only<1-4>{Gaussian hypothesis \cite{Chari2003}}
-%\item \only<1-4>{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}
-%
-%
-%\item \only<1-4>{
-%\textcolor{grey}{Gaussian hypothesis \cite{Chari2003}}}
-%\item \only<1-4>{
-%\textcolor{grey}{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}}
 
-\end{itemize}
+\item \only<1-4>{Gaussian hypothesis \cite{Chari2003}}\only<5->{
+\textcolor{grey}{Gaussian hypothesis \cite{Chari2003}}}
+\item \only<1-4>{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}
+\only<5->{
+\textcolor{grey}{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}}
 %
-%
-%\item \only<1-4>{\textcolor{grey}{$\given{\sensRandVar}{\extract(\vaLeakVec) = \extract(\vLeakVec)}$ (discriminative model)}\only<5->{\textcolor{red}{$\given{\sensRandVar}{\vaLeakVec = \vLeakVec}$ (discriminative model)}
-%}
-%\end{itemize}
 \end{itemize}
 
+\item \only<1-4>{\textcolor{grey}{$\given{\sensRandVar}{\extract(\vaLeakVec) = \extract(\vLeakVec)}$ (discriminative model)}}\only<5->{\textcolor{red}{$\given{\sensRandVar}{\vaLeakVec = \vLeakVec}$ (discriminative model)}}
+\end{itemize}
+\end{itemize}
+%
 \begin{block}{Objectives}
 \uncover<2->{
 \begin{itemize}
@@ -190,59 +185,36 @@ d_{\keyVar} &= \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\only<1-
 \end{itemize}
 }
 \end{block}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Objectives}
-
-Profiling phase (using profiling traces under known $\sensRandVar$)
-\begin{itemize}
-\item {manage de-synchronization problem}\only<3>{\important{$\longleftarrow$}}
-\item {mandatory dimensionality reduction} \only<1-2>{\important{$\longleftarrow$}}
-\item {Gaussian hypothesis \cite{Chari2003}}
-\item \textcolor{grey}{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}
-\item estimate{$\prob[\important{\varepsilon(\vaLeakVec)}|\sensRandVar=\sensVar]$ (generative model)} for each value of $\sensVar$
-\end{itemize}
-
-\begin{block}{Objectives}
-\uncover<2->{
-\begin{itemize}
-\item Ameliorate the template attack routine by proposing efficient dimensionality reduction techniques
-\item \uncover<3->{More generally, optimise the profiling attack strategy - consider discriminative model}
-\item Consider the presence of most-commonly-implemented SCA countermeasures (masking, hiding)
-\end{itemize}
-}
-\end{block}
-
+%
 \end{frame}
 
 
+
 \begin{frame}
-\frametitle{State of the Art}
+\frametitle{Dimensionality Reduction: State of the Art}
 \begin{block}{Dimensionality Reduction}
 \begin{columns}
-\begin{column} {.6\textwidth}
-Optimally exploit Points of Interest to 
-\begin{itemize}
-\item reduce attack complexity 
-\item raise attack efficiency
-\end{itemize}
-\end{column}
+
 \begin{column}{.3\textwidth}
 \centering extractor  \begin{align*}
 \extract \colon & \mathbb{R}^D\rightarrow \mathbb{R}^C\\
 & \vLeakVec \mapsto \extract(\vLeakVec)
 \end{align*}
-%$\extract \colon \mathbb{R}^D\rightarrow \mathbb{R}^C$  
 
 \end{column}
+\begin{column} {.6\textwidth}
+\begin{itemize}
+\item Feature selection 
+\item Feature extraction
+\end{itemize}
+\end{column}
+
 \end{columns}
 \end{block}
 \begin{columns}
 
 \begin{column}{.4\textwidth}
-\begin{block}{Selecting Extractors}
+\begin{block}{Feature selection}
 $\extract$ performs a sub-sampling
 \begin{itemize}
 \item SOD \cite{Chari2003}
@@ -259,7 +231,7 @@ $\extract$ performs a sub-sampling
 \includegraphics[width = \textwidth]{figures/SNR_1order_new.jpg} 
 }
 \only<2>{
-\begin{block}{Projecting Extractors}
+\begin{block}{Linear feature extraction}
 $\extract(\vLeakVec) = \vLeakVec \mbox{ with } A \in M_{\mathbb{R}}(\newTraceLength, \traceLength)$
 \begin{itemize}
 \item Principal Component Analysis (PCA) \cite{TAprincipal,Batina2012}
@@ -272,8 +244,8 @@ $\extract(\vLeakVec) = \vLeakVec \mbox{ with } A \in M_{\mathbb{R}}(\newTraceLen
 \end{frame}
 
 \begin{frame}
-\frametitle{Contributions}
 
+\frametitle{Contributions}
 
 \begin{itemize}
 \item \textbf{Linear Dimensionality Reduction}: 
@@ -281,39 +253,18 @@ $\extract(\vLeakVec) = \vLeakVec \mbox{ with } A \in M_{\mathbb{R}}(\newTraceLen
 \item PCA, choise of components ELV
 \item LDA in case of undersampling
 \end{itemize}
-\only<2>{
-\item \textbf{Kernel Discriminant Analysis}: application of an appropriate kernel trick to LDA, in order to manage masking countermeasure
-\item \textbf{Convolutional Neural Networks}: 
+
+\item \only<1>{\textbf{Kernel Discriminant Analysis}: application of an appropriate kernel trick to LDA, in order to manage masking countermeasure}\only<2->{\important{\textbf{Kernel Discriminant Analysis}: application of an appropriate kernel trick to LDA, in order to manage masking countermeasure}}
+\item \only<1>{\textbf{Convolutional Neural Networks}: } \only<2->{\important{\textbf{Convolutional Neural Networks}: }}
 \begin{itemize}
-\item discriminative model by means of neural network classifiers
-\item convolutional layers to manage desyncrhonisation (a form of hiding)
-\item Data Augmentation techniques to reduce overfitting
-\end{itemize}}
-\only<3->{\important{
-\item \textbf{Kernel Discriminant Analysis}: application of an appropriate kernel trick to LDA, in order to manage masking countermeasure
-\item \textbf{Convolutional Neural Networks}: 
-\begin{itemize}
-\item discriminative model by means of neural network classifiers
-\item convolutional layers to manage desyncrhonisation (a form of hiding)
-\item Data Augmentation techniques to reduce overfitting
+\item \only<1>{discriminative model by means of neural network classifiers}\only<2->{\important{discriminative model by means of neural network classifiers}}
+\item \only<1>{convolutional layers to manage desyncrhonisation (a form of hiding)}\only<2->{\important{convolutional layers to manage desyncrhonisation (a form of hiding)}}
+\item \only<1>{Data Augmentation techniques to reduce overfitting}\only<2->{\important{Data Augmentation techniques to reduce overfitting}}
 \end{itemize}
-}
-}
+
 \end{itemize}
 
 
-\end{frame}
-
-
-
-\begin{frame}
-\frametitle{Contents}
-\begin{itemize}
-\item Introduction to LDA: as a classifier, and as a feature extractor
-\item Introduction to masking countermeasure and Kernel Discriminant Analysis as a feature extractor
-\item Motivations to apply deep learning techniques
-\item Convolutional Neural Networks and Data Augmentation to attack jitter-based countermeasure
-\end{itemize}
 \end{frame}
 
 
