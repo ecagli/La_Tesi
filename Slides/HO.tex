@@ -105,9 +105,14 @@ LDA: linear decision boundary $a = \vec{w}^\intercal \vLeakVec + w_0$ ($\vec{w} 
 %
 \begin{block}{}
 \begin{huge}
-If $\mu_1 = \mu_2$? 
+\centering What if $\mu_1 = \mu_2$? 
 \end{huge}
 \end{block}
+\only<2->{\includegraphics[width=.4\textwidth]{figures/D2.png} }
+\only<3>{\includegraphics[width=.4\textwidth]{figures/D2_useless1.png} }
+\only<4>{\includegraphics[width=.4\textwidth]{figures/D2_useless2.png} }
+\only<5>{\includegraphics[width=.4\textwidth]{figures/D2_useless3.png} }
+\only<6>{\includegraphics[width=.4\textwidth]{figures/D2_useless4.png} }
 \end{frame}
 
 
@@ -119,15 +124,40 @@ with \only<1>{\textcolor{black}{$M_1, \dots , M_{d-1}$}}\only<2->{\textcolor{red
 Software implementations: shares are handled at different time samples $$t_1,\dots, t_d \qquad \only<1>{\mbox{\textcolor{white}{UNKNOWN}}} \only<2->{\mbox{\textcolor{red}{UNKNOWN}}} $$\\
 $\Rightarrow$ each time sample is independent from $Z$.\\
 \end{block}
-\pause
-\vspace{3pt}
+\begin{columns}
+\begin{column}{.5\textwidth}
+\includegraphics[\textwidth]{figures/D2.pdf}
+\end{column}
+\begin{column}{.5\textwidth}
+\begin{block}{}
+Toy example: 2 time samples, 1-bit data
+\begin{itemize}
+\item[$t_1$:] $M + n$, $n\sim \mathcal{N}(0,0.1)$ 
+\item[$t_2$:] $M\oplus Z + n$ (Boolean masking)
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+
+
+\end{frame}
+\begin{frame}
+\frametitle{In high-dimensional traces}
 $f(z) = \esper[\vaLeakVec\lvert Z=z]$ is constant $\Rightarrow$ SNR, SOD, t-statistic are null!
 \includegraphics[width = 0.9\textwidth]{figures/SNR_2order_new.png} 
 \pause
-\vspace{-8pt}
 $\esper[A\vaLeakVec\lvert Z=z]$ is constant as well $\Rightarrow$ Projecting extractors can't help! 
 
+\begin{block}{Higher-Order Side-Channel Attacks}
+Exploit $f(z) = \esper\left[\vaLeakVec[t_1]\vaLeakVec[t_2]\dots\vaLeakVec[t_d]\lvert Z=z\right]$ non-constant.
+ \end{block}
+
+\begin{block}{Necessary condition}
+\cite{carlet2014achieving} The statistic extracted from measurements must contain  $$\vaLeakVec[t_1]\vaLeakVec[t_2]\dots\vaLeakVec[t_d]$$
+\end{block} 
 \end{frame}
+
 \begin{frame}
 \frametitle{PoIs Research}
 How to detect the $d$-tuple $t_1,\dots, t_d$? 
@@ -149,17 +179,24 @@ How to detect the $d$-tuple $t_1,\dots, t_d$?
 \end{frame}
 
 \subsection{Kernel Discriminant Analysis}
+
 \begin{frame}
 [fragile]
-\frametitle{Kernel Discriminant Analysis (KDA)}
-\vspace{-10pt}
+\frametitle{KDA: the purpose}
+
+\begin{block}{Problem}
+Useful statistics lie in a high-dimensional \emph{feature} space: 
+$$\featureSpace = \mathbb{R}^{{D+d-1}\choose{d}}$$
+(all $d$th-degree monomials in the trace coordinates)
+\end{block}
+
 \begin{figure}
 \centering
 {
 \begin{tikzpicture}
 \matrix (m) [matrix of math nodes, row sep=3em,
 column sep=3em, text height=1.5ex, text depth=0.25ex]
-{ \mathbb{R}^\traceLength & \featureSpace & \mathbb{R}^\newTraceLength \\ };
+{ \mathbb{R}^\traceLength & \featureSpace & \mathbb{R}^\newTraceLength \\};
 \path[->]
 (m-1-1) edge node[above] {$\Phi$} (m-1-2);
          %edge [bend left=30] (m-2-2)
@@ -173,104 +210,260 @@ column sep=3em, text height=1.5ex, text depth=0.25ex]
 (m-1-1) edge [bend left=50] node[above] {$\extract^{\mathrm{KPCA}}$} (m-1-3)
 (m-1-1) edge [bend right=50] node[below] {$\extract^{\mathrm{KDA}}$} (m-1-3);
 
+\node[text width=4cm] at (4,0) {\begin{footnotesize}
+$\Phi$ non-linear function
+\end{footnotesize}};
 \end{tikzpicture} 
 }
+
+
 \end{figure}
-\vspace{-10pt}
-$\mathcal{F}$ contains all $d$-th degree monomials \small{(dimension increases combinatorially: ${{D}\choose{d}}$)}
-\pause
 
-\begin{block}{Kernel function}
- \begin{centering}$K\colon\mathbb{R}^D\times \mathbb{R}^D \rightarrow \mathbb{R} \qquad K(\vLeakVec[]{i},\vLeakVec[]{j}) = \Phi(\vLeakVec[]{i})\cdot \Phi(\vLeakVec[]{j})
-$\end{centering}
+\begin{block}{What KDA provides}
+KDA allows performing LDA in $\featureSpace$, remaining in $\mathbb{R}^{D}$.
 \end{block}
-\pause
-\vspace{-5pt}
-\begin{block}{Polynomial kernel function}
-dth-degree polynomial kernel: $K\colon(\vLeakVec[]{i},\vLeakVec[]{j}) \mapsto ( \vLeakVec[]{i}\cdot \vLeakVec[]{j})^d \leftrightarrow$  all $d$-th degree monomials ($\mathcal{F}$).
-\pause
 
-Example: 
-$d=2, D=2$; $\vLeakVec[]{i} = [a,b]$ , $\vLeakVec[]{j} = [c,d]$ $\longrightarrow$
-\vspace{-10pt}
+\end{frame}
+
+
+
+\begin{frame}
+%[fragile]
+\frametitle{KDA: an intuition}
+%\vspace{-30pt}
+%\begin{figure}
+%\centering
+%{
+%\begin{tikzpicture}
+%\matrix (m) [matrix of math nodes, row sep=3em,
+%column sep=3em, text height=1.5ex, text depth=0.25ex]
+%{ \mathbb{R}^\traceLength & \featureSpace & \mathbb{R}^\newTraceLength \\};
+%\path[->]
+%(m-1-1) edge node[above] {$\Phi$} (m-1-2);
+%         %edge [bend left=30] (m-2-2)
+%         %edge [bend right=15] (m-2-2);
+%\path[->]
+%($(m-1-2.north east)-(0,0.1)$) edge node[above] {$\extract^{\mathrm{PCA}}$} ($(m-1-3.north west)-(0,0.1)$);
+%\path[->]
+%($(m-1-2.south east)+(0,0.15)$) edge node[below] {$\extract^{\mathrm{LDA}}$} ($(m-1-3.south west)+(0,0.15)$);
+%
+%\path[->]
+%(m-1-1) edge [bend left=50] node[above] {$\extract^{\mathrm{KPCA}}$} (m-1-3)
+%(m-1-1) edge [bend right=50] node[below] {$\extract^{\mathrm{KDA}}$} (m-1-3);
+%
+%\node[text width=4cm] at (4,0) {\begin{footnotesize}
+%$\Phi$ non-linear function: all $d$th-degree monomials of time samples
+%\end{footnotesize}};
+%\end{tikzpicture} 
+%}
+%
+%
+%\end{figure}
+\vspace{-15pt}
+\begin{block}{}
+Toy example: 2 time samples, 1-bit data
+\begin{itemize}
+\item[$t_1$:] $M + n$, $n\sim \mathcal{N}(0,0.1)$ 
+\item[$t_2$:] $M\oplus Z + n$ (Boolean masking)
+\end{itemize}
+\end{block}
+
+\begin{columns}
+\begin{column}{.5\textwidth}
+\uncover<1->{
+\only<1-3>{
+\begin{figure}
+\includegraphics[width=\textwidth]{figures/D2.pdf}
+\end{figure}}
+
+\only<4>{
+\begin{figure}
+\includegraphics[width=\textwidth]{figures/D2_proj.pdf}
+\end{figure}
+\centering
+\textcolor{violet}{\Large{KDA} \\ \large{remains in $\mathbb{R}^D$}}
+}
+\only<5->{
+\begin{figure}
+\includegraphics[width=\textwidth]{figures/new_example_KDA.pdf} 
+\end{figure}}
+}
+
+\end{column}
+
+\begin{column}{.5\textwidth}
+\uncover<2->{
+\only<1-2>{
+\begin{figure}
+\includegraphics[width=\textwidth]{figures/D3.pdf} 
+\end{figure}
+\centering
+\textcolor{violet}{\Large{ $\Phi\colon \mathbb{R}^D \rightarrow \mathbb{R}^{{D+d-1}\choose{d}}$  \\ $\Phi(t_1,t2) = (t_1^2, t_2^2, kt_1t_2)$ }}
+}
+\only<3>{
+\begin{figure}
+\includegraphics[width=\textwidth]{figures/D3_proj.pdf} 
+\end{figure}
+\centering
+\textcolor{violet}{\Large{$\Phi \longrightarrow$ LDA}}
+}
+\only<4>{
+\begin{figure}
+\includegraphics[width=\textwidth]{figures/D3_proj.jpg} 
+\end{figure}
+}}
+
+\only<5->{
+\begin{block}{KDA procedure}
+\begin{itemize}
+\item Training $\rightarrow \textcolor{violet}{\boldsymbol{\nu}_\ell}$ , $C$ vectors of coefficients ($\ell = 1,\dots , C$)
+\item<6-> \emph{Compare} the new trace with all training traces $K(\textcolor{red}{\sss[z_i]{i}}, \textcolor{green}{\sss[]{}})$, $K(\textcolor{blue}{\sss[z_i]{i}}, \textcolor{green}{\sss[]{}})$
+\item<7-> \emph{KDA projection} \begin{equation}\label{eq:projection}
+\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) = \sum_{i=1}^{\NPoI}\textcolor{violet}{\boldsymbol{\nu}_\ell[i]}K(\sss[z_i]{i}, \textcolor{green}{\sss[]{}}) \mbox{ .}
+\end{equation} 
+\end{itemize}
+
+\end{block}
+}
+
+\end{column}
+\end{columns}
+%\uncover<5>{
+%\begin{block}{Apply KDA extractor}
+%\begin{equation}\label{eq:projection}
+%\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) = \sum_{i=1}^{\NPoI}\boldsymbol{\nu}_\ell[i]K(\textcolor{red}{\sss[z_i]{i}}, \textcolor{green}{\sss[]{}}) \mbox{ .}
+%\end{equation} 
+%
+%
+%\end{block}
+%}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Kernel Function}
+
+\begin{block}{Kernel Function}
+$K\colon\mathbb{R}^D\times \mathbb{R}^D \rightarrow \mathbb{R} \nonumber$
+\begin{equation}\label{eq:kernelProperty}
+K(\sss[]{i},\sss[]{j}) = \Phi(\sss[]{i})\cdot \Phi(\sss[]{j})
+\end{equation}
+\end{block}
+
+\begin{block}{Polynomial Kernel Function}
+$K(\sss[]{i},\sss[]{j}) = (\sss[]{i} \cdot \sss[]{j})^d \qquad \leftrightarrow \qquad\Phi:\mathbb{R}^D \rightarrow \mathcal{F}\subset \mathbb{R}^{{D+d-1}\choose{d}} $ all $d$th-degree monomials
+
+
+\end{block}
+\uncover<2->{
+\begin{block}{Example: $2$nd Degree Polynomial Kernel Function}
+Toy example: $D=2 \longrightarrow \sss[]{i} = [a,b]$ , $\sss[]{j} = [c,d]$
 \begin{equation*}
-\textcolor{olive}{K(\vLeakVec[]{i},\vLeakVec[]{j})} = (ac + bd)^2 = a^2c^2 + 2abcd + b^2d^2 \mbox{ ,}
+K(\sss[]{i},\sss[]{j}) = (ac + bd)^2 = a^2c^2 + 2abcd + b^2d^2
 \end{equation*}
-
+\only<2>{
+\textcolor{white}{$K \longleftrightarrow$ $\Phi\colon \Bbb{R}^2\rightarrow\Bbb{R}^3$
+\begin{equation*}
+\Phi(u,v) =  [u^2, \sqrt{2}uv, v^2]
+\end{equation*}}
+}
+\uncover<3->{
+$K \longleftrightarrow$ $\Phi\colon \Bbb{R}^2\rightarrow\Bbb{R}^3$
 %\begin{align}
 %&\Phi \colon \mathbb{R}^2 \rightarrow \mathbb{R}^3\\
 %&\Phi \colon [a,b]\mapsto [a^2, \sqrt{2}ab, b^2]\\
 %&\Phi \colon [c,d]\mapsto [c^2, \sqrt{2}cd, d^2].
 %\end{align}
-\vspace{-15pt}
+\vspace{-5pt}
+\only<3>{
 \begin{equation*}
-K \longleftrightarrow \Phi\colon \Bbb{R}^2\rightarrow\Bbb{R}^3 \qquad \Phi(u,v) =  [u^2, \sqrt{2}uv, v^2]
+\Phi(u,v) =  [u^2, \sqrt{2}uv, v^2]
+\end{equation*}}
+\only<4>{
+\begin{equation*}
+\Phi(a,b) =  \textcolor{magenta}{[a^2, \sqrt{2}ab, b^2]}
 \end{equation*}
-$\textcolor{olive}{\Phi(\vLeakVec[]{i})\cdot \Phi(\vLeakVec[]{j})} = a^2c^2 + 2abcd + b^2d^2 = K(\vLeakVec[]{i},\vLeakVec[]{j})$
+}
+\only<5>{
+\begin{equation*}
+\Phi(c,d) =  \textcolor{blue}{[c^2, \sqrt{2}cd, d^2]}
+\end{equation*}
+}
+}
+
+\only<3>{
+\textcolor{white}{$\Phi(\sss[]{i})\cdot \Phi(\sss[]{j}) = {a^2}{c^2} + {\sqrt{2}ab}{\sqrt{2}cd} + {b^2}{d^2} = K(\sss[]{i},\sss[]{j})$}}
+
+\only<4>{
+$\Phi(\sss[]{i})\cdot \Phi(\sss[]{j}) = \textcolor{magenta}{a^2}\textcolor{white}{c^2} + \textcolor{magenta}{\sqrt{2}ab}\textcolor{white}{\sqrt{2}cd} + \textcolor{magenta}{b^2}\textcolor{white}{d^2} = K(\sss[]{i},\sss[]{j})$}
+
+\only<5>{
+$\Phi(\sss[]{i})\cdot \Phi(\sss[]{j}) = \textcolor{magenta}{a^2}\textcolor{blue}{c^2} + \textcolor{magenta}{\sqrt{2}ab}\textcolor{blue}{\sqrt{2}cd} + \textcolor{magenta}{b^2}\textcolor{blue}{d^2} = K(\sss[]{i},\sss[]{j})$}
 
 \end{block}
+}
+
 \end{frame}
 
+
+
 \begin{frame}
-[fragile]
-\frametitle{LDA to KDA}
-\vspace{-30pt}
-\begin{figure}
-\centering
-{
-\begin{tikzpicture}
-\matrix (m) [matrix of math nodes, row sep=3em,
-column sep=3em, text height=1.5ex, text depth=0.25ex]
-{ \mathbb{R}^\traceLength & \featureSpace & \mathbb{R}^\newTraceLength \\ };
-\path[->]
-(m-1-1) edge node[above] {$\Phi$} (m-1-2);
-         %edge [bend left=30] (m-2-2)
-         %edge [bend right=15] (m-2-2);
-\path[->]
-($(m-1-2.north east)-(0,0.1)$) edge node[above] {$\extract^{\mathrm{PCA}}$} ($(m-1-3.north west)-(0,0.1)$);
-\path[->]
-($(m-1-2.south east)+(0,0.15)$) edge node[below] {$\extract^{\mathrm{LDA}}$} ($(m-1-3.south west)+(0,0.15)$);
 
-\path[->]
-(m-1-1) edge [bend left=50] node[above] {$\extract^{\mathrm{KPCA}}$} (m-1-3)
-(m-1-1) edge [bend right=50] node[below] {$\extract^{\mathrm{KDA}}$} (m-1-3);
+\frametitle{KDA - the training}
+\begin{center}
+\only<1>{
+Between-class (inter-class) Scatter Matrix }
+\only<2>{
+Within-class (inter-class) Scatter Matrix }
+\only<3>{
+Eigenvector problem}
+\only<4>{
+New trace projection}
 
-\end{tikzpicture} 
-}
-\end{figure}
-\vspace{-15pt}
+\end{center}
+
 \begin{columns}
 \begin{column}{.5\textwidth}
+\uncover<3->{Computational Complexity $O(D^3)$}
 \begin{block}{LDA}
+\begin{small}
 \begin{itemize}
-\item $\AAlpha_i$ eigenvectors of $\SW^{-1}\SB$
-\item $\SB$ and $\SW$ depend on data $(\vLeakVec[z_i]{i})$ [$D\times D$]
-\item $\extract^{LDA}_{\ell}(\vaLeakVec) = \sum_{i=1}^D \AAlpha_{\ell}[i]\vaLeakVec[i] $
+\item $\SB = \sum_{\sensVar\in\sensVarSet}\numTraces(\mmmXclass-\mmmX)(\mmmXclass-\mmmX)^\intercal$ 
+\uncover<2->{\item $\SW = \sum_{\sensVar\in\sensVarSet}\sum_{i=1}^{\numTraces}(\sss{i}-\mmmXclass)(\sss{i}-\mmmXclass)^\intercal$ }
+\uncover<3->{\item $\AAlpha_i$ eigenvectors of $\SW^{-1}\SB$ [$D\times D$]}
+\uncover<4->{\item $\extract^{LDA}_{\ell}(\xxx) = \sum_{i=1}^D \AAlpha_{\ell}[i]\xxx[i] $}
 \end{itemize}
+\end{small}
 \end{block}
 \end{column}
 
-\begin{column}{.5\textwidth}
+\begin{column}{.55\textwidth}
+\uncover<3->{Computational Complexity $O(N^3)$}
 \begin{block}{KDA}
+\begin{small}
 \begin{itemize}
-\item $\nununu_i$ eigenvectors of $(\SW^K)^{-1}\SB^K$
-\item $\SB^K$ and $\SW^K$ depend on kernel function images $K(\vLeakVec[z_i]{i}, \vLeakVec[z_j]{j})$ [$N\times N$]
-\item $\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) = \sum_{i=1}^{\numPoI}\nununu_\ell[i]K(\vLeakVec[z_i]{i}, \vLeakVec[]{}) $
+
+\item $\MMM = \sum_{\sensVar\in\sensVarSet}\numTraces(\MMMclass - \MMMT)(\MMMclass-\MMMT)^\intercal$ \footnotemark
+
+\uncover<2->{\item $\NNN = \sum_{\sensVar\in\sensVarSet}\kernelMatrix_\sensVar(\III - \III_{\numTraces})\kernelMatrix_\sensVar^\intercal$ \only<2-4>{\footnotemark} \only<5>{ \textcolor{red}{$+ \mu\III$}}}
+
+\uncover<3->{\item $\nununu_i$ eigenvectors of $\NNN^{-1}\MMM$ [$N\times N$]}
+\uncover<4->{\item $\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) = \sum_{i=1}^{\NPoI}\nununu_\ell[i]K(\sss[z_i]{i}, \sss[]{}) $}
 \end{itemize}
+\end{small}
 \end{block}
 \end{column}
 \end{columns}
-\vspace{-5pt}
-\begin{block}{Application Issues}
-\begin{itemize}
-\item regularization : $\SW^K \leftarrow \SW^K + \mu \III$
-\item computational complexity is $O(N^3)$ 
-\item non-injective model $\sensVarSet \rightarrow m(\sensVarSet)$ to reduce the number of classes (to improve KDA accuracy in detecting class separating subspaces)
-\item asymmetric 'KDA/profiling' approach (to improve profiling accuracy)
-\end{itemize}
-\end{block}
+\centering
+\vspace{8pt}
+\only<5>{\textcolor{red}{$\mu$ regularization parameter}}
 
+\footnotetext[1]{$\MMMclass$ and $\MMMT$ are two $N$-sized column vectors whose entries are given by: $\MMMclass[z][j] = \frac{1}{\numTraces}\sum_{i:z_i=z}^{\numTraces}K(\sss[z_j]{j},\sss[z_i]{i}), \qquad
+\MMMT[j] = \frac{1}{\NPoI}\sum_{i=1}^{\NPoI}K(\sss[z_j]{j},\sss[z_i]{i}) \mbox{ .}$}
+
+\uncover<2->{\footnotetext[2]{$\III$ is a $\numTraces\times \numTraces$ identity matrix, $\III_{\numTraces}$ is a $\numTraces\times \numTraces$ matrix with all entries equal to $\frac{1}{\numTraces}$ and $\kernelMatrix_{\sensVar}$ is the $\NPoI\times \numTraces$ sub-matrix of $\kernelMatrix = (K(\sss[z_i]{i},\sss[z_j]{j}))_{\substack{i=1,\dots,\numTraces[] \\ j=1,\dots,\numTraces[]}}$ storing only columns indexed by the indices $i$ such that $z_i=z$}}
 \end{frame}
+
 
 \subsection{Experimental Results}
 
