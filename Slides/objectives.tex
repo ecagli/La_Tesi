@@ -115,7 +115,7 @@ Time samples that statistically depend on $Z$.
 \end{itemize}
 }
 
-\item \uncover<3->{$\pdf_{\given{\sensRandVar}{  \only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\rho(\extract{\vaLeakVec)})} = \only<1-5>{\vLeakVec}\only<6>{\extract{(\vLeakVec)}}\only<7>{\extract{(\rho(\vLeakVec)})}
+\item \uncover<3->{$\pdf_{\given{\sensRandVar}{  \only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\rho(\extract{(\vaLeakVec)})} = \only<1-5>{\vLeakVec}\only<6>{\extract{(\vLeakVec)}}\only<7>{\extract{(\rho(\vLeakVec)})}
 }}$ (discriminative model)
 }
 \end{itemize}
@@ -133,7 +133,7 @@ d_k = \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\only<1-5>{\vaLeakVec}\only<6>{
 \uncover<2->{
 \item A-posteriori probability score for each key hypothesis $k$
 \begin{align*}
-\pdf_{\given{\sensRandVar}{  \only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\rho(\extract{\vaLeakVec)})} = \only<1-5>{\vLeakVec}\only<6>{\extract{(\vLeakVec)}}\only<7>{\extract{(\rho(\vLeakVec)})}
+\pdf_{\given{\sensRandVar}{  \only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\rho(\extract{(\vaLeakVec)})} = \only<1-5>{\vLeakVec}\only<6>{\extract{(\vLeakVec)}}\only<7>{\extract{(\rho(\vLeakVec)})}
 }}(\sensVar) &= \frac{\pdf_{\given{\only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\extract{(\rho(\vaLeakVec)})}}{\sensRandVar = \sensVar}}(\only<1-5>{\vLeakVec}\only<6>{\extract{(\vLeakVec)}}\only<7>{\extract{(\rho(\vLeakVec)})}
 )\pdf_{\sensRandVar}(\sensVar)} {\pdf_{\only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\extract{(\rho(\vaLeakVec)})}}(\only<1-5>{\vLeakVec}\only<6>{\extract{(\vLeakVec)}}\only<7>{\extract{(\rho(\vLeakVec)})}
 )} \text{Bayes' theorem}\\

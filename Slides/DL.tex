@@ -1,22 +1,56 @@
 \section{Deep Learning against Misalignment}
 \begin{frame}
-\frametitle{Contents}
+\frametitle{Motivations (1)}
+\includegraphics[width=.5\textwidth]{figures/whydeeplearning.png} 
 \begin{itemize}
-\item \textcolor{grey}{Introduction to LDA: as a classifier, and as a feature extractor
-\item Introduction to masking countermeasure and Kernel Discriminant Analysis as a feature extractor}
-\item \important{Convolutional Neural Networks and Data Augmentation to attack jitter-based countermeasure}
+\item not memory-based
+\item parallelizable computation(GPU optimizations)
 \end{itemize}
-\end{frame}
-\begin{frame}
-\frametitle{Motivations to apply deep learning techniques}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{An integrated approach}
-riprendi l'elenco puntato dell'inizio, barra tutto e dici che non si fanno più tanti step ma solo uno\\
+\frametitle{Motivations (2)}
 
-più blocco che richiama il teorema di approssimazione universale
+\only<2->{
+ \begin{textblock}{5}(5,5)
+ \important{DEEP LEARNING}
+ \end{textblock}
+}
+\textbf{Profiling phase}
+\begin{itemize}
+\item \only<1>{manage de-synchronization problem [$\setDataTrain \longrightarrow \rho\colon \mathbb{R}^D\rightarrow\mathbb{R}^D$]}\only<2->{\textcolor{gray}{manage de-synchronization problem [$\setDataTrain \longrightarrow \rho\colon \mathbb{R}^D\rightarrow\mathbb{R}^D$]}}
+\item \only<1>{mandatory dimensionality reduction [$\setDataTrain \longrightarrow \extract\colon\mathbb{R}^D\rightarrow \mathbb{R}^C$]}
+\only<2->{\textcolor{gray}{mandatory dimensionality reduction [$\setDataTrain \longrightarrow \extract\colon\mathbb{R}^D\rightarrow \mathbb{R}^C$]}}
+\item estimate
+\only<1>{
+\begin{itemize}
+\item $\pdf_{\given{\extract{(\rho(\vaLeakVec)})}{\sensRandVar = \sensVar}}$, $\pdf_{\extract{(\rho(\vaLeakVec)})}$, $\pdf_{\sensRandVar}$ (generative model)
+
+\begin{itemize}
+\item Gaussian hypothesis \cite{Chari2003}
+\item Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}
+\end{itemize}
+\end{itemize}
+}
+\only<2->{
+\begin{itemize}
+\item \textcolor{gray}{$\pdf_{\given{\extract{(\rho(\vaLeakVec)})}{\sensRandVar = \sensVar}}$, $\pdf_{\extract{(\rho(\vaLeakVec)})}$, $\pdf_{\sensRandVar}$ (generative model)}
+\begin{itemize}
+\item \textcolor{gray}{ Gaussian hypothesis \cite{Chari2003}}
+\item \textcolor{gray}{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}
+\end{itemize}
+\end{itemize}
+}
+
+
+\item $\pdf_{\given{\sensRandVar}{\only<1>{\extract{(\rho(\vLeakVec)}}  \only<2->{\vaLeakVec}}}$ (discriminative model) \\ \uncover<2->{by means of a neural network $F(\vaLeakVec)\approx \pdf_{\given{\sensRandVar}{ \only<2->{\vaLeakVec}}}$ (Universal approximation theorem)} 
+
+
+\end{itemize}
+\begin{block}{}
+Many independent preprocessing steps and assumptions\\ \uncover<3>{$\longleftrightarrow$ integrated and agnostic approach}
+\end{block}
 \end{frame}
 
 \begin{frame}

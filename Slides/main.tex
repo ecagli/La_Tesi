@@ -171,9 +171,24 @@ comparison is successful}
 \newcommand*{\yyy}{\vec{y}}
 \newcommand*{\YYY}{\vec{Y}}
 \newcommand*{\www}{\vec{w}}
+\newcommand*{\xxx}{\vec{x}}
 %\newcommand*{\WWW}{\textbf{W}}
 \newcommand*{\vvv}{\vec{v}}
 %\newcommand*{\VVV}{\textbf{V}}
+
+\newcommand{\numTraces}[1][z]{N_{#1}}
+\newcommand{\numTracesAttack}{N_a}
+\newcommand{\sss}[2][z]{\textbf{x}^{#1}_{#2}} % $\sss{i}$ or $\sss[k]{i}$
+\newcommand{\sssTest}[2][z]{\textbf{y}^{#1}_{#2}} % $\sssTest{i}$ or $\sssTest[k]{i}$
+\newcommand{\SSS}[1][z]{\textbf{X}^{#1}}
+\newcommand{\sssSet}{\mathcal{X}}
+\newcommand{\SSSTest}[1][z]{\textbf{Y}_{#1}}
+
+
+\newcommand{\extractor}[2][]{\varepsilon_{#1}(#2)}
+\newcommand{\bestExtractor}{\varepsilon^\star}
+
+
 
 \newcommand*{\nbTraces}{N}
 \newcommand*{\nbTrainingTraces}{N_t}
@@ -189,6 +204,7 @@ comparison is successful}
 \newcommand*{\BBeta}{\vec{\zeta}}
 \newcommand*{\covmat}{\textbf{S}}
 \newcommand*{\numPoI}{\sharp\mathrm{PoI}}
+\newcommand{\NPoI}{N}
 \newcommand*{\leakFunction}{\phi}
 \newcommand*{\LeakFunction}{\boldsymbol{\phi}}
 \newcommand*{\noise}{B}
@@ -225,7 +241,6 @@ comparison is successful}
 \newcommand*{\mmmXclass}[1][\sensVarGenValue]{\vec{\mu}_{#1}}
 \newcommand*{\mmmY}{\overline{\vec{y}}}
 \newcommand*{\varXclass}[1][\sensVarGenValue]{\vec{\varrho}_{#1}}
-\newcommand{\sss}[2][z]{\textbf{x}^{#1}_{#2}} % $\sss{i}$ or $\sss[k]{i}$
 
 
 \newcommand{\MMM}{\textbf{M}}

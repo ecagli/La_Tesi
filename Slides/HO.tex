@@ -108,11 +108,13 @@ LDA: linear decision boundary $a = \vec{w}^\intercal \vLeakVec + w_0$ ($\vec{w} 
 \centering What if $\mu_1 = \mu_2$? 
 \end{huge}
 \end{block}
-\only<2->{\includegraphics[width=.4\textwidth]{figures/D2.png} }
-\only<3>{\includegraphics[width=.4\textwidth]{figures/D2_useless1.png} }
-\only<4>{\includegraphics[width=.4\textwidth]{figures/D2_useless2.png} }
-\only<5>{\includegraphics[width=.4\textwidth]{figures/D2_useless3.png} }
-\only<6>{\includegraphics[width=.4\textwidth]{figures/D2_useless4.png} }
+\only<2>{\includegraphics[width=.4\textwidth]{figures/D2.png}\\}
+\only<3>{\includegraphics[width=.4\textwidth]{figures/D2.png}\includegraphics[width=.4\textwidth]{figures/D2_useless1.png}\\}
+\only<4>{\includegraphics[width=.4\textwidth]{figures/D2.png}\includegraphics[width=.4\textwidth]{figures/D2_useless2.png}\\}
+\only<5>{\includegraphics[width=.4\textwidth]{figures/D2.png}\includegraphics[width=.4\textwidth]{figures/D2_useless3.png}\\}
+\only<6>{\includegraphics[width=.4\textwidth]{figures/D2.png}\includegraphics[width=.4\textwidth]{figures/D2_useless4.png}\\}
+\uncover<2->{$f(z) = \esper[\vaLeakVec\lvert Z=z]$ is constant\\}
+\uncover<3->{$\esper[A\vaLeakVec\lvert Z=z]$ is constant as well $\Rightarrow$ Projecting extractors can't help! }
 \end{frame}
 
 
@@ -120,13 +122,14 @@ LDA: linear decision boundary $a = \vec{w}^\intercal \vLeakVec + w_0$ ($\vec{w} 
 \frametitle{Dimensionality reduction in presence of masking}
 \begin{block}{$(d-1)$th-order Sharing (or Masking)} 
 Split each sensitive $Z$ into shares  $Z = M_1 \star \dots \star M_d$ \\
-with \only<1>{\textcolor{black}{$M_1, \dots , M_{d-1}$}}\only<2->{\textcolor{red}{$M_1, \dots , M_{d-1}$}} random shares (or masks) \only<2->{\textcolor{red}{UNKNOWN}} \\ and $M_d = Z \star M_1^{-1}\star \dots \star M_{d-1}^{-1}$ \\
-Software implementations: shares are handled at different time samples $$t_1,\dots, t_d \qquad \only<1>{\mbox{\textcolor{white}{UNKNOWN}}} \only<2->{\mbox{\textcolor{red}{UNKNOWN}}} $$\\
+with \only<1-2>{\textcolor{black}{$M_1, \dots , M_{d-1}$}}\only<3->{\textcolor{red}{$M_1, \dots , M_{d-1}$}} random shares (or masks) \only<3->{\textcolor{red}{UNKNOWN}} \\ and $M_d = Z \star M_1^{-1}\star \dots \star M_{d-1}^{-1}$ \\
+Software implementations: shares are handled at different time samples $$t_1,\dots, t_d \qquad \only<1-2>{\mbox{\textcolor{white}{UNKNOWN}}} \only<3->{\mbox{\textcolor{red}{UNKNOWN}}} $$\\
 $\Rightarrow$ each time sample is independent from $Z$.\\
 \end{block}
+\uncover<2->{
 \begin{columns}
 \begin{column}{.5\textwidth}
-\includegraphics[\textwidth]{figures/D2.pdf}
+\includegraphics[width=\textwidth]{figures/D2.pdf}
 \end{column}
 \begin{column}{.5\textwidth}
 \begin{block}{}
@@ -138,16 +141,17 @@ Toy example: 2 time samples, 1-bit data
 \end{block}
 \end{column}
 \end{columns}
-
-
-
+}
 \end{frame}
+
+
+
 \begin{frame}
 \frametitle{In high-dimensional traces}
 $f(z) = \esper[\vaLeakVec\lvert Z=z]$ is constant $\Rightarrow$ SNR, SOD, t-statistic are null!
-\includegraphics[width = 0.9\textwidth]{figures/SNR_2order_new.png} 
+\includegraphics[width = 0.9\textwidth]{figures/SNR_2order_new.png} \\
 \pause
-$\esper[A\vaLeakVec\lvert Z=z]$ is constant as well $\Rightarrow$ Projecting extractors can't help! 
+$\esper[A\vaLeakVec\lvert Z=z]$ is constant as well 
 
 \begin{block}{Higher-Order Side-Channel Attacks}
 Exploit $f(z) = \esper\left[\vaLeakVec[t_1]\vaLeakVec[t_2]\dots\vaLeakVec[t_d]\lvert Z=z\right]$ non-constant.
@@ -448,7 +452,7 @@ New trace projection}
 \uncover<2->{\item $\NNN = \sum_{\sensVar\in\sensVarSet}\kernelMatrix_\sensVar(\III - \III_{\numTraces})\kernelMatrix_\sensVar^\intercal$ \only<2-4>{\footnotemark} \only<5>{ \textcolor{red}{$+ \mu\III$}}}
 
 \uncover<3->{\item $\nununu_i$ eigenvectors of $\NNN^{-1}\MMM$ [$N\times N$]}
-\uncover<4->{\item $\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) = \sum_{i=1}^{\NPoI}\nununu_\ell[i]K(\sss[z_i]{i}, \sss[]{}) $}
+\uncover<4->{\item \only<4>{$\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) = \sum_{i=1}^{\NPoI}\nununu_\ell[i]K(\sss[z_i]{i}, \sss[]{}) $}\only<5->{$\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) =$ \textcolor{red}{$\sum_{i=1}^{\NPoI}$}$\nununu_\ell[i]$\textcolor{red}{$K(\sss[z_i]{i}, \sss[]{})$} }}
 \end{itemize}
 \end{small}
 \end{block}
@@ -456,7 +460,7 @@ New trace projection}
 \end{columns}
 \centering
 \vspace{8pt}
-\only<5>{\textcolor{red}{$\mu$ regularization parameter}}
+\only<5>{\textcolor{red}{$\mu$ regularization parameter} $\qquad$ \textcolor{red}{\emph{Memory-based} machine}}
 
 \footnotetext[1]{$\MMMclass$ and $\MMMT$ are two $N$-sized column vectors whose entries are given by: $\MMMclass[z][j] = \frac{1}{\numTraces}\sum_{i:z_i=z}^{\numTraces}K(\sss[z_j]{j},\sss[z_i]{i}), \qquad
 \MMMT[j] = \frac{1}{\NPoI}\sum_{i=1}^{\NPoI}K(\sss[z_j]{j},\sss[z_i]{i}) \mbox{ .}$}
@@ -469,26 +473,236 @@ New trace projection}
 
 
 \begin{frame}
-\frametitle{Experimental results}
+\frametitle{Experimental setup}
+Target device and acquisitions: 
+
 \begin{itemize}
-\item $D = 200$: length of rough trace (interesting clock cycles selected)
-\item $d=2$, feature extracted from a $200^2 = 40.000$-sized space
-\item $d=3 \rightarrow 200^3=6.000.000$ , $d=4 \rightarrow 200^4 = 800.000.000$
+\item 8-bit AVR microprocessor Atmega328P
+\item power-consumption acquired via the ChipWhisperer \cite{o2014chipwhisperer} platform
+\item $D = 200$, $4$ clock-cycles are selected
 \end{itemize}
-\begin{figure}[t]
 
-\includegraphics[width=.4\textwidth]{../Figures/CARDIS2016/2order_classes_TA.pdf}
-\includegraphics[width=.4\textwidth]{../Figures/CARDIS2016/3order_new.pdf}
+Sensitive variable: $Z = \mathrm{Sbox_{AES}}(P\oplus K^{\star})$\\
+%Leakage:
+%\begin{footnotesize}
+%
+%\begin{itemize}
+%\item[$d=2$] $M_1$, $Z\oplus M_1$
+%\item[$d=3$] $M_1$, $M_2$, $Z\oplus M_1\oplus M_2$  
+%\item[$d=4$] $M_1$,$M_2$,$M_3$, $Z\oplus M_1\oplus M_2 \oplus M_3$  
+%\end{itemize}
+%\end{footnotesize}
+\begin{figure}
+\includegraphics[width=0.8\textwidth]{figures/one_trace.pdf}
 \end{figure}
+%Attack: 
+%\begin{itemize}
+%\item \emph{KDA profiling traces} ($\sim 9000$) $\rightarrow \extract^{KDA}\colon \mathbb{R}^{200}\rightarrow \mathbb{R}^2$ separating classes
+%\item \emph{TA profiling traces} ($\sim 20000$) $\rightarrow$ Gaussian templates per class
+%\item \emph{attack traces} $\rightarrow$ attack via maximum likelihood
+%\end{itemize}
+
+
+\end{frame}
+
+%
+%
+%\begin{frame}
+%[fragile]
+%\frametitle{Attack Scenario}
+%\begin{block}{KDA training phase}
+%Build the KDA extractor $\extract^{KDA}$
+%\end{block}
+%
+%\uncover<2->{
+%\begin{block}{Gaussian Template Attack}
+%\begin{itemize}
+%\item<2-> Preprocess profiling and attack traces
+%\item<3-> Compute Gaussian templates
+%\item<4-> Attack via maximum likelihood
+%\end{itemize}
+%\end{block}
+%}
+%
+%\begin{figure}
+%\centering
+%{
+%\begin{tikzpicture}[xscale=0.8,yscale=0.4]
+%\uncover<2->{
+%\node at (1,4.5) [text width=2cm] {\begin{footnotesize}TA profiling traces\end{footnotesize}};
+%\node at (4,4.5)[text width=2cm] {\begin{footnotesize}TA attack traces\end{footnotesize}};
+%\draw [->] (1,4) -- (1,3);
+%\draw [->] (4,4) --(4,3);
+%\node [left] at (1,3.5) {$\mathbb{R}^{200}$};
+%\node [right] at (4,3.5) {$\mathbb{R}^{200}$};}
+%\draw [blue] (0,2) rectangle(5,3);
+%\node at (2.5,2.5) {\begin{large}$\extract^{KDA}$\end{large}};
+%\uncover<2->{
+%\draw [->] (1,2) -- (1,1);
+%\draw [->] (4,2) --(4,1);
+%\node [left] at (1,1.5) {$\mathbb{R}^{2}$};
+%\node [right] at (4,1.5) {$\mathbb{R}^{2}$};
+%\node at (1,0.5)[text width=2cm] {\begin{footnotesize}TA profiling traces\end{footnotesize}};
+%\node at (4,0.5)[text width=2cm] {\begin{footnotesize}TA attack traces\end{footnotesize}};}
+%\uncover<3->{
+%\draw [->] (1,0) -- (1,-2);
+%\draw [yellow] (0,-3) rectangle(2,-2);
+%\node at (1.5,-2.5)[text width=2cm] {\begin{footnotesize}Templates\end{footnotesize}};}
+%\uncover<4>{
+%\draw [->] (2,-2.5) -- (3,-2.5);
+%\draw [->] (4,0) -- (4,-1.5);
+%\draw [red] (4,-2.5) circle(1);
+%\node at (4.6,-2.5)[text width=2cm] {\begin{footnotesize}Matching\end{footnotesize}};
+%\draw [->] (5,-2.5) -- (6,-2.5);
+%\node at (7.5,-2.5)[text width=2cm] {$K^\star$};}
+%\end{tikzpicture} 
+%}
+%
+%
+%\end{figure}
+%
+%
+%\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Efficiency/Accuracy trade-off}
+
+KDA training set size fixed ($\sim$ 9000 traces) to control efficiency\\
+
+\begin{block}{Adjust the number of classes to gain in accuracy}
+$Z = 0,\dots, 255 $\\
+\centering
+\begin{tabular}{|c|c|c|}
+\hline 
+\textbf{Model} & \textbf{number of classes} & \textbf{traces per class} \\
+Value & 256 & 35\\
+HW & 9 & 1000 \\
+HW $<,>,= 4$ & 3 & 3000 \\
+HW $\leq,> 4$ & 2 & 4500 \\
+\hline
+\end{tabular}
+
+\end{block}
+\end{frame}
+
+
+
+
+
+
+
+\begin{frame}
+\frametitle{Attack of second order}
 \vspace{-10pt}
-\begin{figure}[t]
+\includegraphics[width=0.5\textwidth]{../Figures/CARDIS2016/2order_classes_TA.pdf} 
+\uncover<2->{\includegraphics[width=0.5\textwidth]{../Figures/CARDIS2016/good_coeffs.png} }
+\begin{block}{Implicit coefficients}
 
-\includegraphics[width=.4\textwidth]{../Figures/CARDIS2016/3order_2_9.pdf}
-\includegraphics[width=.4\textwidth]{../Figures/CARDIS2016/4order_2_9.pdf}
-\end{figure}
+\begin{equation}
+\extract^{\mathrm{KDA}}_{\ell}(\sss[]{}) = \sum_{i=1}^{\NPoI}\nununu_\ell[i]K(\sss[z_i]{i}, \sss[]{})= \sum_{j=1}^\traceLength \sum_{k=1}^\traceLength[ \underbrace{(\sss[]{}[j]\sss[]{}[k])}_{\parbox[c]{2cm}{\centering{multiplied \\ time samples}}}\underbrace{(\sum_{i=1}^{\NPoI}\boldsymbol{\nu}_{\ell}[i] \sss[]{i}[j]\sss[]{i}[k])}_{\mbox{implicit  coefficients}}]
+\end{equation}
+
+
+\end{block}
+$d=2 \quad \longrightarrow \quad  {{200+2-1}\choose{2}} = 20.100$ implicit coefficients
 \end{frame}
 
 \begin{frame}
-\frametitle{Limits and Drawbacks}
+\frametitle{Third and Fourth Order}
+\begin{figure}
+\includegraphics[width=0.5\textwidth]{figures/3order_only_9.pdf}
+\includegraphics[width=0.5\textwidth]{figures/4order_only_9.pdf}
+\end{figure}
+
+
+\begin{itemize}
+\item $d=3 \quad \longrightarrow \quad {{200+3-1}\choose{3}} = 1.353.400$ implicit coefficients
+\item  $d=4 \quad \longrightarrow \quad {{200+4-1}\choose{4}} = 68.685.050$ implicit coefficients
+\end{itemize}
+
+Same time of execution of the KDA algorithm!
+
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Multi-class trade-off}
+%
+%With a fixed training set size, reducing the number of classes to separate (via non injective models like Hamming Weight, ...) decreases the class approximation error
+%\begin{figure}
+%\includegraphics[width=0.7\textwidth]{figures/3order_new.pdf} 
+%\end{figure}
+%
+%%\begin{itemize}
+%%\item $d=2$, features extracted from a ${{200}\choose{2}} = 19.900$-sized space
+%%\item $d=3$, features extracted from a ${{200}\choose{3}} = 1.313.400$-sized space
+%%\end{itemize}
+%\end{frame}
+
+
+%\begin{frame}
+%\frametitle{Asymmetric KDA/profiling approach}
+%
+%If KDA separates 2 classes, it has localised the PoIs. \\
+%TA will work and will be more efficient if performed over more classes \\(\emph{e.g.} 9 classes, Hamming Weight)
+%\begin{figure}
+%\includegraphics[width=0.5\textwidth]{figures/3order_2_9.pdf}
+%\includegraphics[width=0.5\textwidth]{figures/4order_2_9.pdf}
+%\end{figure}
+%
+%
+%\begin{itemize}
+%\item $d=3$, features extracted from a ${{200}\choose{3}} = 1.313.400$-sized space
+%\item  $d=4$, features extracted from a ${{200}\choose{4}} = 64.684.950$-sized space
+%\end{itemize}
+%\end{frame}
+
+\begin{frame}
+\frametitle{Qualitative comparison with PP}
+\vspace{-15pt}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\centering 
+Second Order
+\end{column}
+\begin{column}{0.5\textwidth}
+\centering 
+Third Order
+\end{column}
+\end{columns}
+\begin{figure}
+\includegraphics[width=0.45\textwidth]{figures/secondOrderPP.pdf} 
+\includegraphics[width=0.45\textwidth]{figures/thirdOrderPP.pdf}\\
+\only<1>{\includegraphics[width=0.45\textwidth]{../Figures/CARDIS2016/good_coeffs.png}}
+\end{figure}
+%\only<2>{
+%\begin{block}{Fair/Unfair Comparison}
+%\hfill
+%\begin{itemize}
+%\item \textbf{Fair:} the same \emph{KDA profiling traces} are used to run PP algorithm
+%\item \textbf{Unfair:} PP does not suffer (but takes advantage of) the increase of the number of profiling traces 
+%\end{itemize}
+%
+%\end{block}
+%}
+\end{frame}
+\begin{frame}
+\frametitle{Conclusions on KDA}
+\begin{block}{Strong points}
+\begin{itemize}
+\item KDA is suitable to attack $(d-1)$th-order masking
+\item Choice of the $d$-th degree polynomial kernel function
+\item KDA computational complexity is independent from the order $d$
+\item Tested and effective on a real case, positively compared to PP 
+\end{itemize}
+\end{block}
+
+\begin{block}{Limits and drawbacks}
+\begin{itemize}
+\item Memory-based $\rightarrow$ Non-scalability to big training set $\rightarrow$ not suitable for highly-noisy higher-order masked signals
+\item Regularization hyper-parameter $\mu$ (and slow \emph{validation})
+\end{itemize}
+\end{block}
 
 \end{frame}
