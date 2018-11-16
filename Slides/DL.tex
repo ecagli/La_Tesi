@@ -53,29 +53,234 @@ Many independent preprocessing steps and assumptions\\ \uncover<3>{$\longleftrig
 \end{block}
 \end{frame}
 
-\begin{frame}
-\frametitle{Neural Networks}
-schema a blocchi con tracce, split in training e validation, passa nel modello, funzione di costo, ottimizzo i pesi, monitoro, re-itero...tante volte..test
-\end{frame}
 
 \begin{frame}
 \frametitle{Multi-Layer Perceptron}
-le couche ...arrivare alla softmax richiamando la spiega sulla LDA
+\begin{block}{Multi-Layer Perceptron (MLP)}
+\only<1>{
+$F(\vLeakVec,W) = \softmax\circ\lambda_n\circ\sigma_{n-1}\circ\lambda_{n-1}\circ\dots\circ \lambda_1(\vLeakVec)=\yyy \approx \mathrm{Pr}[\sensRandVar | \vaLeakVec = \vLeakVec] $
+\begin{itemize}
+\item[]\textcolor{white}{$\lambda_i$ linear functions (linear combinations of time samples) depending on some trainable weights $W$}
+\item[]\textcolor{white}{$\sigma_i$ non-linear functions}
+\item[]\textcolor{white}{$\softmax$ normalizing \emph{softmax} function}
+\end{itemize}}
+\only<2>{
+$F(\vLeakVec,W) = \softmax\circ\textcolor{red}{\lambda_n}\circ\sigma_{n-1}\circ\textcolor{red}{\lambda_{n-1}}\circ\dots\circ \textcolor{red}{\lambda_1}(\vLeakVec)=\yyy \approx \mathrm{Pr}[\sensRandVar | \vaLeakVec = \vLeakVec]$
+\begin{itemize}
+\item[]\textcolor{red}{$\lambda_i$} linear functions (linear combinations of time samples) depending on some \textbf{trainable weights} $W$
+\item[]\textcolor{white}{$\sigma_i$ non-linear functions}
+\item[]\textcolor{white}{$\softmax$ normalizing \emph{softmax} function}
+\end{itemize}}
+\only<3>{
+$F(\vLeakVec,W) = \softmax\circ\lambda_n\circ\textcolor{red}{\sigma_{n-1}}\circ\lambda_{n-1}\circ\dots\circ \lambda_1(\vLeakVec)=\yyy \approx \mathrm{Pr}[\sensRandVar | \vaLeakVec = \vLeakVec] $
+\begin{itemize}
+\item[]{$\lambda_i$ linear functions (linear combinations of time samples) depending on some \textbf{trainable weights} $W$}
+\item[]\textcolor{red}{$\sigma_i$} non-linear \emph{activation} functions
+\item[]\textcolor{white}{$\softmax$ normalizing \emph{softmax} function}
+\end{itemize}}
+\only<4->{
+$F(\vLeakVec,W) = \textcolor{red}{\softmax}\circ\lambda_n\circ\sigma_{n-1}\circ\lambda_{n-1}\circ\dots\circ \lambda_1(\vLeakVec)=\yyy \approx \mathrm{Pr}[\sensRandVar | \vaLeakVec = \vLeakVec] $
+\begin{itemize}
+\item[]{$\lambda_i$ linear functions (linear combinations of time samples) depending on some \textbf{trainable weights} $W$}
+\item[]{$\sigma_i$ non-linear \emph{activation} functions}
+\item[]\textcolor{red}{$\softmax$} normalizing \emph{softmax} function
+\end{itemize}}
 
+\end{block}
+\uncover<5->{
+\begin{block}{Softmax $\sim$ multi-class logistic sigmoid}
+\begin{equation}\label{eq:softmax}
+\softmax(\aaa)[k] = \frac{e^{\aaa[k]}}{\sum_{j=1}^{\numClasses}e^{\aaa[j]}}\mbox{ .}
+\end{equation}
+\begin{equation}\label{eq:post_probs_multi-class}
+\prob(\given{\sensVarValue{j}}{\vLeakVec})  = \frac{\prob(\given{\vLeakVec}{\sensVarValue{j}})\prob(\sensVarValue{j})}{\prob(\vLeakVec)} = \frac{\prob(\given{\vLeakVec}{\sensVarValue{j}})\prob(\sensVarValue{j})}{\sum_{k=1}^{\nbClasses}\prob(\given{\vLeakVec}{\sensVarValue{k}})\prob(\sensVarValue{k} )} = \softmax (\aaa)[j]\mbox{ ,}
+\end{equation}
+\end{block}
+}
 \end{frame}
 
 \begin{frame}
-
-\frametitle{Shift-invariance}
+\frametitle{Training-Validation-Test}
+\only<1>{\includegraphics[width=\textwidth]{figures/deep_learning/Diapositive1.PNG}}
+\only<2>{\includegraphics[width=\textwidth]{figures/deep_learning/Diapositive2.PNG}}
+\only<3>{\includegraphics[width=\textwidth]{figures/deep_learning/Diapositive3.PNG}}
 \end{frame}
 
+\begin{frame}
+\frametitle{Cost function - Cross-entropy}
+\vspace*{-3pt}
+\begin{itemize}
+\item batch of training data $(\vLeakVec_i, \sensVar_i)_{i\in I}$, outputs of the current model $(\vNNOutput_i)_{i\in I}$
+\item labels $\sensVar_i=\sensVarValue{j}$ are \emph{one-hot encoded}: $\vec{\sensVar_i} = \sensVarOneHot{j} = (0,\ldots , 0,\underbrace{1}_{j},0,\dots,0)$
+\end{itemize}
+
+\begin{block}{Loss function}
+\begin{equation}\label{eq:lossfunction}
+\mathcal{L} = -\frac{1}{\lvert I \rvert} \sum_{i\in I} \sum_{t=1}^{|\sensVarSet|}\vec{\sensVar_i}[t]\log{\vNNOutput_i[t]}
+\end{equation}   
+\end{block}
+
+\begin{block}{Maximum-\emph{a-posteriori} or Cross-entropy}
+\begin{itemize}
+\item $\vNNOutput_i \approx \prob[\given{\sensRandVar}{\vaLeakVec=\vLeakVec_i}]$
+\uncover<2>{\item $\vNNOutput_i \approx \prob[\given{\sensRandVar}{\vaLeakVec=\vLeakVec_i}]$}
+\uncover<2>{\item $\entropy(\vec{\sensVar_i}, \vNNOutput_i) = \entropy(\vec{\sensVar_i}) + D_{KL}(\vec{\sensVar_i} || \vNNOutput_i) = \esper_{\vec{\sensVar_i}}[-\log{\vNNOutput_i}] = -\sum_{t=1}^{|\sensVarSet|}\vec{\sensVar_i}[t]\log{\vNNOutput_i[t]}$}
+\only<1>{\includegraphics[width=0.4\textwidth]{figures/maxaposteriori.png}}
+\only<2>{\includegraphics[width=0.7\textwidth]{figures/crossentropy.png}}
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Capacity-Overfitting-Regularization}
+
+
+\begin{block}{Regression example}
+Performance metric: Mean Square Error (MSE)
+\begin{columns}
+\begin{column}{.5\textwidth}
+\only<1-2>{\begin{figure}
+\includegraphics[width=\textwidth]{../Figures/linear_regression.pdf}
+\caption{Linear regression $\rightarrow$ underfitting}
+\end{figure}}
+\only<3-4>{\begin{figure}
+\includegraphics[width=\textwidth]{../Figures/cubic_regression.pdf}
+\caption{Cubic regression $\rightarrow$ overfitting}
+\end{figure}}
+\end{column}
+\begin{column}{.5\textwidth}
+\only<2-3>{
+\begin{figure}
+\includegraphics[width=\textwidth]{../Figures/quadratic_regression.pdf}
+\caption{Linear regression $\rightarrow$ fits}
+\end{figure}}
+\only<4>{
+\begin{figure}
+\includegraphics[width=\textwidth]{../Figures/cubic_regression_more.pdf}
+\caption{Cubic regression with more training data}
+\end{figure}}
+\end{column}
+\end{columns}
+\end{block}
+
+\uncover<5->{
+\begin{block}{Classification via Neural Network}
+Performance measure: Accuracy (Classification rate)\\
+Evaluate and compare training and validation accuracy
+\begin{columns}
+\begin{column}{.45\textwidth}
+\only<5>{Understand significant features
+\begin{figure}
+\includegraphics[width=.9\textwidth]{figures/fitting.pdf} 
+\end{figure}
+}
+\only<6>{
+Why?
+\begin{itemize}
+\item[] Too complex model
+\item[] Not enough training data
+\end{itemize}
+Solution? 
+\begin{itemize}
+\item[] Data augmentation
+\end{itemize}
+}
+\end{column}
+\begin{column}{.45\textwidth}
+Learn by heart (\textbf{\textcolor{red}{OVERFITTING}})
+\begin{figure}
+\includegraphics[width=.9\textwidth]{figures/overfitting.pdf} 
+\end{figure}
+
+\end{column}
+\end{columns}
+\end{block}
+
+}
+
+
+
+\end{frame}
+
+%
 \begin{frame}
 \frametitle{Convolutional Neural Networks}
+\begin{block}{Translation-invariance}
+\begin{figure}
+\centering
+\only<1>{\includegraphics[width=\textwidth]{Figures/cane_shift_classifier1.pdf}}
+\only<2>{\includegraphics[width=\textwidth]{Figures/cane_shift_classifier2.pdf}}
+\only<3-4>{\includegraphics[width=\textwidth]{Figures/cane_shift_classifier3.pdf}}
+\only<5>{\includegraphics[width=\textwidth]{Figures/cane_shift_classifier4.pdf}}
+\only<6>{\includegraphics[width=\textwidth]{Figures/trace_shift_classifier1.pdf}}
+\only<7>{\includegraphics[width=\textwidth]{Figures/trace_shift_classifier2.pdf}}
+\only<8->{\includegraphics[width=\textwidth]{Figures/trace_shift_classifier3.pdf}}
+\end{figure}
+\uncover<4->{It is important to explicit the data translation-invariance\\}
+\uncover<9->{Convolutional Neural Networks: share weights across space}
+\end{block}
+%
+
+\vspace*{-7pt}
+
+\begin{columns}
+\begin{column}{.5\textwidth}
+\only<1-10>{
+\begin{figure}
+\includegraphics[width=.7\textwidth]{Figures/small_white.pdf}
+\end{figure}
+}
+
+\only<11>{
+\begin{figure}
+\includegraphics[width=.6\textwidth]{../tikz_per_manuscritto/conv_filter_2_1.pdf} 
+\caption{\scriptsize{Linear layer in a ConvNet (\emph{Convolutional Layer})}}
+\end{figure}
+}
+
+\only<12>{
+\begin{figure}
+\includegraphics[width=0.8\textwidth]{../tikz_per_manuscritto/conv_filter_2_3.pdf} 
+\caption{\scriptsize{Linear layer in a ConvNet (\emph{Convolutional Layer})}}
+\end{figure}
+}
+
+\end{column}
+%%
+\begin{column}{.5\textwidth}
+\only<1-9>{
+\begin{figure}
+\includegraphics[width=.7\textwidth]{Figures/big_white.pdf}
+\end{figure}}
+\only<10-12>{
+\begin{figure}
+\includegraphics[width=.8\textwidth]{Figures/FC.pdf} 
+\caption{\scriptsize{Linear layer in an MLP (\emph{Fully Connected Layer})}}
+\end{figure}
+}
+\only<14->{
+\begin{figure}
+\includegraphics[width=.6\textwidth]{../tikz_per_manuscritto/pooling.pdf} 
+\caption{\scriptsize{Max Pooling Layer}}
+\end{figure}
+}
+
+\end{column}
+\end{columns}
 \end{frame}
 
 
 \begin{frame}
-\frametitle{Our CNN design principle}
+\frametitle{A kind of CNN architecture}
+\includegraphics[width=\textwidth]{../tikz_per_manuscritto/convnet_arch.pdf} \\VGG-like:
+\begin{itemize}
+\item Reduce temporal features to only one
+\item Maintain time complexity of each layer (one-half pooling when number of feature maps are doubled)
+\item Small filters
+\end{itemize}
+\begin{block}{Model used in our experiments}
+$\softmax \circ [\lambda]^1 \circ[\delta \circ [\sigma \circ \gamma  ]^1 ]^4$
+\end{block}
 
 \end{frame}
 
@@ -129,20 +334,18 @@ Data Augmentation techniques are applied online during training phase.
 \begin{frame}
 \frametitle{Experimental Results}
 \begin{itemize}
-\item \only<1-2>{Random delays}\only<3>{\textcolor{red}{Random delays}}
-\item \only<1-2>{Artificial Jitter}\only<3>{\textcolor{grey}{Artificial Jitter}}
-\item \only<1-2>{Real Jitter}\only<3>{\textcolor{red}{Real Jitter}}
+%\item \only<1-2>{Random delays}\only<3>{\textcolor{red}{Random delays}}
+%\item \only<1-2>{Artificial Jitter}\only<3>{\textcolor{grey}{Artificial Jitter}}
+%\item \only<1-2>{Real Jitter}\only<3>{\textcolor{red}{Real Jitter}}
+\item Random delays
+\item Artificial Jitter
+\item Real Jitter
 \end{itemize}
-\uncover<2->{
-\begin{block}{}
-\begin{itemize}
-\item Network architecture: 
-$  \softmax \circ [\lambda]^1 \circ[\delta \circ [\sigma \circ \gamma  ]^1 ]^4$
 
-\item Keras library with Tensorflow backend \cite{keras} (open source)
-\end{itemize}
-\end{block}
-}
+\vspace*{3pt}
+Keras 1.2.1 library with Tensorflow backend \cite{keras} (open source, today 2.2.4)
+
+
 \end{frame}
 
 \begin{frame}
@@ -386,5 +589,21 @@ Acc        & $N^\star$       & 1.2\%                      & 137                 
 \includegraphics[width=0.5\textwidth]{../Figures/CHES2017/TA_CNN_smartcard.pdf} 
 }
 
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Conclusions about CNN}
+
+\begin{block}{}
+\begin{itemize}
+\item State-of-the-Art Template Attack routine separates resynchronization/dimensionality reduction from characterization \pause
+\item CNNs provide an integrated approach to directly construct a discriminative model from rough data \pause
+\item CNN models may have high capacity and require plenty of data to be trained \pause 
+\item Data Augmentation provides an answer to the lack of data \pause
+\item we proposed two Side-Channel-adapted Data Augmentation techniques (inspired by trace misalignment)\pause
+\item we verified the effectiveness/efficiency of the CNN+Data Augmentation approach over different sets of misaligned data
+\end{itemize}
+\end{block}
 
 \end{frame}

@@ -64,7 +64,11 @@
 \end{itemize}
 \item $\Rightarrow a = \vec{w}^\intercal \vLeakVec + w_0$ (linear decision boundary, $\vec{w}$ and $w_0$ functions of $\Sigma, \mu_j$)
 \end{itemize}
-
+\begin{block}{Generalised linear discriminative model}
+\begin{equation}\label{eq:binary_linear_classifier}
+\prob(\given{\sensVarValue{1}}{\vLeakVec}) = \sigma(\www^\intercal \vLeakVec + w_0)\mbox{ ,where }  \sigma(a)= \frac{1}{1+e^{-a}} \text{\emph{logistic sigmoid}}
+\end{equation}
+\end{block}
 \end{frame}
 
 \begin{frame}

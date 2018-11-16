@@ -81,7 +81,7 @@ We remark that Eq.~\eqref{eq:post_probs} rewrites as:
 \end{equation}
 where the function $\sigma$ is the so-called \emph{logistic sigmoid}. This remark translates in the multi-class case, \ie $\numClasses >2$, in the following way: the posterior probability for each class $\sensVarValue{j}$ is given by
 \begin{equation}\label{eq:post_probs_multi-class}
-\prob(\given{\sensVarValue{j}}{\vLeakVec})  = \frac{\prob(\given{\vLeakVec}{\sensVarValue{j}})\prob(\sensVarValue{j})}{\prob(\vLeakVec)} = \frac{\prob(\given{\vLeakVec}{\sensVarValue{j}})\prob(\sensVarValue{j})}{\sum_{k=1}^{\nbClasses}\prob(\given{\vLeakVec}{\sensVar^k})\prob(\sensVar^k )} = \softmax (\aaa)[j]\mbox{ ,}
+\prob(\given{\sensVarValue{j}}{\vLeakVec})  = \frac{\prob(\given{\vLeakVec}{\sensVarValue{j}})\prob(\sensVarValue{j})}{\prob(\vLeakVec)} = \frac{\prob(\given{\vLeakVec}{\sensVarValue{j}})\prob(\sensVarValue{j})}{\sum_{k=1}^{\nbClasses}\prob(\given{\vLeakVec}{\sensVarValue{k}})\prob(\sensVarValue{k} )} = \softmax (\aaa)[j]\mbox{ ,}
 \end{equation}
 where $\aaa$ is a $\numClasses$-dimensional vector, whose entries are given by
 \begin{equation}\label{eq:softmax_entries}
