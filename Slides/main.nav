@@ -1,45 +1,43 @@
-\defcounter {refsection}{0}\relax 
-\beamer@endinputifotherversion {3.33pt}
 \headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}
 \headcommand {\beamer@framepages {1}{1}}
 \headcommand {\sectionentry {1}{Context}{2}{Context}{0}}
 \headcommand {\beamer@sectionpages {1}{1}}
 \headcommand {\beamer@subsectionpages {1}{1}}
-\headcommand {\slideentry {1}{0}{2}{2/2}{}{0}}
+\headcommand {\slideentry {1}{0}{1}{2/2}{}{0}}
 \headcommand {\beamer@framepages {2}{2}}
-\headcommand {\slideentry {1}{0}{3}{3/3}{}{0}}
+\headcommand {\slideentry {1}{0}{2}{3/3}{}{0}}
 \headcommand {\beamer@framepages {3}{3}}
-\headcommand {\slideentry {1}{0}{4}{4/4}{}{0}}
+\headcommand {\slideentry {1}{0}{3}{4/4}{}{0}}
 \headcommand {\beamer@framepages {4}{4}}
-\headcommand {\slideentry {1}{0}{5}{5/10}{}{0}}
+\headcommand {\slideentry {1}{0}{4}{5/10}{}{0}}
 \headcommand {\beamer@framepages {5}{10}}
-\headcommand {\slideentry {1}{0}{6}{11/18}{}{0}}
+\headcommand {\slideentry {1}{0}{5}{11/18}{}{0}}
 \headcommand {\beamer@framepages {11}{18}}
-\headcommand {\slideentry {1}{0}{7}{19/22}{}{0}}
+\headcommand {\slideentry {1}{0}{6}{19/22}{}{0}}
 \headcommand {\beamer@framepages {19}{22}}
-\headcommand {\slideentry {1}{0}{8}{23/24}{}{0}}
+\headcommand {\slideentry {1}{0}{7}{23/24}{}{0}}
 \headcommand {\beamer@framepages {23}{24}}
-\headcommand {\slideentry {1}{0}{9}{25/29}{}{0}}
+\headcommand {\slideentry {1}{0}{8}{25/29}{}{0}}
 \headcommand {\beamer@framepages {25}{29}}
 \headcommand {\sectionentry {2}{State of the Art, Objectives, Contributions}{30}{State of the Art, Objectives, Contributions}{0}}
 \headcommand {\beamer@sectionpages {2}{29}}
 \headcommand {\beamer@subsectionpages {2}{29}}
-\headcommand {\slideentry {2}{0}{10}{30/30}{}{0}}
+\headcommand {\slideentry {2}{0}{1}{30/30}{}{0}}
 \headcommand {\beamer@framepages {30}{30}}
-\headcommand {\slideentry {2}{0}{11}{31/32}{}{0}}
+\headcommand {\slideentry {2}{0}{2}{31/32}{}{0}}
 \headcommand {\beamer@framepages {31}{32}}
-\headcommand {\slideentry {2}{0}{12}{33/39}{}{0}}
+\headcommand {\slideentry {2}{0}{3}{33/39}{}{0}}
 \headcommand {\beamer@framepages {33}{39}}
-\headcommand {\slideentry {2}{0}{13}{40/44}{}{0}}
+\headcommand {\slideentry {2}{0}{4}{40/44}{}{0}}
 \headcommand {\beamer@framepages {40}{44}}
-\headcommand {\slideentry {2}{0}{14}{45/46}{}{0}}
+\headcommand {\slideentry {2}{0}{5}{45/46}{}{0}}
 \headcommand {\beamer@framepages {45}{46}}
-\headcommand {\slideentry {2}{0}{15}{47/48}{}{0}}
+\headcommand {\slideentry {2}{0}{6}{47/48}{}{0}}
 \headcommand {\beamer@framepages {47}{48}}
 \headcommand {\sectionentry {3}{Kernel Discriminant Analysis against Masking}{49}{Kernel Discriminant Analysis against Masking}{0}}
 \headcommand {\beamer@sectionpages {30}{48}}
 \headcommand {\beamer@subsectionpages {30}{48}}
-\headcommand {\slideentry {3}{0}{16}{49/49}{}{0}}
+\headcommand {\slideentry {3}{0}{1}{49/49}{}{0}}
 \headcommand {\beamer@framepages {49}{49}}
 \headcommand {\beamer@subsectionentry {0}{3}{1}{50}{Linear Discriminant Analysis}}\headcommand {\beamer@subsectionpages {49}{49}}
 \headcommand {\slideentry {3}{1}{1}{50/50}{Linear Discriminant Analysis}{0}}
@@ -81,23 +79,23 @@
 \headcommand {\sectionentry {4}{Deep Learning against Misalignment}{90}{Deep Learning against Misalignment}{0}}
 \headcommand {\beamer@sectionpages {49}{89}}
 \headcommand {\beamer@subsectionpages {83}{89}}
-\headcommand {\slideentry {4}{0}{7}{90/90}{}{0}}
+\headcommand {\slideentry {4}{0}{1}{90/90}{}{0}}
 \headcommand {\beamer@framepages {90}{90}}
-\headcommand {\slideentry {4}{0}{8}{91/91}{}{0}}
+\headcommand {\slideentry {4}{0}{2}{91/91}{}{0}}
 \headcommand {\beamer@framepages {91}{91}}
-\headcommand {\slideentry {4}{0}{9}{92/94}{}{0}}
+\headcommand {\slideentry {4}{0}{3}{92/94}{}{0}}
 \headcommand {\beamer@framepages {92}{94}}
-\headcommand {\slideentry {4}{0}{10}{95/99}{}{0}}
+\headcommand {\slideentry {4}{0}{4}{95/99}{}{0}}
 \headcommand {\beamer@framepages {95}{99}}
-\headcommand {\slideentry {4}{0}{11}{100/102}{}{0}}
+\headcommand {\slideentry {4}{0}{5}{100/102}{}{0}}
 \headcommand {\beamer@framepages {100}{102}}
-\headcommand {\slideentry {4}{0}{12}{103/104}{}{0}}
+\headcommand {\slideentry {4}{0}{6}{103/104}{}{0}}
 \headcommand {\beamer@framepages {103}{104}}
-\headcommand {\slideentry {4}{0}{13}{105/110}{}{0}}
+\headcommand {\slideentry {4}{0}{7}{105/110}{}{0}}
 \headcommand {\beamer@framepages {105}{110}}
-\headcommand {\slideentry {4}{0}{14}{111/124}{}{0}}
+\headcommand {\slideentry {4}{0}{8}{111/124}{}{0}}
 \headcommand {\beamer@framepages {111}{124}}
-\headcommand {\slideentry {4}{0}{15}{125/125}{}{0}}
+\headcommand {\slideentry {4}{0}{9}{125/125}{}{0}}
 \headcommand {\beamer@framepages {125}{125}}
 \headcommand {\beamer@subsectionentry {0}{4}{1}{126}{Data Augmentation}}\headcommand {\beamer@subsectionpages {90}{125}}
 \headcommand {\slideentry {4}{1}{1}{126/127}{Data Augmentation}{0}}
@@ -126,27 +124,23 @@
 \headcommand {\sectionentry {5}{Conclusions}{146}{Conclusions}{0}}
 \headcommand {\beamer@sectionpages {90}{145}}
 \headcommand {\beamer@subsectionpages {128}{145}}
-\headcommand {\slideentry {5}{0}{11}{146/146}{}{0}}
+\headcommand {\slideentry {5}{0}{1}{146/146}{}{0}}
 \headcommand {\beamer@framepages {146}{146}}
-\headcommand {\slideentry {5}{0}{12}{147/149}{}{0}}
+\headcommand {\slideentry {5}{0}{2}{147/149}{}{0}}
 \headcommand {\beamer@framepages {147}{149}}
 \headcommand {\sectionentry {6}{References}{150}{References}{0}}
 \headcommand {\beamer@sectionpages {146}{149}}
 \headcommand {\beamer@subsectionpages {146}{149}}
-\headcommand {\slideentry {6}{0}{13}{150/150}{}{0}}
+\headcommand {\slideentry {6}{0}{0}{150/150}{}{0}}
 \headcommand {\beamer@framepages {150}{150}}
-\headcommand {\slideentry {6}{0}{13}{150/151}{}{0}}
+\headcommand {\slideentry {6}{0}{0}{150/151}{}{0}}
 \headcommand {\beamer@framepages {150}{151}}
-\headcommand {\slideentry {6}{0}{13}{150/152}{}{0}}
+\headcommand {\slideentry {6}{0}{0}{150/152}{}{0}}
 \headcommand {\beamer@framepages {150}{152}}
-\headcommand {\slideentry {6}{0}{13}{150/153}{}{0}}
+\headcommand {\slideentry {6}{0}{0}{150/153}{}{0}}
 \headcommand {\beamer@framepages {150}{153}}
-\headcommand {\slideentry {6}{0}{13}{150/154}{}{0}}
-\headcommand {\beamer@framepages {150}{154}}
-\headcommand {\slideentry {6}{0}{13}{150/155}{}{0}}
-\headcommand {\beamer@framepages {150}{155}}
-\headcommand {\beamer@partpages {1}{155}}
-\headcommand {\beamer@subsectionpages {146}{155}}
-\headcommand {\beamer@sectionpages {146}{155}}
-\headcommand {\beamer@documentpages {155}}
+\headcommand {\beamer@partpages {1}{153}}
+\headcommand {\beamer@subsectionpages {146}{153}}
+\headcommand {\beamer@sectionpages {146}{153}}
+\headcommand {\beamer@documentpages {153}}
 \headcommand {\def \inserttotalframenumber {55}}
