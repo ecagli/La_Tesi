@@ -17,6 +17,7 @@
 
 \begin{frame}
 \frametitle{Model-based SNR and Fisher's Criterion}
+\vspace*{-12pt}
 \begin{block}{Signal-to-Noise Ratio (SNR)}
 \begin{itemize}
 \item Independent Noise Assumption: $\vaLeakVec = \varphi(\sensRandVar)+\vec{B}$
@@ -36,6 +37,7 @@
  \begin{equation}\label{eq:LDA}
 \hat{ \AAlpha}=\mathrm{argmax}_{\AAlpha} \frac{\AAlpha^\intercal \SB \AAlpha}{\AAlpha^\intercal \SW \AAlpha} \mbox{ ,}
  \end{equation}
+ $\extract(\vLeakVec) = A\vLeakVec $ where $A=[\AAlpha_1, \dots, \AAlpha_{|\sensVarSet|-1}]$ eigenvectors of $\SW^{-1}\SB$
 \end{itemize}
 
 \end{block}
@@ -50,20 +52,24 @@
 \begin{column}{.6\linewidth}
 \begin{itemize}
 \item Classify data $\vLeakVec$ into 2 classes $\sensVarSet = \{\sensVarValue{1}, \sensVarValue{2}\}$
+\pause
 \item Generative model: $\pdf_{\given{\vaLeakVec}{\sensRandVar = \sensVarValue{j}}}(\vLeakVec)$, $\pdf_{\sensRandVar}(\sensVarValue{j})$ and $\pdf_{\vaLeakVec}(\vLeakVec)$
+\pause
 \item Posterior probabilities (via Bayes' theorem), then classify through the \emph{log-likelihood ratio}: $a = \log\left[\frac{\prob(\given{\sensVarValue{1}}{\vLeakVec})}{\prob(\given{\sensVarValue{2}}{\vLeakVec})}\right]]$ (boundary surface $a=0$)
 \end{itemize}
 \end{column}
 \end{columns}
-
+\pause
 \begin{itemize}
 \item Two assumptions about class-conditional densities: 
 \begin{itemize}
 \item Gaussian distributions with parameters $\mu_j, \Sigma_j$
 \item Homoscedasticity: $\Sigma_j=\Sigma$ for all $j$
 \end{itemize}
+\pause
 \item $\Rightarrow a = \vec{w}^\intercal \vLeakVec + w_0$ (linear decision boundary, $\vec{w}$ and $w_0$ functions of $\Sigma, \mu_j$)
 \end{itemize}
+\pause
 \begin{block}{Generalised linear discriminative model}
 \begin{equation}\label{eq:binary_linear_classifier}
 \prob(\given{\sensVarValue{1}}{\vLeakVec}) = \sigma(\www^\intercal \vLeakVec + w_0)\mbox{ ,where }  \sigma(a)= \frac{1}{1+e^{-a}} \text{\emph{logistic sigmoid}}
@@ -75,16 +81,18 @@
 \frametitle{LDA and Fisher's Discriminant}
 \begin{columns}
 \begin{column}{.5\linewidth}
-\includegraphics[width=\textwidth]{figures/LDAprojection.pdf} 
+\only<1>{\includegraphics[width=\textwidth]{figures/LDA_boundary.pdf}}
+\only<2->{\includegraphics[width=\textwidth]{figures/LDAprojection.pdf} }
 \end{column}
 \begin{column}{.6\linewidth}
 \begin{itemize}
 \item LDA: linear decision boundary $a = \vec{w}^\intercal \vLeakVec + w_0$
+\pause
 \item Equivalently, project data onto $\vec{w}^\intercal \vLeakVec$ (orthogonally to the decision boudary), than classify by a real threshold (optimally $w_0$). \\
 \end{itemize}
 \end{column}
 \end{columns}
-
+\pause
 \begin{itemize}
 \item Two assumptions about class-conditional densities: 
 \begin{itemize}
@@ -95,7 +103,7 @@
 
 \begin{block}{Fact, abuse and preference for the dimensionality reduction formulation}
 \begin{itemize}
-\item When LDA assumptions are met, the solution of the Fisher's criterion coincides with $\vec{w}$. 
+\item When LDA assumptions are met, the solution $\AAlpha_1$ of the Fisher's criterion is orthogonal to $\vec{w}$. 
 \item assumption not required
 \item naturally multi-class
 \end{itemize}
@@ -105,6 +113,8 @@
 
 \begin{frame}
 \frametitle{Linear separability}
+
+\only<1>{\includegraphics[width=0.5\textwidth]{figures/LDA_non_linearly.pdf}\\ }
 LDA: linear decision boundary $a = \vec{w}^\intercal \vLeakVec + w_0$ ($\vec{w} = \Sigma^{-1}(\mu_1-\mu_2)$)
 %
 \begin{block}{}
@@ -446,7 +456,7 @@ New trace projection}
 \end{column}
 
 \begin{column}{.55\textwidth}
-\uncover<3->{Computational Complexity $O(N^3)$}
+\uncover<3->{\only<3-4>{Computational Complexity $O(N^3)$}\only<5>{\textcolor{red}{Computational Complexity $O(N^3)$}}}
 \begin{block}{KDA}
 \begin{small}
 \begin{itemize}
@@ -704,7 +714,7 @@ Third Order
 
 \begin{block}{Limits and drawbacks}
 \begin{itemize}
-\item Memory-based $\rightarrow$ Non-scalability to big training set $\rightarrow$ not suitable for highly-noisy higher-order masked signals
+\item Memory-based $+$ $O(N^3)$ complexity $\rightarrow$ Non-scalability to big training set $\rightarrow$ not suitable for highly-noisy higher-order masked signals
 \item Regularization hyper-parameter $\mu$ (and slow \emph{validation})
 \end{itemize}
 \end{block}

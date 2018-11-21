@@ -72,8 +72,9 @@
 \begin{block}{Notations and generalities}
 \begin{itemize}
 \item Side-channel traces: realizations of a random vector $\vaLeakVec \in \mathbb{R}^D$  
-\item $D$ is the number of time samples
-\item Target: a \emph{sensitive} variable $Z = f(\mathrm{plaintext,key})$ 
+\item $D$ is the number of time samples (or features)
+\item Target: a \emph{sensitive} variable $Z = f(\mathrm{plaintext,key})$ in $\sensVarSet = \{\sensVarValue{1}, \dots, \sensVarValue{|\sensVarSet|}\}$
+\item each label $\sensVarValue{i}$ identifies a \emph{class}
 \end{itemize}
 \end{block}
 \vspace{-5pt}
@@ -83,17 +84,13 @@
 \item attack traces $\setDataAttack = (\vLeakVec_i, p_i)_{i=1}^{N_a}$ acquired under known plaintext
 \end{itemize}
 \end{block}
-\pause
-\begin{block}{Points of Interest}
-Time samples that statistically depend on $Z$.
-\end{block}
 \end{frame}
 
 
 
 
 \begin{frame}
-\frametitle{Template Attack}
+\frametitle{Profiling Attack}
 \only<4->{
  \begin{textblock}{5}(10,2)
  \important{$\vaLeakVec\in \mathbb{R}^D$\\
@@ -110,7 +107,7 @@ Time samples that statistically depend on $Z$.
 \item $\pdf_{\given{\only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\extract{(\rho(\vaLeakVec)})}}{\sensRandVar = \sensVar}}$\uncover<2->{, $\pdf_{\only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\extract{(\rho(\vaLeakVec)})}}$, $\pdf_{\sensRandVar}$} \uncover<3->{(generative model)}
 \uncover<5->{
 \begin{itemize}
-\item Gaussian hypothesis \cite{Chari2003}
+\item Gaussian hypothesis (\textbf{Template Attack}) \cite{Chari2003}
 \item Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}
 \end{itemize}
 }
@@ -196,7 +193,7 @@ d_{\keyVar} &= \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\only<1-
 \begin{columns}
 
 \begin{column}{.3\textwidth}
-\centering extractor  \begin{align*}
+\begin{align*}
 \extract \colon & \mathbb{R}^D\rightarrow \mathbb{R}^C\\
 & \vLeakVec \mapsto \extract(\vLeakVec)
 \end{align*}
@@ -204,7 +201,7 @@ d_{\keyVar} &= \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\only<1-
 \end{column}
 \begin{column} {.6\textwidth}
 \begin{itemize}
-\item Feature selection 
+\item Feature selection (Points of Interest selection)
 \item Feature extraction
 \end{itemize}
 \end{column}
@@ -232,7 +229,7 @@ $\extract$ performs a sub-sampling
 }
 \only<2>{
 \begin{block}{Linear feature extraction}
-$\extract(\vLeakVec) = \vLeakVec \mbox{ with } A \in M_{\mathbb{R}}(\newTraceLength, \traceLength)$
+$\extract(\vLeakVec) = A\vLeakVec \mbox{ with } A \in M_{\mathbb{R}}(\newTraceLength, \traceLength)$
 \begin{itemize}
 \item Principal Component Analysis (PCA) \cite{TAprincipal,Batina2012}
 \item Linear Discriminant Analysis (LDA) \cite{Standaert2008,lessIsMore}
@@ -248,18 +245,19 @@ $\extract(\vLeakVec) = \vLeakVec \mbox{ with } A \in M_{\mathbb{R}}(\newTraceLen
 \frametitle{Contributions}
 
 \begin{itemize}
-\item \textbf{Linear Dimensionality Reduction}: 
+\item \textbf{Linear Dimensionality Reduction}([CARDIS 2015]): 
 \begin{itemize}
 \item PCA, choise of components ELV
 \item LDA in case of undersampling
 \end{itemize}
 
-\item \only<1>{\textbf{Kernel Discriminant Analysis}: application of an appropriate kernel trick to LDA, in order to manage masking countermeasure}\only<2->{\important{\textbf{Kernel Discriminant Analysis}: application of an appropriate kernel trick to LDA, in order to manage masking countermeasure}}
-\item \only<1>{\textbf{Convolutional Neural Networks}: } \only<2->{\important{\textbf{Convolutional Neural Networks}: }}
+\item \only<1>{\textbf{Kernel Discriminant Analysis}([CARDIS 2016]): application of an appropriate kernel trick to LDA, in order to manage masking countermeasure}\only<2->{\textcolor{red}{\textbf{Kernel Discriminant Analysis}([CARDIS 2016]): application of an appropriate kernel trick to LDA, in order to manage masking countermeasure}}
+
+\item \only<1>{\textbf{Convolutional Neural Networks}([CHES 2017]) } \only<2->{\textcolor{red}{\textbf{Convolutional Neural Networks}([CHES 2017]) }}:
 \begin{itemize}
-\item \only<1>{discriminative model by means of neural network classifiers}\only<2->{\important{discriminative model by means of neural network classifiers}}
-\item \only<1>{convolutional layers to manage desyncrhonisation (a form of hiding)}\only<2->{\important{convolutional layers to manage desyncrhonisation (a form of hiding)}}
-\item \only<1>{Data Augmentation techniques to reduce overfitting}\only<2->{\important{Data Augmentation techniques to reduce overfitting}}
+\item \only<1>{discriminative model by means of neural network classifiers}\only<2->{\textcolor{red}{discriminative model by means of neural network classifiers}}
+\item \only<1>{convolutional layers to manage desyncrhonisation (a form of hiding)}\only<2->{\textcolor{red}{convolutional layers to manage desyncrhonisation (a form of hiding)}}
+\item \only<1>{Data Augmentation techniques to reduce overfitting}\only<2->{\textcolor{red}{Data Augmentation techniques to reduce overfitting}}
 \end{itemize}
 
 \end{itemize}

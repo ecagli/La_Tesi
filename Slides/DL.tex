@@ -5,6 +5,7 @@
 \begin{itemize}
 \item not memory-based
 \item parallelizable computation(GPU optimizations)
+\item many hyper-parameters but faster validation
 \end{itemize}
 
 \end{frame}
@@ -104,6 +105,7 @@ $F(\vLeakVec,W) = \textcolor{red}{\softmax}\circ\lambda_n\circ\sigma_{n-1}\circ\
 \only<1>{\includegraphics[width=\textwidth]{figures/deep_learning/Diapositive1.PNG}}
 \only<2>{\includegraphics[width=\textwidth]{figures/deep_learning/Diapositive2.PNG}}
 \only<3>{\includegraphics[width=\textwidth]{figures/deep_learning/Diapositive3.PNG}}
+\only<4>{\includegraphics[width=\textwidth]{figures/deep_learning/Diapositive3.PNG}}
 \end{frame}
 
 \begin{frame}
@@ -123,7 +125,7 @@ $F(\vLeakVec,W) = \textcolor{red}{\softmax}\circ\lambda_n\circ\sigma_{n-1}\circ\
 \begin{block}{Maximum-\emph{a-posteriori} or Cross-entropy}
 \begin{itemize}
 \item $\vNNOutput_i \approx \prob[\given{\sensRandVar}{\vaLeakVec=\vLeakVec_i}]$
-\uncover<2>{\item $\vNNOutput_i \approx \prob[\given{\sensRandVar}{\vaLeakVec=\vLeakVec_i}]$}
+\uncover<2>{\item $\vec{\sensVar_i} \approx \prob[\given{\sensRandVar}{\sensRandVar=\sensVarOneHot{j}}]$}
 \uncover<2>{\item $\entropy(\vec{\sensVar_i}, \vNNOutput_i) = \entropy(\vec{\sensVar_i}) + D_{KL}(\vec{\sensVar_i} || \vNNOutput_i) = \esper_{\vec{\sensVar_i}}[-\log{\vNNOutput_i}] = -\sum_{t=1}^{|\sensVarSet|}\vec{\sensVar_i}[t]\log{\vNNOutput_i[t]}$}
 \only<1>{\includegraphics[width=0.4\textwidth]{figures/maxaposteriori.png}}
 \only<2>{\includegraphics[width=0.7\textwidth]{figures/crossentropy.png}}
