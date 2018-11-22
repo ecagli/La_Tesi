@@ -154,7 +154,7 @@ Performance metric: Mean Square Error (MSE)
 \only<2-3>{
 \begin{figure}
 \includegraphics[width=\textwidth]{../Figures/quadratic_regression.pdf}
-\caption{Linear regression $\rightarrow$ fits}
+\caption{Quadratic regression $\rightarrow$ fits}
 \end{figure}}
 \only<4>{
 \begin{figure}
@@ -207,6 +207,7 @@ Learn by heart (\textbf{\textcolor{red}{OVERFITTING}})
 %
 \begin{frame}
 \frametitle{Convolutional Neural Networks}
+\vspace*{-10pt}
 \begin{block}{Translation-invariance}
 \begin{figure}
 \centering
@@ -240,7 +241,7 @@ Learn by heart (\textbf{\textcolor{red}{OVERFITTING}})
 \end{figure}
 }
 
-\only<12>{
+\only<12-13>{
 \begin{figure}
 \includegraphics[width=0.8\textwidth]{../tikz_per_manuscritto/conv_filter_2_3.pdf} 
 \caption{\scriptsize{Linear layer in a ConvNet (\emph{Convolutional Layer})}}
@@ -260,7 +261,7 @@ Learn by heart (\textbf{\textcolor{red}{OVERFITTING}})
 \caption{\scriptsize{Linear layer in an MLP (\emph{Fully Connected Layer})}}
 \end{figure}
 }
-\only<14->{
+\only<13->{
 \begin{figure}
 \includegraphics[width=.6\textwidth]{../tikz_per_manuscritto/pooling.pdf} 
 \caption{\scriptsize{Max Pooling Layer}}
@@ -274,7 +275,7 @@ Learn by heart (\textbf{\textcolor{red}{OVERFITTING}})
 
 \begin{frame}
 \frametitle{A kind of CNN architecture}
-\includegraphics[width=\textwidth]{../tikz_per_manuscritto/convnet_arch.pdf} \\VGG-like:
+\includegraphics[width=\textwidth]{../tikz_per_manuscritto/convnet_arch.pdf} \\VGG-like \cite{simonyan2014very}:
 \begin{itemize}
 \item Reduce temporal features to only one
 \item Maintain time complexity of each layer (one-half pooling when number of feature maps are doubled)
@@ -325,8 +326,8 @@ Emulate the effects of misaligning countermeasures to generate new traces
   \end{minipage} 
 \end{figure}
 \vspace{-9pt}
-Parameter  \textcolor{green}{$T$}: $\sharp$ of possible positions \hfill \only<2->{\textcolor{red}{\small{$\longrightarrow$ new hyper-parameter}}}\\
-Parameter \textcolor{blue}{$R$}: $\sharp$ of added and removed points \hfill \only<2->{\textcolor{red}{\small{$\longrightarrow$ new hyper-parameter}}}\\
+Parameter  \textcolor{green}{$T$}: $\sharp$ of possible positions \\
+Parameter \textcolor{blue}{$R$}: $\sharp$ of added and removed points \\
 Data Augmentation techniques are applied online during training phase.
 \end{block}
 \end{frame}
