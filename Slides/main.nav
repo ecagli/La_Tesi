@@ -13,140 +13,140 @@
 \headcommand {\beamer@framepages {5}{5}}
 \headcommand {\slideentry {1}{0}{5}{6/11}{}{0}}
 \headcommand {\beamer@framepages {6}{11}}
-\headcommand {\slideentry {1}{0}{6}{12/19}{}{0}}
-\headcommand {\beamer@framepages {12}{19}}
-\headcommand {\slideentry {1}{0}{7}{20/23}{}{0}}
-\headcommand {\beamer@framepages {20}{23}}
-\headcommand {\slideentry {1}{0}{8}{24/25}{}{0}}
-\headcommand {\beamer@framepages {24}{25}}
-\headcommand {\slideentry {1}{0}{9}{26/30}{}{0}}
-\headcommand {\beamer@framepages {26}{30}}
-\headcommand {\sectionentry {2}{State of the Art, Objectives, Contributions}{31}{State of the Art, Objectives, Contributions}{0}}
-\headcommand {\beamer@sectionpages {2}{30}}
-\headcommand {\beamer@subsectionpages {2}{30}}
-\headcommand {\slideentry {2}{0}{10}{31/31}{}{0}}
-\headcommand {\beamer@framepages {31}{31}}
-\headcommand {\slideentry {2}{0}{11}{32/32}{}{0}}
+\headcommand {\slideentry {1}{0}{6}{12/20}{}{0}}
+\headcommand {\beamer@framepages {12}{20}}
+\headcommand {\slideentry {1}{0}{7}{21/24}{}{0}}
+\headcommand {\beamer@framepages {21}{24}}
+\headcommand {\slideentry {1}{0}{8}{25/26}{}{0}}
+\headcommand {\beamer@framepages {25}{26}}
+\headcommand {\slideentry {1}{0}{9}{27/31}{}{0}}
+\headcommand {\beamer@framepages {27}{31}}
+\headcommand {\sectionentry {2}{State of the Art, Objectives, Contributions}{32}{State of the Art, Objectives, Contributions}{0}}
+\headcommand {\beamer@sectionpages {2}{31}}
+\headcommand {\beamer@subsectionpages {2}{31}}
+\headcommand {\slideentry {2}{0}{10}{32/32}{}{0}}
 \headcommand {\beamer@framepages {32}{32}}
-\headcommand {\slideentry {2}{0}{12}{33/39}{}{0}}
-\headcommand {\beamer@framepages {33}{39}}
-\headcommand {\slideentry {2}{0}{13}{40/44}{}{0}}
-\headcommand {\beamer@framepages {40}{44}}
-\headcommand {\slideentry {2}{0}{14}{45/46}{}{0}}
-\headcommand {\beamer@framepages {45}{46}}
-\headcommand {\slideentry {2}{0}{15}{47/48}{}{0}}
-\headcommand {\beamer@framepages {47}{48}}
-\headcommand {\sectionentry {3}{Kernel Discriminant Analysis against Masking}{49}{Kernel Discriminant Analysis against Masking}{0}}
-\headcommand {\beamer@sectionpages {31}{48}}
-\headcommand {\beamer@subsectionpages {31}{48}}
-\headcommand {\slideentry {3}{0}{16}{49/49}{}{0}}
-\headcommand {\beamer@framepages {49}{49}}
-\headcommand {\beamer@subsectionentry {0}{3}{1}{50}{Linear Discriminant Analysis}}\headcommand {\beamer@subsectionpages {49}{49}}
-\headcommand {\slideentry {3}{1}{1}{50/50}{Linear Discriminant Analysis}{0}}
+\headcommand {\slideentry {2}{0}{11}{33/33}{}{0}}
+\headcommand {\beamer@framepages {33}{33}}
+\headcommand {\slideentry {2}{0}{12}{34/40}{}{0}}
+\headcommand {\beamer@framepages {34}{40}}
+\headcommand {\slideentry {2}{0}{13}{41/45}{}{0}}
+\headcommand {\beamer@framepages {41}{45}}
+\headcommand {\slideentry {2}{0}{14}{46/47}{}{0}}
+\headcommand {\beamer@framepages {46}{47}}
+\headcommand {\slideentry {2}{0}{15}{48/49}{}{0}}
+\headcommand {\beamer@framepages {48}{49}}
+\headcommand {\sectionentry {3}{Kernel Discriminant Analysis against Masking}{50}{Kernel Discriminant Analysis against Masking}{0}}
+\headcommand {\beamer@sectionpages {32}{49}}
+\headcommand {\beamer@subsectionpages {32}{49}}
+\headcommand {\slideentry {3}{0}{16}{50/50}{}{0}}
 \headcommand {\beamer@framepages {50}{50}}
-\headcommand {\slideentry {3}{1}{2}{51/56}{Linear Discriminant Analysis}{0}}
-\headcommand {\beamer@framepages {51}{56}}
-\headcommand {\slideentry {3}{1}{3}{57/59}{Linear Discriminant Analysis}{0}}
-\headcommand {\beamer@framepages {57}{59}}
-\headcommand {\slideentry {3}{1}{4}{60/65}{Linear Discriminant Analysis}{0}}
-\headcommand {\beamer@framepages {60}{65}}
-\headcommand {\slideentry {3}{1}{5}{66/68}{Linear Discriminant Analysis}{0}}
-\headcommand {\beamer@framepages {66}{68}}
-\headcommand {\slideentry {3}{1}{6}{69/70}{Linear Discriminant Analysis}{0}}
-\headcommand {\beamer@framepages {69}{70}}
-\headcommand {\slideentry {3}{1}{7}{71/71}{Linear Discriminant Analysis}{0}}
-\headcommand {\beamer@framepages {71}{71}}
-\headcommand {\beamer@subsectionentry {0}{3}{2}{72}{Kernel Discriminant Analysis}}\headcommand {\beamer@subsectionpages {50}{71}}
-\headcommand {\slideentry {3}{2}{1}{72/72}{Kernel Discriminant Analysis}{0}}
+\headcommand {\beamer@subsectionentry {0}{3}{1}{51}{Linear Discriminant Analysis}}\headcommand {\beamer@subsectionpages {50}{50}}
+\headcommand {\slideentry {3}{1}{1}{51/51}{Linear Discriminant Analysis}{0}}
+\headcommand {\beamer@framepages {51}{51}}
+\headcommand {\slideentry {3}{1}{2}{52/57}{Linear Discriminant Analysis}{0}}
+\headcommand {\beamer@framepages {52}{57}}
+\headcommand {\slideentry {3}{1}{3}{58/60}{Linear Discriminant Analysis}{0}}
+\headcommand {\beamer@framepages {58}{60}}
+\headcommand {\slideentry {3}{1}{4}{61/66}{Linear Discriminant Analysis}{0}}
+\headcommand {\beamer@framepages {61}{66}}
+\headcommand {\slideentry {3}{1}{5}{67/69}{Linear Discriminant Analysis}{0}}
+\headcommand {\beamer@framepages {67}{69}}
+\headcommand {\slideentry {3}{1}{6}{70/71}{Linear Discriminant Analysis}{0}}
+\headcommand {\beamer@framepages {70}{71}}
+\headcommand {\slideentry {3}{1}{7}{72/72}{Linear Discriminant Analysis}{0}}
 \headcommand {\beamer@framepages {72}{72}}
-\headcommand {\slideentry {3}{2}{2}{73/79}{Kernel Discriminant Analysis}{0}}
-\headcommand {\beamer@framepages {73}{79}}
-\headcommand {\slideentry {3}{2}{3}{80/84}{Kernel Discriminant Analysis}{0}}
-\headcommand {\beamer@framepages {80}{84}}
-\headcommand {\slideentry {3}{2}{4}{85/89}{Kernel Discriminant Analysis}{0}}
-\headcommand {\beamer@framepages {85}{89}}
-\headcommand {\beamer@subsectionentry {0}{3}{3}{90}{Experimental Results}}\headcommand {\beamer@subsectionpages {72}{89}}
-\headcommand {\slideentry {3}{3}{1}{90/90}{Experimental Results}{0}}
-\headcommand {\beamer@framepages {90}{90}}
-\headcommand {\slideentry {3}{3}{2}{91/91}{Experimental Results}{0}}
+\headcommand {\beamer@subsectionentry {0}{3}{2}{73}{Kernel Discriminant Analysis}}\headcommand {\beamer@subsectionpages {51}{72}}
+\headcommand {\slideentry {3}{2}{1}{73/73}{Kernel Discriminant Analysis}{0}}
+\headcommand {\beamer@framepages {73}{73}}
+\headcommand {\slideentry {3}{2}{2}{74/80}{Kernel Discriminant Analysis}{0}}
+\headcommand {\beamer@framepages {74}{80}}
+\headcommand {\slideentry {3}{2}{3}{81/85}{Kernel Discriminant Analysis}{0}}
+\headcommand {\beamer@framepages {81}{85}}
+\headcommand {\slideentry {3}{2}{4}{86/90}{Kernel Discriminant Analysis}{0}}
+\headcommand {\beamer@framepages {86}{90}}
+\headcommand {\beamer@subsectionentry {0}{3}{3}{91}{Experimental Results}}\headcommand {\beamer@subsectionpages {73}{90}}
+\headcommand {\slideentry {3}{3}{1}{91/91}{Experimental Results}{0}}
 \headcommand {\beamer@framepages {91}{91}}
-\headcommand {\slideentry {3}{3}{3}{92/93}{Experimental Results}{0}}
-\headcommand {\beamer@framepages {92}{93}}
-\headcommand {\slideentry {3}{3}{4}{94/94}{Experimental Results}{0}}
-\headcommand {\beamer@framepages {94}{94}}
-\headcommand {\slideentry {3}{3}{5}{95/95}{Experimental Results}{0}}
+\headcommand {\slideentry {3}{3}{2}{92/92}{Experimental Results}{0}}
+\headcommand {\beamer@framepages {92}{92}}
+\headcommand {\slideentry {3}{3}{3}{93/94}{Experimental Results}{0}}
+\headcommand {\beamer@framepages {93}{94}}
+\headcommand {\slideentry {3}{3}{4}{95/95}{Experimental Results}{0}}
 \headcommand {\beamer@framepages {95}{95}}
-\headcommand {\slideentry {3}{3}{6}{96/96}{Experimental Results}{0}}
+\headcommand {\slideentry {3}{3}{5}{96/96}{Experimental Results}{0}}
 \headcommand {\beamer@framepages {96}{96}}
-\headcommand {\sectionentry {4}{Deep Learning against Misalignment}{97}{Deep Learning against Misalignment}{0}}
-\headcommand {\beamer@sectionpages {49}{96}}
-\headcommand {\beamer@subsectionpages {90}{96}}
-\headcommand {\slideentry {4}{0}{7}{97/97}{}{0}}
+\headcommand {\slideentry {3}{3}{6}{97/97}{Experimental Results}{0}}
 \headcommand {\beamer@framepages {97}{97}}
-\headcommand {\slideentry {4}{0}{8}{98/98}{}{0}}
+\headcommand {\sectionentry {4}{Deep Learning against Misalignment}{98}{Deep Learning against Misalignment}{0}}
+\headcommand {\beamer@sectionpages {50}{97}}
+\headcommand {\beamer@subsectionpages {91}{97}}
+\headcommand {\slideentry {4}{0}{7}{98/98}{}{0}}
 \headcommand {\beamer@framepages {98}{98}}
-\headcommand {\slideentry {4}{0}{9}{99/101}{}{0}}
-\headcommand {\beamer@framepages {99}{101}}
-\headcommand {\slideentry {4}{0}{10}{102/106}{}{0}}
-\headcommand {\beamer@framepages {102}{106}}
-\headcommand {\slideentry {4}{0}{11}{107/110}{}{0}}
-\headcommand {\beamer@framepages {107}{110}}
-\headcommand {\slideentry {4}{0}{12}{111/112}{}{0}}
-\headcommand {\beamer@framepages {111}{112}}
-\headcommand {\slideentry {4}{0}{13}{113/118}{}{0}}
-\headcommand {\beamer@framepages {113}{118}}
-\headcommand {\slideentry {4}{0}{14}{119/131}{}{0}}
-\headcommand {\beamer@framepages {119}{131}}
-\headcommand {\slideentry {4}{0}{15}{132/132}{}{0}}
-\headcommand {\beamer@framepages {132}{132}}
-\headcommand {\beamer@subsectionentry {0}{4}{1}{133}{Data Augmentation}}\headcommand {\beamer@subsectionpages {97}{132}}
-\headcommand {\slideentry {4}{1}{1}{133/133}{Data Augmentation}{0}}
+\headcommand {\slideentry {4}{0}{8}{99/99}{}{0}}
+\headcommand {\beamer@framepages {99}{99}}
+\headcommand {\slideentry {4}{0}{9}{100/102}{}{0}}
+\headcommand {\beamer@framepages {100}{102}}
+\headcommand {\slideentry {4}{0}{10}{103/107}{}{0}}
+\headcommand {\beamer@framepages {103}{107}}
+\headcommand {\slideentry {4}{0}{11}{108/111}{}{0}}
+\headcommand {\beamer@framepages {108}{111}}
+\headcommand {\slideentry {4}{0}{12}{112/113}{}{0}}
+\headcommand {\beamer@framepages {112}{113}}
+\headcommand {\slideentry {4}{0}{13}{114/119}{}{0}}
+\headcommand {\beamer@framepages {114}{119}}
+\headcommand {\slideentry {4}{0}{14}{120/132}{}{0}}
+\headcommand {\beamer@framepages {120}{132}}
+\headcommand {\slideentry {4}{0}{15}{133/133}{}{0}}
 \headcommand {\beamer@framepages {133}{133}}
-\headcommand {\beamer@subsectionentry {0}{4}{2}{134}{Experimental Results}}\headcommand {\beamer@subsectionpages {133}{133}}
-\headcommand {\slideentry {4}{2}{1}{134/134}{Experimental Results}{0}}
+\headcommand {\beamer@subsectionentry {0}{4}{1}{134}{Data Augmentation}}\headcommand {\beamer@subsectionpages {98}{133}}
+\headcommand {\slideentry {4}{1}{1}{134/134}{Data Augmentation}{0}}
 \headcommand {\beamer@framepages {134}{134}}
-\headcommand {\slideentry {4}{2}{2}{135/135}{Experimental Results}{0}}
+\headcommand {\beamer@subsectionentry {0}{4}{2}{135}{Experimental Results}}\headcommand {\beamer@subsectionpages {134}{134}}
+\headcommand {\slideentry {4}{2}{1}{135/135}{Experimental Results}{0}}
 \headcommand {\beamer@framepages {135}{135}}
-\headcommand {\slideentry {4}{2}{3}{136/137}{Experimental Results}{0}}
-\headcommand {\beamer@framepages {136}{137}}
-\headcommand {\slideentry {4}{2}{4}{138/138}{Experimental Results}{0}}
-\headcommand {\beamer@framepages {138}{138}}
-\headcommand {\slideentry {4}{2}{5}{139/139}{Experimental Results}{0}}
+\headcommand {\slideentry {4}{2}{2}{136/136}{Experimental Results}{0}}
+\headcommand {\beamer@framepages {136}{136}}
+\headcommand {\slideentry {4}{2}{3}{137/138}{Experimental Results}{0}}
+\headcommand {\beamer@framepages {137}{138}}
+\headcommand {\slideentry {4}{2}{4}{139/139}{Experimental Results}{0}}
 \headcommand {\beamer@framepages {139}{139}}
-\headcommand {\slideentry {4}{2}{6}{140/140}{Experimental Results}{0}}
+\headcommand {\slideentry {4}{2}{5}{140/140}{Experimental Results}{0}}
 \headcommand {\beamer@framepages {140}{140}}
-\headcommand {\slideentry {4}{2}{7}{141/141}{Experimental Results}{0}}
+\headcommand {\slideentry {4}{2}{6}{141/141}{Experimental Results}{0}}
 \headcommand {\beamer@framepages {141}{141}}
-\headcommand {\slideentry {4}{2}{8}{142/143}{Experimental Results}{0}}
-\headcommand {\beamer@framepages {142}{143}}
-\headcommand {\slideentry {4}{2}{9}{144/145}{Experimental Results}{0}}
-\headcommand {\beamer@framepages {144}{145}}
-\headcommand {\slideentry {4}{2}{10}{146/151}{Experimental Results}{0}}
-\headcommand {\beamer@framepages {146}{151}}
-\headcommand {\sectionentry {5}{Conclusions}{152}{Conclusions}{0}}
-\headcommand {\beamer@sectionpages {97}{151}}
-\headcommand {\beamer@subsectionpages {134}{151}}
-\headcommand {\slideentry {5}{0}{11}{152/152}{}{0}}
-\headcommand {\beamer@framepages {152}{152}}
-\headcommand {\slideentry {5}{0}{12}{153/155}{}{0}}
-\headcommand {\beamer@framepages {153}{155}}
-\headcommand {\sectionentry {6}{References}{156}{References}{0}}
-\headcommand {\beamer@sectionpages {152}{155}}
-\headcommand {\beamer@subsectionpages {152}{155}}
-\headcommand {\slideentry {6}{0}{13}{156/156}{}{0}}
-\headcommand {\beamer@framepages {156}{156}}
-\headcommand {\slideentry {6}{0}{13}{156/157}{}{0}}
-\headcommand {\beamer@framepages {156}{157}}
-\headcommand {\slideentry {6}{0}{13}{156/158}{}{0}}
-\headcommand {\beamer@framepages {156}{158}}
-\headcommand {\slideentry {6}{0}{13}{156/159}{}{0}}
-\headcommand {\beamer@framepages {156}{159}}
-\headcommand {\slideentry {6}{0}{13}{156/160}{}{0}}
-\headcommand {\beamer@framepages {156}{160}}
-\headcommand {\slideentry {6}{0}{13}{156/161}{}{0}}
-\headcommand {\beamer@framepages {156}{161}}
-\headcommand {\beamer@partpages {1}{161}}
-\headcommand {\beamer@subsectionpages {152}{161}}
-\headcommand {\beamer@sectionpages {152}{161}}
-\headcommand {\beamer@documentpages {161}}
+\headcommand {\slideentry {4}{2}{7}{142/142}{Experimental Results}{0}}
+\headcommand {\beamer@framepages {142}{142}}
+\headcommand {\slideentry {4}{2}{8}{143/144}{Experimental Results}{0}}
+\headcommand {\beamer@framepages {143}{144}}
+\headcommand {\slideentry {4}{2}{9}{145/146}{Experimental Results}{0}}
+\headcommand {\beamer@framepages {145}{146}}
+\headcommand {\slideentry {4}{2}{10}{147/152}{Experimental Results}{0}}
+\headcommand {\beamer@framepages {147}{152}}
+\headcommand {\sectionentry {5}{Conclusions}{153}{Conclusions}{0}}
+\headcommand {\beamer@sectionpages {98}{152}}
+\headcommand {\beamer@subsectionpages {135}{152}}
+\headcommand {\slideentry {5}{0}{11}{153/153}{}{0}}
+\headcommand {\beamer@framepages {153}{153}}
+\headcommand {\slideentry {5}{0}{12}{154/156}{}{0}}
+\headcommand {\beamer@framepages {154}{156}}
+\headcommand {\sectionentry {6}{References}{157}{References}{0}}
+\headcommand {\beamer@sectionpages {153}{156}}
+\headcommand {\beamer@subsectionpages {153}{156}}
+\headcommand {\slideentry {6}{0}{13}{157/157}{}{0}}
+\headcommand {\beamer@framepages {157}{157}}
+\headcommand {\slideentry {6}{0}{13}{157/158}{}{0}}
+\headcommand {\beamer@framepages {157}{158}}
+\headcommand {\slideentry {6}{0}{13}{157/159}{}{0}}
+\headcommand {\beamer@framepages {157}{159}}
+\headcommand {\slideentry {6}{0}{13}{157/160}{}{0}}
+\headcommand {\beamer@framepages {157}{160}}
+\headcommand {\slideentry {6}{0}{13}{157/161}{}{0}}
+\headcommand {\beamer@framepages {157}{161}}
+\headcommand {\slideentry {6}{0}{13}{157/162}{}{0}}
+\headcommand {\beamer@framepages {157}{162}}
+\headcommand {\beamer@partpages {1}{162}}
+\headcommand {\beamer@subsectionpages {153}{162}}
+\headcommand {\beamer@sectionpages {153}{162}}
+\headcommand {\beamer@documentpages {162}}
 \headcommand {\def \inserttotalframenumber {55}}

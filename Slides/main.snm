@@ -1,7 +1,7 @@
-\beamer@slide {eq:LDA}{50}
-\beamer@slide {eq:binary_linear_classifier}{51}
-\beamer@slide {eq:kernelProperty}{80}
-\beamer@slide {eq:softmax}{102}
-\beamer@slide {eq:post_probs_multi-class}{102}
-\beamer@slide {eq:lossfunction}{111}
-\beamer@slide {table:results_all}{141}
+\beamer@slide {eq:LDA}{51}
+\beamer@slide {eq:binary_linear_classifier}{52}
+\beamer@slide {eq:kernelProperty}{81}
+\beamer@slide {eq:softmax}{103}
+\beamer@slide {eq:post_probs_multi-class}{103}
+\beamer@slide {eq:lossfunction}{112}
+\beamer@slide {table:results_all}{142}
