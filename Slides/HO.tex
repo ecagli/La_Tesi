@@ -20,9 +20,9 @@
 \vspace*{-12pt}
 \begin{block}{Signal-to-Noise Ratio (SNR)}
 \begin{itemize}
-\item Independent Noise Assumption: $\vaLeakVec = \varphi(\sensRandVar)+\vec{B}$
+\item Independent Noise Assumption: $\vaLeakVec[t] = \varphi_t(\sensRandVar)+B$
 
-\item $\mmmXclass= \esperEst[\given{\vaLeakVec}{\sensRandVar = \sensVarGenValue}] = \frac{1}{\nbTracesPerClass}\sum_{i\colon \sensVar_i=\sensVarGenValue} \vLeakVec_i $ sample mean per class ($\approx \varphi(\sensRandVar)$)
+\item $\mmmXclass= \esperEst[\given{\vaLeakVec}{\sensRandVar = \sensVarGenValue}] = \frac{1}{\nbTracesPerClass}\sum_{i\colon \sensVar_i=\sensVarGenValue} \vLeakVec_i $ sample mean per class ($\approx \varphi_t(\sensRandVar)$)
 \item $\varXclass = \varEst(\given{\vaLeakVec}{\sensRandVar = \sensVarGenValue}) = \frac{1}{\nbTracesPerClass-1}\sum_{i\colon \sensVar_i=\sensVarGenValue} (\vLeakVec_i - \mmmXclass)^2 $ sample variance per class ($\approx \mathrm{var}(\vec{B})$) 
 \item \begin{equation*}\mathrm{SNR}(t) = \frac{\varEst(\mmmXclass[Z](t))}{\esperEst[\varXclass[Z](t)]} \qquad \textcolor{grey}{\frac{\text{\emph{variance inter-class}}}{\text{\emph{variance intra-class}}}} \end{equation*}
 \end{itemize}
@@ -78,7 +78,7 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{LDA and Fisher's Discriminant}
+\frametitle{LDA and Fisher Criterion}
 \begin{columns}
 \begin{column}{.5\linewidth}
 \only<1>{\includegraphics[width=\textwidth]{figures/LDA_boundary.pdf}}
@@ -106,6 +106,7 @@
 \item When LDA assumptions are met, the solution $\AAlpha_1$ of the Fisher's criterion is orthogonal to $\vec{w}$. 
 \item assumption not required
 \item naturally multi-class
+\item optimal dimensionality reduction for template attack
 \end{itemize}
 \end{block}
 
@@ -122,13 +123,17 @@ LDA: linear decision boundary $a = \vec{w}^\intercal \vLeakVec + w_0$ ($\vec{w} 
 \centering What if $\mu_1 = \mu_2$? 
 \end{huge}
 \end{block}
-\only<2>{\includegraphics[width=.4\textwidth]{figures/D2.png}\\}
-\only<3>{\includegraphics[width=.4\textwidth]{figures/D2.png}\includegraphics[width=.4\textwidth]{figures/D2_useless1.png}\\}
-\only<4>{\includegraphics[width=.4\textwidth]{figures/D2.png}\includegraphics[width=.4\textwidth]{figures/D2_useless2.png}\\}
-\only<5>{\includegraphics[width=.4\textwidth]{figures/D2.png}\includegraphics[width=.4\textwidth]{figures/D2_useless3.png}\\}
-\only<6>{\includegraphics[width=.4\textwidth]{figures/D2.png}\includegraphics[width=.4\textwidth]{figures/D2_useless4.png}\\}
-\uncover<2->{$f(z) = \esper[\vaLeakVec\lvert Z=z]$ is constant\\}
-\uncover<3->{$\esper[A\vaLeakVec\lvert Z=z]$ is constant as well $\Rightarrow$ Projecting extractors can't help! }
+
+
+%\only<2>{\includegraphics[width=.4\textwidth]{figures/D2.png}\\}
+%\only<3>{\includegraphics[width=.4\textwidth]{figures/D2.png}\includegraphics[width=.4\textwidth]{figures/D2_useless1.png}\\}
+%\only<4>{\includegraphics[width=.4\textwidth]{figures/D2.png}\includegraphics[width=.4\textwidth]{figures/D2_useless2.png}\\}
+%\only<5>{\includegraphics[width=.4\textwidth]{figures/D2.png}\includegraphics[width=.4\textwidth]{figures/D2_useless3.png}\\}
+%\only<6>{\includegraphics[width=.4\textwidth]{figures/D2.png}\includegraphics[width=.4\textwidth]{figures/D2_useless4.png}\\}
+%\uncover<2->{$f(z) = \esper[\vaLeakVec\lvert Z=z]$ is constant\\}
+%\uncover<3->{$\esper[A\vaLeakVec\lvert Z=z]$ is constant as well $\Rightarrow$ Projecting extractors can't help! }
+
+
 \end{frame}
 
 
@@ -301,10 +306,10 @@ Toy example: 2 time samples, 1-bit data
 \centering
 \textcolor{violet}{\Large{KDA} \\ \large{remains in $\mathbb{R}^D$}}
 }
-\only<5->{
-\begin{figure}
-\includegraphics[width=\textwidth]{figures/new_example_KDA.pdf} 
-\end{figure}}
+%\only<5->{
+%\begin{figure}
+%\includegraphics[width=\textwidth]{figures/new_example_KDA.pdf} 
+%\end{figure}}
 }
 
 \end{column}
@@ -331,18 +336,18 @@ Toy example: 2 time samples, 1-bit data
 \end{figure}
 }}
 
-\only<5->{
-\begin{block}{KDA procedure}
-\begin{itemize}
-\item Training $\rightarrow \textcolor{violet}{\boldsymbol{\nu}_\ell}$ , $C$ vectors of coefficients ($\ell = 1,\dots , C$)
-\item<6-> \emph{Compare} the new trace with all training traces $K(\textcolor{red}{\sss[z_i]{i}}, \textcolor{green}{\sss[]{}})$, $K(\textcolor{blue}{\sss[z_i]{i}}, \textcolor{green}{\sss[]{}})$
-\item<7-> \emph{KDA projection} \begin{equation}\label{eq:projection}
-\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) = \sum_{i=1}^{\NPoI}\textcolor{violet}{\boldsymbol{\nu}_\ell[i]}K(\sss[z_i]{i}, \textcolor{green}{\sss[]{}}) \mbox{ .}
-\end{equation} 
-\end{itemize}
-
-\end{block}
-}
+%\only<5->{
+%\begin{block}{KDA procedure}
+%\begin{itemize}
+%\item Training $\rightarrow \textcolor{violet}{\boldsymbol{\nu}_\ell}$ , $C$ vectors of coefficients ($\ell = 1,\dots , C$)
+%\item<6-> \emph{Compare} the new trace with all training traces $K(\textcolor{red}{\sss[z_i]{i}}, \textcolor{green}{\sss[]{}})$, $K(\textcolor{blue}{\sss[z_i]{i}}, \textcolor{green}{\sss[]{}})$
+%\item<7-> \emph{KDA projection} \begin{equation}\label{eq:projection}
+%\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) = \sum_{i=1}^{\NPoI}\textcolor{violet}{\boldsymbol{\nu}_\ell[i]}K(\sss[z_i]{i}, \textcolor{green}{\sss[]{}}) \mbox{ .}
+%\end{equation} 
+%\end{itemize}
+%
+%\end{block}
+%}
 
 \end{column}
 \end{columns}
@@ -456,17 +461,17 @@ New trace projection}
 \end{column}
 
 \begin{column}{.55\textwidth}
-\uncover<3->{\only<3-4>{Computational Complexity $O(N^3)$}\only<5>{\textcolor{red}{Computational Complexity $O(N^3)$}}}
+\uncover<3->{\only<3-4>{Computational Complexity $O(N^3)$}}
 \begin{block}{KDA}
 \begin{small}
 \begin{itemize}
 
 \item $\MMM = \sum_{\sensVar\in\sensVarSet}\numTraces(\MMMclass - \MMMT)(\MMMclass-\MMMT)^\intercal$ \footnotemark
 
-\uncover<2->{\item $\NNN = \sum_{\sensVar\in\sensVarSet}\kernelMatrix_\sensVar(\III - \III_{\numTraces})\kernelMatrix_\sensVar^\intercal$ \only<2-4>{\footnotemark} \only<5>{ \textcolor{red}{$+ \mu\III$}}}
+\uncover<2->{\item $\NNN = \sum_{\sensVar\in\sensVarSet}\kernelMatrix_\sensVar(\III - \III_{\numTraces})\kernelMatrix_\sensVar^\intercal$ \only<2-4>{\footnotemark} }
 
 \uncover<3->{\item $\nununu_i$ eigenvectors of $\NNN^{-1}\MMM$ [$N\times N$]}
-\uncover<4->{\item \only<4>{$\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) = \sum_{i=1}^{\NPoI}\nununu_\ell[i]K(\sss[z_i]{i}, \sss[]{}) $}\only<5->{$\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) =$ \textcolor{red}{$\sum_{i=1}^{\NPoI}$}$\nununu_\ell[i]$\textcolor{red}{$K(\sss[z_i]{i}, \sss[]{})$} }}
+\uncover<4->{\item \only<4>{$\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) = \sum_{i=1}^{\NPoI}\nununu_\ell[i]K(\sss[z_i]{i}, \sss[]{}) $}}
 \end{itemize}
 \end{small}
 \end{block}
@@ -474,7 +479,6 @@ New trace projection}
 \end{columns}
 \centering
 \vspace{8pt}
-\only<5>{\textcolor{red}{$\mu$ regularization parameter} $\qquad$ \textcolor{red}{\emph{Memory-based} machine}}
 
 \footnotetext[1]{$\MMMclass$ and $\MMMT$ are two $N$-sized column vectors whose entries are given by: $\MMMclass[z][j] = \frac{1}{\numTraces}\sum_{i:z_i=z}^{\numTraces}K(\sss[z_j]{j},\sss[z_i]{i}), \qquad
 \MMMT[j] = \frac{1}{\NPoI}\sum_{i=1}^{\NPoI}K(\sss[z_j]{j},\sss[z_i]{i}) \mbox{ .}$}
@@ -713,10 +717,59 @@ Third Order
 \end{block}
 
 \begin{block}{Limits and drawbacks}
-\begin{itemize}
-\item Memory-based $+$ $O(N^3)$ complexity $\rightarrow$ Non-scalability to big training set $\rightarrow$ not suitable for highly-noisy higher-order masked signals
-\item Regularization hyper-parameter $\mu$ (and slow \emph{validation})
-\end{itemize}
+%\begin{itemize}
+%\item Memory-based $+$ $O(N^3)$ complexity $\rightarrow$ Non-scalability to big training set $\rightarrow$ not suitable for highly-noisy higher-order masked signals
+%\item Regularization hyper-parameter $\mu$ (and slow \emph{validation})
+%\end{itemize}
 \end{block}
 
+
+
+\end{frame}
+\begin{frame}
+
+\frametitle{KDA - limits and drawbacks}
+
+
+\begin{columns}
+\begin{column}{.5\textwidth}
+Computational Complexity $O(D^3)$
+\begin{block}{LDA}
+\begin{small}
+\begin{itemize}
+\item $\SB = \sum_{\sensVar\in\sensVarSet}\numTraces(\mmmXclass-\mmmX)(\mmmXclass-\mmmX)^\intercal$ 
+\item $\SW = \sum_{\sensVar\in\sensVarSet}\sum_{i=1}^{\numTraces}(\sss{i}-\mmmXclass)(\sss{i}-\mmmXclass)^\intercal$ 
+\item $\AAlpha_i$ eigenvectors of $\SW^{-1}\SB$ [$D\times D$]
+\item $\extract^{LDA}_{\ell}(\xxx) = \sum_{i=1}^D \AAlpha_{\ell}[i]\xxx[i] $
+\end{itemize}
+\end{small}
+\end{block}
+\end{column}
+
+\begin{column}{.55\textwidth}
+\textcolor{red}{Computational Complexity $O(N^3)$}
+\begin{block}{KDA}
+\begin{small}
+\begin{itemize}
+
+\item $\MMM = \sum_{\sensVar\in\sensVarSet}\numTraces(\MMMclass - \MMMT)(\MMMclass-\MMMT)^\intercal$ \footnotemark
+
+\item $\NNN = \sum_{\sensVar\in\sensVarSet}\kernelMatrix_\sensVar(\III - \III_{\numTraces})\kernelMatrix_\sensVar^\intercal$ \textcolor{red}{$+ \mu\III$}
+
+\item $\nununu_i$ eigenvectors of $\NNN^{-1}\MMM$ [$N\times N$]
+$\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) =$ \textcolor{red}{$\sum_{i=1}^{\NPoI}$}$\nununu_\ell[i]$\textcolor{red}{$K(\sss[z_i]{i}, \sss[]{})$} 
+\end{itemize}
+\end{small}
+\end{block}
+\end{column}
+\end{columns}
+\centering
+\vspace{8pt}
+\textcolor{red}{$\mu$ regularization parameter} $\qquad$ \textcolor{red}{\emph{Memory-based} machine}\\
+\textcolor{red}{Does not allow the localisation of PoIs}
+
+\footnotetext[1]{$\MMMclass$ and $\MMMT$ are two $N$-sized column vectors whose entries are given by: $\MMMclass[z][j] = \frac{1}{\numTraces}\sum_{i:z_i=z}^{\numTraces}K(\sss[z_j]{j},\sss[z_i]{i}), \qquad
+\MMMT[j] = \frac{1}{\NPoI}\sum_{i=1}^{\NPoI}K(\sss[z_j]{j},\sss[z_i]{i}) \mbox{ .}$}
+
+\uncover<2->{\footnotetext[2]{$\III$ is a $\numTraces\times \numTraces$ identity matrix, $\III_{\numTraces}$ is a $\numTraces\times \numTraces$ matrix with all entries equal to $\frac{1}{\numTraces}$ and $\kernelMatrix_{\sensVar}$ is the $\NPoI\times \numTraces$ sub-matrix of $\kernelMatrix = (K(\sss[z_i]{i},\sss[z_j]{j}))_{\substack{i=1,\dots,\numTraces[] \\ j=1,\dots,\numTraces[]}}$ storing only columns indexed by the indices $i$ such that $z_i=z$}}
 \end{frame}

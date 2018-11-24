@@ -3,8 +3,8 @@
 \frametitle{Motivations (1)}
 \includegraphics[width=.5\textwidth]{figures/whydeeplearning.png} 
 \begin{itemize}
-\item not memory-based
 \item parallelizable computation(GPU optimizations)
+\item not memory-based
 \item many hyper-parameters but faster validation
 \end{itemize}
 
@@ -29,7 +29,7 @@
 \item $\pdf_{\given{\extract{(\rho(\vaLeakVec)})}{\sensRandVar = \sensVar}}$, $\pdf_{\extract{(\rho(\vaLeakVec)})}$, $\pdf_{\sensRandVar}$ (generative model)
 
 \begin{itemize}
-\item Gaussian hypothesis \cite{Chari2003}
+\item Gaussian hypothesis (\textbf{Template Attack})\cite{Chari2003}
 \item Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}
 \end{itemize}
 \end{itemize}
@@ -38,14 +38,14 @@
 \begin{itemize}
 \item \textcolor{gray}{$\pdf_{\given{\extract{(\rho(\vaLeakVec)})}{\sensRandVar = \sensVar}}$, $\pdf_{\extract{(\rho(\vaLeakVec)})}$, $\pdf_{\sensRandVar}$ (generative model)}
 \begin{itemize}
-\item \textcolor{gray}{ Gaussian hypothesis \cite{Chari2003}}
+\item \textcolor{gray}{ Gaussian hypothesis (\textbf{Template Attack})\cite{Chari2003}}
 \item \textcolor{gray}{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}
 \end{itemize}
 \end{itemize}
 }
 
 
-\item $\pdf_{\given{\sensRandVar}{\only<1>{\extract{(\rho(\vLeakVec)}}  \only<2->{\vaLeakVec}}}$ (discriminative model) \\ \uncover<2->{by means of a neural network $F(\vaLeakVec)\approx \pdf_{\given{\sensRandVar}{ \only<2->{\vaLeakVec}}}$ (Universal approximation theorem)} 
+\item $\pdf_{\given{\sensRandVar}{\only<1>{\extract{(\rho(\vLeakVec)}}  \only<2->{\vaLeakVec}}}$ (discriminative model) \\ \uncover<2->{by means of a neural network $F(\vaLeakVec)\approx \pdf_{\given{\sensRandVar}{ \only<2->{\vaLeakVec}}}$} 
 
 
 \end{itemize}
@@ -84,7 +84,7 @@ $F(\vLeakVec,W) = \textcolor{red}{\softmax}\circ\lambda_n\circ\sigma_{n-1}\circ\
 \begin{itemize}
 \item[]{$\lambda_i$ linear functions (linear combinations of time samples) depending on some \textbf{trainable weights} $W$}
 \item[]{$\sigma_i$ non-linear \emph{activation} functions}
-\item[]\textcolor{red}{$\softmax$} normalizing \emph{softmax} function
+\item[]\textcolor{red}{$\softmax$} normalizing \emph{softmax} function \uncover<6->{\hfill Architecture hyper-parameters}
 \end{itemize}}
 
 \end{block}
@@ -98,14 +98,104 @@ $F(\vLeakVec,W) = \textcolor{red}{\softmax}\circ\lambda_n\circ\sigma_{n-1}\circ\
 \end{equation}
 \end{block}
 }
+\uncover<7->{Universal approximation theorem}
 \end{frame}
+
+\begin{frame}
+\frametitle{Convolutional Neural Networks}
+\vspace*{-10pt}
+\begin{block}{Translation-invariance}
+\begin{figure}
+\centering
+\only<1>{\includegraphics[width=\textwidth]{Figures/cane_shift_classifier1.pdf}}
+\only<2>{\includegraphics[width=\textwidth]{Figures/cane_shift_classifier2.pdf}}
+\only<3-4>{\includegraphics[width=\textwidth]{Figures/cane_shift_classifier3.pdf}}
+\only<5>{\includegraphics[width=\textwidth]{Figures/cane_shift_classifier4.pdf}}
+\only<6>{\includegraphics[width=\textwidth]{Figures/trace_shift_classifier1.pdf}}
+\only<7>{\includegraphics[width=\textwidth]{Figures/trace_shift_classifier2.pdf}}
+\only<8->{\includegraphics[width=\textwidth]{Figures/trace_shift_classifier3.pdf}}
+\end{figure}
+\uncover<4->{It is important to explicit the data translation-invariance\\}
+\uncover<9->{Convolutional Neural Networks: share weights across space}
+\end{block}
+%
+
+\vspace*{-7pt}
+
+\begin{columns}
+\begin{column}{.5\textwidth}
+\only<1-10>{
+\begin{figure}
+\includegraphics[width=.7\textwidth]{Figures/small_white.pdf}
+\end{figure}
+}
+
+\only<11>{
+\begin{figure}
+\includegraphics[width=.6\textwidth]{../tikz_per_manuscritto/conv_filter_2_1.pdf} 
+\caption{\scriptsize{Linear layer in a ConvNet (\emph{Convolutional Layer})}}
+\end{figure}
+}
+
+\only<12-13>{
+\begin{figure}
+\includegraphics[width=0.8\textwidth]{../tikz_per_manuscritto/conv_filter_2_3.pdf} 
+\caption{\scriptsize{Linear layer in a ConvNet (\emph{Convolutional Layer})}}
+\end{figure}
+}
+
+\end{column}
+%%
+\begin{column}{.5\textwidth}
+\only<1-9>{
+\begin{figure}
+\includegraphics[width=.7\textwidth]{Figures/big_white.pdf}
+\end{figure}}
+\only<10-12>{
+\begin{figure}
+\includegraphics[width=.8\textwidth]{Figures/FC.pdf} 
+\caption{\scriptsize{Linear layer in an MLP (\emph{Fully Connected Layer})}}
+\end{figure}
+}
+\only<13->{
+\begin{figure}
+\includegraphics[width=.6\textwidth]{../tikz_per_manuscritto/pooling.pdf} 
+\caption{\scriptsize{Max Pooling Layer}}
+\end{figure}
+}
+
+\end{column}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{A kind of CNN architecture}
+\includegraphics[width=\textwidth]{../tikz_per_manuscritto/convnet_arch.pdf} \\VGG-like \cite{simonyan2014very}:
+\begin{itemize}
+\item Reduce temporal features to only one
+\item Maintain time complexity of each layer (one-half pooling when number of feature maps are doubled)
+\item Small filters
+\end{itemize}
+\begin{block}{Model used in our experiments}
+\begin{itemize}
+\item 4 Conv + Pool layers
+\item tanh activations
+\item batch normalisation \cite{batch_norm}
+\item 1 \emph{fully connected layer} + softmax
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+
 
 \begin{frame}
 \frametitle{Training-Validation-Test}
 \only<1>{\includegraphics[width=\textwidth]{figures/deep_learning/Diapositive1.PNG}}
 \only<2>{\includegraphics[width=\textwidth]{figures/deep_learning/Diapositive2.PNG}}
 \only<3>{\includegraphics[width=\textwidth]{figures/deep_learning/Diapositive3.PNG}}
-\only<4>{\includegraphics[width=\textwidth]{figures/deep_learning/Diapositive3.PNG}}
+\only<4>{\includegraphics[width=\textwidth]{figures/deep_learning/Diapositive4.PNG}}
 \end{frame}
 
 \begin{frame}
@@ -205,87 +295,6 @@ Learn by heart (\textbf{\textcolor{red}{OVERFITTING}})
 \end{frame}
 
 %
-\begin{frame}
-\frametitle{Convolutional Neural Networks}
-\vspace*{-10pt}
-\begin{block}{Translation-invariance}
-\begin{figure}
-\centering
-\only<1>{\includegraphics[width=\textwidth]{Figures/cane_shift_classifier1.pdf}}
-\only<2>{\includegraphics[width=\textwidth]{Figures/cane_shift_classifier2.pdf}}
-\only<3-4>{\includegraphics[width=\textwidth]{Figures/cane_shift_classifier3.pdf}}
-\only<5>{\includegraphics[width=\textwidth]{Figures/cane_shift_classifier4.pdf}}
-\only<6>{\includegraphics[width=\textwidth]{Figures/trace_shift_classifier1.pdf}}
-\only<7>{\includegraphics[width=\textwidth]{Figures/trace_shift_classifier2.pdf}}
-\only<8->{\includegraphics[width=\textwidth]{Figures/trace_shift_classifier3.pdf}}
-\end{figure}
-\uncover<4->{It is important to explicit the data translation-invariance\\}
-\uncover<9->{Convolutional Neural Networks: share weights across space}
-\end{block}
-%
-
-\vspace*{-7pt}
-
-\begin{columns}
-\begin{column}{.5\textwidth}
-\only<1-10>{
-\begin{figure}
-\includegraphics[width=.7\textwidth]{Figures/small_white.pdf}
-\end{figure}
-}
-
-\only<11>{
-\begin{figure}
-\includegraphics[width=.6\textwidth]{../tikz_per_manuscritto/conv_filter_2_1.pdf} 
-\caption{\scriptsize{Linear layer in a ConvNet (\emph{Convolutional Layer})}}
-\end{figure}
-}
-
-\only<12-13>{
-\begin{figure}
-\includegraphics[width=0.8\textwidth]{../tikz_per_manuscritto/conv_filter_2_3.pdf} 
-\caption{\scriptsize{Linear layer in a ConvNet (\emph{Convolutional Layer})}}
-\end{figure}
-}
-
-\end{column}
-%%
-\begin{column}{.5\textwidth}
-\only<1-9>{
-\begin{figure}
-\includegraphics[width=.7\textwidth]{Figures/big_white.pdf}
-\end{figure}}
-\only<10-12>{
-\begin{figure}
-\includegraphics[width=.8\textwidth]{Figures/FC.pdf} 
-\caption{\scriptsize{Linear layer in an MLP (\emph{Fully Connected Layer})}}
-\end{figure}
-}
-\only<13->{
-\begin{figure}
-\includegraphics[width=.6\textwidth]{../tikz_per_manuscritto/pooling.pdf} 
-\caption{\scriptsize{Max Pooling Layer}}
-\end{figure}
-}
-
-\end{column}
-\end{columns}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{A kind of CNN architecture}
-\includegraphics[width=\textwidth]{../tikz_per_manuscritto/convnet_arch.pdf} \\VGG-like \cite{simonyan2014very}:
-\begin{itemize}
-\item Reduce temporal features to only one
-\item Maintain time complexity of each layer (one-half pooling when number of feature maps are doubled)
-\item Small filters
-\end{itemize}
-\begin{block}{Model used in our experiments}
-$\softmax \circ [\lambda]^1 \circ[\delta \circ [\sigma \circ \gamma  ]^1 ]^4$
-\end{block}
-
-\end{frame}
 
 
 \subsection{Data Augmentation}
@@ -337,12 +346,9 @@ Data Augmentation techniques are applied online during training phase.
 \begin{frame}
 \frametitle{Experimental Results}
 \begin{itemize}
-%\item \only<1-2>{Random delays}\only<3>{\textcolor{red}{Random delays}}
-%\item \only<1-2>{Artificial Jitter}\only<3>{\textcolor{grey}{Artificial Jitter}}
-%\item \only<1-2>{Real Jitter}\only<3>{\textcolor{red}{Real Jitter}}
-\item Random delays
-\item Artificial Jitter
-\item Real Jitter
+\item \only<1-2>{Random delays}\only<3>{\textcolor{red}{Random delays}}
+\item \only<1-2>{Artificial Jitter}\only<3>{\textcolor{grey}{Artificial Jitter}}
+\item \only<1-2>{Real Jitter}\only<3>{\textcolor{red}{Real Jitter}}
 \end{itemize}
 
 \vspace*{3pt}
@@ -415,135 +421,7 @@ Acc        & $N^\star$       & 27.0\%                      & $>1,000$           
 \end{frame}
 %
 
-\begin{frame}
-\frametitle{Random Delays - Two Leaking Operations}
 
-\centering
-\includegraphics[width=.5\textwidth]{../Figures/CHES2017/CW_double_shift_traces.pdf}	
-
-
-\begin{block}{Two leaking operations}
-First operation - Test acc: $76.8\%$, $N^\star=7$\\
-Second operation - Test acc: $82.5\%$, $N^\star=6$
-\end{block}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Artificial Jitter}
-\begin{figure}
-\subfloat[Low artificial jitter]{\includegraphics[width=.4\textwidth]{../Figures/CHES2017/jitter_2_2_framed.png} }
-\subfloat[High artificial jitter]{\includegraphics[width=.4\textwidth]{../Figures/CHES2017/jitter_6_6_framed.png} }
-\end{figure}
-\begin{block}{Target}
-
-\begin{itemize}
-\item Target Variable: $Z = \mathrm{HW}(\mathrm{Sbox}(P\oplus K))$
-\item $\approx 2000$ time samples
-\item Countermeasure: artificial signal treatment simulating clock jitter
-\item 10000 training traces
-\end{itemize}
-\end{block}
-
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Artificial Jitter (2)}
-\vspace*{-10pt}
-\begin{scriptsize}
-\newcolumntype{C}{>{\centering\arraybackslash}p{3em}}
-\begin{table}[t]
-\centering
-
-\begin{tabular}{|C|C|CCCCCC|}
-\multicolumn{8}{C}{\emph{Low\_jitter}}      \\                                            
-\hline
-Acc                          & $N^\star$                         & \multicolumn{2}{C|}{$\mathrm{SH}_{0}$}                                                   & \multicolumn{2}{C|}{$\mathrm{SH}_{20}$}                                                & \multicolumn{2}{C|}{$\mathrm{SH}_{40}$}                                           \\ \hline
-\multicolumn{2}{|C|}{$\mathrm{AR}_{0}$}   & \multicolumn{1}{C|}{\cellcolor[HTML]{EFEFEF}57.4\%}  & \multicolumn{1}{C|}{\cellcolor[HTML]{EFEFEF}14}     & \multicolumn{1}{C|}{82.5\%}                         & \multicolumn{1}{C|}{6}                              & \multicolumn{1}{C|}{83.6\%}                                  & 6                                                            \\ \cline{1-8}
-\multicolumn{2}{|C|}{$\mathrm{AR}_{100}$} & \multicolumn{1}{C|}{86.0\%}                          & \multicolumn{1}{C|}{6}                              & \multicolumn{1}{C|}{87.0\%}                         & \multicolumn{1}{C|}{5}                              & \multicolumn{1}{C|}{87.5\%}                                  & 6                                                             \\ \cline{1-8}
-\multicolumn{2}{|C|}{$\mathrm{AR}_{200}$} & \multicolumn{1}{C|}{86.6\%}                          & \multicolumn{1}{C|}{6}                              & \multicolumn{1}{C|}{85.7\%} & \multicolumn{1}{C|}{6}      & \multicolumn{1}{C|}{\textbf{87.7\%}} & \textbf{5}      \\ \hline
-
-
-\end{tabular}
-
-
-\end{table}
-\begin{table}[t]
-\centering
-
-
-\begin{tabular}{|C|C|CCCCCC|}
-\multicolumn{8}{C}{\emph{High\_jitter}}      \\   
-\hline
-Acc                          & $N^\star$                         & \multicolumn{2}{C|}{$\mathrm{SH}_{0}$}                                                   & \multicolumn{2}{C|}{$\mathrm{SH}_{20}$}                                              & \multicolumn{2}{C|}{$\mathrm{SH}_{40}$}                                             \\ \hline
-\multicolumn{2}{|C|}{$\mathrm{AR}_{0}$}   & \multicolumn{1}{C|}{\cellcolor[HTML]{EFEFEF}40.6\%} & \multicolumn{1}{C|}{\cellcolor[HTML]{EFEFEF}35}  & \multicolumn{1}{C|}{51.1\%} & \multicolumn{1}{C|}{9}      & \multicolumn{1}{C|}{62.4\%}           & 11                                 \\ \cline{1-8}
-\multicolumn{2}{|C|}{$\mathrm{AR}_{100}$} & \multicolumn{1}{C|}{50.2\%} & \multicolumn{1}{C|}{15}     & \multicolumn{1}{C|}{72.4\%} & \multicolumn{1}{C|}{11}     & \multicolumn{1}{C|}{73.5\%}           & 9                       \\ \cline{1-8}
-\multicolumn{2}{|C|}{$\mathrm{AR}_{200}$} & \multicolumn{1}{C|}{64.0\%} & \multicolumn{1}{C|}{11}     & \multicolumn{1}{C|}{\textbf{75.5\%}} & \multicolumn{1}{C|}{\textbf{8}}   & \multicolumn{1}{C|}{74.4\%}           & 8           \\ \hline
-
-
-\end{tabular}
-
-
-\end{table}
-\end{scriptsize}
-
-
-\begin{figure}
-\subfloat[Low Jitter]{\includegraphics[width=.45\textwidth]{../Figures/CHES2017/results_low_jitter_new.pdf} }
-\subfloat[High Jitter]{\includegraphics[width=.45\textwidth]{../Figures/CHES2017/results_high_jitter_new.pdf} }
-
-\end{figure}
-\end{frame}
-
-
-
-\begin{frame}
-\frametitle{Artificial Jitter}
-\begin{tiny}
-
-\newcolumntype{C}{>{\centering\arraybackslash}p{3em}}
-\begin{table}[t]
-\centering
-\label{table:results_all}
-
-
-
-\begin{tabular}{|C|C|CCCCCC|CC}
-\hline
-\multicolumn{10}{|C|}{\textbf{\emph{DS\_low\_jitter}}}\\
-\hline
-$a$                           & $b$                         & \multicolumn{2}{C|}{}                                                                                      & \multicolumn{2}{C|}{}                                                                                     & \multicolumn{2}{C|}{}                                                                                  & \multicolumn{2}{C|}{}                                      \\ \cline{1-2}
-$c$                           & $d$                         & \multicolumn{2}{C|}{\multirow{-2}{*}{$\mathrm{SH}_{0}$}}                                                   & \multicolumn{2}{c|}{\multirow{-2}{*}{$\mathrm{SH}_{20}$}}                                                 & \multicolumn{2}{c|}{\multirow{-2}{*}{$\mathrm{SH}_{40}$}}                                              & \multicolumn{2}{c|}{\multirow{-2}{*}{$\mathrm{SH}_{200}$}} \\ \hline
-\multicolumn{2}{|c|}{}                                      & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}100.0\%} & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}68.7\%} & \multicolumn{1}{c|}{99.8\%}                         & \multicolumn{1}{c|}{86.1\%}                         & \multicolumn{1}{c|}{98.9\%}                                  & 84.1\%                                  &                              &                             \\ \cline{3-8}
-\multicolumn{2}{|c|}{\multirow{-2}{*}{$\mathrm{AR}_{0}$}}   & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}57.4\%}  & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}14}     & \multicolumn{1}{c|}{82.5\%}                         & \multicolumn{1}{c|}{6}                              & \multicolumn{1}{c|}{83.6\%}                                  & 6                                       &                              &                             \\ \cline{1-8}
-\multicolumn{2}{|c|}{}                                      & \multicolumn{1}{c|}{87.7\%}                          & \multicolumn{1}{c|}{88.2\%}                         & \multicolumn{1}{c|}{82.4\%}                         & \multicolumn{1}{c|}{88.4\%}                         & \multicolumn{1}{c|}{81.9\%}                                  & 89.6\%                                  &                              &                             \\ \cline{3-8}
-\multicolumn{2}{|c|}{\multirow{-2}{*}{$\mathrm{AR}_{100}$}} & \multicolumn{1}{c|}{86.0\%}                          & \multicolumn{1}{c|}{6}                              & \multicolumn{1}{c|}{87.0\%}                         & \multicolumn{1}{c|}{5}                              & \multicolumn{1}{c|}{87.5\%}                                  & 6                                       &                              &                             \\ \cline{1-8}
-\multicolumn{2}{|c|}{}                                      & \multicolumn{1}{c|}{83.2\%}                          & \multicolumn{1}{c|}{88.6\%}                         & \multicolumn{1}{c|}{81.4\%} & \multicolumn{1}{c|}{86.9\%} & \multicolumn{1}{c|}{\textbf{80.6\%}} &\textbf{88.9\%} &                              &                             \\ \cline{3-8}
-\multicolumn{2}{|c|}{\multirow{-2}{*}{$\mathrm{AR}_{200}$}} & \multicolumn{1}{c|}{86.6\%}                          & \multicolumn{1}{c|}{6}                              & \multicolumn{1}{c|}{85.7\%} & \multicolumn{1}{c|}{6}      & \multicolumn{1}{c|}{\textbf{87.7\%}} & \textbf{5}      &                              &                             \\ \hline
-\multicolumn{2}{|c|}{}                                      &                                                      &                                                     &                                                     &                                                     &                                                              &                                         & \multicolumn{1}{c|}{85.0\%}  & \multicolumn{1}{c|}{88.6\%} \\ \cline{9-10} 
-\multicolumn{2}{|c|}{\multirow{-2}{*}{$\mathrm{AR}_{500}$}} &                                                      &                                                     &                                                     &                                                     &                                                              &                                         & \multicolumn{1}{c|}{86.2\%}  & \multicolumn{1}{c|}{5}      \\ \cline{1-2} \cline{9-10}
-\multicolumn{10}{|C|}{}\\
-\hline
-\multicolumn{10}{|C|}{\textbf{\emph{DS\_high\_jitter}}}\\
-\hline
-$a$                          & $b$                         & \multicolumn{2}{C|}{\multirow{2}{*}{$\mathrm{SH}_{0}$}}   & \multicolumn{2}{C|}{\multirow{2}{*}{$\mathrm{SH}_{20}$}}  & \multicolumn{2}{C|}{\multirow{2}{*}{$\mathrm{SH}_{40}$}} & \multicolumn{2}{C|}{\multirow{2}{*}{$\mathrm{SH}_{200}$}} \\ \cline{1-2}
-$c$                          & $d$                         & \multicolumn{2}{C|}{}                                     & \multicolumn{2}{C|}{}                                     & \multicolumn{2}{C|}{}                                    & \multicolumn{2}{C|}{}                                     \\ \hline
-\multicolumn{2}{|C|}{\multirow{2}{*}{$\mathrm{AR}_{0}$}}   & \multicolumn{1}{C|}{\cellcolor[HTML]{EFEFEF}100\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}45.0\%} & \multicolumn{1}{C|}{100\%}  & \multicolumn{1}{C|}{60.0\%} & \multicolumn{1}{l|}{98.5\%}           & 67.6\%           &                             &                             \\ \cline{3-8}
-\multicolumn{2}{|C|}{}                                     &  \multicolumn{1}{C|}{\cellcolor[HTML]{EFEFEF}40.6\%} & \multicolumn{1}{C|}{\cellcolor[HTML]{EFEFEF}35}  & \multicolumn{1}{C|}{51.1\%} & \multicolumn{1}{C|}{9}      & \multicolumn{1}{C|}{62.4\%}           & 11               &                             &                             \\ \cline{1-8}
-\multicolumn{2}{|C|}{\multirow{2}{*}{$\mathrm{AR}_{100}$}} & \multicolumn{1}{C|}{90.4\%} & \multicolumn{1}{l|}{57.3\%} & \multicolumn{1}{C|}{76.6\%} & \multicolumn{1}{C|}{73.6\%} & \multicolumn{1}{C|}{78.5\%}           & 76.4\%           &                             &                             \\ \cline{3-8}
-\multicolumn{2}{|C|}{}                                     & \multicolumn{1}{C|}{50.2\%} & \multicolumn{1}{C|}{15}     & \multicolumn{1}{C|}{72.4\%} & \multicolumn{1}{C|}{11}     & \multicolumn{1}{C|}{73.5\%}           & 9                &                             &                             \\ \cline{1-8}
-\multicolumn{2}{|C|}{\multirow{2}{*}{$\mathrm{AR}_{200}$}} & \multicolumn{1}{C|}{83.1\%} & \multicolumn{1}{C|}{67.7\%} &\multicolumn{1}{C|}{\textbf{82.0\%}} & \multicolumn{1}{C|}{\textbf{77.1\%}} & \multicolumn{1}{l|}{82.6\%}           & 77.0\%           &                             &                             \\ \cline{3-8}
-\multicolumn{2}{|C|}{}                                     & \multicolumn{1}{C|}{64.0\%} & \multicolumn{1}{C|}{11}     & \multicolumn{1}{C|}{\textbf{75.5\%}} & \multicolumn{1}{C|}{\textbf{8}}   & \multicolumn{1}{C|}{74.4\%}           & 8                &                             &                             \\ \hline
-\multicolumn{2}{|C|}{\multirow{2}{*}{$\mathrm{AR}_{500}$}} &                             &                             &                             &                             &                                       &                  & \multicolumn{1}{C|}{83.6\%} & \multicolumn{1}{C|}{73.4\%} \\ \cline{9-10} 
-\multicolumn{2}{|C|}{}                                     &                             &                             &                             &                             &                                       &                  & \multicolumn{1}{C|}{68.2\%} & \multicolumn{1}{C|}{11}     \\ \cline{1-2} \cline{9-10}  
-\end{tabular}
-
-
-\end{table}
-
-\end{tiny}
-\end{frame}
 
 \begin{frame}
 \frametitle{Real Jitter (1)}

@@ -1,11 +1,4 @@
-\frametitle{KDA: the purpose}
-
-\begin{block}{Problem}
-Useful statistics lie in a high-dimensional \emph{feature} space:
-$$\featureSpace = \mathbb{R}^{{D+d-1}\choose{d}}$$
-(all $d$th-degree monomials in the trace coordinates)
-\end{block}
-
+\frametitle{Kernel Function}
 \begin{figure}
 \centering
 {
@@ -34,8 +27,63 @@ $\Phi$ non-linear function
 
 
 \end{figure}
-
-\begin{block}{What KDA provides}
-KDA allows performing LDA in $\featureSpace$, remaining in $\mathbb{R}^{D}$.
+\begin{block}{Kernel Function}
+$K\colon\mathbb{R}^D\times \mathbb{R}^D \rightarrow \mathbb{R} \nonumber$
+\begin{equation}\label{eq:kernelProperty}
+K(\sss[]{i},\sss[]{j}) = \Phi(\sss[]{i})\cdot \Phi(\sss[]{j})
+\end{equation}
 \end{block}
+
+\begin{block}{Polynomial Kernel Function}
+$K(\sss[]{i},\sss[]{j}) = (\sss[]{i} \cdot \sss[]{j})^d \qquad \leftrightarrow \qquad\Phi:\mathbb{R}^D \rightarrow \mathcal{F}\subset \mathbb{R}^{{D+d-1}\choose{d}} $ all $d$th-degree monomials
+
+
+\end{block}
+%\uncover<2->{
+%\begin{block}{Example: $2$nd Degree Polynomial Kernel Function}
+%Toy example: $D=2 \longrightarrow \sss[]{i} = [a,b]$ , $\sss[]{j} = [c,d]$
+%\begin{equation*}
+%K(\sss[]{i},\sss[]{j}) = (ac + bd)^2 = a^2c^2 + 2abcd + b^2d^2
+%\end{equation*}
+%\only<2>{
+%\textcolor{white}{$K \longleftrightarrow$ $\Phi\colon \Bbb{R}^2\rightarrow\Bbb{R}^3$
+%\begin{equation*}
+%\Phi(u,v) =  [u^2, \sqrt{2}uv, v^2]
+%\end{equation*}}
+%}
+%\uncover<3->{
+%$K \longleftrightarrow$ $\Phi\colon \Bbb{R}^2\rightarrow\Bbb{R}^3$
+%%\begin{align}
+%%&\Phi \colon \mathbb{R}^2 \rightarrow \mathbb{R}^3\\
+%%&\Phi \colon [a,b]\mapsto [a^2, \sqrt{2}ab, b^2]\\
+%%&\Phi \colon [c,d]\mapsto [c^2, \sqrt{2}cd, d^2].
+%%\end{align}
+%\vspace{-5pt}
+%\only<3>{
+%\begin{equation*}
+%\Phi(u,v) =  [u^2, \sqrt{2}uv, v^2]
+%\end{equation*}}
+%\only<4>{
+%\begin{equation*}
+%\Phi(a,b) =  \textcolor{magenta}{[a^2, \sqrt{2}ab, b^2]}
+%\end{equation*}
+%}
+%\only<5>{
+%\begin{equation*}
+%\Phi(c,d) =  \textcolor{blue}{[c^2, \sqrt{2}cd, d^2]}
+%\end{equation*}
+%}
+%}
+%
+%\only<3>{
+%\textcolor{white}{$\Phi(\sss[]{i})\cdot \Phi(\sss[]{j}) = {a^2}{c^2} + {\sqrt{2}ab}{\sqrt{2}cd} + {b^2}{d^2} = K(\sss[]{i},\sss[]{j})$}}
+%
+%\only<4>{
+%$\Phi(\sss[]{i})\cdot \Phi(\sss[]{j}) = \textcolor{magenta}{a^2}\textcolor{white}{c^2} + \textcolor{magenta}{\sqrt{2}ab}\textcolor{white}{\sqrt{2}cd} + \textcolor{magenta}{b^2}\textcolor{white}{d^2} = K(\sss[]{i},\sss[]{j})$}
+%
+%\only<5>{
+%$\Phi(\sss[]{i})\cdot \Phi(\sss[]{j}) = \textcolor{magenta}{a^2}\textcolor{blue}{c^2} + \textcolor{magenta}{\sqrt{2}ab}\textcolor{blue}{\sqrt{2}cd} + \textcolor{magenta}{b^2}\textcolor{blue}{d^2} = K(\sss[]{i},\sss[]{j})$}
+%
+%\end{block}
+%}
 
