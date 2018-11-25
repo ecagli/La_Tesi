@@ -211,27 +211,30 @@ d_{\keyVar} &= \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\only<1-
 \begin{columns}
 
 \begin{column}{.4\textwidth}
+\uncover<2->{
 \begin{block}{Feature selection}
 $\extract$ performs a sub-sampling
 \begin{itemize}
 \item SOD \cite{Chari2003}
 \item SOST \cite{bar2010improved}
-\item \only<1>{SNR}\only<2>{\textcolor{red}{SNR}} \cite{mangard2008power}/ NICV \cite{bhasin2014side}
+\item \only<1-3>{SNR}\only<4>{\textcolor{red}{SNR}} \cite{mangard2008power}/ NICV \cite{bhasin2014side}
 \item $t$-test, $F$-test,... \cite{gierlichs2006templates,choudary2014efficient}
 \end{itemize}
 \end{block}
+}
 \end{column}
 
 \begin{column}{.6\textwidth}
-
+\uncover<3->{
 \begin{block}{Linear feature extraction}
 $\extract(\vLeakVec) = A\vLeakVec \mbox{ with } A \in M_{\mathbb{R}}(\newTraceLength, \traceLength)$
 \begin{itemize}
 \item Principal Component Analysis (PCA) \cite{TAprincipal,Batina2012}
-\item \only<1>{Linear Discriminant Analysis (LDA)}\only<2>{\textcolor{red}{Linear Discriminant Analysis (LDA)}} \cite{Standaert2008,lessIsMore}
+\item \only<1-3>{Linear Discriminant Analysis (LDA)}\only<4>{\textcolor{red}{Linear Discriminant Analysis (LDA)}} \cite{Standaert2008,lessIsMore}
 \item Projection Pursuits (PP) \cite{PP}
 \end{itemize}
 \end{block}
+}
 \end{column}
 \end{columns}
 \end{frame}
@@ -241,6 +244,7 @@ $\extract(\vLeakVec) = A\vLeakVec \mbox{ with } A \in M_{\mathbb{R}}(\newTraceLe
 \vspace*{-10pt}
 \begin{columns}
 \begin{column}{0.5\textwidth}
+\textbf{Feature selection - SNR}
 \begin{figure}
 \includegraphics[width = \textwidth]{figures/SNR_1order_new.jpg} 
 \caption{$SNR(t) = {\frac{\text{\emph{variance inter-class}}}{\text{\emph{variance intra-class}}}}$}
@@ -248,8 +252,9 @@ $\extract(\vLeakVec) = A\vLeakVec \mbox{ with } A \in M_{\mathbb{R}}(\newTraceLe
 \end{column}
 \pause
 \begin{column}{0.5\textwidth}
+\textbf{Feature extraction - LDA}
 \begin{figure}
-\includegraphics[width = \textwidth]{figures/LDAprojection.pdf} 
+\includegraphics[width = 0.8\textwidth]{figures/LDAprojection.pdf} 
 \caption{Fisher's Criterion: project into a subspace in which  $\frac{\text{\emph{inter-class covariance matrix}}}{\text{\emph{intra-class covariance matrix}}}$ is maximised}
 \end{figure}
 \end{column}
