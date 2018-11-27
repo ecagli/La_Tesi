@@ -100,7 +100,10 @@ $F(\vLeakVec,W) = \textcolor{red}{\softmax}\circ\lambda_n\circ\sigma_{n-1}\circ\
 %\end{block}
 %}
 \uncover<6->{Universal approximation theorem}
-\hfill \uncover<2->{\includegraphics[width=.35\textwidth]{Figures/FC_si.png}}
+\hfill \uncover<2->{
+\begin{figure}\includegraphics[width=.35\textwidth]{Figures/FC_si.png}}
+\caption{\scriptsize{Linear layer in an MLP (\emph{Fully Connected Layer})}}
+\end{figure}
 \end{frame}
 
 \begin{frame}
@@ -174,7 +177,8 @@ $F(\vLeakVec,W) = \textcolor{red}{\softmax}\circ\lambda_n\circ\sigma_{n-1}\circ\
 \begin{frame}
 \frametitle{A kind of CNN architecture}
 \vspace*{-10pt}
-\includegraphics[width=0.8\textwidth]{../tikz_per_manuscritto/convnet_arch.pdf} \\VGG-like \cite{simonyan2014very}:
+\includegraphics[width=0.8\textwidth]{../tikz_per_manuscritto/convnet_arch.pdf} \\
+Architecture inspired by AlexNet \cite{KSH12}, VGG \cite{simonyan2014very}, ResNet \cite{he2016deep} design rules:
 \begin{itemize}
 \item Reduce temporal features to only one
 \item Maintain time complexity of each layer (one-half pooling when number of feature maps are doubled)
@@ -191,35 +195,81 @@ $F(\vLeakVec,W) = \textcolor{red}{\softmax}\circ\lambda_n\circ\sigma_{n-1}\circ\
 
 \end{frame}
 
-\begin{frame}
-
-\frametitle{Training and overfitting}
-%\vspace{-12pt}
-%\begin{block}{Training and validation set}
+%\begin{frame}
 %
-% Profiling set 
+%\frametitle{Training and overfitting}
+%%\vspace{-12pt}
+%%\begin{block}{Training and validation set}
+%%
+%% Profiling set 
+%%$\rightarrow
+%%\begin{cases} \mathrm{Training\ set}\\
+%% \mathrm{Validation\ set}
+%% \end{cases}$
+%%
+%%\end{block}
+%\vspace{-12pt}
+%\begin{block}{Training}
+%\begin{itemize}
+%\item[]  Profiling set 
 %$\rightarrow
 %\begin{cases} \mathrm{Training\ set}\\
 % \mathrm{Validation\ set}
 % \end{cases}$
+%\item[] Randomly partition training set into batches
+%\item[] Iterative optimization algorithm over batches (cost function, stochastic gradient descent)
+%\item[] \emph{Epoch}:= one pass over the entire training set
+%
+%\end{itemize}
 %
 %\end{block}
-\vspace{-12pt}
-\begin{block}{Training}
-\begin{itemize}
-\item[]  Profiling set 
-$\rightarrow
-\begin{cases} \mathrm{Training\ set}\\
- \mathrm{Validation\ set}
- \end{cases}$
-\item[] Randomly partition training set into batches
-\item[] Iterative optimization algorithm over batches (cost function, stochastic gradient descent)
-\item[] \emph{Epoch}:= one pass over the entire training set
+%\pause
+%\begin{block}{ Evaluate and compare training and validation accuracy}
+%\begin{columns}
+%\begin{column}{.45\textwidth}
+%\only<2>{Understand significant features
+%\begin{figure}
+%\includegraphics[width=.9\textwidth]{Figures/fitting.pdf} 
+%\end{figure}
+%}
+%\only<3>{
+%Why?
+%\begin{itemize}
+%\item[] Too complex model
+%\item[] Not enough training data
+%\end{itemize}
+%Solution? 
+%\begin{itemize}
+%\item[] Data augmentation
+%\end{itemize}
+%}
+%\end{column}
+%\begin{column}{.45\textwidth}
+%Learn by heart (\textbf{\textcolor{red}{OVERFITTING}})
+%\begin{figure}
+%\includegraphics[width=.9\textwidth]{Figures/overfitting.pdf} 
+%\end{figure}
+%
+%\end{column}
+%\end{columns}
+%
+%\end{block}
+%
+%
+%\end{frame}
 
-\end{itemize}
 
-\end{block}
-\pause
+\begin{frame}
+\frametitle{Training and Validation}
+\only<2>{\includegraphics[width=\textwidth]{figures/deep_learning/Diapositive2.PNG}}
+\only<3>{\includegraphics[width=\textwidth]{figures/deep_learning/Diapositive3.PNG}}
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Overfitting}
+
 \begin{block}{ Evaluate and compare training and validation accuracy}
 \begin{columns}
 \begin{column}{.45\textwidth}
@@ -253,7 +303,6 @@ Learn by heart (\textbf{\textcolor{red}{OVERFITTING}})
 
 
 \end{frame}
-
 
 %
 
@@ -307,9 +356,9 @@ Data Augmentation techniques are applied online during training phase.
 \begin{frame}
 \frametitle{Experimental Results}
 \begin{itemize}
-\item \only<1-2>{Random delays}\only<3>{\textcolor{red}{Random delays}}
-\item \only<1-2>{Artificial Jitter}\only<3>{\textcolor{grey}{Artificial Jitter}}
-\item \only<1-2>{Real Jitter}\only<3>{\textcolor{red}{Real Jitter}}
+\item \only<1>{Random delays (software countermeasure)}\only<2>{\textcolor{red}{Random delays (software countermeasure)}}
+\item \only<1>{Artificial Jitter (simulated hardware countermeasure)}\only<2>{\textcolor{grey}{Artificial Jitter (simulated hardware countermeasure)}}
+\item \only<1>{Real Jitter (hardware countermeasure)}\only<2>{\textcolor{red}{Real Jitter (hardware countermeasure)}}
 \end{itemize}
 
 \vspace*{3pt}

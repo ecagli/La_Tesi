@@ -80,8 +80,8 @@
 \vspace{-5pt}
 \begin{block}{Profiling attack scenario}
 \begin{itemize}
-\item labelled traces $\setDataTrain = (\vLeakVec_i, z_i)_{i=1}^N$, acquired under known $Z$, to characterise the signals
-\item attack traces $\setDataAttack = (\vLeakVec_i, p_i)_{i=1}^{N_a}$ acquired under known plaintext
+\item labelled traces $\setDataTrain = (\vLeakVec_i, e_i, k_i)_{i=1}^N$, acquired under known secrets
+\item attack traces $\setDataAttack = (\vLeakVec_i, e_i)_{i=1}^{N_a}$ acquired under unknown secrets
 \end{itemize}
 \end{block}
 \end{frame}
@@ -100,19 +100,19 @@
 
 \textbf{Profiling phase}
 \begin{itemize}
-\uncover<7->{\item manage de-synchronization problem [$\setDataTrain \longrightarrow \rho\colon \mathbb{R}^D\rightarrow\mathbb{R}^D$]}
-\uncover<6->{\item mandatory dimensionality reduction [$\setDataTrain \longrightarrow \extract\colon\mathbb{R}^D\rightarrow \mathbb{R}^C$]}
+\uncover<7->{\item \textcolor{blue}{manage de-synchronization problem [$\setDataTrain \longrightarrow \rho\colon \mathbb{R}^D\rightarrow\mathbb{R}^D$]}}
+\uncover<6->{\item \textcolor{red}{mandatory dimensionality reduction [$\setDataTrain \longrightarrow \extract\colon\mathbb{R}^D\rightarrow \mathbb{R}^C$]}}
 \item estimate
 \begin{itemize}
-\item $\pdf_{\given{\only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\extract{(\rho(\vaLeakVec)})}}{\sensRandVar = \sensVar}}$\uncover<2->{, $\pdf_{\only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\extract{(\rho(\vaLeakVec)})}}$, $\pdf_{\sensRandVar}$} \uncover<3->{(generative model)}
+\item $\pdf_{\given{\only<1-5>{\vaLeakVec}\only<6>{\textcolor{red}{\extract}{(\vaLeakVec)}}\only<7>{\textcolor{red}{\extract}{(\textcolor{blue}{\rho}(\vaLeakVec)})}}{\sensRandVar = \sensVar}}$\uncover<2->{\ $\pdf_{\only<1-5>{\vaLeakVec}\only<6>{\textcolor{red}{\extract}{(\vaLeakVec)}}\only<7>{\textcolor{red}{\extract}{(\textcolor{blue}{\rho}(\vaLeakVec)})}}$\ $\pdf_{\sensRandVar}$} \uncover<3->{(generative model)}
 \uncover<5->{
 \begin{itemize}
 \item Gaussian hypothesis (\textbf{Template Attack}) \cite{Chari2003}
-\item Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}
+%\item Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}
 \end{itemize}
 }
 
-\item \uncover<3->{$\pdf_{\given{\sensRandVar}{  \only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\rho(\extract{(\vaLeakVec)})} = \only<1-5>{\vLeakVec}\only<6>{\extract{(\vLeakVec)}}\only<7>{\extract{(\rho(\vLeakVec)})}
+\item \uncover<3->{$\pdf_{\given{\sensRandVar}{  \only<1-5>{\vaLeakVec}\only<6>{\textcolor{red}{\extract}{(\vaLeakVec)}}\only<7>{\textcolor{blue}{\rho}(\textcolor{red}{\extract}{(\vaLeakVec)})} = \only<1-5>{\vLeakVec}\only<6>{\textcolor{red}{\extract}{(\vLeakVec)}}\only<7>{\textcolor{red}{\extract}{(\textcolor{blue}{\rho}(\vLeakVec)})}
 }}$ (discriminative model)
 }
 \end{itemize}
@@ -122,26 +122,18 @@
 \begin{itemize}
 \item Likelihood score for each key hypothesis $k$
 \begin{equation*}
-d_k = \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\extract{(\rho(\vaLeakVec)})}}{\sensRandVar = f(p_i,k)}}(\only<1-5>{\vLeakVec_i}\only<6>{\extract{(\vLeakVec_i)}}\only<7>{\extract{(\rho(\vLeakVec_i)})}
-)
-%%d_k = \sum_{i=1}^{N}\log \prob[\vaLeakVec=\vLeakVec_i | Z=f(p_i,k)]
+d_k =  \pdf_{\given{\only<1-5>{\vaLeakVec}\only<6>{\textcolor{red}{\extract}(\vaLeakVec)}\only<7>{\textcolor{red}{\extract}(\textcolor{blue}{\rho}(\vaLeakVec))}}{\sensRandVar}}\left(\only<1-5>{\left(\vLeakVec_i\right)_{i=1,\dots,N}}\only<6>{\left(\textcolor{red}{\extract}(\vLeakVec_i)\right)_{i=1,\dots,N}}\only<7>{\left(\textcolor{red}{\extract}(\textcolor{blue}{\rho}(\vLeakVec_i))\right)_{i=1,\dots,N}}, \left(\sensFunction(\publicParVar_i,\keyVar)\right)_{i=1,\dots,N_a}\right)
 \end{equation*}
 %
 \uncover<2->{
 \item A-posteriori probability score for each key hypothesis $k$
-\begin{align*}
-\pdf_{\given{\sensRandVar}{  \only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\rho(\extract{(\vaLeakVec)})} = \only<1-5>{\vLeakVec}\only<6>{\extract{(\vLeakVec)}}\only<7>{\extract{(\rho(\vLeakVec)})}
-}}(\sensVar) &= \frac{\pdf_{\given{\only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\extract{(\rho(\vaLeakVec)})}}{\sensRandVar = \sensVar}}(\only<1-5>{\vLeakVec}\only<6>{\extract{(\vLeakVec)}}\only<7>{\extract{(\rho(\vLeakVec)})}
-)\pdf_{\sensRandVar}(\sensVar)} {\pdf_{\only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\extract{(\rho(\vaLeakVec)})}}(\only<1-5>{\vLeakVec}\only<6>{\extract{(\vLeakVec)}}\only<7>{\extract{(\rho(\vLeakVec)})}
-)} \text{Bayes' theorem}\\
-d_{\keyVar} &= \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\only<1-5>{\vaLeakVec}\only<6>{\extract{(\vaLeakVec)}}\only<7>{\extract{(\rho(\vaLeakVec)})} = \only<1-5>{\vLeakVec_i}\only<6>{\extract{(\vLeakVec_i)}}\only<7>{\extract{(\rho(\vLeakVec_i)})}
-}}(\sensFunction(\keyVar,\publicParVar_i) ) \mbox{ ,}
-\end{align*}
+\begin{equation*}
+d_{\keyVar} = \pdf_{\given{\sensRandVar}{\only<1-5>{\vaLeakVec}\only<6>{\textcolor{red}{\extract}(\vaLeakVec)}\only<7>{\textcolor{red}{\extract}(\textcolor{blue}{\rho}(\vaLeakVec))}}}\left(\sensFunction\left(\publicParVar_i,\keyVar\right)_{i=1,\dots,N_a}, \left(\only<1-5>{\vLeakVec_i}\only<6>{\textcolor{red}{\extract}{(\vLeakVec_i)}}\only<7>{\textcolor{red}{\extract}(\textcolor{blue}{\rho}(\vLeakVec_i))}\right)_{i=1,\dots,N_a}  \right) \mbox{ ,}
+\end{equation*}
 }
 \end{itemize}
 
 \end{frame}
-
 
 
 \begin{frame}
@@ -157,15 +149,15 @@ d_{\keyVar} &= \prod_{i=1}^{\nbAttackTraces} \pdf_{\given{\sensRandVar}{\only<1-
 \item \only<1-4>{\textcolor{red}{mandatory dimensionality reduction [$\setDataTrain \longrightarrow \extract\colon\mathbb{R}^D\rightarrow \mathbb{R}^C$]}}\only<5->{\textcolor{grey}{mandatory dimensionality reduction [$\setDataTrain \longrightarrow \extract\colon\mathbb{R}^D\rightarrow \mathbb{R}^C$]}}
 \item estimate
 \begin{itemize}
-\item \only<1-4>{$\pdf_{\given{\extract(\vaLeakVec)}{\sensRandVar = \sensVar}}$, $\pdf_{\extract(\vaLeakVec)}$, $\pdf_{\sensRandVar}$ (generative model)}\only<5->{\textcolor{grey}{$\pdf_{\given{\extract(\vaLeakVec)}{\sensRandVar = \sensVar}}$, $\pdf_{\extract(\vaLeakVec)}$, $\pdf_{\sensRandVar}$ (generative model)}}
+\item \only<1-4>{$\pdf_{\given{\extract(\vaLeakVec)}{\sensRandVar = \sensVar}}$  $\pdf_{\extract(\vaLeakVec)}$ $\pdf_{\sensRandVar}$ (generative model)}\only<5->{\textcolor{grey}{$\pdf_{\given{\extract(\vaLeakVec)}{\sensRandVar = \sensVar}}$, $\pdf_{\extract(\vaLeakVec)}$  $\pdf_{\sensRandVar}$ (generative model)}}
 
 \begin{itemize}
 
 \item \only<1-4>{Gaussian hypothesis (\textbf{Template Attack}) \cite{Chari2003}}\only<5->{
 \textcolor{grey}{Gaussian hypothesis (\textbf{Template Attack}) \cite{Chari2003}}}
-\item \only<1-4>{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}
-\only<5->{
-\textcolor{grey}{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}}
+%\item \only<1-4>{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}
+%\only<5->{
+%\textcolor{grey}{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}}
 %
 \end{itemize}
 
@@ -227,6 +219,7 @@ $\extract$ performs a sub-sampling
 \begin{column}{.6\textwidth}
 \uncover<3->{
 \begin{block}{Linear feature extraction}
+$\extract$ performs linear combinations\\
 $\extract(\vLeakVec) = A\vLeakVec \mbox{ with } A \in M_{\mathbb{R}}(\newTraceLength, \traceLength)$
 \begin{itemize}
 \item Principal Component Analysis (PCA) \cite{TAprincipal,Batina2012}
@@ -239,40 +232,40 @@ $\extract(\vLeakVec) = A\vLeakVec \mbox{ with } A \in M_{\mathbb{R}}(\newTraceLe
 \end{columns}
 \end{frame}
 
-\begin{frame}
-\frametitle{SNR, Fisher's criterion and LDA classifier}
-\vspace*{-10pt}
-\begin{columns}
-\begin{column}{0.5\textwidth}
-\textbf{Feature selection - SNR}
-\begin{figure}
-\includegraphics[width = \textwidth]{figures/SNR_1order_new.jpg} 
-\caption{$SNR(t) = {\frac{\text{\emph{variance inter-class}}}{\text{\emph{variance intra-class}}}}$}
-\end{figure}
-\end{column}
-\pause
-\begin{column}{0.5\textwidth}
-\textbf{Feature extraction - LDA}
-\begin{figure}
-\includegraphics[width = 0.8\textwidth]{figures/LDAprojection.pdf} 
-\caption{Fisher's Criterion: project into a subspace in which  $\frac{\text{\emph{inter-class covariance matrix}}}{\text{\emph{intra-class covariance matrix}}}$ is maximised}
-\end{figure}
-\end{column}
-\end{columns}
-\pause
-LDA: optimal \textbf{classifier} under following hypothesis
-\begin{itemize}
-\item Gaussian distributions with parameters $\mu_j, \Sigma_j$
-\item Homoscedasticity: $\Sigma_j=\Sigma$ for all $j$
-\end{itemize}
-
-\begin{center}
-Fisher's criterion $\Leftrightarrow$ LDA 
-\end{center}
-\pause
-SNR and LDA most suitable selector and extractor for classification purposes
-
-\end{frame}
+%\begin{frame}
+%\frametitle{SNR, Fisher's criterion and LDA classifier}
+%\vspace*{-10pt}
+%\begin{columns}
+%\begin{column}{0.5\textwidth}
+%\textbf{Feature selection - SNR}
+%\begin{figure}
+%\includegraphics[width = \textwidth]{figures/SNR_1order_new.jpg} 
+%\caption{$SNR(t) = {\frac{\text{\emph{variance inter-class}}}{\text{\emph{variance intra-class}}}}$}
+%\end{figure}
+%\end{column}
+%\pause
+%\begin{column}{0.5\textwidth}
+%\textbf{Feature extraction - LDA}
+%\begin{figure}
+%\includegraphics[width = 0.8\textwidth]{figures/LDAprojection.pdf} 
+%\caption{Fisher's Criterion: project into a subspace in which  $\frac{\text{\emph{inter-class covariance matrix}}}{\text{\emph{intra-class covariance matrix}}}$ is maximised}
+%\end{figure}
+%\end{column}
+%\end{columns}
+%\pause
+%LDA: optimal \textbf{classifier} under following hypothesis
+%\begin{itemize}
+%\item Gaussian distributions with parameters $\mu_j, \Sigma_j$
+%\item Homoscedasticity: $\Sigma_j=\Sigma$ for all $j$
+%\end{itemize}
+%
+%\begin{center}
+%Fisher's criterion $\Leftrightarrow$ LDA 
+%\end{center}
+%\pause
+%SNR and LDA most suitable selector and extractor for classification purposes
+%
+%\end{frame}
 
 
 \begin{frame}
@@ -280,21 +273,26 @@ SNR and LDA most suitable selector and extractor for classification purposes
 \frametitle{Contributions}
 
 \begin{itemize}
-\item \textbf{Linear Dimensionality Reduction}([CARDIS 2015]): 
+\item \textbf{Linear Dimensionality Reduction} ([CARDIS 2015]): 
 \begin{itemize}
 \item PCA, choise of components ELV
 \item LDA in case of undersampling
 \end{itemize}
 
-\item \only<1>{\textbf{Kernel Discriminant Analysis}([CARDIS 2016]): application of an appropriate kernel trick to LDA, in order to manage masking countermeasure}\only<2->{\textcolor{red}{\textbf{Kernel Discriminant Analysis}([CARDIS 2016]): application of an appropriate kernel trick to LDA, in order to manage masking countermeasure}}
+\item \only<1>{\textbf{Kernel Discriminant Analysis} ([CARDIS 2016]): application of an appropriate kernel trick to LDA, in order to manage masking countermeasure}\only<2->{\textcolor{red}{\textbf{Kernel Discriminant Analysis} ([CARDIS 2016]): application of an appropriate kernel trick to LDA, in order to manage masking countermeasure}}
 
-\item \only<1>{\textbf{Convolutional Neural Networks}([CHES 2017]) } \only<2->{\textcolor{red}{\textbf{Convolutional Neural Networks}([CHES 2017]) }}:
+\item \only<1>{\textbf{Convolutional Neural Networks} ([CHES 2017])} \only<2->{\textcolor{red}{\textbf{Convolutional Neural Networks} ([CHES 2017])}}:
 \begin{itemize}
 \item \only<1>{discriminative model by means of neural network classifiers}\only<2->{\textcolor{red}{discriminative model by means of neural network classifiers}}
 \item \only<1>{convolutional layers to manage desyncrhonisation (a form of hiding)}\only<2->{\textcolor{red}{convolutional layers to manage desyncrhonisation (a form of hiding)}}
 \item \only<1>{Data Augmentation techniques to reduce overfitting}\only<2->{\textcolor{red}{Data Augmentation techniques to reduce overfitting}}
 \end{itemize}
 
+\item \textbf{ASCAD public dataset} (submitted paper):
+\begin{itemize}
+\item deep learning open comparison platform (implementation sources, side-channel traces, attack scripts)
+\item hyper-parametrization methodology proposal and test
+\end{itemize}
 \end{itemize}
 
 

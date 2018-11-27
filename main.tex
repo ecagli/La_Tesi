@@ -42,6 +42,7 @@ headsepline, % Uncomment to get a line under the header
 \usepackage[T1]{fontenc} % Output font encoding for international characters
 \usepackage{xhfill}
 \usepackage{palatino} % Use the Palatino font by default
+\usepackage{ragged2e}
 
 \usepackage[hyperref, backend=bibtex,style=alphabetic,natbib=true,backref,backrefstyle=none]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
@@ -613,6 +614,35 @@ Versailles$-$St$-$Quentin$-$en$-$Yvelines}} \hfill \large{Rapporteur\\
 %----------------------------------------------------------------------------------------
 
 \printbibliography[heading=bibintoc]
+
+%----------------------- abstract
+%\newpage\null\thispagestyle{empty}
+\par\vfill\break % Break Last Page
+\thispagestyle{empty}
+\advance\vsize by 8cm % Advance page height
+\advance\voffset by -1cm % Shift top margin
+\advance\hsize by 2cm
+\advance\hoffset by -1.3cm % Shift top margin
+
+
+\begin{center}
+\Large{\textbf{R\'esum\'e}}
+\end{center}
+\justify
+La cryptographie embarqu\'ee sur les composants s\'ecuris\'es peut \^etre vuln\'erable \`a des attaques par canaux auxiliaires bas\'ees sur l'observation de fuites d'information issues de signaux acquis durant l'ex\'ecution de l'algorithme. Aujourd'hui, la pr\'esence de nombreuses contremesures peut conduire \`a l'acquisition de signaux \`a la fois tr\`es bruit\'es, ce qui oblige un attaquant, ou un \'evaluateur s\'ecuritaire, \`a utiliser des mod\`eles statistiques, et tr\`es larges, ce qui rend difficile l'estimation de tels mod\`eles. Dans cette th\`ese nous \'etudions les techniques de r\'eduction de dimension en tant que pr\'etraitement, et plus g\'en\'eralement le probl\`eme de l'extraction d'information dans le cas des signaux de grandes dimensions. Les premiers travaux concernent l'application des extracteurs de caract\'eristiques lin\'eaires classiques en statistiques appliqu\'ees, comme l'analyse en composantes principales et l'analyse discriminante lin\'eaire. Nous analysons ensuite une g\'en\'eralisation non lin\'eaire de ce deuxi\`eme extracteur qui permet de d\'efinir une m\'ethode de pr\'etraitement qui reste efficace en pr\'esence de contremesures de masquage. Finalement, en g\'en\'eralisant davantage les mod\`eles d'extractions, nous explorons certaines m\'ethodes d'apprentissage profond pour r\'eduire les pr\'etraitements du signal et extraire de fa\c{c}on automatique l'information du signal brut. En particulier, l'application des r\'eseaux de neurones convolutifs nous permet de mener des attaques qui restent efficaces en pr\'esence de d\'esynchronisation.\\
+
+\
+\textbf{Mot-cl\'es:} canaux auxiliaires, cryptographie embarqu\'ee, r\'eduction de dimension, analyse en composantes principales, analyse discriminante lin\'eaire, analyse discriminante par noyau, r\'eseaux de neurones
+
+\begin{center}
+\Large{\textbf{Abstract}}
+\end{center}
+Cryptographic integrated circuits may be vulnerable to attacks based on the observation of information leakages conducted during the cryptographic algorithms' executions, the so-called Side-Channel Attacks. Nowadays the presence of several countermeasures may lead to the acquisition of signals which are at the same time highly noisy, forcing an attacker or a security evaluator to exploit statistical models, and highly multi-dimensional, letting hard the estimation of such models. In this thesis we study preprocessing techniques aiming at reducing the dimension of the measured data, and the more general issue of information extraction from highly multi-dimensional signals. The first works concern the application of classical linear feature extractors, such as Principal Component Analysis and Linear Discriminant Analysis. Then we analyse a non-linear generalisation of the latter extractor, obtained through the application of a \textquotedbl Kernel Trick\textquotedbl, in order to let such preprocessing effective in presence of masking countermeasures. Finally, further generalising the extraction models, we explore the deep learning methodology, in order to reduce signal preprocessing and automatically extract sensitive information from rough signal. In particular, the application of the Convolutional Neural Network allows us to perform some attacks that remain effective in presence of signal desynchronisation.\\
+
+\
+\textbf{Keywords:} side-channel, embedded cryptography, dimensionality reduction, principal components analysis, linear discriminant analysis, kernel discriminant analysis, neural networks
+
+\par\vfill\break % Break the page with different margins
 
 %----------------------------------------------------------------------------------------
 

@@ -1,3 +1,85 @@
+
+\begin{frame}
+\frametitle{LDA: an optimal binary linear classifier}
+\begin{columns}
+\begin{column}{.5\linewidth}
+\includegraphics[width=\textwidth]{figures/dataNoProjection.pdf} 
+\end{column}
+\begin{column}{.6\linewidth}
+\begin{itemize}
+\item Classify data $\vLeakVec$ into 2 classes $\sensVarSet = \{\sensVarValue{1}, \sensVarValue{2}\}$
+\pause
+\item Generative model: $\pdf_{\given{\vaLeakVec}{\sensRandVar = \sensVarValue{j}}}(\vLeakVec)$, $\pdf_{\sensRandVar}(\sensVarValue{j})$ and $\pdf_{\vaLeakVec}(\vLeakVec)$
+\pause
+\item Posterior probabilities (via Bayes' theorem), then classify through the \emph{log-likelihood ratio}: $a = \log\left[\frac{\prob(\given{\sensVarValue{1}}{\vLeakVec})}{\prob(\given{\sensVarValue{2}}{\vLeakVec})}\right]]$ (boundary surface $a=0$)
+\end{itemize}
+\end{column}
+\end{columns}
+\pause
+\begin{itemize}
+\item Two assumptions about class-conditional densities: 
+\begin{itemize}
+\item Gaussian distributions with parameters $\mu_j, \Sigma_j$
+\item Homoscedasticity: $\Sigma_j=\Sigma$ for all $j$
+\end{itemize}
+\pause
+\item $\Rightarrow a = \vec{w}^\intercal \vLeakVec + w_0$ (linear decision boundary, $\vec{w}$ and $w_0$ functions of $\Sigma, \mu_j$)
+\end{itemize}
+\pause
+\begin{block}{Generalised linear discriminative model}
+\begin{equation}\label{eq:binary_linear_classifier}
+\prob(\given{\sensVarValue{1}}{\vLeakVec}) = \sigma(\www^\intercal \vLeakVec + w_0)\mbox{ ,where }  \sigma(a)= \frac{1}{1+e^{-a}} \text{\emph{logistic sigmoid}}
+\end{equation}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{LDA and Fisher Criterion}
+\begin{columns}
+\begin{column}{.5\linewidth}
+\only<1>{\includegraphics[width=\textwidth]{figures/LDA_boundary.pdf}}
+\only<2->{\includegraphics[width=\textwidth]{figures/LDAprojection.pdf} }
+\end{column}
+\begin{column}{.6\linewidth}
+\begin{itemize}
+\item LDA: linear decision boundary $a = \vec{w}^\intercal \vLeakVec + w_0$
+\pause
+\item Equivalently, project data onto $\vec{w}^\intercal \vLeakVec$ (orthogonally to the decision boudary), than classify by a real threshold (optimally $w_0$). \\
+\end{itemize}
+\end{column}
+\end{columns}
+\pause
+\begin{itemize}
+\item Two assumptions about class-conditional densities: 
+\begin{itemize}
+\item Gaussian distributions with parameters $\mu_j, \Sigma_j$
+\item Homoscedasticity: $\Sigma_j=\Sigma$ for all $j$
+\end{itemize}
+\end{itemize}
+
+\begin{block}{Fact, abuse and preference for the dimensionality reduction formulation}
+\begin{itemize}
+\item When LDA assumptions are met, the solution $\AAlpha_1$ of the Fisher's criterion is orthogonal to $\vec{w}$. 
+\item assumption not required
+\item naturally multi-class
+\item optimal dimensionality reduction for template attack
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Linear separability}
+
+\only<1>{\includegraphics[width=0.5\textwidth]{figures/LDA_non_linearly.pdf}\\ }
+LDA: linear decision boundary $a = \vec{w}^\intercal \vLeakVec + w_0$ ($\vec{w} = \Sigma^{-1}(\mu_1-\mu_2)$)
+%
+\begin{block}{}
+\begin{huge}
+\centering What if $\mu_1 = \mu_2$? 
+\end{huge}
+\end{block}
+\end{frame}
 \begin{frame}
 \frametitle{Training-Validation-Test}
 \only<1>{\includegraphics[width=\textwidth]{figures/deep_learning/Diapositive1.PNG}}

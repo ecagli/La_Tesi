@@ -139,17 +139,16 @@
 \begin{frame}
 \frametitle{Dimensionality reduction in presence of masking}
 \begin{block}{$(d-1)$th-order Sharing (or Masking)} 
-Split each sensitive $Z$ into shares  $Z = M_1 \star \dots \star M_d$ \\
-with \only<1->{\textcolor{black}{$M_1, \dots , M_{d-1}$}} random shares (or masks)  \\ and $M_d = Z \star M_1^{-1}\star \dots \star M_{d-1}^{-1}$ \\
+Split each sensitive $Z$ into shares  $Z = M_1 \oplus \dots \oplus M_d$ 
+\begin{itemize}
+Random \emph{masks}: $M_1, \dots , M_{d-1}$  
+\emph{Masked} variable: $M_d = Z \oplus M_1^{-1}\oplus \dots \oplus M_{d-1}$
+\end{itemize}
 Shares are handled at time samples $$t_1,\dots, t_d \qquad \text{(in general different if software countermeasure)} $$
 \\
 \end{block}
 
-\begin{block}{Indistinguishability up to order $d-1$}
-$f(z) = \esper[\vaLeakVec\lvert Z=z]$ constant\\
-$f(z) = \cov(\vaLeakVec\lvert Z=z)$ constant \\
-...\\
-$(d-1)$th statistical orders of $\vaLeakVec\lvert Z=z$, all identical\\
+\begin{block}{Indistinguishability of $\pdf_{\given{\vaLeakVec}{\sensRandVar=\sensVar}}$  up to order $d-1$}
 \pause
 \textcolor{red}{$f(z) = \esper\left[\vaLeakVec[t_1]\vaLeakVec[t_2]\dots\vaLeakVec[t_d]\lvert Z=z\right]$ non-constant} $\Rightarrow$ \textcolor{red}{$d$th-order attack} \\
 \pause
@@ -477,6 +476,7 @@ $K(\sss[]{i},\sss[]{j}) = (\sss[]{i} \cdot \sss[]{j})^d \qquad \leftrightarrow \
 \begin{frame}
 
 \frametitle{KDA - the training}
+\emph{"Fisher Discriminant Analysis with Kernels"(\cite{scholkopf1999fisher})}
 \begin{center}
 \only<1>{
 Between-class (inter-class) Covariance Matrix }
