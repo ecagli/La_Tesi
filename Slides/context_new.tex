@@ -105,17 +105,17 @@ $\Rightarrow$ Requires protection against very high-level attacker
 \emph{Simple} attack: \\ a single input
  \end{textblock}
  }
-Attack $\Longrightarrow$ \only<1-2>{a secret} \only<3->{\includegraphics[width = 1cm]{figures/cle.jpg} }
+Attack $\Longrightarrow$ \only<1>{a secret} \uncover<2->{\includegraphics[width = 1cm]{figures/cle.jpg} }
 \begin{small}
 \begin{table}[]
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{ >{\raggedleft\arraybackslash}m{0.4\textwidth} m{0.4\textwidth}}
 \toprule
-\textbf{Classical Cryptanalysis}                                                                                                             & \textbf{Side-Channel Cryptanalysis}                                                                      \\
+\textbf{Classical Attacks}                                                                                                             & \textbf{Side-Channel Attacks}                                                                      \\
 \midrule
 Mathematical vulnerability &
-\uncover<2-> {Physical vulnerability}\\
-Black Box                                                                                                                                    & \uncover<2->{Grey Box / Divide-and-conquer}                                                                                                \\
+\uncover<3-> {Physical vulnerability}\\
+Black Box                                                                                                                                    & \uncover<3->{Grey Box / Divide-and-conquer}                                                                                                \\
 %\uncover<4->{Formal attacker model & Attacker model?} \\
 %\uncover<5->{Computational complexity & Cotation table     }                                              
 \end{tabular}
@@ -211,7 +211,9 @@ Profiling attacks
 \end{center}
 \uncover<2->{
 \begin{block}{Machine Learning}
-\uncover<3->{\textquotedbl A computer program is said to learn from experience E with respect to some task T and performance measure P, if its performance on T, as measured by P, improves with experience E. \textquotedbl \cite{Mitchell1997} }
+\uncover<3->{\emph{Learn} from data via statistic models\\
+Task - Performance - Experience \cite{Mitchell1997}}
+%\uncover<3->{\textquotedbl A computer program is said to learn from experience E with respect to some task T and performance measure P, if its performance on T, as measured by P, improves with experience E. \textquotedbl \cite{Mitchell1997} }
 \end{block}
 \pause
 \begin{block}{Supervised Learning}

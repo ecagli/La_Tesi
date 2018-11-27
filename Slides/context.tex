@@ -98,8 +98,8 @@ $\Rightarrow$ Requires protection against very high-level attacker
 \frametitle{Side-Channel Vulnerability of Embedded Cryptography}
 
 \only<1>{\includegraphics[width=.9\textwidth]{figures/simple_attack/Diapositive3.PNG} }
-\only<2>{\includegraphics[width=.9\textwidth]{figures/simple_attack/Diapositive2.PNG} }
-\only<3->{\includegraphics[width=.9\textwidth]{figures/simple_attack/Diapositive1.PNG} }
+\only<3>{\includegraphics[width=.9\textwidth]{figures/simple_attack/Diapositive2.PNG} }
+\only<4->{\includegraphics[width=.9\textwidth]{figures/simple_attack/Diapositive1.PNG} }
 
 \only<6>{ \begin{textblock}{5}(10,7)
 \emph{Simple} attack: only one plaintext
@@ -111,11 +111,11 @@ $\Rightarrow$ Requires protection against very high-level attacker
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{ >{\raggedleft\arraybackslash}m{0.4\textwidth} m{0.4\textwidth}}
 \toprule
-\textbf{Classical Cryptanalysis}                                                                                                             & \textbf{Side-Channel Cryptanalysis}                                                                      \\
+\textbf{Classical Attacks}                                                                                                             & \textbf{Side-Channel Attacks}                                                                      \\
 \midrule
 Mathematical vulnerability &
-\uncover<2-> {Physical vulnerability}\\
-Black Box                                                                                                                                    & \uncover<2->{Grey Box / Divide-and-conquer}                                                                                                \\
+\uncover<3-> {Physical vulnerability}\\
+Black Box                                                                                                                                    & \uncover<->{Grey Box / Divide-and-conquer}                                                                                                \\
 %\uncover<4->{Formal attacker model & Attacker model?} \\
 %\uncover<5->{Computational complexity & Cotation table     }                                              
 \end{tabular}

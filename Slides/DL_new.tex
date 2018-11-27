@@ -358,7 +358,7 @@ Data Augmentation techniques are applied online during training phase.
 \begin{itemize}
 \item \only<1>{Random delays (software countermeasure)}\only<2>{\textcolor{red}{Random delays (software countermeasure)}}
 \item \only<1>{Artificial Jitter (simulated hardware countermeasure)}\only<2>{\textcolor{grey}{Artificial Jitter (simulated hardware countermeasure)}}
-\item \only<1>{Real Jitter (hardware countermeasure)}\only<2>{\textcolor{red}{Real Jitter (hardware countermeasure)}}
+\item \only<1>{Real Jitter (hardware countermeasure)}\only<2>{\textcolor{grey}{Real Jitter (hardware countermeasure)}}
 \end{itemize}
 
 \vspace*{3pt}
@@ -432,56 +432,6 @@ Acc        & $N^\star$       & 27.0\%                      & $>1,000$           
 %
 
 
-
-\begin{frame}
-\frametitle{Real Jitter (1)}
-\vspace{-10pt}
-\begin{block}{Target}
-\begin{itemize}
-\item AES hardware implementation
-\item strong jitter effect
-\item Target Variable: $Z = \mathrm{Sbox}(P\oplus K)$
-\item $2,500$ selected time samples
-\item $99,000$ training traces
-\end{itemize}
-\end{block}
-
-\only<1>{
-\includegraphics[width=\textwidth]{../Figures/CHES2017/SNR_firstSbox.pdf}
-}
-\only<2>{
-\includegraphics[width=\textwidth]{../Figures/CHES2017/SNR_desynchro.pdf}
-}
-
-
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Real Jitter (2)}
-\centering
-\begin{scriptsize}
-\begin{table}
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
-\multicolumn{8}{c}{}\\
-\hline
-\multicolumn{2}{|c|}{} & \multicolumn{2}{c|}{\textcolor{green}{$\mathrm{SH}_{0}$}\textcolor{blue}{$\mathrm{AR}_{0}$}} & \multicolumn{2}{c|}{\textcolor{green}{$\mathrm{SH}_{10}$}\textcolor{blue}{$\mathrm{AR}_{100}$}} & \multicolumn{2}{c|}{\textcolor{green}{$\mathrm{SH}_{20}$}\textcolor{blue}{$\mathrm{AR}_{200}$}} \\ \hline
-Acc        & $N^\star$       & 1.2\%                      & 137                      & 1.3\%                       & 89                         & \textbf{1.8\%}              & \textbf{54}                \\ \hline
-\end{tabular}
-\end{table}
-\end{scriptsize}
-\uncover<2>{
-\includegraphics[width=0.75\textwidth]{../Figures/CHES2017/SNR_resynchro.pdf} 
-}
-\vspace*{-18pt}
-
-\centering
-\uncover<2>{
-\includegraphics[width=0.5\textwidth]{../Figures/CHES2017/TA_CNN_smartcard.pdf} 
-}
-
-
-\end{frame}
 
 \begin{frame}
 \frametitle{Conclusions about CNN}
