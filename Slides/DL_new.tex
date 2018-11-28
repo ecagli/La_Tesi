@@ -1,17 +1,17 @@
 \section{Deep Learning against Misalignment}
-\begin{frame}
-\frametitle{Motivations (1)}
-\includegraphics[width=.5\textwidth]{figures/whydeeplearning.png} 
-\begin{itemize}
-\item parallelizable computation(GPU optimizations)
-\item not memory-based
-\item many hyper-parameters but faster validation
-\end{itemize}
+%\begin{frame}
+%\frametitle{Motivations (1)}
+%\includegraphics[width=.5\textwidth]{figures/whydeeplearning.png} 
+%\begin{itemize}
+%\item parallelizable computation(GPU optimizations)
+%\item not memory-based
+%\item many hyper-parameters but faster validation
+%\end{itemize}
+%
+%\end{frame}
 
-\end{frame}
-
 \begin{frame}
-\frametitle{Motivations (2)}
+\frametitle{Motivations}
 
 \only<2->{
  \begin{textblock}{5}(5,5)
@@ -30,7 +30,6 @@
 
 \begin{itemize}
 \item Gaussian hypothesis (\textbf{Template Attack})\cite{Chari2003}
-\item Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}
 \end{itemize}
 \end{itemize}
 }
@@ -39,13 +38,12 @@
 \item \textcolor{gray}{$\pdf_{\given{\extract{(\rho(\vaLeakVec)})}{\sensRandVar = \sensVar}}$, $\pdf_{\extract{(\rho(\vaLeakVec)})}$, $\pdf_{\sensRandVar}$ (generative model)}
 \begin{itemize}
 \item \textcolor{gray}{ Gaussian hypothesis (\textbf{Template Attack})\cite{Chari2003}}
-\item \textcolor{gray}{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}
 \end{itemize}
 \end{itemize}
 }
 
 
-\item $\pdf_{\given{\sensRandVar}{\only<1>{\extract{(\rho(\vLeakVec)}}  \only<2->{\vaLeakVec}}}$ (discriminative model) \\ \uncover<2->{by means of a neural network $F(\vaLeakVec)\approx \pdf_{\given{\sensRandVar}{ \only<2->{\vaLeakVec}}}$} 
+\item $\pdf_{\given{\sensRandVar}{\only<1>{\extract{(\rho(\vLeakVec)}}  \only<2->{\vaLeakVec}}}$ (discriminative model) \\ \uncover<2->{by means of a neural network \textcolor{magenta}{$\hat{\pdf}(\vLeakVec,W)\approx \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec}}$}} 
 
 
 \end{itemize}
@@ -60,28 +58,28 @@ Many independent preprocessing steps and assumptions\\ \uncover<3>{$\longleftrig
 \hfill In SCA litterature \cite{martinasek2013optimization,martinasek2013innovative,martinasek2015profiling,martinasek2016profiling}
 \begin{block}{Multi-Layer Perceptron (MLP)}
 \only<1>{
-$F(\vLeakVec,W) = \softmax\circ\lambda_n\circ\sigma_{n-1}\circ\lambda_{n-1}\circ\dots\circ \lambda_1(\vLeakVec)=\yyy \approx \mathrm{Pr}[\sensRandVar | \vaLeakVec = \vLeakVec] $
+$\hat{\pdf}(\vLeakVec,W) = \softmax\circ\lambda_n\circ\sigma_{n-1}\circ\lambda_{n-1}\circ\dots\circ \lambda_1(\vLeakVec)=\yyy \approx \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec}}$
 \begin{itemize}
 \item[]\textcolor{white}{$\lambda_i$ linear functions (linear combinations of time samples) depending on some trainable weights $W$}
 \item[]\textcolor{white}{$\sigma_i$ non-linear functions}
 \item[]\textcolor{white}{$\softmax$ normalizing \emph{softmax} function}
 \end{itemize}}
 \only<2>{
-$F(\vLeakVec,W) = \softmax\circ\textcolor{red}{\lambda_n}\circ\sigma_{n-1}\circ\textcolor{red}{\lambda_{n-1}}\circ\dots\circ \textcolor{red}{\lambda_1}(\vLeakVec)=\yyy \approx \mathrm{Pr}[\sensRandVar | \vaLeakVec = \vLeakVec]$
+$F(\vLeakVec,W) = \softmax\circ\textcolor{red}{\lambda_n}\circ\sigma_{n-1}\circ\textcolor{red}{\lambda_{n-1}}\circ\dots\circ \textcolor{red}{\lambda_1}(\vLeakVec)=\yyy \approx \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec}}$
 \begin{itemize}
 \item[]\textcolor{red}{$\lambda_i$} linear functions (linear combinations of time samples) depending on some \textbf{trainable weights} $W$
 \item[]\textcolor{white}{$\sigma_i$ non-linear functions}
 \item[]\textcolor{white}{$\softmax$ normalizing \emph{softmax} function}
 \end{itemize}}
 \only<3>{
-$F(\vLeakVec,W) = \softmax\circ\lambda_n\circ\textcolor{red}{\sigma_{n-1}}\circ\lambda_{n-1}\circ\dots\circ \lambda_1(\vLeakVec)=\yyy \approx \mathrm{Pr}[\sensRandVar | \vaLeakVec = \vLeakVec] $
+$F(\vLeakVec,W) = \softmax\circ\lambda_n\circ\textcolor{red}{\sigma_{n-1}}\circ\lambda_{n-1}\circ\dots\circ \lambda_1(\vLeakVec)=\yyy \approx \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec}} $
 \begin{itemize}
 \item[]{$\lambda_i$ linear functions (linear combinations of time samples) depending on some \textbf{trainable weights} $W$}
 \item[]\textcolor{red}{$\sigma_i$} non-linear \emph{activation} functions
 \item[]\textcolor{white}{$\softmax$ normalizing \emph{softmax} function}
 \end{itemize}}
 \only<4->{
-$F(\vLeakVec,W) = \textcolor{red}{\softmax}\circ\lambda_n\circ\sigma_{n-1}\circ\lambda_{n-1}\circ\dots\circ \lambda_1(\vLeakVec)=\yyy \approx \mathrm{Pr}[\sensRandVar | \vaLeakVec = \vLeakVec] $
+$F(\vLeakVec,W) = \textcolor{red}{\softmax}\circ\lambda_n\circ\sigma_{n-1}\circ\lambda_{n-1}\circ\dots\circ \lambda_1(\vLeakVec)=\yyy \approx \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec}} $
 \begin{itemize}
 \item[]{$\lambda_i$ linear functions (linear combinations of time samples) depending on some \textbf{trainable weights} $W$}
 \item[]{$\sigma_i$ non-linear \emph{activation} functions}
@@ -107,9 +105,8 @@ $F(\vLeakVec,W) = \textcolor{red}{\softmax}\circ\lambda_n\circ\sigma_{n-1}\circ\
 \end{frame}
 
 \begin{frame}
-\frametitle{Convolutional Neural Networks}
-\vspace*{-10pt}
-\begin{block}{Translation-invariance}
+\frametitle{Translation-Invariance}
+
 \begin{figure}
 \centering
 \only<1>{\includegraphics[width=\textwidth]{Figures/cane_shift_classifier1.pdf}}
@@ -120,59 +117,20 @@ $F(\vLeakVec,W) = \textcolor{red}{\softmax}\circ\lambda_n\circ\sigma_{n-1}\circ\
 \only<6>{\includegraphics[width=\textwidth]{Figures/trace_shift_classifier2.pdf}}
 \only<7->{\includegraphics[width=\textwidth]{Figures/trace_shift_classifier3.pdf}}
 \end{figure}
-\uncover<4->{It is important to explicit the data translation-invariance\\}
-\uncover<9->{Convolutional Neural Networks: share weights across space}
-\end{block}
-%
 
-\vspace*{-7pt}
 
-\begin{columns}
-\begin{column}{.5\textwidth}
-\only<1-10>{
+\uncover<8->{
 \begin{figure}
-\includegraphics[width=.7\textwidth]{Figures/small_white.pdf}
+\includegraphics[width=\textwidth]{figures/cnn_car.jpeg} 
+\caption{Source: \url{medium.com}}
 \end{figure}
 }
-
-\only<11>{
-\begin{figure}
-\includegraphics[width=.5\textwidth]{../tikz_per_manuscritto/conv_filter_2_1.pdf} 
-\caption{\scriptsize{Linear layer in a ConvNet (\emph{Convolutional Layer})}}
-\end{figure}
-}
-
-\only<12-13>{
-\begin{figure}
-\includegraphics[width=0.8\textwidth]{../tikz_per_manuscritto/conv_filter_2_3.pdf} 
-\caption{\scriptsize{Linear layer in a ConvNet (\emph{Convolutional Layer})}}
-\end{figure}
-}
-
-\end{column}
-%%
-\begin{column}{.5\textwidth}
-\only<1-9>{
-\begin{figure}
-\includegraphics[width=.7\textwidth]{Figures/big_white.pdf}
-\end{figure}}
-\only<10-12>{
-\begin{figure}
-\includegraphics[width=.7\textwidth]{Figures/FC_no.png} 
-\caption{\scriptsize{Linear layer in an MLP (\emph{Fully Connected Layer})}}
-\end{figure}
-}
-\only<13->{
-\begin{figure}
-\includegraphics[width=.5\textwidth]{../tikz_per_manuscritto/pooling.pdf} 
-\caption{\scriptsize{Max Pooling Layer}}
-\end{figure}
-}
-
-\end{column}
-\end{columns}
 \end{frame}
 
+\begin{frame}
+\frametitle{Convolutional Neural Networks}
+
+\end{frame}
 
 \begin{frame}
 \frametitle{A kind of CNN architecture}

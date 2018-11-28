@@ -159,16 +159,86 @@ $\Rightarrow$ extract features containing $\vaLeakVec[t_1]\vaLeakVec[t_2]\dots\v
 
 
 
+%\begin{frame}
+%\frametitle{How to detect the $d$-tuple $t_1,\dots, t_d$?}
+%$f(z) = \esper[\vaLeakVec\lvert Z=z]$ is constant $\Rightarrow$  Variance inter-class null! $\Rightarrow$ SNR, SOD, t-statistic null!
+%\includegraphics[width = 0.9\textwidth]{figures/SNR_2order_new.png} \\
+%\pause
+%$\esper[A\vaLeakVec\lvert Z=z]$ is constant as well $\Rightarrow$ any projecting extraction is useless!
+%\uncover<2->{
+%\begin{columns}
+%\begin{column}{.5\textwidth}
+%\only<2>{\includegraphics[width=\textwidth]{figures/D2.pdf}}
+%\only<3>{\includegraphics[width=\textwidth]{figures/D2_useless_proj_1.pdf}}
+%\only<4>{\includegraphics[width=\textwidth]{figures/D2_useless_proj_2.pdf}}
+%\only<5>{\includegraphics[width=\textwidth]{figures/D2_useless_proj_3.pdf}}
+%\only<6>{\includegraphics[width=\textwidth]{figures/D2_useless_proj_4.pdf}}
+%\end{column}
+%\begin{column}{.5\textwidth}
+%\begin{block}{}
+%Toy example: 2 time samples, 1-bit data
+%\begin{itemize}
+%\item[$t_1$:] $M + n$, $n\sim \mathcal{N}(0,0.1)$ 
+%\item[$t_2$:] $M\oplus Z + n$ (Boolean masking)
+%\end{itemize}
+%\end{block}
+%\end{column}
+%\end{columns}
+%}
+%
+%\end{frame}
+
+
 \begin{frame}
+\vspace*{-10pt}
 \frametitle{How to detect the $d$-tuple $t_1,\dots, t_d$?}
-$f(z) = \esper[\vaLeakVec\lvert Z=z]$ is constant $\Rightarrow$  Variance inter-class null! $\Rightarrow$ SNR, SOD, t-statistic null!
-\includegraphics[width = 0.9\textwidth]{figures/SNR_2order_new.png} \\
-\pause
-$\esper[A\vaLeakVec\lvert Z=z]$ is constant as well $\Rightarrow$ any projecting extraction is useless!
+\begin{columns}
+
+\begin{column}{.4\textwidth}
+\begin{scriptsize}
+\begin{block}{Feature selection}
+$\extract$ performs a sub-sampling
+\begin{itemize}
+\item SOD \cite{Chari2003}
+\item SOST \cite{bar2010improved}
+\item SNR \cite{mangard2008power}/ NICV \cite{bhasin2014side}
+\item $t$-test, $F$-test,... \cite{gierlichs2006templates,choudary2014efficient}
+\end{itemize}
+\end{block}
+\end{scriptsize}
+
+\begin{itemize}
+\item Point-wise statistics \ \includegraphics[width=10pt]{figures/no.png}
+\item Exploit $\esper[\vaLeakVec\lvert Z=z]$ \ \includegraphics[width=10pt]{figures/no.png}
+\end{itemize}
+\end{column}
+
+
+\begin{column}{.6\textwidth}
+\begin{scriptsize}
+
+\begin{block}{Linear feature extraction}
+$\extract$ performs linear combinations\\
+$\extract(\vLeakVec) = A\vLeakVec \mbox{ with } A \in M_{\mathbb{R}}(\newTraceLength, \traceLength)$
+\begin{itemize}
+\item Principal Component Analysis (PCA) \cite{TAprincipal,Batina2012}
+\item Linear Discriminant Analysis (LDA) \cite{Standaert2008,lessIsMore}
+\item Projection Pursuits (PP) \cite{PP}
+\end{itemize}
+\end{block}
+\end{scriptsize}
+
+\begin{itemize}
+\item Combine all time samples \ \includegraphics[width=10pt]{figures/yes.png}
+\item Linear combinations $\esper[A\vaLeakVec\lvert Z=z]$ \ \includegraphics[width=10pt]{figures/no.png}
+\end{itemize}
+
+\end{column}
+\end{columns}
 \uncover<2->{
 \begin{columns}
 \begin{column}{.5\textwidth}
-\only<2>{\includegraphics[width=\textwidth]{figures/D2.pdf}}
+\only<1-2>{\includegraphics[width=\textwidth]{figures/D2.pdf}}
 \only<3>{\includegraphics[width=\textwidth]{figures/D2_useless_proj_1.pdf}}
 \only<4>{\includegraphics[width=\textwidth]{figures/D2_useless_proj_2.pdf}}
 \only<5>{\includegraphics[width=\textwidth]{figures/D2_useless_proj_3.pdf}}
@@ -187,6 +257,9 @@ Toy example: 2 time samples, 1-bit data
 }
 
 \end{frame}
+
+
+
 %\begin{frame}
 %\frametitle{HIgher-Order Attacks}
 %\begin{block}{Higher-Order Side-Channel Attacks}
@@ -205,7 +278,7 @@ Toy example: 2 time samples, 1-bit data
 \begin{block}{A lacking literature}
 \begin{itemize}
 \item many HO attacks papers assume the knowledge of $t_1,\dots, t_d$
-\item PoI research exploiting the random shares knowledge (back to unprotected case using $M_1,\dots , M_d$ instead of $Z$)
+\item PoI research exploiting the masks knowledge in profiling phase
 \item Hand selection via educated guess \cite{Oswald2006}
 \item Feature Selection for Higher-Order Attacks $\longrightarrow$ Projection Pursuits \cite{PP}
 \end{itemize}
@@ -223,9 +296,9 @@ Naive strategy: infer over all possible $d$-tuples
 \frametitle{KDA: the purpose}
 
 \begin{block}{Problem}
-Naive strategy: useful statistics lie in a high-dimensional \emph{feature} space: 
-$$\featureSpace = \mathbb{R}^{{D+d-1}\choose{d}}$$
-(all $d$th-degree monomials in the trace coordinates)
+All $d$th-degree monomials in the trace coordinates lies in the: 
+$$\featureSpace = \mathbb{R}^{{D+d-1}\choose{d}} \qquad \text{\emph{feature} space}$$
+\includegraphics[width = 0.5cm]{figures/pericolo.png} \  Dimension increasing combinatorially with $d$ and $D$ 
 \end{block}
 
 \begin{figure}
