@@ -3,36 +3,48 @@
 
 \begin{frame}
 \frametitle{Secure Component and Embedded Cryptography}
-\textbf{A piece of hardware with security properties}\\
-\textbf{Embedded cryptography to provide security services}
-\pause
+%\textbf{A piece of hardware with security properties}\\
+%\textbf{Embedded cryptography to provide security services}
 \begin{columns}
-\begin{column}{0.5\textwidth}
-\includegraphics[width = \textwidth]{figures/smartcards.pdf}
-\end{column}
-\begin{column}{0.5\textwidth}
-\begin{itemize}
-\item Sensitive applications: ID cards, credit cards, transport cards, health cards, SIM
-\item Pervasive aspect: several billion smartcards sold par year
-\item Hard to update
+\begin{column}{0.35\textwidth}
+\uncover<2->{\begin{itemize}
+\item Sensitive applications
+\item Pervasive aspect
+%\item Hard to update
 \item Hostile environment
 \end{itemize}
+}
+\end{column}
+\begin{column}{0.65\textwidth}
+\only<2>{\includegraphics[width=\textwidth]{figures/Presentazione1/Slide2.PNG}}
+\only<3>{\includegraphics[width=\textwidth]{figures/Presentazione1/Slide1.PNG}}
 \end{column}
 \end{columns}
-$\Rightarrow$ Requires protection against very high-level attacker
-\end{frame}
+\uncover<2->{$\Rightarrow$ Requires protection against very high-level attacker}
+%
+%\begin{block}{}
+%\begin{itemize}
+%\item Sensitive applications: ID cards, credit cards, transport cards, health cards, SIM
+%\item Pervasive aspect: several billion smartcards sold par year
+%\item Hostile environment
+%\end{itemize}
+%$\Rightarrow$ Requires protection against very high-level attacker
+%\end{block}
 
-\begin{frame}
-\frametitle{Security Certification}
-\centering
-\includegraphics[width = .9\textwidth]{figures/ITSEF_ANSSI.PNG}
-\begin{itemize}
-\item Standardised Evaluation (\eg ISO/IEC 15408 - Common Criteria)
-\item Many evaluation tasks
-\item AVA class: vulnerability assessment (penetration testing)
-\end{itemize}
+
 \end{frame}
 %
+%\begin{frame}
+%\frametitle{Security Certification}
+%\centering
+%\includegraphics[width = .9\textwidth]{figures/ITSEF_ANSSI.PNG}
+%\begin{itemize}
+%\item Standardised Evaluation (\eg ISO/IEC 15408 - Common Criteria)
+%\item Many evaluation tasks
+%\item AVA class: vulnerability assessment (penetration testing)
+%\end{itemize}
+%\end{frame}
+%%
 %\begin{frame}
 %\frametitle{Side-Channel Vulnerability of Embedded Cryptography}
 %\scalebox{0.7}{
