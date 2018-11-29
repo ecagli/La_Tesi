@@ -330,7 +330,7 @@ $\Phi$ non-linear function
 
 \end{figure}
 
-\begin{block}{What KDA provides}
+\begin{block}{KDA}
 KDA allows performing LDA in $\featureSpace$, remaining in $\mathbb{R}^{D}$.
 \end{block}
 
@@ -489,7 +489,7 @@ K(\sss[]{i},\sss[]{j}) = \Phi(\sss[]{i})\cdot \Phi(\sss[]{j})
 \end{equation}
 \end{block}
 
-\begin{block}{Polynomial Kernel Function}
+\begin{block}{\emph{$d$-degree Polynomial} Kernel Function}
 $K(\sss[]{i},\sss[]{j}) = (\sss[]{i} \cdot \sss[]{j})^d \qquad \leftrightarrow \qquad\Phi:\mathbb{R}^D \rightarrow \mathcal{F}\subset \mathbb{R}^{{D+d-1}\choose{d}} $ all $d$th-degree monomials
 
 
@@ -615,6 +615,7 @@ Target device and acquisitions:
 \item 8-bit AVR microprocessor Atmega328P
 \item power-consumption acquired via the ChipWhisperer \cite{o2014chipwhisperer} platform
 \item $D = 200$, $4$ clock-cycles are selected
+\item $9.000$ KDA training traces
 \end{itemize}
 
 Sensitive variable: $Z = \mathrm{Sbox_{AES}}(P\oplus K^{\star})$\\
@@ -846,9 +847,9 @@ PP  & \includegraphics[width=10pt]{figures/yes.png}          & \includegraphics[
 
 \begin{block}{Limits and drawbacks}
 \begin{itemize}
-\item Regularization hyper-parameter $\mu$: $\NNN = \sum_{\sensVar\in\sensVarSet}\kernelMatrix_\sensVar(\III - \III_{\numTraces})\kernelMatrix_\sensVar^\intercal$ \textcolor{red}{$+ \mu\III$}
-\item Does not allow the localisation of PoIs
-\item \uncover<2->{Memory-based [$\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) =$ \textcolor{red}{$\sum_{i=1}^{\NPoI}$}$\nununu_\ell[i]$\textcolor{red}{$K(\sss[z_i]{i}, \sss[]{})$}]\uncover<3>{$+$ $O(N^3)$ complexity $\rightarrow$ Non-scalability to big training set}}
+\item Memory-based [$\extract^{\mathrm{KDA}}_{\ell}(\vec{x}) =$ \textcolor{red}{$\sum_{i=1}^{\NPoI}$}$\nununu_\ell[i]$\textcolor{red}{$K(\sss[z_i]{i}, \sss[]{})$}]\uncover<2->{$+$ $O(N^3)$ complexity $\rightarrow$ Non-scalability to big training set}
+\item \uncover<3->{Regularization hyper-parameter $\mu$: $\NNN = \sum_{\sensVar\in\sensVarSet}\kernelMatrix_\sensVar(\III - \III_{\numTraces})\kernelMatrix_\sensVar^\intercal$ \textcolor{red}{$+ \mu\III$}}
+\item \uncover<4>{Does not allow the localisation of PoIs}
 \end{itemize}
 
 \end{block}
