@@ -29,7 +29,7 @@
 \item $\pdf_{\given{\extract{(\rho(\vaLeakVec)})}{\sensRandVar = \sensVar}}$, $\pdf_{\extract{(\rho(\vaLeakVec)})}$, $\pdf_{\sensRandVar}$ (generative model)
 
 \begin{itemize}
-\item Gaussian hypothesis (\textbf{Template Attack})\cite{Chari2003}
+\item Gaussian hypothesis (\textbf{Template Attack})\textcolor{cyan}{\cite{Chari2003}}
 \end{itemize}
 \end{itemize}
 }
@@ -37,7 +37,7 @@
 \begin{itemize}
 \item \textcolor{gray}{$\pdf_{\given{\extract{(\rho(\vaLeakVec)})}{\sensRandVar = \sensVar}}$, $\pdf_{\extract{(\rho(\vaLeakVec)})}$, $\pdf_{\sensRandVar}$ (generative model)}
 \begin{itemize}
-\item \textcolor{gray}{ Gaussian hypothesis (\textbf{Template Attack})\cite{Chari2003}}
+\item \textcolor{gray}{ Gaussian hypothesis (\textbf{Template Attack})\textcolor{cyan}{\cite{Chari2003}}}
 \end{itemize}
 \end{itemize}
 }
@@ -55,7 +55,7 @@ Many independent preprocessing steps and assumptions\\ \uncover<2>{$\longleftrig
 
 \begin{frame}
 \frametitle{Multi-Layer Perceptron}
-\hfill In SCA litterature \cite{martinasek2013optimization,martinasek2013innovative,martinasek2015profiling,martinasek2016profiling}
+\hfill In SCA litterature \textcolor{cyan}{\cite{martinasek2013optimization,martinasek2013innovative,martinasek2015profiling,martinasek2016profiling}}
 \begin{block}{Multi-Layer Perceptron (MLP)}
 \only<1>{
 $\hat{\pdf}(\vLeakVec,W) = \softmax\circ\lambda_n\circ\sigma_{n-1}\circ\lambda_{n-1}\circ\dots\circ \lambda_1(\vLeakVec)=\yyy \approx \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec}}$
@@ -72,14 +72,14 @@ $\hat{\pdf}(\vLeakVec,W) = \softmax\circ\textcolor{red}{\lambda_n}\circ\sigma_{n
 \item[]\textcolor{white}{$\softmax$ normalizing \emph{softmax} function}
 \end{itemize}}
 \only<3>{
-$\hat{pdf}(\vLeakVec,W) = \softmax\circ\lambda_n\circ\textcolor{red}{\sigma_{n-1}}\circ\lambda_{n-1}\circ\dots\circ \lambda_1(\vLeakVec)=\yyy \approx \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec}} $
+$\hat{\pdf}(\vLeakVec,W) = \softmax\circ\lambda_n\circ\textcolor{red}{\sigma_{n-1}}\circ\lambda_{n-1}\circ\dots\circ \lambda_1(\vLeakVec)=\yyy \approx \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec}} $
 \begin{itemize}
 \item[]{$\lambda_i$ linear functions (linear combinations of time samples) depending on some \textbf{trainable weights} $W$}
 \item[]\textcolor{red}{$\sigma_i$} non-linear \emph{activation} functions
 \item[]\textcolor{white}{$\softmax$ normalizing \emph{softmax} function}
 \end{itemize}}
 \only<4->{
-$\hat{pdf}(\vLeakVec,W) = \textcolor{red}{\softmax}\circ\lambda_n\circ\sigma_{n-1}\circ\lambda_{n-1}\circ\dots\circ \lambda_1(\vLeakVec)=\yyy \approx \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec}} $
+$\hat{\pdf}(\vLeakVec,W) = \textcolor{red}{\softmax}\circ\lambda_n\circ\sigma_{n-1}\circ\lambda_{n-1}\circ\dots\circ \lambda_1(\vLeakVec)=\yyy \approx \pdf_{\given{\sensRandVar}{\vaLeakVec = \vLeakVec}} $
 \begin{itemize}
 \item[]{$\lambda_i$ linear functions (linear combinations of time samples) depending on some \textbf{trainable weights} $W$}
 \item[]{$\sigma_i$ non-linear \emph{activation} functions}
@@ -118,12 +118,12 @@ $\hat{pdf}(\vLeakVec,W) = \textcolor{red}{\softmax}\circ\lambda_n\circ\sigma_{n-
 \end{figure}
 \end{block}
 
-\uncover<7->{
-\begin{figure}
-\includegraphics[width=\textwidth]{figures/cnn_car.jpeg} 
-\caption{Source: \url{medium.com}}
-\end{figure}
-}
+%\uncover<7->{
+%\begin{figure}
+%\includegraphics[width=\textwidth]{figures/cnn_car.jpeg} 
+%\caption{Source: \url{medium.com}}
+%\end{figure}
+%}
 \end{frame}
 
 \begin{frame}
@@ -131,13 +131,13 @@ $\hat{pdf}(\vLeakVec,W) = \textcolor{red}{\softmax}\circ\lambda_n\circ\sigma_{n-
 \begin{columns}
 \begin{column}{0.5\textwidth}
 \begin{figure}
-\includegraphics[width=.45\textwidth]{figures/FC_no.png} 
+\includegraphics[width=.9\textwidth]{figures/FC_no.png} 
 \caption{Linear layer in an MLP.}
 \end{figure}
 \end{column}
 \begin{column}{0.5\textwidth}
 \begin{figure}
-\includegraphics[width=.45\textwidth]{../tikz_per_manuscritto/conv_filter_2_1.pdf} 
+\includegraphics[width=.9\textwidth]{../tikz_per_manuscritto/conv_filter_2_1.pdf} 
 \caption{Convolutional layer in a CNN.}
 \end{figure}
 \end{column}
@@ -148,16 +148,16 @@ $\hat{pdf}(\vLeakVec,W) = \textcolor{red}{\softmax}\circ\lambda_n\circ\sigma_{n-
 \frametitle{A kind of CNN architecture}
 \vspace*{-10pt}
 \includegraphics[width=0.8\textwidth]{../tikz_per_manuscritto/convnet_arch.pdf} \\
-Architecture inspired by AlexNet \cite{KSH12}, VGG \cite{simonyan2014very}, ResNet \cite{he2016deep} design rules:
+Architecture inspired by AlexNet \textcolor{cyan}{\cite{KSH12}}, VGG \textcolor{cyan}{\cite{simonyan2014very}}, ResNet \textcolor{cyan}{\cite{he2016deep}} design rules:
 \begin{itemize}
 \item Reduce temporal features to only one
-\item Maintain time complexity of each layer (one-half pooling when number of feature maps are doubled)
+\item Maintain time complexity of each layer (one-half pooling when number of feature maps is doubled)
 \end{itemize}
 \begin{block}{Model used in our experiments}
 \begin{itemize}
 \item 4 Conv + Pool layers
 \item tanh activations
-\item batch normalisation \cite{batch_norm}
+\item batch normalisation \textcolor{cyan}{\cite{batch_norm}}
 \item 1 \emph{fully connected layer} + softmax
 \end{itemize}
 \end{block}
@@ -255,7 +255,10 @@ Why?
 \end{itemize}
 Solution? 
 \begin{itemize}
-\item[] Data augmentation
+\item[] Reduce model capacity
+\item[] Regularization
+\item[] Dropout 
+\item[] \only<3>{Data augmentation}\only<4>{\textcolor{red}{Data augmentation}}
 \end{itemize}
 }
 \end{column}

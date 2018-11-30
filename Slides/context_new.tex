@@ -153,16 +153,14 @@ Black Box                                                                       
  %}
  
  \only<9>{\begin{textblock}{7}(9,3)
-\textcolor{red}{Differential Power Analysis \cite{kocher1999differential}\\
-Correlation Power Analysis \cite{brier2004correlation}\\
-Mutual Information Analysis \cite{gierlichs2008mutual,batina2011mutual} \\
-...}
+\emph{Differential Power Analysis} \textcolor{cyan}{\cite{kocher1999differential}}\\
+\emph{Correlation Power Analysis} \textcolor{cyan}{\cite{brier2004correlation}}\\
+\emph{Mutual Information Analysis} \textcolor{cyan}{\cite{gierlichs2008mutual,batina2011mutual}}...
  \end{textblock}
  }
   \only<9>{\begin{textblock}{5}(1,10)
-\textcolor{red}{Non-profiling attacks\\
-Profiling attacks
-...}
+\emph{Non-profiling attacks\\
+Profiling attacks}
  \end{textblock}
  }
 \end{frame}
@@ -224,7 +222,7 @@ Profiling attacks
 \uncover<2->{
 \begin{block}{Machine Learning}
 \uncover<3->{\emph{Learn} from data via statistic models\\
-Task - Performance - Experience \cite{Mitchell1997}}
+Task - Performance - Experience \textcolor{cyan}{\cite{Mitchell1997}}}
 %\uncover<3->{\textquotedbl A computer program is said to learn from experience E with respect to some task T and performance measure P, if its performance on T, as measured by P, improves with experience E. \textquotedbl \cite{Mitchell1997} }
 \end{block}
 \pause
@@ -277,7 +275,7 @@ Task - Performance - Experience \cite{Mitchell1997}}
 \begin{frame}
 \frametitle{Classification}
 \vspace*{-5pt}
-\uncover<5>{\hfill{Machine Learning classifiers in Side-Channel literature: SVM (\cite{intelligentMachineOmicide,machineLearningSCA}), RF (\cite{lerman2014power,lerman2015machine})}}
+\uncover<5>{\hfill{Machine Learning classifiers in Side-Channel literature:\\ SVM (\textcolor{cyan}{\cite{machineLearningSCA,intelligentMachineOmicide}), RF (\cite{lerman2014power,lerman2015machine})}}}
 \begin{block}{Classification problem}
 Assign to a datum $\vaLeakVec$ (e.g. an image) a label $\sensRandVar$ among a set of possible labels $\mathcal{Z}=\{\mathrm{Cat}, \mathrm{Dog}, \mathrm{Horse}\}$
 \only<1>{

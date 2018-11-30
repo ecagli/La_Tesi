@@ -104,15 +104,15 @@
 \uncover<6->{\item \textcolor{red}{mandatory dimensionality reduction [$\setDataTrain \longrightarrow \extract\colon\mathbb{R}^D\rightarrow \mathbb{R}^C$]}}
 \item estimate
 \begin{itemize}
-\item $\pdf_{\given{\only<1-5>{\vaLeakVec}\only<6>{\textcolor{red}{\extract}{(\vaLeakVec)}}\only<7>{\textcolor{red}{\extract}{(\textcolor{blue}{\rho}(\vaLeakVec)})}}{\sensRandVar = \sensVar}}$\uncover<2->{\ $\pdf_{\only<1-5>{\vaLeakVec}\only<6>{\textcolor{red}{\extract}{(\vaLeakVec)}}\only<7>{\textcolor{red}{\extract}{(\textcolor{blue}{\rho}(\vaLeakVec)})}}$\ $\pdf_{\sensRandVar}$} \uncover<3->{(generative model)}
+\item $\pdf_{\given{\only<1-5>{\vaLeakVec}\only<6>{\textcolor{red}{\extract}{(\vaLeakVec)}}\only<7>{\textcolor{red}{\extract}{(\textcolor{blue}{\rho}(\vaLeakVec)})}}{\sensRandVar = \sensVar}}$\uncover<2->{\ $\pdf_{\only<1-5>{\vaLeakVec}\only<6>{\textcolor{red}{\extract}{(\vaLeakVec)}}\only<7>{\textcolor{red}{\extract}{(\textcolor{blue}{\rho}(\vaLeakVec)})}}$\ $\pdf_{\sensRandVar}$} \uncover<2->{(generative model)}
 \uncover<5->{
 \begin{itemize}
-\item Gaussian hypothesis (\textbf{Template Attack}) \cite{Chari2003}
+\item Gaussian hypothesis (\textbf{Template Attack}) \textcolor{cyan}{\cite{Chari2003}}
 %\item Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}
 \end{itemize}
 }
 
-\item \uncover<3->{$\pdf_{\given{\sensRandVar}{  \only<1-5>{\vaLeakVec}\only<6>{\textcolor{red}{\extract}{(\vaLeakVec)}}\only<7>{\textcolor{blue}{\rho}(\textcolor{red}{\extract}{(\vaLeakVec)})} = \only<1-5>{\vLeakVec}\only<6>{\textcolor{red}{\extract}{(\vLeakVec)}}\only<7>{\textcolor{red}{\extract}{(\textcolor{blue}{\rho}(\vLeakVec)})}
+\item \uncover<2->{$\pdf_{\given{\sensRandVar}{  \only<1-5>{\vaLeakVec}\only<6>{\textcolor{red}{\extract}{(\vaLeakVec)}}\only<7>{\textcolor{blue}{\rho}(\textcolor{red}{\extract}{(\vaLeakVec)})} = \only<1-5>{\vLeakVec}\only<6>{\textcolor{red}{\extract}{(\vLeakVec)}}\only<7>{\textcolor{red}{\extract}{(\textcolor{blue}{\rho}(\vLeakVec)})}
 }}$ (discriminative model)
 }
 \end{itemize}
@@ -122,13 +122,13 @@
 \begin{itemize}
 \item Likelihood score for each key hypothesis $k$
 \begin{equation*}
-d_k =  \pdf_{\given{\only<1-5>{\vaLeakVec}\only<6>{\textcolor{red}{\extract}(\vaLeakVec)}\only<7>{\textcolor{red}{\extract}(\textcolor{blue}{\rho}(\vaLeakVec))}}{\sensRandVar}}\left(\only<1-5>{\left(\vLeakVec_i\right)_{i=1,\dots,N_a}}\only<6>{\left(\textcolor{red}{\extract}(\vLeakVec_i)\right)_{i=1,\dots,N_a}}\only<7>{\left(\textcolor{red}{\extract}(\textcolor{blue}{\rho}(\vLeakVec_i))\right)_{i=1,\dots,N_a}}, \left(\sensFunction(\publicParVar_i,\keyVar)\right)_{i=1,\dots,N_a}\right)
+d_k =  \only<1>{\pdf}\only<2>{\textcolor{magenta}{\pdf}}\only<3->{\pdf}_{\given{\only<1>{\vaLeakVec}\only<2>{\textcolor{magenta}{\vaLeakVec}}\only<3-5>{\vaLeakVec}\only<6>{\textcolor{red}{\extract}(\vaLeakVec)}\only<7>{\textcolor{red}{\extract}(\textcolor{blue}{\rho}(\vaLeakVec))}}{\only<1>{\sensRandVar}\only<2>{\textcolor{magenta}{\sensRandVar}}\only<3->{\sensRandVar}}}\left(\only<1-5>{\left(\vLeakVec_i\right)_{i=1,\dots,N_a}}\only<6>{\left(\textcolor{red}{\extract}(\vLeakVec_i)\right)_{i=1,\dots,N_a}}\only<7>{\left(\textcolor{red}{\extract}(\textcolor{blue}{\rho}(\vLeakVec_i))\right)_{i=1,\dots,N_a}}, \left(\sensFunction(\publicParVar_i,\keyVar)\right)_{i=1,\dots,N_a}\right)
 \end{equation*}
 %
 \uncover<2->{
 \item A-posteriori probability score for each key hypothesis $k$
 \begin{equation*}
-d_{\keyVar} = \pdf_{\given{\sensRandVar}{\only<1-5>{\vaLeakVec}\only<6>{\textcolor{red}{\extract}(\vaLeakVec)}\only<7>{\textcolor{red}{\extract}(\textcolor{blue}{\rho}(\vaLeakVec))}}}\left(\sensFunction\left(\publicParVar_i,\keyVar\right)_{i=1,\dots,N_a}, \left(\only<1-5>{\vLeakVec_i}\only<6>{\textcolor{red}{\extract}{(\vLeakVec_i)}}\only<7>{\textcolor{red}{\extract}(\textcolor{blue}{\rho}(\vLeakVec_i))}\right)_{i=1,\dots,N_a}  \right) \mbox{ ,}
+d_{\keyVar} = \only<1>{\pdf}\only<2>{\textcolor{magenta}{\pdf}}\only<3->{\pdf}_{\given{\only<2>{\textcolor{magenta}{\sensRandVar}}\only<3->{\sensRandVar}}{\only<1>{\vaLeakVec}\only<2>{\textcolor{magenta}{\vaLeakVec}}\only<3-5>{\vaLeakVec}\only<6>{\textcolor{red}{\extract}(\vaLeakVec)}\only<7>{\textcolor{red}{\extract}(\textcolor{blue}{\rho}(\vaLeakVec))}}}\left(\sensFunction\left(\publicParVar_i,\keyVar\right)_{i=1,\dots,N_a}, \left(\only<1-5>{\vLeakVec_i}\only<6>{\textcolor{red}{\extract}{(\vLeakVec_i)}}\only<7>{\textcolor{red}{\extract}(\textcolor{blue}{\rho}(\vLeakVec_i))}\right)_{i=1,\dots,N_a}  \right) \mbox{ ,}
 \end{equation*}
 }
 \end{itemize}
@@ -153,24 +153,24 @@ d_{\keyVar} = \pdf_{\given{\sensRandVar}{\only<1-5>{\vaLeakVec}\only<6>{\textcol
 
 \begin{itemize}
 
-\item \only<1-4>{Gaussian hypothesis (\textbf{Template Attack}) \cite{Chari2003}}\only<5->{
-\textcolor{grey}{Gaussian hypothesis (\textbf{Template Attack}) \cite{Chari2003}}}
+\item \only<1-4>{Gaussian hypothesis (\textbf{Template Attack}) \textcolor{cyan}{\cite{Chari2003}}}\only<5->{
+\textcolor{grey}{Gaussian hypothesis (\textbf{Template Attack}) \textcolor{cyan}{\cite{Chari2003}}}}
 %\item \only<1-4>{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}
 %\only<5->{
 %\textcolor{grey}{Variants: \emph{pooled} version \cite{choudary2014efficient}, linear regression \cite{schindler2005stochastic}}}
 %
 \end{itemize}
 
-\item \only<1-4>{\textcolor{grey}{$\given{\sensRandVar}{\extract(\vaLeakVec) = \extract(\vLeakVec)}$ (discriminative model)}}\only<5->{\textcolor{red}{$\given{\sensRandVar}{\vaLeakVec = \vLeakVec}$ (discriminative model)}}
+\item \only<1-3>{\textcolor{grey}{$\given{\sensRandVar}{\extract(\vaLeakVec) = \extract(\vLeakVec)}$ (discriminative model)}}\only<4->{\textcolor{black}{$\given{\sensRandVar}{\vaLeakVec = \vLeakVec}$ (discriminative model)}}
 \end{itemize}
 \end{itemize}
 %
 \begin{block}{Objectives}
 \uncover<2->{
 \begin{itemize}
-\item Ameliorate the template attack routine by proposing efficient dimensionality reduction techniques
+\item Dimensionality reduction techniques for Template Attack
+\item \uncover<3->{Consider countermeasures (masking, hiding)}
 \item \uncover<4->{More generally, ameliorate the profiling attack strategy}
-\item \uncover<3->{Consider the presence of most-commonly-implemented SCA countermeasures (masking, hiding)}
 \end{itemize}
 }
 \end{block}
@@ -207,10 +207,10 @@ d_{\keyVar} = \pdf_{\given{\sensRandVar}{\only<1-5>{\vaLeakVec}\only<6>{\textcol
 \begin{block}{Feature selection}
 $\extract$ performs a sub-sampling
 \begin{itemize}
-\item SOD \cite{Chari2003}
-\item SOST \cite{bar2010improved}
-\item SNR \cite{mangard2008power}/ NICV \cite{bhasin2014side}
-\item $t$-test, $F$-test,... \cite{gierlichs2006templates,choudary2014efficient}
+\item SOD \textcolor{cyan}{\cite{Chari2003}}
+\item SOST \textcolor{cyan}{\cite{bar2010improved}}
+\item SNR \textcolor{cyan}{\cite{mangard2008power}}/ NICV \textcolor{cyan}{\cite{bhasin2014side}}
+\item $t$-test, $F$-test,... \textcolor{cyan}{\cite{gierlichs2006templates,choudary2014efficient}}
 \end{itemize}
 \end{block}
 }
@@ -222,9 +222,9 @@ $\extract$ performs a sub-sampling
 $\extract$ performs linear combinations\\
 $\extract(\vLeakVec) = A\vLeakVec \mbox{ with } A \in M_{\mathbb{R}}(\newTraceLength, \traceLength)$
 \begin{itemize}
-\item Principal Component Analysis (PCA) \cite{TAprincipal,Batina2012}
-\item \only<1-3>{Linear Discriminant Analysis (LDA)}\only<4>{\textcolor{red}{Linear Discriminant Analysis (LDA)}} \cite{Standaert2008,lessIsMore}
-\item Projection Pursuits (PP) \cite{PP}
+\item Principal Component Analysis (PCA) \textcolor{cyan}{\cite{TAprincipal,Batina2012}}
+\item \only<1-3>{Linear Discriminant Analysis (LDA)}\only<4>{\textcolor{red}{Linear Discriminant Analysis (LDA)}} \textcolor{cyan}{\cite{Standaert2008,lessIsMore}}
+\item Projection Pursuits (PP) \textcolor{cyan}{\cite{PP}}
 \end{itemize}
 \end{block}
 }
@@ -281,7 +281,7 @@ $\extract(\vLeakVec) = A\vLeakVec \mbox{ with } A \in M_{\mathbb{R}}(\newTraceLe
 
 \item \only<1>{\textbf{Kernel Discriminant Analysis} ([CARDIS 2016]): application of an appropriate kernel trick to LDA, in order to manage masking countermeasure}\only<2->{\textcolor{red}{\textbf{Kernel Discriminant Analysis} ([CARDIS 2016]): application of an appropriate kernel trick to LDA, in order to manage masking countermeasure}}
 
-\item \only<1>{\textbf{Convolutional Neural Networks} ([CHES 2017])} \only<2->{\textcolor{red}{\textbf{Convolutional Neural Networks} ([CHES 2017])}}:
+\item \only<1>{\textbf{Convolutional Neural Networks} ([CHES 2017]):}\only<2->{\textcolor{red}{\textbf{Convolutional Neural Networks} ([CHES 2017]):}}
 \begin{itemize}
 \item \only<1>{discriminative model by means of neural network classifiers}\only<2->{\textcolor{red}{discriminative model by means of neural network classifiers}}
 \item \only<1>{convolutional layers to manage desyncrhonisation (a form of hiding)}\only<2->{\textcolor{red}{convolutional layers to manage desyncrhonisation (a form of hiding)}}
