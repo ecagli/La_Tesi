@@ -80,8 +80,8 @@
 \vspace{-5pt}
 \begin{block}{Profiling attack scenario}
 \begin{itemize}
-\item labelled traces $\setDataTrain = (\vLeakVec_i, e_i, k_i)_{i=1}^N$, acquired under known secrets
-\item attack traces $\setDataAttack = (\vLeakVec_i, e_i)_{i=1}^{N_a}$ acquired under unknown secrets
+\item labelled traces $\setDataTrain = (\vLeakVec_i, e_i, k_i)_{i=1}^N$, acquired under \textcolor{magenta}{known} secrets
+\item attack traces $\setDataAttack = (\vLeakVec_i, e_i)_{i=1}^{N_a}$ acquired under \textcolor{magenta}{unknown} secrets
 \end{itemize}
 \end{block}
 \end{frame}
@@ -284,7 +284,7 @@ $\extract(\vLeakVec) = A\vLeakVec \mbox{ with } A \in M_{\mathbb{R}}(\newTraceLe
 \item \only<1>{\textbf{Convolutional Neural Networks} ([CHES 2017]):}\only<2->{\textcolor{red}{\textbf{Convolutional Neural Networks} ([CHES 2017]):}}
 \begin{itemize}
 \item \only<1>{discriminative model by means of neural network classifiers}\only<2->{\textcolor{red}{discriminative model by means of neural network classifiers}}
-\item \only<1>{convolutional layers to manage desyncrhonisation (a form of hiding)}\only<2->{\textcolor{red}{convolutional layers to manage desyncrhonisation (a form of hiding)}}
+\item \only<1>{convolutional layers to manage desynchronisation (a form of hiding)}\only<2->{\textcolor{red}{convolutional layers to manage desyncrhonisation (a form of hiding)}}
 \item \only<1>{Data Augmentation techniques to reduce overfitting}\only<2->{\textcolor{red}{Data Augmentation techniques to reduce overfitting}}
 \end{itemize}
 
