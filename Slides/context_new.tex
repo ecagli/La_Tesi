@@ -275,33 +275,31 @@ Task - Performance - Experience \textcolor{cyan}{\cite{Mitchell1997}}}
 \begin{frame}
 \frametitle{Classification}
 \vspace*{-5pt}
-\uncover<5>{\hfill{Machine Learning classifiers in Side-Channel literature:\\ SVM (\textcolor{cyan}{\cite{machineLearningSCA,intelligentMachineOmicide}}), RF (\textcolor{cyan}{\cite{lerman2014power,lerman2015machine}})}}
+\uncover<3>{\hfill{Machine Learning classifiers in Side-Channel literature:\\ SVM (\textcolor{cyan}{\cite{machineLearningSCA,intelligentMachineOmicide}}), RF (\textcolor{cyan}{\cite{lerman2014power,lerman2015machine}})}}
 \begin{block}{Classification problem}
-Assign to a datum $\vaLeakVec$ (e.g. an image) a label $\sensRandVar$ among a set of possible labels $\mathcal{Z}=\{\mathrm{Cat}, \mathrm{Dog}, \mathrm{Horse}\}$
-\only<1>{
-\includegraphics[width=\textwidth]{Figures/cane_wo_results.pdf}}
-\only<2->{\includegraphics[width=\textwidth]{Figures/cane_classifier.pdf}}
+Assign to a datum $\vaLeakVec$ a label $\sensRandVar$ among a set of possible labels $\mathcal{Z}=\{s_1,s_2,s_3\}$, or probabilities. 
+\includegraphics[width=\textwidth]{figures/trace_classifier/Diapositive4.PNG} 
 
 %\uncover<3->{\hfill{\textcolor{red}{$\prob[\ZZZ|\XXX]$}}}
 
 \end{block}
-\uncover<3->{
+%\uncover<3->{
 %\only<3>{
 %\begin{block}{Simple Attack as a Classification Problem}
 %\includegraphics[width=\textwidth]{Figures/trace_classifier/Diapositive1.png} 
 %\end{block}
 %}
-\only<1-3>{
-\begin{block}{Advanced Attack as a Classification Problem}
-\includegraphics[width=\textwidth]{Figures/trace_classifier/Diapositive2.png} 
-\end{block}
-}
-\only<4->{
+%\only<1-3>{
+%\begin{block}{Advanced Attack as a Classification Problem}
+%\includegraphics[width=\textwidth]{Figures/trace_classifier/Diapositive2.png} 
+%\end{block}
+%}
+\uncover<2->{
 \begin{block}{Advanced Attack as Multiple Classification Problems}
 \includegraphics[width=\textwidth]{Figures/trace_classifier/Diapositive3.png} 
 \end{block}
 }
-}
+%}
 \end{frame}
 
 
